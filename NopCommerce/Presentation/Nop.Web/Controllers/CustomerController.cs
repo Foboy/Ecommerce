@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Nop.Core;
+using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Forums;
@@ -25,6 +27,7 @@ using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
 using Nop.Services.Seo;
+using Nop.Services.Stores;
 using Nop.Services.Tax;
 using Nop.Web.Extensions;
 using Nop.Web.Framework.Controllers;
@@ -35,7 +38,7 @@ using Nop.Web.Models.Customer;
 
 namespace Nop.Web.Controllers
 {
-    public partial class CustomerController : BaseNopController
+    public partial class CustomerController : BasePublicController
     {
         #region Fields
         private readonly IAuthenticationService _authenticationService;
@@ -45,7 +48,10 @@ namespace Nop.Web.Controllers
         private readonly ILocalizationService _localizationService;
         private readonly IWorkContext _workContext;
         private readonly IStoreContext _storeContext;
+        private readonly IStoreMappingService _storeMappingService;
         private readonly ICustomerService _customerService;
+        private readonly ICustomerAttributeParser _customerAttributeParser;
+        private readonly ICustomerAttributeService _customerAttributeService;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ICustomerRegistrationService _customerRegistrationService;
         private readonly ITaxService _taxService;
@@ -89,7 +95,10 @@ namespace Nop.Web.Controllers
             ILocalizationService localizationService,
             IWorkContext workContext,
             IStoreContext storeContext,
+            IStoreMappingService storeMappingService,
             ICustomerService customerService,
+            ICustomerAttributeParser customerAttributeParser,
+            ICustomerAttributeService customerAttributeService,
             IGenericAttributeService genericAttributeService,
             ICustomerRegistrationService customerRegistrationService,
             ITaxService taxService, RewardPointsSettings rewardPointsSettings,
@@ -115,7 +124,10 @@ namespace Nop.Web.Controllers
             this._localizationService = localizationService;
             this._workContext = workContext;
             this._storeContext = storeContext;
+            this._storeMappingService = storeMappingService;
             this._customerService = customerService;
+            this._customerAttributeParser = customerAttributeParser;
+            this._customerAttributeService = customerAttributeService;
             this._genericAttributeService = genericAttributeService;
             this._customerRegistrationService = customerRegistrationService;
             this._taxService = taxService;
@@ -323,11 +335,186 @@ namespace Nop.Web.Controllers
                 });
             }
 
+            #region Custom customer attributes
+
+            var customerAttributes = _customerAttributeService.GetAllCustomerAttributes();
+            foreach (var attribute in customerAttributes)
+            {
+                var caModel = new CustomerAttributeModel()
+                {
+                    Id = attribute.Id,
+                    Name = attribute.GetLocalized(x => x.Name),
+                    IsRequired = attribute.IsRequired,
+                    AttributeControlType = attribute.AttributeControlType,
+                };
+
+                if (attribute.ShouldHaveValues())
+                {
+                    //values
+                    var caValues = _customerAttributeService.GetCustomerAttributeValues(attribute.Id);
+                    foreach (var caValue in caValues)
+                    {
+                        var caValueModel = new CustomerAttributeValueModel()
+                        {
+                            Id = caValue.Id,
+                            Name = caValue.GetLocalized(x => x.Name),
+                            IsPreSelected = caValue.IsPreSelected
+                        };
+                        caModel.Values.Add(caValueModel);
+                    }
+                }
+
+                //set already selected attributes
+                string selectedCustomerAttributes = customer.GetAttribute<string>(SystemCustomerAttributeNames.CustomCustomerAttributes, _genericAttributeService);
+                switch (attribute.AttributeControlType)
+                {
+                    case AttributeControlType.DropdownList:
+                    case AttributeControlType.RadioList:
+                    case AttributeControlType.Checkboxes:
+                        {
+                            if (!String.IsNullOrEmpty(selectedCustomerAttributes))
+                            {
+                                //clear default selection
+                                foreach (var item in caModel.Values)
+                                    item.IsPreSelected = false;
+
+                                //select new values
+                                var selectedCaValues = _customerAttributeParser.ParseCustomerAttributeValues(selectedCustomerAttributes);
+                                foreach (var caValue in selectedCaValues)
+                                    foreach (var item in caModel.Values)
+                                        if (caValue.Id == item.Id)
+                                            item.IsPreSelected = true;
+                            }
+                        }
+                        break;
+                    case AttributeControlType.TextBox:
+                    case AttributeControlType.MultilineTextbox:
+                        {
+                            if (!String.IsNullOrEmpty(selectedCustomerAttributes))
+                            {
+                                var enteredText = _customerAttributeParser.ParseValues(selectedCustomerAttributes, attribute.Id);
+                                if (enteredText.Count > 0)
+                                    caModel.DefaultValue = enteredText[0];
+                            }
+                        }
+                        break;
+                    case AttributeControlType.ColorSquares:
+                    case AttributeControlType.Datepicker:
+                    case AttributeControlType.FileUpload:
+                    default:
+                        //not supported attribute control types
+                        break;
+                }
+
+                model.CustomerAttributes.Add(caModel);
+            }
+
+            #endregion 
 
             model.NavigationModel = GetCustomerNavigationModel(customer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Info;
         }
-        
+
+        [NonAction]
+        protected void PrepareCustomerRegisterModel(RegisterModel model, bool excludeProperties)
+        {
+            if (model == null)
+                throw new ArgumentNullException("model");
+
+            model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
+            foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
+                model.AvailableTimeZones.Add(new SelectListItem() { Text = tzi.DisplayName, Value = tzi.Id, Selected = (excludeProperties ? tzi.Id == model.TimeZoneId : tzi.Id == _dateTimeHelper.CurrentTimeZone.Id) });
+            
+            model.DisplayVatNumber = _taxSettings.EuVatEnabled;
+            //form fields
+            model.GenderEnabled = _customerSettings.GenderEnabled;
+            model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
+            model.CompanyEnabled = _customerSettings.CompanyEnabled;
+            model.CompanyRequired = _customerSettings.CompanyRequired;
+            model.StreetAddressEnabled = _customerSettings.StreetAddressEnabled;
+            model.StreetAddressRequired = _customerSettings.StreetAddressRequired;
+            model.StreetAddress2Enabled = _customerSettings.StreetAddress2Enabled;
+            model.StreetAddress2Required = _customerSettings.StreetAddress2Required;
+            model.ZipPostalCodeEnabled = _customerSettings.ZipPostalCodeEnabled;
+            model.ZipPostalCodeRequired = _customerSettings.ZipPostalCodeRequired;
+            model.CityEnabled = _customerSettings.CityEnabled;
+            model.CityRequired = _customerSettings.CityRequired;
+            model.CountryEnabled = _customerSettings.CountryEnabled;
+            model.StateProvinceEnabled = _customerSettings.StateProvinceEnabled;
+            model.PhoneEnabled = _customerSettings.PhoneEnabled;
+            model.PhoneRequired = _customerSettings.PhoneRequired;
+            model.FaxEnabled = _customerSettings.FaxEnabled;
+            model.FaxRequired = _customerSettings.FaxRequired;
+            model.NewsletterEnabled = _customerSettings.NewsletterEnabled;
+            model.AcceptPrivacyPolicyEnabled = _customerSettings.AcceptPrivacyPolicyEnabled;
+            model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
+            model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
+            model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
+            
+            //countries and states
+            if (_customerSettings.CountryEnabled)
+            {
+                model.AvailableCountries.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.SelectCountry"), Value = "0" });
+                foreach (var c in _countryService.GetAllCountries())
+                {
+                    model.AvailableCountries.Add(new SelectListItem()
+                    {
+                        Text = c.GetLocalized(x => x.Name),
+                        Value = c.Id.ToString(),
+                        Selected = c.Id == model.CountryId
+                    });
+                }
+
+                if (_customerSettings.StateProvinceEnabled)
+                {
+                    //states
+                    var states = _stateProvinceService.GetStateProvincesByCountryId(model.CountryId).ToList();
+                    if (states.Count > 0)
+                    {
+                        foreach (var s in states)
+                            model.AvailableStates.Add(new SelectListItem() { Text = s.GetLocalized(x => x.Name), Value = s.Id.ToString(), Selected = (s.Id == model.StateProvinceId) });
+                    }
+                    else
+                        model.AvailableStates.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.OtherNonUS"), Value = "0" });
+
+                }
+            }
+
+            #region Custom customer attributes
+
+            var customerAttributes = _customerAttributeService.GetAllCustomerAttributes();
+            foreach (var attribute in customerAttributes)
+            {
+                var caModel = new CustomerAttributeModel()
+                {
+                    Id = attribute.Id,
+                    Name = attribute.GetLocalized(x => x.Name),
+                    IsRequired = attribute.IsRequired,
+                    AttributeControlType = attribute.AttributeControlType,
+                };
+
+                if (attribute.ShouldHaveValues())
+                {
+                    //values
+                    var caValues = _customerAttributeService.GetCustomerAttributeValues(attribute.Id);
+                    foreach (var caValue in caValues)
+                    {
+                        var caValueModel = new CustomerAttributeValueModel()
+                        {
+                            Id = caValue.Id,
+                            Name = caValue.GetLocalized(x => x.Name),
+                            IsPreSelected = caValue.IsPreSelected
+                        };
+                        caModel.Values.Add(caValueModel);
+                    }
+                }
+
+                model.CustomerAttributes.Add(caModel);
+            }
+
+            #endregion 
+        }
+
         [NonAction]
         protected CustomerOrderListModel PrepareCustomerOrderListModel(Customer customer)
         {
@@ -374,6 +561,74 @@ namespace Nop.Web.Controllers
             }
 
             return model;
+        }
+
+        [NonAction]
+        protected string ParseCustomCustomerAttributes(Customer customer, FormCollection form)
+        {
+            if (customer == null)
+                throw new ArgumentNullException("customer");
+
+            if (form == null)
+                throw new ArgumentNullException("form");
+
+            string selectedAttributes = "";
+            var customerAttributes = _customerAttributeService.GetAllCustomerAttributes();
+            foreach (var attribute in customerAttributes)
+            {
+                string controlId = string.Format("customer_attribute_{0}", attribute.Id);
+                switch (attribute.AttributeControlType)
+                {
+                    case AttributeControlType.DropdownList:
+                    case AttributeControlType.RadioList:
+                        {
+                            var ctrlAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            {
+                                int selectedAttributeId = int.Parse(ctrlAttributes);
+                                if (selectedAttributeId > 0)
+                                    selectedAttributes = _customerAttributeParser.AddCustomerAttribute(selectedAttributes,
+                                        attribute, selectedAttributeId.ToString());
+                            }
+                        }
+                        break;
+                    case AttributeControlType.Checkboxes:
+                        {
+                            var cblAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(cblAttributes))
+                            {
+                                foreach (var item in cblAttributes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                                {
+                                        int selectedAttributeId = int.Parse(item);
+                                        if (selectedAttributeId > 0)
+                                            selectedAttributes = _customerAttributeParser.AddCustomerAttribute(selectedAttributes,
+                                                attribute, selectedAttributeId.ToString());
+                                }
+                            }
+                        }
+                        break;
+                    case AttributeControlType.TextBox:
+                    case AttributeControlType.MultilineTextbox:
+                        {
+                            var ctrlAttributes = form[controlId];
+                            if (!String.IsNullOrEmpty(ctrlAttributes))
+                            {
+                                string enteredText = ctrlAttributes.Trim();
+                                selectedAttributes = _customerAttributeParser.AddCustomerAttribute(selectedAttributes,
+                                    attribute, enteredText);
+                            }
+                        }
+                        break;
+                    case AttributeControlType.Datepicker:
+                    case AttributeControlType.ColorSquares:
+                    case AttributeControlType.FileUpload:
+                        //not supported customer attributes
+                    default:
+                        break;
+                }
+            }
+
+            return selectedAttributes;
         }
 
         #endregion
@@ -460,56 +715,7 @@ namespace Nop.Web.Controllers
                 return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Disabled });
 
             var model = new RegisterModel();
-            model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
-            foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
-                model.AvailableTimeZones.Add(new SelectListItem() { Text = tzi.DisplayName, Value = tzi.Id, Selected = (tzi.Id == _dateTimeHelper.DefaultStoreTimeZone.Id) });
-            model.DisplayVatNumber = _taxSettings.EuVatEnabled;
-            //form fields
-            model.GenderEnabled = _customerSettings.GenderEnabled;
-            model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
-            model.CompanyEnabled = _customerSettings.CompanyEnabled;
-            model.CompanyRequired = _customerSettings.CompanyRequired;
-            model.StreetAddressEnabled = _customerSettings.StreetAddressEnabled;
-            model.StreetAddressRequired = _customerSettings.StreetAddressRequired;
-            model.StreetAddress2Enabled = _customerSettings.StreetAddress2Enabled;
-            model.StreetAddress2Required = _customerSettings.StreetAddress2Required;
-            model.ZipPostalCodeEnabled = _customerSettings.ZipPostalCodeEnabled;
-            model.ZipPostalCodeRequired = _customerSettings.ZipPostalCodeRequired;
-            model.CityEnabled = _customerSettings.CityEnabled;
-            model.CityRequired = _customerSettings.CityRequired;
-            model.CountryEnabled = _customerSettings.CountryEnabled;
-            model.StateProvinceEnabled = _customerSettings.StateProvinceEnabled;
-            model.PhoneEnabled = _customerSettings.PhoneEnabled;
-            model.PhoneRequired = _customerSettings.PhoneRequired;
-            model.FaxEnabled = _customerSettings.FaxEnabled;
-            model.FaxRequired = _customerSettings.FaxRequired;
-            model.NewsletterEnabled = _customerSettings.NewsletterEnabled;
-            model.AcceptPrivacyPolicyEnabled = _customerSettings.AcceptPrivacyPolicyEnabled;
-            model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
-            model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
-            model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
-            if (_customerSettings.CountryEnabled)
-            {
-                model.AvailableCountries.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.SelectCountry"), Value = "0" });
-                foreach (var c in _countryService.GetAllCountries())
-                {
-                    model.AvailableCountries.Add(new SelectListItem() { Text = c.GetLocalized(x => x.Name), Value = c.Id.ToString() });
-                }
-                
-                if (_customerSettings.StateProvinceEnabled)
-                {
-                    //states
-                    var states = _stateProvinceService.GetStateProvincesByCountryId(model.CountryId).ToList();
-                    if (states.Count > 0)
-                    {
-                        foreach (var s in states)
-                            model.AvailableStates.Add(new SelectListItem() { Text = s.GetLocalized(x => x.Name), Value = s.Id.ToString(), Selected = (s.Id == model.StateProvinceId) });
-                    }
-                    else
-                        model.AvailableStates.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.OtherNonUS"), Value = "0" });
-
-                }
-            }
+            PrepareCustomerRegisterModel(model, false);
             //enable newsletter by default
             model.Newsletter = true;
 
@@ -519,7 +725,7 @@ namespace Nop.Web.Controllers
         [HttpPost]
         [CaptchaValidator]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model, string returnUrl, bool captchaValid)
+        public ActionResult Register(RegisterModel model, string returnUrl, bool captchaValid, FormCollection form)
         {
             //check whether registration is allowed
             if (_customerSettings.UserRegistrationType == UserRegistrationType.Disabled)
@@ -540,7 +746,15 @@ namespace Nop.Web.Controllers
             {
                 ModelState.AddModelError("", _localizationService.GetResource("Common.WrongCaptcha"));
             }
-            
+
+            //custom customer attributes
+            var customerAttributes = ParseCustomCustomerAttributes(customer, form);
+            var customerAttributeWarnings = _customerAttributeParser.GetAttributeWarnings(customerAttributes);
+            foreach (var error in customerAttributeWarnings)
+            {
+                ModelState.AddModelError("", error);
+            }
+
             if (ModelState.IsValid)
             {
                 if (_customerSettings.UsernamesEnabled && model.Username != null)
@@ -643,6 +857,9 @@ namespace Nop.Web.Controllers
                         }
                     }
 
+                    //save customer attributes
+                    _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
+                    
                     //login customer now
                     if (isApproved)
                         _authenticationService.SignIn(customer, true);
@@ -726,58 +943,7 @@ namespace Nop.Web.Controllers
             }
 
             //If we got this far, something failed, redisplay form
-            model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
-            foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
-                model.AvailableTimeZones.Add(new SelectListItem() { Text = tzi.DisplayName, Value = tzi.Id, Selected = (tzi.Id == _dateTimeHelper.DefaultStoreTimeZone.Id) });
-            model.DisplayVatNumber = _taxSettings.EuVatEnabled;
-            //form fields
-            model.GenderEnabled = _customerSettings.GenderEnabled;
-            model.DateOfBirthEnabled = _customerSettings.DateOfBirthEnabled;
-            model.CompanyEnabled = _customerSettings.CompanyEnabled;
-            model.CompanyRequired = _customerSettings.CompanyRequired;
-            model.StreetAddressEnabled = _customerSettings.StreetAddressEnabled;
-            model.StreetAddressRequired = _customerSettings.StreetAddressRequired;
-            model.StreetAddress2Enabled = _customerSettings.StreetAddress2Enabled;
-            model.StreetAddress2Required = _customerSettings.StreetAddress2Required;
-            model.ZipPostalCodeEnabled = _customerSettings.ZipPostalCodeEnabled;
-            model.ZipPostalCodeRequired = _customerSettings.ZipPostalCodeRequired;
-            model.CityEnabled = _customerSettings.CityEnabled;
-            model.CityRequired = _customerSettings.CityRequired;
-            model.CountryEnabled = _customerSettings.CountryEnabled;
-            model.StateProvinceEnabled = _customerSettings.StateProvinceEnabled;
-            model.PhoneEnabled = _customerSettings.PhoneEnabled;
-            model.PhoneRequired = _customerSettings.PhoneRequired;
-            model.FaxEnabled = _customerSettings.FaxEnabled;
-            model.FaxRequired = _customerSettings.FaxRequired;
-            model.NewsletterEnabled = _customerSettings.NewsletterEnabled;
-            model.AcceptPrivacyPolicyEnabled = _customerSettings.AcceptPrivacyPolicyEnabled;
-            model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
-            model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
-            model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
-            if (_customerSettings.CountryEnabled)
-            {
-                model.AvailableCountries.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.SelectCountry"), Value = "0" });
-                foreach (var c in _countryService.GetAllCountries())
-                {
-                    model.AvailableCountries.Add(new SelectListItem() { Text = c.GetLocalized(x => x.Name), Value = c.Id.ToString(), Selected = (c.Id == model.CountryId) });
-                }
-
-
-                if (_customerSettings.StateProvinceEnabled)
-                {
-                    //states
-                    var states = _stateProvinceService.GetStateProvincesByCountryId(model.CountryId).ToList();
-                    if (states.Count > 0)
-                    {
-                        foreach (var s in states)
-                            model.AvailableStates.Add(new SelectListItem() { Text = s.GetLocalized(x => x.Name), Value = s.Id.ToString(), Selected = (s.Id == model.StateProvinceId) });
-                    }
-                    else
-                        model.AvailableStates.Add(new SelectListItem() { Text = _localizationService.GetResource("Address.OtherNonUS"), Value = "0" });
-
-                }
-            }
-
+            PrepareCustomerRegisterModel(model, true);
             return View(model);
         }
 
@@ -929,7 +1095,7 @@ namespace Nop.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Info(CustomerInfoModel model)
+        public ActionResult Info(CustomerInfoModel model, FormCollection form)
         {
             if (!IsCurrentUserRegistered())
                 return new HttpUnauthorizedResult();
@@ -938,6 +1104,14 @@ namespace Nop.Web.Controllers
 
             try
             {
+                //custom customer attributes
+                var customerAttributes = ParseCustomCustomerAttributes(customer, form);
+                var customerAttributeWarnings = _customerAttributeParser.GetAttributeWarnings(customerAttributes);
+                foreach (var error in customerAttributeWarnings)
+                {
+                    ModelState.AddModelError("", error);
+                }
+
                 if (ModelState.IsValid)
                 {
                     //username 
@@ -1055,6 +1229,9 @@ namespace Nop.Web.Controllers
                     if (_forumSettings.ForumsEnabled && _forumSettings.SignaturesEnabled)
                         _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.Signature, model.Signature);
 
+                    //save customer attributes
+                    _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
+                    
                     return RedirectToRoute("CustomerInfo");
                 }
             }
@@ -1084,7 +1261,11 @@ namespace Nop.Web.Controllers
             var model = new CustomerAddressListModel();
             model.NavigationModel = GetCustomerNavigationModel(customer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Addresses;
-            foreach (var address in customer.Addresses)
+            var addresses = customer.Addresses
+                //enabled for the current store
+                .Where(a => a.Country == null || _storeMappingService.Authorize(a.Country))
+                .ToList();
+            foreach (var address in addresses)
             {
                 var addressModel = new AddressModel();
                 addressModel.PrepareModel(address, false, _addressSettings, _localizationService,

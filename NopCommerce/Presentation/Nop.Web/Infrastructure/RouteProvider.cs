@@ -91,6 +91,11 @@ namespace Nop.Web.Infrastructure
                             new { controller = "Customer", action = "UserAgreement" },
                             new { orderItemId = new GuidConstraint(false) },
                             new[] { "Nop.Web.Controllers" });
+            routes.MapRoute("GetOrderNoteFile",
+                            "download/ordernotefile/{ordernoteid}",
+                            new { controller = "Download", action = "GetOrderNoteFile" },
+                            new { ordernoteid = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
 
             //reviews
             routes.MapLocalizedRoute("ProductReviews",
@@ -169,9 +174,15 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             //product attributes with "upload file" type
             routes.MapLocalizedRoute("UploadFileProductAttribute",
-                            "uploadfileproductattribute/{productId}/{productAttributeId}",
+                            "uploadfileproductattribute/{attributeId}",
                             new { controller = "ShoppingCart", action = "UploadFileProductAttribute" },
-                            new { productId = @"\d+", productAttributeId = @"\d+" },
+                            new { attributeId = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
+            //checkout attributes with "upload file" type
+            routes.MapLocalizedRoute("UploadFileCheckoutAttribute",
+                            "uploadfilecheckoutattribute/{attributeId}",
+                            new { controller = "ShoppingCart", action = "UploadFileCheckoutAttribute" },
+                            new { attributeId = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
             
             //checkout
@@ -558,10 +569,6 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
 
             //topics
-            routes.MapLocalizedRoute("Topic",
-                            "t/{SystemName}",
-                            new { controller = "Topic", action = "TopicDetails" },
-                            new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("TopicPopup",
                             "t-popup/{SystemName}",
                             new { controller = "Topic", action = "TopicDetailsPopup" },
@@ -599,12 +606,6 @@ namespace Nop.Web.Infrastructure
                             new { controller = "BackwardCompatibility2X", action = "RedirectProductTagsAll" },
                             new[] { "Nop.Web.Controllers" });
             #endregion
-            //vendors
-            routes.MapLocalizedRoute("Vendor",
-                            "vendor/{vendorId}/{SeName}",
-                            new { controller = "Catalog", action = "Vendor", SeName = UrlParameter.Optional },
-                            new { vendorId = @"\d+" },
-                            new[] { "Nop.Web.Controllers" });
 
 
             //product search
@@ -634,7 +635,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("ChangeCurrency",
                             "changecurrency/{customercurrency}",
-                            new { controller = "Common", action = "CurrencySelected" },
+                            new { controller = "Common", action = "SetCurrency" },
                             new { customercurrency = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("ChangeLanguage",
@@ -644,7 +645,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("ChangeTaxType",
                             "changetaxtype/{customertaxtype}",
-                            new { controller = "Common", action = "TaxTypeSelected" },
+                            new { controller = "Common", action = "SetTaxType" },
                             new { customertaxtype = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
             routes.MapRoute("EuCookieLawAccept",
