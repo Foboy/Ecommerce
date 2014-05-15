@@ -95,6 +95,14 @@
     <div id="ajaxBusy">
         <span>&nbsp;</span>
     </div>
+    @if (IsSectionDefined("statusbar"))
+    {
+        @RenderSection("statusbar")
+    }
+    else
+    {
+
+    }
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="/admin" class="logo">
@@ -129,48 +137,46 @@
                         @Html.Widget("admin_header_middle")
                         @Html.Widget("admin_header_after")
                 <ul class="nav navbar-nav">
-
-                    <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope"></i>
-                            <span class="label label-success">4</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="/Administration/Content/img/avatar3.png" class="img-circle" alt="User Image" />
-                                            </div>
-                                            <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <p>
-                                            @Html.Action("LanguageSelector", "Common")
-                                                @Html.ActionLink(T("Admin.Header.PublicStore").Text, "Index", "Home", new { area = "" }, null)
-                                                @if (canManageMaintenance)
-                                                {
-                                                    <span class="separator">|</span>
-                                                    @Html.ActionLink(T("Admin.Header.ClearCache").Text, "ClearCache", "Common")
-                                                    <span class="separator">|</span>
-                                                    @Html.ActionLink(T("Admin.Header.RestartApplication").Text, "RestartApplication", "Common", null, new { id = "restart-application" })
-                                                }
-                                            </p>
-                                        </a>
-                                    </li><!-- end message -->
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
-                        </ul>
-                    </li>
                     @if (currentCustomer != null && currentCustomer.IsRegistered())
                     {
+                        <!--//@Html.Action("LanguageSelector", "Common") -->
+                        <!-- Notifications: style can be found in dropdown.less -->
+                        <li class="dropdown notifications-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-warning"></i>
+                                <span class="label label-warning"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">后台操作</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="@Url.Action("Index", "Home", new { area = "" })">
+                                                <i class="ion ion-ios7-people info"></i> @T("Admin.Header.PublicStore").Text
+                                            </a>
+
+                                            
+                                        </li>
+                                        @if (canManageMaintenance)
+                                                {
+                                        <li>
+                                            <a href="@Url.Action("ClearCache", "Common")">
+                                                <i class="fa fa-warning danger"></i> @T("Admin.Header.ClearCache").Text
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("RestartApplication", "Common")" id="restart-application">
+                                                <i class="fa fa-users warning"></i> @T("Admin.Header.RestartApplication").Text
+                                            </a>
+                                            
+                                        </li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li class="footer"><a href="#">View all</a></li>
+                            </ul>
+                        </li>
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
