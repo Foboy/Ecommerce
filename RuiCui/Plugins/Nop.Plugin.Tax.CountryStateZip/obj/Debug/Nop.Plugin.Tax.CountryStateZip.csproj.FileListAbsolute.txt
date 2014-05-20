@@ -1,0 +1,7 @@
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.CountryStateZip\Description.txt
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.CountryStateZip\logo.jpg
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.CountryStateZip\Nop.Plugin.Tax.CountryStateZip.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.CountryStateZip\Nop.Plugin.Tax.CountryStateZip.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.CountryStateZip\obj\Debug\Nop.Plugin.Tax.CountryStateZip.csprojResolveAssemblyReference.cache
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.CountryStateZip\obj\Debug\Nop.Plugin.Tax.CountryStateZip.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.CountryStateZip\obj\Debug\Nop.Plugin.Tax.CountryStateZip.pdb

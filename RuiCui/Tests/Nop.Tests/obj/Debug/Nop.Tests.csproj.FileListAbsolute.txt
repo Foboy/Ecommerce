@@ -1,0 +1,8 @@
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb

@@ -1,0 +1,2 @@
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Web.MVC.Tests\obj\Debug\Nop.Web.MVC.Tests.csproj.App.config
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Web.MVC.Tests\obj\Debug\Nop.Web.MVC.Tests.csprojResolveAssemblyReference.cache
