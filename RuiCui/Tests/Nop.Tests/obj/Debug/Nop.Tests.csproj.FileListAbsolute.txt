@@ -6,3 +6,12 @@ E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.pdb
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.dll
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.dll
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
+D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb

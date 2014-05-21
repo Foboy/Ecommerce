@@ -5,3 +5,9 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.ByWeight\N
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.ByWeight\obj\Debug\Nop.Plugin.Shipping.ByWeight.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.ByWeight\obj\Debug\Nop.Plugin.Shipping.ByWeight.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.ByWeight\obj\Debug\Nop.Plugin.Shipping.ByWeight.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.ByWeight\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.ByWeight\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.ByWeight\Nop.Plugin.Shipping.ByWeight.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.ByWeight\Nop.Plugin.Shipping.ByWeight.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.ByWeight\obj\Debug\Nop.Plugin.Shipping.ByWeight.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.ByWeight\obj\Debug\Nop.Plugin.Shipping.ByWeight.pdb

@@ -5,3 +5,9 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.Custo
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.CustomerRoles\obj\Debug\Nop.Plugin.DiscountRules.CustomerRoles.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.CustomerRoles\obj\Debug\Nop.Plugin.DiscountRules.CustomerRoles.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.CustomerRoles\obj\Debug\Nop.Plugin.DiscountRules.CustomerRoles.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.CustomerRoles\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.CustomerRoles\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.CustomerRoles\Nop.Plugin.DiscountRules.CustomerRoles.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.CustomerRoles\Nop.Plugin.DiscountRules.CustomerRoles.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.CustomerRoles\obj\Debug\Nop.Plugin.DiscountRules.CustomerRoles.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.CustomerRoles\obj\Debug\Nop.Plugin.DiscountRules.CustomerRoles.pdb

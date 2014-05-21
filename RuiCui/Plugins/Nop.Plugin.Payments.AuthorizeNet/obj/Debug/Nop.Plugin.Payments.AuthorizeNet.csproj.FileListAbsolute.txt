@@ -6,3 +6,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeN
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AuthorizeNet\obj\Debug\Nop.Plugin.Payments.AuthorizeNet.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AuthorizeNet\obj\Debug\Nop.Plugin.Payments.AuthorizeNet.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AuthorizeNet\obj\Debug\Nop.Plugin.Payments.AuthorizeNet.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeNet\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeNet\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeNet\Nop.Plugin.Payments.AuthorizeNet.dll.config
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeNet\Nop.Plugin.Payments.AuthorizeNet.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AuthorizeNet\Nop.Plugin.Payments.AuthorizeNet.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AuthorizeNet\obj\Debug\Nop.Plugin.Payments.AuthorizeNet.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AuthorizeNet\obj\Debug\Nop.Plugin.Payments.AuthorizeNet.pdb

@@ -6,3 +6,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDire
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.dll.config
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.PayPalDirect\Nop.Plugin.Payments.PayPalDirect.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.PayPalDirect\obj\Debug\Nop.Plugin.Payments.PayPalDirect.pdb

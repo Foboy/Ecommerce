@@ -5,3 +5,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.FixedRateS
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.FixedRateShipping\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.FixedRateShipping\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.FixedRateShipping\Nop.Plugin.Shipping.FixedRateShipping.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.FixedRateShipping\Nop.Plugin.Shipping.FixedRateShipping.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.FixedRateShipping\obj\Debug\Nop.Plugin.Shipping.FixedRateShipping.pdb

@@ -5,3 +5,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.Manual\Nop
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.Manual\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.Manual\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.Manual\Nop.Plugin.Payments.Manual.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.Manual\Nop.Plugin.Payments.Manual.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.Manual\obj\Debug\Nop.Plugin.Payments.Manual.pdb

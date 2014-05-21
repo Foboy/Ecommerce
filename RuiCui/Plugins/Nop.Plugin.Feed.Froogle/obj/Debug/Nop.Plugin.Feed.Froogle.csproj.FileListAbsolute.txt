@@ -6,3 +6,11 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\Nop.Pl
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.pdb
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\Content\styles.css
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\Nop.Plugin.Feed.Froogle.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Feed.Froogle\Nop.Plugin.Feed.Froogle.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Feed.Froogle\obj\Debug\Nop.Plugin.Feed.Froogle.pdb

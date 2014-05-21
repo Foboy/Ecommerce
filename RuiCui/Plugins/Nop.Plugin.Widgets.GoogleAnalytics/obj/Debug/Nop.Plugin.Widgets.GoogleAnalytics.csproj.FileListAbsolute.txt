@@ -5,3 +5,9 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Widgets.GoogleAnaly
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Widgets.GoogleAnalytics\obj\Debug\Nop.Plugin.Widgets.GoogleAnalytics.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Widgets.GoogleAnalytics\obj\Debug\Nop.Plugin.Widgets.GoogleAnalytics.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Widgets.GoogleAnalytics\obj\Debug\Nop.Plugin.Widgets.GoogleAnalytics.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Widgets.GoogleAnalytics\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Widgets.GoogleAnalytics\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Widgets.GoogleAnalytics\Nop.Plugin.Widgets.GoogleAnalytics.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Widgets.GoogleAnalytics\Nop.Plugin.Widgets.GoogleAnalytics.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Widgets.GoogleAnalytics\obj\Debug\Nop.Plugin.Widgets.GoogleAnalytics.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.Widgets.GoogleAnalytics\obj\Debug\Nop.Plugin.Widgets.GoogleAnalytics.pdb
