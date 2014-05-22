@@ -5,3 +5,9 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.USPS\Nop.P
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.USPS\Description.txt
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.USPS\logo.jpg
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.USPS\Nop.Plugin.Shipping.USPS.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.USPS\Nop.Plugin.Shipping.USPS.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.USPS\obj\Debug\Nop.Plugin.Shipping.USPS.pdb

@@ -5,3 +5,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.FixedRate\Nop.P
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.FixedRate\Description.txt
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.FixedRate\logo.jpg
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.FixedRate\Nop.Plugin.Tax.FixedRate.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Tax.FixedRate\Nop.Plugin.Tax.FixedRate.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Tax.FixedRate\obj\Debug\Nop.Plugin.Tax.FixedRate.pdb

@@ -9,3 +9,14 @@ E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Deb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Description.txt
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Content\facebookstyles.css
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Content\Images\facebook-signing.png
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\logo.jpg
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.dll.config
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.Facebook\Nop.Plugin.ExternalAuth.Facebook.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csproj.App.config
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.Facebook\obj\Debug\Nop.Plugin.ExternalAuth.Facebook.pdb

@@ -5,3 +5,9 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.CanadaPost
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.CanadaPost\obj\Debug\Nop.Plugin.Shipping.CanadaPost.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.CanadaPost\obj\Debug\Nop.Plugin.Shipping.CanadaPost.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.CanadaPost\obj\Debug\Nop.Plugin.Shipping.CanadaPost.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.CanadaPost\Description.txt
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.CanadaPost\logo.jpg
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.CanadaPost\Nop.Plugin.Shipping.CanadaPost.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.CanadaPost\Nop.Plugin.Shipping.CanadaPost.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.CanadaPost\obj\Debug\Nop.Plugin.Shipping.CanadaPost.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.CanadaPost\obj\Debug\Nop.Plugin.Shipping.CanadaPost.pdb

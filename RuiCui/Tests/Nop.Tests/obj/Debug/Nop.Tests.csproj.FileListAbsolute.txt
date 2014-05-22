@@ -6,3 +6,14 @@ E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\nunit.framework.xml
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll.CodeAnalysisLog.xml
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Nop.Tests.dll.lastcodeanalysissucceeded
