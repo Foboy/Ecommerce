@@ -79,3 +79,5 @@
 /RuiCui/Tests/Nop.Core.Tests/bin/Debug
 /RuiCui/Tests/Nop.Tests/bin/Debug
 /RuiCui/Tests/Nop.Services.Tests/bin/Debug
+/RuiCui/Tests/Nop.Data.Tests/obj/Debug
+/RuiCui/Tests/Nop.Web.MVC.Tests/obj/Debug
