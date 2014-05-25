@@ -1,0 +1,13 @@
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Description.txt
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\logo.jpg
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Nop.Plugin.DiscountRules.HasAllProducts.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Nop.Plugin.DiscountRules.HasAllProducts.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.HasAllProducts\obj\Debug\Nop.Plugin.DiscountRules.HasAllProducts.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.HasAllProducts\obj\Debug\Nop.Plugin.DiscountRules.HasAllProducts.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.HasAllProducts\obj\Debug\Nop.Plugin.DiscountRules.HasAllProducts.csprojResolveAssemblyReference.cache
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Description.txt
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\logo.jpg
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Nop.Plugin.DiscountRules.HasAllProducts.dll
+D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\DiscountRules.HasAllProducts\Nop.Plugin.DiscountRules.HasAllProducts.pdb
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.HasAllProducts\obj\Debug\Nop.Plugin.DiscountRules.HasAllProducts.dll
+D:\NET\Ecommerce\RuiCui\Plugins\Nop.Plugin.DiscountRules.HasAllProducts\obj\Debug\Nop.Plugin.DiscountRules.HasAllProducts.pdb
