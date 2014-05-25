@@ -70,3 +70,12 @@
 /RuiCui/Libraries/Nop.Data/obj
 /RuiCui/Libraries/Nop.Services/bin
 /RuiCui/Libraries/Nop.Services/obj
+/RuiCui/Tests/Nop.Tests/bin
+/RuiCui/Tests/Nop.Services.Tests/bin
+/RuiCui/Tests/Nop.Data.Tests/bin
+/RuiCui/Tests/Nop.Core.Tests/bin
+/RuiCui/Presentation/Nop.Web/Plugins/bin
+/RuiCui/Presentation/Nop.Web/Administration/Bin
+/RuiCui/Tests/Nop.Core.Tests/bin/Debug
+/RuiCui/Tests/Nop.Tests/bin/Debug
+/RuiCui/Tests/Nop.Services.Tests/bin/Debug
