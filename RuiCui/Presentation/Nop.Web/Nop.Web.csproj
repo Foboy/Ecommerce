@@ -1273,7 +1273,7 @@
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unlink.gif" />
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unordered.gif" />
     <Content Include="Themes\DefaultTheme\Content\css\base.css" />
-    <Content Include="Themes\DefaultTheme\Content\css\index.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\main.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-x.png" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-y.png" />
@@ -2208,7 +2208,7 @@
     <Content Include="Themes\DefaultTheme\Content\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Themes\DefaultTheme\Content\tinymce\themes\modern\theme.min.js" />
     <Content Include="Themes\DefaultTheme\Content\tinymce\tinymce.min.js" />
-    <Content Include="Themes\DefaultTheme\u98.jpg" />
+    <Content Include="Themes\DefaultTheme\preview.jpg" />
     <Content Include="Themes\Mobile\Content\jquery.mobile-1.3.2.css" />
     <Content Include="Themes\Mobile\Content\jquery.mobile-1.3.2.min.css" />
     <Content Include="Themes\Mobile\Content\jquery.mobile.structure-1.3.2.css" />

@@ -4,7 +4,6 @@
 @{
     var displayMiniProfiler = CommonHelper.GetTrustLevel() >= AspNetHostingPermissionLevel.High &&
         EngineContext.Current.Resolve<Nop.Core.Domain.StoreInformationSettings>().DisplayMiniProfilerInPublicStore;
-
     //resources
     Html.AppendCssFileParts("~/Content/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
 
@@ -15,6 +14,11 @@
     Html.AppendScriptParts("~/Scripts/jquery.validate.unobtrusive.min.js");
     Html.AppendScriptParts("~/Scripts/jquery.validate.min.js");
     Html.AppendScriptParts("~/Scripts/jquery-1.10.2.min.js");
+    //resources
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/base.css");
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/main.css");
+
+    Html.AppendScriptParts("~/Themes/DefaultTheme/Content/js/jquery.js");
 
     //X-UA-Compatible tag
     var commonSettings = EngineContext.Current.Resolve<CommonSettings>();
@@ -46,12 +50,67 @@
     {
         @StackExchange.Profiling.MiniProfiler.RenderIncludes()
     }
-    <!--Powered by nopCommerce - http://www.nopCommerce.com-->
-    <!--Copyright (c) 2008-2013-->
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    var navCategory = "toggled";
+    /*]]>*/
+    </script>
 </head>
 <body>
     @RenderBody()
     @Html.NopCssFiles(this.Url, ResourceLocation.Foot)
     @Html.NopScripts(this.Url, ResourceLocation.Foot)
+    <script src="~/Themes/DefaultTheme/Content/js/base.js"></script>
+    <script>
+    XIAOMI.namespace("GLOBAL_CONFIG,GLOBAL_VAR");
+    XIAOMI.GLOBAL_CONFIG = {
+        orderSite: "http://order.mi.com",
+        wwwSite: "http://www.mi.com",
+        damiaoSite: "http://tp.hd.mi.com/",
+        logoutUrl: "http://order.mi.com/site/logout",
+        quickLoginUrl: "https://account.xiaomi.com/pass/static/login.html",
+        //图片上传路径地址
+        uploadUrl: "http://viewapi.xiaomi.com",
+        //图片远程存储地址
+        imgSaveUrl: "http://img06.mifile.cn/v1/MI_574AF0887F5D0",
+        //评论查询地址
+        commentUrl: "http://test.comment.com",
+        //评论Api地址
+        commentApiUrl: "http://comment.order.mi.com",
+        //侧边栏数据接口
+        sideBarApiUrl: "http://prs.www.xiaomi.com"
+    }
+    XIAOMI.app.setLoginInfo.orderUrl = XIAOMI.GLOBAL_CONFIG.orderSite + '/user/order';
+    XIAOMI.app.setLoginInfo.logoutUrl = XIAOMI.GLOBAL_CONFIG.logoutUrl;
+    XIAOMI.app.setLoginInfo.init(XIAOMI.GLOBAL_CONFIG);
+
+    //全站需要直接执行的函数
+    jQuery(function ($) {
+        var oLogin = new XIAOMI.app.miniLogin();
+        oLogin.init();
+
+        // 搜索
+        XIAOMI.app.search.init();
+
+        // miniCart
+        XIAOMI.app.miniCart.init();
+        // 更新miniCart数量
+        XIAOMI.app.updateMiniCart();
+
+        // 商品分类导航
+        XIAOMI.app.navMenus.init($('.J_menuNavMain'), {
+            menuSelector: '.nav-main-item',
+            submenuSelector: '.nav-main-children',
+            effect: 'slide',
+            triggerEvent: 'hover'
+        });
+        XIAOMI.app.navCategory.init();
+
+        // 绑定尾部公共事件
+        XIAOMI.app.footer.init();
+    });
+    </script>
+
+    <script src="~/Themes/DefaultTheme/Content/js/index.js"></script>
 </body>
 </html>

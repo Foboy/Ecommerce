@@ -5,7 +5,6 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.Fedex\Nop.
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.Fedex\Nop.Plugin.Shipping.Fedex.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.Fedex\obj\Debug\Nop.Plugin.Shipping.Fedex.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.Fedex\obj\Debug\Nop.Plugin.Shipping.Fedex.pdb
-E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Shipping.Fedex\obj\Debug\Nop.Plugin.Shipping.Fedex.csprojResolveAssemblyReference.cache
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.Fedex\Description.txt
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.Fedex\logo.jpg
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Shipping.Fedex\Nop.Plugin.Shipping.Fedex.dll.config
