@@ -1,0 +1,35 @@
+﻿@model HeaderLinksModel
+@using Nop.Web.Models.Common;
+@Html.Widget("header_links_before")
+@if (Model.IsAuthenticated)
+{
+    <a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a><span class="sep">|</span>
+    <a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
+}
+else
+{
+    <a href="@Url.RouteUrl("Register")" data-needlogin="true">@T("Account.Register")</a><span class="sep">|</span>
+    <a href="@Url.RouteUrl("Login")" target="_blank">@T("Account.Login")</a>
+}
+@if (Model.AllowPrivateMessages)
+{
+    <span class="sep">|</span><a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">@T("PrivateMessages.Inbox")</a>
+    @Model.UnreadPrivateMessages
+
+    if (!string.IsNullOrEmpty(Model.AlertMessage))
+    {
+        <script type="text/javascript">
+            $(document).ready(function () {
+                displayPopupNotification('@Html.Raw(HttpUtility.JavaScriptStringEncode(Model.AlertMessage))', 'success', false);
+            });
+        </script>
+    }
+}
+@if (Model.WishlistEnabled)
+{
+    <span class="sep">|</span><a href="@Url.RouteUrl("Wishlist")">
+        <span>@T("Wishlist")</span>
+        <span>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+    </a>
+}
+@Html.Widget("header_links_after")
