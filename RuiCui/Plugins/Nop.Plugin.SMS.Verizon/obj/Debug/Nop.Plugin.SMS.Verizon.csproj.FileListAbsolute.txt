@@ -4,7 +4,6 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\SMS.Verizon\Nop.Plu
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\SMS.Verizon\Nop.Plugin.SMS.Verizon.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.SMS.Verizon\obj\Debug\Nop.Plugin.SMS.Verizon.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.SMS.Verizon\obj\Debug\Nop.Plugin.SMS.Verizon.pdb
-E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.SMS.Verizon\obj\Debug\Nop.Plugin.SMS.Verizon.csprojResolveAssemblyReference.cache
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\SMS.Verizon\Description.txt
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\SMS.Verizon\logo.jpg
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\SMS.Verizon\Nop.Plugin.SMS.Verizon.dll

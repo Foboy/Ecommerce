@@ -1289,8 +1289,8 @@ a {
             display: block;
             text-align: center;
             background-repeat: no-repeat;
-            background-image: url('http://img03.mifile.cn/webfile/images/2014/cn/icon/site-logo.png');
-            background-image: -webkit-image-set(url('http://img03.mifile.cn/webfile/images/2014/cn/icon/site-logo.png') 1x, url('http://img03.mifile.cn/webfile/images/2014/cn/icon/site-logo_2x.png') 2x);
+            background-image: url('/Themes/DefaultTheme/Content/Images/site-logo.jpg');
+            background-image: -webkit-image-set(url('/Themes/DefaultTheme/Content/Images/site-logo.jpg') 1x, url('/Themes/DefaultTheme/Content/Images/site-logo.jpg') 2x);
         }
 
             .site-header .site-logo .logo i {

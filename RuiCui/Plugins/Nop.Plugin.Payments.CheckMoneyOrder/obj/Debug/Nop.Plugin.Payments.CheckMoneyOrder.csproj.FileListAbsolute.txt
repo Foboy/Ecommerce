@@ -4,7 +4,6 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.CheckMoney
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.CheckMoneyOrder\Nop.Plugin.Payments.CheckMoneyOrder.pdb
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.CheckMoneyOrder\obj\Debug\Nop.Plugin.Payments.CheckMoneyOrder.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.CheckMoneyOrder\obj\Debug\Nop.Plugin.Payments.CheckMoneyOrder.pdb
-E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.CheckMoneyOrder\obj\Debug\Nop.Plugin.Payments.CheckMoneyOrder.csprojResolveAssemblyReference.cache
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.CheckMoneyOrder\Description.txt
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.CheckMoneyOrder\logo.jpg
 D:\NET\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.CheckMoneyOrder\Nop.Plugin.Payments.CheckMoneyOrder.dll

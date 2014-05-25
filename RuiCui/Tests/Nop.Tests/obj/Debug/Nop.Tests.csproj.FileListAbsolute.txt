@@ -15,3 +15,4 @@ D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\bin\Debug\Rhino.Mocks.xml
 D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.csprojResolveAssemblyReference.cache
 D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.dll
 D:\NET\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Tests\Nop.Tests\obj\Debug\Nop.Tests.csprojResolveAssemblyReference.cache
