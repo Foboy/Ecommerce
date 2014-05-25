@@ -1370,11 +1370,11 @@ a {
             width: 104px;
             height: 20px;
             padding: 9px 10px;
-            border: 1px solid #ffdb3d;
+            border: 1px solid #F68B1F;
             line-height: 20px;
             text-align: center;
             color: #333;
-            background: #ffdb3d;
+            background: #F68B1F;
         }
 
             .site-header .header-info .mini-cart .iconfont {
@@ -1621,7 +1621,7 @@ a {
         position: relative;
         clear: both;
         height: 50px;
-        background: #404144;
+        background: #826F5E;
     }
 
         .site-header .header-nav .nav-main {
@@ -1639,7 +1639,7 @@ a {
             float: left;
             width: 248px;
             height: 50px;
-            background: #ff4a00;
+            background: #F68B1F;
         }
 
         .site-header .header-nav .btn-category-list {
