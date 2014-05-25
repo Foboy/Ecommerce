@@ -15,10 +15,10 @@
         </div>
         <div class="options">
             <a href="@Url.Action("Create")" class="k-button">@T("Admin.Common.AddNew")</a>
-            <a href="@Url.Action("ExportXmlAll")" class="k-button">@T("Admin.Common.ExportToXml.All")</a>
+            @*<a href="@Url.Action("ExportXmlAll")" class="k-button">@T("Admin.Common.ExportToXml.All")</a>
             <input type="button" id="exportxml-selected" class="k-button" value="@T("Admin.Common.ExportToXml.Selected")" />
             <a href="@Url.Action("ExportExcelAll")" class="k-button">@T("Admin.Common.ExportToExcel.All")</a>
-            <input type="button" id="exportexcel-selected" class="k-button" value="@T("Admin.Common.ExportToExcel.Selected")" />
+            <input type="button" id="exportexcel-selected" class="k-button" value="@T("Admin.Common.ExportToExcel.Selected")" />*@
         </div>
     </div>
     <table width="100%">
@@ -29,6 +29,11 @@
             <td class="adminData">
                 @foreach (var customerRole in Model.AvailableCustomerRoles)
                 {
+                    if(customerRole.Id == 1)
+                    {
+                        continue;
+                    }
+                       
                     <input type="checkbox" name="SearchCustomerRoleIds" value="@customerRole.Id"
                 @if (Model.SearchCustomerRoleIds != null && Model.SearchCustomerRoleIds.Contains(customerRole.Id))
                 {
@@ -66,14 +71,14 @@
                 @Html.EditorFor(model => model.SearchFirstName)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchLastName):
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.SearchLastName)
             </td>
-        </tr>
+        </tr>*@
         @if (Model.DateOfBirthEnabled)
         {
             <tr>

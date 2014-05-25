@@ -25,10 +25,10 @@
             <li @Html.RenderSelectedTabIndex(5, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.CurrentWishlist")
             </li>
-            <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
+            @*<li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.ActivityLog")
-            </li>
-            <li @Html.RenderSelectedTabIndex(7, GetSelectedTabIndex())>
+            </li>*@
+            <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.Impersonate")
             </li>
         }
@@ -293,7 +293,7 @@
                 @Html.ValidationMessageFor(model => model.FirstName)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.LastName):
             </td>
@@ -301,7 +301,7 @@
                 @Html.EditorFor(model => model.LastName)
                 @Html.ValidationMessageFor(model => model.LastName)
             </td>
-        </tr>
+        </tr>*@
         @if (Model.DateOfBirthEnabled)
         {
             <tr>
@@ -433,7 +433,7 @@
                 @Html.ValidationMessageFor(model => model.AdminComment)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.IsTaxExempt):
             </td>
@@ -441,7 +441,7 @@
                 @Html.EditorFor(model => model.IsTaxExempt)
                 @Html.ValidationMessageFor(model => model.IsTaxExempt)
             </td>
-        </tr>
+        </tr>*@
         @if (Model.AllowCustomersToSetTimeZone)
         {
             <tr>
@@ -542,6 +542,10 @@
         {
             foreach (var customerRole in Model.AvailableCustomerRoles)
             {
+                if (customerRole.Id == 1)
+                {
+                    continue; 
+                }
     <input type="checkbox" name="SelectedCustomerRoleIds" value="@customerRole.Id"
                 @if (Model.SelectedCustomerRoleIds != null && Model.SelectedCustomerRoleIds.Contains(customerRole.Id))
                 {
