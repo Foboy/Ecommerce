@@ -6,18 +6,16 @@
         <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.Info")
         </li>
-        <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
-            @T("Admin.Common.SEO")
-        </li>
+
         <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.Pictures")
         </li>
         <li @Html.RenderSelectedTabIndex(3, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Categories")
+            规格属性分类
         </li>
-        <li @Html.RenderSelectedTabIndex(4, GetSelectedTabIndex())>
+        @*<li @Html.RenderSelectedTabIndex(4, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.Manufacturers")
-        </li>
+        </li>*@
         <li @Html.RenderSelectedTabIndex(5, GetSelectedTabIndex())>
             @T("Admin.Catalog.Products.SpecificationAttributes")
         </li>
@@ -55,18 +53,16 @@
     <div>
         @TabInfo()
     </div>
-    <div>
-        @TabSeo()
-    </div>
+
     <div>
         @TabPictures()
     </div>
     <div>
         @TabCategories()
     </div>
-    <div>
+    @*<div>
         @TabManufacturers()
-    </div>
+    </div>*@
     <div>
         @TabSpecificationAttributes()
     </div>
@@ -128,7 +124,7 @@
 <input type="hidden" id="selected-tab-index" name="selected-tab-index" value="@(GetSelectedTabIndex())">
 
 @helper TabInfo()
-{ 
+{
     @Html.Partial("_CreateOrUpdate.Info", Model)
 }
 @helper TabSeo()

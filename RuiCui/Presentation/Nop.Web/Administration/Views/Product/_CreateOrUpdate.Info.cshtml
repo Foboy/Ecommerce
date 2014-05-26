@@ -403,7 +403,7 @@
             @Html.ValidationMessageFor(model => model.Sku)
         </td>
     </tr>
-    <tr>
+    @*<tr>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.ManufacturerPartNumber):
         </td>
@@ -420,7 +420,7 @@
             @Html.EditorFor(model => model.Gtin)
             @Html.ValidationMessageFor(model => model.Gtin)
         </td>
-    </tr>
+    </tr>*@
 </table>
 <table class="adminContent" id="group-prices">
     <tr class="adminSeparator">
@@ -527,7 +527,7 @@
             @Html.ValidationMessageFor(model => model.CallForPrice)
         </td>
     </tr>
-    <tr>
+    @*<tr>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.CustomerEntersPrice):
         </td>
@@ -553,9 +553,9 @@
             @Html.EditorFor(model => model.MaximumCustomerEnteredPrice) [@Model.PrimaryStoreCurrencyCode]
             @Html.ValidationMessageFor(model => model.MaximumCustomerEnteredPrice)
         </td>
-    </tr>
+    </tr>*@
 </table>
-<table class="adminContent" id="group-required-other-products">
+@*<table class="adminContent" id="group-required-other-products">
     <tr class="adminSeparator">
         <td colspan="2">
             <hr />
@@ -588,8 +588,8 @@
             @Html.ValidationMessageFor(model => model.AutomaticallyAddRequiredProducts)
         </td>
     </tr>
-</table>
-<table class="adminContent" id="group-giftcard">
+</table>*@
+@*<table class="adminContent" id="group-giftcard">
     <tr class="adminSeparator">
         <td colspan="2">
             <hr />
@@ -753,7 +753,7 @@
             @Html.ValidationMessageFor(model => model.RecurringTotalCycles)
         </td>
     </tr>
-</table>
+</table>*@
 <table class="adminContent" id="group-shipping">
     <tr class="adminSeparator">
         <td colspan="2">
@@ -842,7 +842,7 @@
         </td>
     </tr>
 </table>
-<table class="adminContent" id="group-tax">
+@*<table class="adminContent" id="group-tax">
     <tr class="adminSeparator">
         <td colspan="2">
             <hr />
@@ -866,7 +866,7 @@
             @Html.ValidationMessageFor(model => model.TaxCategoryId)
         </td>
     </tr>
-</table>
+</table>*@
 <table class="adminContent" id="group-inventory">
     <tr class="adminSeparator">
         <td colspan="2">
@@ -988,6 +988,49 @@
         <td class="adminData">
             @Html.EditorFor(model => model.AllowAddingOnlyExistingAttributeCombinations)
             @Html.ValidationMessageFor(model => model.AllowAddingOnlyExistingAttributeCombinations)
+        </td>
+    </tr>
+</table>
+<table class="adminContent">
+    <tr class="adminSeparator">
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.MetaKeywords):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.MetaKeywords)
+            @Html.ValidationMessageFor(model => model.MetaKeywords)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.MetaDescription):
+        </td>
+        <td class="adminData">
+            @Html.TextAreaFor(x => x.MetaDescription)
+            @Html.ValidationMessageFor(model => model.MetaDescription)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.MetaTitle):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.MetaTitle)
+            @Html.ValidationMessageFor(model => model.MetaTitle)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            @Html.NopLabelFor(model => model.SeName):
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(x => x.SeName)
+            @Html.ValidationMessageFor(model => model.SeName)
         </td>
     </tr>
 </table>
