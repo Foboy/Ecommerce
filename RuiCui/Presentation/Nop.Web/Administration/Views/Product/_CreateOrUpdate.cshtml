@@ -1,127 +1,145 @@
 ﻿@model ProductModel
 @Html.ValidationSummary(false)
 @Html.HiddenFor(model => model.Id)
-<div id="product-edit">
-    <ul>
-        <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Info")
-        </li>
 
-        <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Pictures")
-        </li>
-        <li @Html.RenderSelectedTabIndex(3, GetSelectedTabIndex())>
-            规格属性分类
-        </li>
-        @*<li @Html.RenderSelectedTabIndex(4, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Manufacturers")
-        </li>*@
-        <li @Html.RenderSelectedTabIndex(5, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.SpecificationAttributes")
-        </li>
-        <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.ProductVariantAttributes")
-        </li>
-        <li @Html.RenderSelectedTabIndex(7, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.TierPrices")
-        </li>
-        <li @Html.RenderSelectedTabIndex(8, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Discounts")
-        </li>
-        <li @Html.RenderSelectedTabIndex(9, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Acl")
-        </li>
-        <li @Html.RenderSelectedTabIndex(10, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.Stores")
-        </li>
-        <li @Html.RenderSelectedTabIndex(11, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.RelatedProducts")
-        </li>
-        <li @Html.RenderSelectedTabIndex(12, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.CrossSells")
-        </li>
-        <li @Html.RenderSelectedTabIndex(13, GetSelectedTabIndex())>
-            @T("Admin.Catalog.Products.AssociatedProducts")
-        </li>
-        @if (Model.Id > 0)
-        {
-            <li @Html.RenderSelectedTabIndex(14, GetSelectedTabIndex())>
-                @T("Admin.Catalog.Products.PurchasedWithOrders")
-            </li>
-        }
-    </ul>
-    <div>
-        @TabInfo()
-    </div>
 
-    <div>
-        @TabPictures()
+
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    基本信息
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabInfo()
+          
+            </div>
+        </div>
     </div>
-    <div>
-        @TabCategories()
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  商品图片
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabPictures()
+             </div>
+        </div>
     </div>
-    @*<div>
-        @TabManufacturers()
-    </div>*@
-    <div>
-        @TabSpecificationAttributes()
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                  规格参数分类
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabCategories()
+                <hr />
+                @TabSpecificationAttributes()
+                <hr />
+                @TabProductAttributes()
+            </div>
+        </div>
     </div>
-    <div>
-        @TabProductAttributes()
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                    关联商品
+                </a>
+            </h4>
+        </div>
+        <div id="collapse4" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabRelatedProducts()
+                <hr/>
+                @TabCrossSells()
+                <hr />
+                @TabAssociatedProducts()
+             </div>
+        </div>
     </div>
-    <div>
-        @TabTierPrices()
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                    权限控制
+                </a>
+            </h4>
+        </div>
+        <div id="collapse5" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabAcl()
+                <hr />
+                @TabStores()
+            </div>
+        </div>
     </div>
-    <div>
-        @TabDiscounts()
-    </div>
-    <div>
-        @TabAcl()
-    </div>
-    <div>
-        @TabStores()
-    </div>
-    <div>
-        @TabRelatedProducts()
-    </div>
-    <div>
-        @TabCrossSells()
-    </div>
-    <div>
-        @TabAssociatedProducts()
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                    折扣价格
+                </a>
+            </h4>
+        </div>
+        <div id="collapse6" class="panel-collapse collapse in">
+            <div class="panel-body">
+                @TabTierPrices()
+                <hr />
+                @TabDiscounts()
+            </div>
+        </div>
     </div>
     @if (Model.Id > 0)
     {
-        <div>
-            @TabPurchasedWithOrders()
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseorder">
+                    权限控制
+                </a>
+            </h4>
         </div>
+            <div id="collapseorder" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    @TabPurchasedWithOrders()
+                </div>
+            </div>
+    </div>
+        
     }
 </div>
+
+
+
 <script>
     $(document).ready(function () {
-        $("#product-edit").kendoTabStrip({
-            animation: {
-                open: {
-                    effects: "fadeIn"
-                }
-            },
-            select: tabstrip_on_tab_select
-        });
+        //$("#product-edit").kendoTabStrip({
+        //    animation: {
+        //        open: {
+        //            effects: "fadeIn"
+        //        }
+        //    },
+        //    select: tabstrip_on_tab_select
+        //});
+        $('.collapse').collapse();
     });
 </script>
 
-@{
-    //custom tabs
-    var eventMessage = new AdminTabStripCreated(this.Html, "product-edit");
-    EngineContext.Current.Resolve<IEventPublisher>().Publish(eventMessage);
-    foreach (var eventBlock in eventMessage.BlocksToRender)
-    {
-        @eventBlock
-    }
-}
 
-@*save selected tab index*@
-<input type="hidden" id="selected-tab-index" name="selected-tab-index" value="@(GetSelectedTabIndex())">
+
 
 @helper TabInfo()
 {
