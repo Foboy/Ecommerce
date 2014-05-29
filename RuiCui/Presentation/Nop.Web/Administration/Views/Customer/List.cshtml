@@ -79,7 +79,7 @@
                 @Html.EditorFor(model => model.SearchLastName)
             </td>
         </tr>*@
-        @if (Model.DateOfBirthEnabled)
+        @*@if (Model.DateOfBirthEnabled)
         {
             <tr>
                 <td class="adminTitle">
@@ -104,7 +104,7 @@
                     @Html.DropDownListFor(model => model.SearchDayOfBirth, dayOfBirthValues)
                 </td>
             </tr>
-        }
+        }*@
         
         @if (Model.CompanyEnabled)
         {
@@ -128,7 +128,7 @@
                 </td>
             </tr>
         }
-        @if (Model.ZipPostalCodeEnabled)
+        @*@if (Model.ZipPostalCodeEnabled)
         {
             <tr>
                 <td class="adminTitle">
@@ -138,7 +138,7 @@
                     @Html.EditorFor(model => model.SearchZipPostalCode)
                 </td>
             </tr>
-        } 
+        }*@ 
         <tr>
             <td colspan="2">
                 <input type="button" id="search-customers" class="k-button" value="@T("Admin.Common.Search")" />
