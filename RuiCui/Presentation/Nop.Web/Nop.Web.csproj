@@ -3384,6 +3384,7 @@
     <Content Include="Themes\DefaultTheme\Views\Web.config" />
     <Content Include="Themes\DefaultTheme\Views\Widget\WidgetsByZone.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\_ViewStart.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Shared\_ColumnsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

@@ -1,6 +1,6 @@
 ﻿@model CategoryModel
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_ColumnsList.cshtml";
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
     Html.AddMetaDescriptionParts(Model.MetaDescription);
     Html.AddMetaKeywordParts(Model.MetaKeywords);
@@ -20,7 +20,7 @@
 @using Nop.Web.Models.Catalog;
 @using Nop.Web.Extensions;
 @*category breadcrumb*@
-@if (Model.DisplayCategoryBreadcrumb)
+@if (false && Model.DisplayCategoryBreadcrumb)
 {
     <div class="breadcrumb">
         <ul>
@@ -45,6 +45,42 @@
     </div>
     @Html.Widget("categorydetails_after_breadcrumb")
 }
+<div class="box-hd">
+    <div class="filter-lists">
+        <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
+            <dd>
+                <ul id="typeOrder" class="clearfix">
+                    <li class="current first"><a href="http://www.mi.com/accessories/2-0-0-0-1-0" rel="nofollow">推荐</a></li>
+                    <li><a href="http://www.mi.com/accessories/2-0-1-0-1-0" rel="nofollow">最新</a></li>
+                    <li><a href="http://www.mi.com/accessories/2-0-10-0-1-0" rel="nofollow">价格从高到低</a></li>
+                    <li><a href="http://www.mi.com/accessories/2-0-8-0-1-0" rel="nofollow">价格从低到高</a></li>
+                    <li><a href="http://www.mi.com/accessories/2-0-3-0-1-0" rel="nofollow">关注度</a></li>
+                </ul>
+            </dd>
+        </dl>
+
+    </div>
+    <div class="more">
+        <div class="filter-stock">
+            <a href="http://www.mi.com/accessories/2-0-0-0-1-1"><i class="icon-check iconfont ">&#xe626;</i>仅显示特惠商品</a>&nbsp;&nbsp;
+            <a href="http://www.mi.com/accessories/2-0-0-1-1-0"><i class="icon-check iconfont ">&#xe626;</i>仅显示有货商品</a>
+        </div>
+    </div>
+</div>
+<div class="xm-goods-list-wrap">
+
+    <ul class="xm-goods-list clearfix">
+        @foreach (var product in Model.Products)
+        {
+        <li class="item-box">
+            @Html.Partial("_ProductBox", product)
+        </li>
+        }
+    </ul>
+</div>
+<div class="xm-pagenavi">
+    @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+</div>
 <div class="page category-page">
     <div class="page-title">
         <h1>@Model.Name</h1>
@@ -170,7 +206,7 @@
             }
         }
         <div class="pager">
-            @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
+            
         </div>
         @Html.Widget("categorydetails_bottom")
     </div>

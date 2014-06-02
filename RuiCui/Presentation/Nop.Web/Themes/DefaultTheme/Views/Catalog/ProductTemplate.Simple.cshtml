@@ -3,7 +3,7 @@
 @using Nop.Core.Infrastructure;
 @using Nop.Web.Models.Catalog;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title, meta
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
@@ -19,6 +19,252 @@
 }
 <!--product breadcrumb-->
 @Html.Action("ProductBreadcrumb", "Catalog", new { productId = Model.Id })
+<div class="goods-detail-info row clearfix">
+    <div class="span14 J_mi_goodsPic_block">
+        <div class="goods-pic-box  " id="J_mi_goodsPicBox">
+            <div class="goods-big-pic">
+                <img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=430&height=430" class="J_goodsBigPic" id="J_BigPic" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=800&height=800 2x">
+            </div>
+            <div class="goods-small-pic clearfix">
+                <ul id="goodsPicList">
+                    <li class="current"><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=138&height=138 2x"></li>
+                    <li class=""><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=138&height=138 2x"></li>
+                    <li class=""><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=138&height=138 2x"></li>
+                </ul>
+            </div>
+
+            <span class="icon-slides icon-slides-prev" title="上一张" id="goodsPicPrev">上一张</span>
+            <span class="icon-slides icon-slides-next" title="下一张" id="goodsPicNext">下一张</span>
+        </div>
+    </div>
+    <div class="span6 goods-info-rightbox">
+        <dl class="goods-info-box ">
+            <dt class="goods-info-head">
+                <dl>
+                    <dt id="goodsName">手机支架 小蜜蜂</dt>
+                    <dd class="goods-info-head-price clearfix">
+                        <div class="left-part">
+                            <b class="J_mi_goodsPrice">19</b><i>&nbsp;元</i>
+                            <del><span class="J_mi_marketPrice"> </span></del>
+                        </div>
+                        <div class="right-part">
+
+                        </div>
+
+                    </dd>
+                    <dd class="goods-info-head-userfaq">
+                        <ul>
+
+
+                            <li class="mobile">适用于所有手机</li>
+                            <li class="faq J_pro_related_btns">
+                                <span class="icon-stat icon-stat-5 J_mi_goods_starNum" data-class="icon-stat-5"></span>
+                                <a href="#goodsComment">26085人评价</a>
+                                <span class="separator">|</span>
+                                <a href="#goodsFaq">1个提问</a>
+                            </li>
+
+                            <!--特殊提示-->
+                            <!--特殊提示-->
+
+
+
+                        </ul>
+                    </dd>
+
+
+
+
+                    <dd class="goods-info-head-colors clearfix">
+                        <span>可选颜色：</span>
+                        <div class="clearfix">
+                            <div class="colorli">
+                                <a href="http://www.mi.com/item/1134900195 " class="" title="路障锥">
+                                    <img class="square" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1R9ZvB7xT1RXrhCrK.jpg?width=25&height=25" />
+                                </a>
+                            </div>
+
+                            <div class="colorli">
+                                <a href="http://www.mi.com/item/1134900194 " class="coloractive" title="小蜜蜂">
+                                    <img class="square" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1dSJvB4ET1RXrhCrK.jpg?width=25&height=25" />
+                                </a>
+                            </div>
+
+                        </div>
+                    </dd>
+
+
+                    <dd class="goods-info-head-cart" id="goodsDetailBtnBox">
+                        <a href="http://order.mi.com/cart/add/2134900203" id="goodsDetailAddCartBtn" class="btn btn-primary goods-add-cart-btn" data-disabled="false" data-gid="2134900203" data-package="false">
+                            <i class="iconfont ">&#xe624;</i>加入购物车
+                        </a>
+                        <a id="goodsDetailCollectBtn" data-isfavorite="false" class="btn btn-dake  goods-collect-btn">
+                            <i class="iconfont">&#xe60a;</i>
+                        </a>
+                    </dd>
+
+
+                </dl>
+            </dt>
+            <dd class="goods-info-head-intro">
+            </dd>
+            <dd class="goods-info-foot">
+                <span class="iconfont">&#xe602;</span>
+                <a href="http://www.mi.com/accessories/5">查看更多手机支架</a>
+            </dd>
+        </dl>
+    </div>
+
+</div>
+<div class="row goods-detail-desc">
+    <!--S left side-->
+    <div class="span5">
+
+        <div class="xm-box goods-recent" id="goodsRectScan">
+
+        </div>
+        <div class="xm-box goods-alsobuy xm-goods-side-list" id="goodsAlsoBuy">
+
+
+
+        </div>
+    </div>
+    <!--E left side-->
+    <div class="span15">
+        <!-- 商品描述 -->
+        <div class="xm-box  goods-detail-box " id="goodsDetail">
+            <div class="box-hd">
+                <ul class="items clearfix J_pro_related_btns">
+                    <li class="current">
+                        <a href="#goodsDesc">详细信息</a>
+                    </li>
+                    <li>
+                        <a href="#goodsParam">规格参数</a>
+                    </li>
+                    <li>
+                        <a href="#goodsComment">评价晒单</a>
+                    </li>
+                    <li>
+                        <a href="#goodsFaq">商品提问</a>
+                    </li>
+
+                    <li>
+                        <a href="#serQue">售后服务</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-bd" id="goodsDesc">
+                <p><img alt="" src="http://img01.mifile.cn/images/accs/xmf_01.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_02.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_03.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_04.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_05.jpg"><img alt="" src="http://p.www.xiaomi.com/images/1202/xinluzhang02.jpg"><img alt="" src="http://p.www.xiaomi.com/images/1202/xinliuzhang03.jpg" style="width: 720px; height: 871px; "><img alt="" src="http://p.www.xiaomi.com/images/1202/xinluzhang04.jpg"></p>
+            </div>
+        </div>
+        <!-- 商品描述 END-->
+        <!--S 规格-->
+        <div class="xm-box goods-detail-standard" id="goodsParam">
+
+            <div class="box-hd">
+                <div class="title">
+                    规格参数
+                </div>
+
+            </div>
+            <div class="box-bd">
+                <table>
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>商品编号</th>
+                            <td>1134900194</td>
+                            <th class="th1"></th>
+                            <td class="td1"></td>
+                        </tr>
+                        <tr>
+                            <th>颜色</th>
+                            <td>小蜜蜂</td>
+                            <th class="th1"></th>
+                            <td class="td1"></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--E 规格-->
+        <!--S 商品评论 -->
+        <div class="xm-box goods-detail-comment " id="goodsComment">
+            <div class="box-hd">
+                <div class="title">
+                    用户评价
+                </div>
+                <div class="more J_comment_order">
+                    <span class="item active " data-order="1">最有用</span>
+                    <span class="separator">|</span>
+                    <span class="item" data-order="0">最新</span>
+                </div>
+            </div>
+            <div class="box-bd" id="J_goods_detail_comment">
+
+            </div>
+        </div>
+        <!--E 商品评论 -->
+        <!-- FAQ  -->
+        <div class="xm-box goods-detail-faq" id="goodsFaq">
+            <div class="box-hd">
+                <div class="title">产品提问</div>
+                <div class="more J_question_all_link">
+                    <a href="/comment/askList/gid/1134900194" class="more-link" target="_blank">查看全部 &gt;</a>
+                </div>
+            </div>
+            <div class="box-bd">
+                <ul class="faq-list J_mi_question"></ul>
+                <div class="faq-input">
+                    <span class="iconfont">&#xe633;</span>
+                    我要提问<input type="text" class="input-content J_mi_ask_content" placeholder="您的提问将会发给已经购买者、小米官方客服和产品经理">
+                    <a href="" class="btn btn-primary ques-btn J_mi_ask">向购买者提问</a>
+                </div>
+
+            </div>
+        </div>
+        <!-- FAQ END -->
+        <!-- 常见问题 -->
+        <div class="common-question">
+            <div class="question-hd clearfix">
+                <div class="title_a">常见问题</div>
+                <div class="title_b"><a href="http://www.mi.com/c/service/shouhou/#q" id="serQue">售后服务</a></div>
+            </div>
+            <div class="question-bd">
+                <ul class="content">
+                    <li>
+                        <h3>如何挑选商品？</h3>
+                        <p>点击页面上方“加入购物车”按钮或页面下拉时顶部导航上的“加入购物车”按钮将商品加入购物车，再点击页面右上角的“购物车”前往购物车页面进行结算。</p>
+                    </li>
+                    <li>
+                        <h3>收藏商品功能</h3>
+                        <p>点击“收藏按钮”后，按钮中的白心亮起,背景由黑色变为黄色代表收藏成功，再次点击取消收藏。您可在“个人中心”中的我的收藏查看所有收藏商品。</p>
+                    </li>
+                    <li>
+                        <h3>维修网点销售配件吗？</h3>
+                        <p>所有授权维修网点具备维修手机标配里配件的功能，部分指定授权维修网点可销售标配及部分官网配件，具体销售的产品及价格请以修网点信息为准。</p>
+                    </li>
+                    <li>
+                        <h3>退换货办理流程</h3>
+                        <p>您可拨打小米客服中心400-100-5678与客服人员沟通，或登录小米网“我的订单” ->“订单详情”下方点击“申请售后服务”并填写相应信息，小米看到您的申请，会安排工作人员与您进行退换货质量确认并办理相关事宜.</p>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!-- 常见问题 END-->
+        <!--<div class="guess-u-like">
+             <h2>猜你喜欢</h2>
+            <ul class="goods-list xm-goods-list clearfix" id="guess-u-like-box">
+            </ul>
+        </div> -->
+
+
+    </div>
+</div>
 <div class="page product-details-page">
     <div class="page-body">
         @Html.Widget("productdetails_top")
