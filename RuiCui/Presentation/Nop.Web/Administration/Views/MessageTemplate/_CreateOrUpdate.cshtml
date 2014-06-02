@@ -75,52 +75,8 @@
             </td>
         </tr>
     </table>
-    @(Html.LocalizedEditor<MessageTemplateModel, MessageTemplateLocalizedModel>("messagetemplate-localized",
-    @<table class="adminContent">
-        <tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.Locales[item].BccEmailAddresses):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.Locales[item].BccEmailAddresses)
-                @Html.ValidationMessageFor(model => model.Locales[item].BccEmailAddresses)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.Locales[item].Subject):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.Locales[item].Subject)
-                @Html.ValidationMessageFor(model => model.Locales[item].Subject)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.Locales[item].Body):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.Locales[item].Body, "RichEditor")
-                @Html.ValidationMessageFor(model => model.Locales[item].Body)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.Locales[item].EmailAccountId):
-            </td>
-            <td class="adminData">
-                @Html.DropDownListFor(model => model.Locales[item].EmailAccountId, new SelectList(Model.AvailableEmailAccounts, "Id", "DisplayName", Model.Locales[item].EmailAccountId))
-                @Html.ValidationMessageFor(model => model.Locales[item].EmailAccountId)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                @Html.HiddenFor(model => model.Locales[item].LanguageId)
-            </td>
-        </tr>
-    </table>
-    ,
-    @<table class="adminContent">
+  
+    <table class="adminContent">
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.BccEmailAddresses):
@@ -158,7 +114,7 @@
             </td>
         </tr>
     </table>
-    ))
+    
 
 
 }

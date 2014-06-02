@@ -4,110 +4,129 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Common;
 
+<div class="footer-links clearfix">
+    <dl class="col-links col-links-first">
+        <dt>帮助中心</dt>
+        <dd><a rel="nofollow" href="http://wiki.xiaomi.cn/%E5%B0%8F%E7%B1%B3%E7%BD%91%E8%B4%AD%E7%89%A9%E6%B5%81%E7%A8%8B" target="_blank">购物指南</a></dd>
+        <dd><a rel="nofollow" href="http://wiki.xiaomi.cn/%E6%94%AF%E4%BB%98%E6%96%B9%E5%BC%8F" target="_blank">支付方式</a></dd>
+        <dd><a rel="nofollow" href="http://wiki.xiaomi.cn/%E7%AC%AC%E4%B8%89%E6%96%B9%E9%85%8D%E9%80%81" target="_blank">配送方式</a></dd>
+    </dl>
+    <dl class="col-links">
+        <dt>@T("Footer.Information")</dt>
+        @if (Model.SitemapEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></dd>
+        }
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">@T("PrivacyNotice")</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></dd>
+    </dl>
+    <dl class="col-links">
+        <dt>@T("Footer.CustomerService")</dt>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </dd>
+        @if (Model.NewsEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("NewsArchive")">@T("News")</a></dd>
+        }
+        @if (Model.BlogEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Blog")">@T("Blog")</a></dd>
+        }
+        @if (Model.ForumEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></dd>
+        }
+        @if (Model.RecentlyViewedProductsEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></dd>
+        }
+        @if (Model.CompareProductsEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></dd>
+        }
+        @if (Model.RecentlyAddedProductsEnabled)
+        {
+            <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("RecentlyAddedProducts")">@T("Products.NewProducts")</a></dd>
+        }
+    </dl>
+    <dl class="col-links">
+        <dt>@T("Footer.MyAccount")</dt>
+        <dd><a target="_blank" href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></dd>
+        @if (!Model.HideOrders)
+        {
+            <dd><a target="_blank" href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></dd>
+        }
+        @if (!Model.HideAddresses)
+        {
+            <dd><a target="_blank" href="@Url.RouteUrl("CustomerAddresses")">@T("Account.CustomerAddresses")</a></dd>
+        }
+        @if (Model.ShoppingCartEnabled)
+        {
+            <dd><a target="_blank" href="@Url.RouteUrl("ShoppingCart")">@T("ShoppingCart")</a></dd>
+        }
+        @if (Model.WishlistEnabled)
+        {
+            <dd><a target="_blank" href="@Url.RouteUrl("Wishlist")">@T("Wishlist")</a></dd>
+        }
+    </dl>
+    <dl class="col-links">
+        <dt>@T("Footer.FollowUs")</dt>
+        @if (!string.IsNullOrEmpty(Model.FacebookLink))
+        {
+            <dd><a href="@Model.FacebookLink" target="_blank">@T("Footer.FollowUs.Facebook")</a></dd>
+        }
+        @if (!string.IsNullOrEmpty(Model.TwitterLink))
+        {
+            <dd><a href="@Model.TwitterLink" target="_blank">@T("Footer.FollowUs.Twitter")</a></dd>
+        }
+        @if (Model.NewsEnabled)
+        {
+            <dd><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a></dd>
+        }
+        @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+        {
+            <dd><a href="@Model.YoutubeLink" target="_blank">@T("Footer.FollowUs.Youtube")</a></dd>
+        }
+        @if (!string.IsNullOrEmpty(Model.GooglePlusLink))
+        {
+            <dd><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></dd>
+        }
+    </dl>
+    <div class="col-contact">
+        <p class="phone">400-100-5678</p>
+        <p>周一至周日 8:00-18:00<br />（仅收市话费）</p>
+        <a class="btn btn-primary btn-small" href="http://www.mi.com/service/contact" target="_blank">24小时在线客服</a>
+    </div>
+</div>
+<div class="footer-info clearfix">
+    <div class="info-text" style="position:relative;">
+        <p>小米旗下网站：<a href="http://www.mi.com/index.php" target="_blank" title="小米网">小米网</a><span class="sep">|</span><a href="http://www.miui.com" target="_blank" title="MIUI">MIUI</a><span class="sep">|</span><a href="http://www.miliao.com" target="_blank" title="米聊">米聊</a><span class="sep">|</span><a href="http://book.duokan.com" target="_blank" title="多看书城">多看书城</a><span class="sep">|</span><a href="http://www.miwifi.com" target="_blank" title="小米路由器">小米路由器</a><span class="sep">|</span><a href="http://www.mi.com/hk" target="_blank" title="繁體香港">繁體香港</a><span class="sep">|</span><a href="http://www.mi.com/tw" target="_blank" title="繁體台灣">繁體台灣</a><span class="sep">|</span><a href="http://www.mi.com/en" target="_blank" title="English">English</a><span class="sep">|</span><a href="http://blog.xiaomi.com" target="_blank" title="小米后院">小米后院</a><span class="sep">|</span><a href="http://xiaomi.tmall.com/index.htm" target="_blank" title="小米天猫店">小米天猫店</a></p>
+        <p>&copy;<a href="http://www.mi.com/" target="_blank" title="mi.com">mi.com</a> 京ICP证110507号 京ICP备10046444号 京公网安备1101080212535号 <a href="http://img03.mifile.cn/webfile/images/2013/cn/jingwangwen.jpg" target="_blank">京网文[2014]0059-0009号</a></p>
+    </div>
+    <div class="info-sites J_globalList">
+        <div class="global-site-current">简体中文</div>
+        <span class="arrow"></span>
+        <ul class="global-site-list">
+            <li><a href="http://www.mi.com/en">English</a></li>
+            <li><a href="http://www.mi.com/tw">繁體台灣</a></li>
+            <li><a href="http://www.mi.com/hk">繁體香港</a></li>
+            <li><a href="http://www.mi.com/sg">Singapore</a></li>
+            <li><a href="http://www.mi.com/my">Malaysia</a></li>
+            <li><a href="http://www.mi.com/">简体中文</a></li>
+        </ul>
+    </div>
+    <div class="info-links">
+        <a href="https://ss.cnnic.cn/verifyseal.dll?sn=e12033011010015771301369&ct=df&pa=461082" target="_blank"><img src="http://p.www.xiaomi.com/zt/12052601/cnnicVerifyseal.png" alt="可信网站" /></a> <a href="https://search.szfw.org/cert/l/CX20120926001783002010" target="_blank"><img alt="诚信网站" src="http://p.www.xiaomi.com/zt/12052601/szfwVerifyseal.gif" /></a> <a href="http://www.315online.com.cn/member/315140007.html" target="_blank"><img alt="诚信网站" src="http://p.www.xiaomi.com/zt/12052601/save.jpg" /></a>
+    </div>
+</div>
 <div class="footer">
-    <div class="footer-menu-wrapper">
-        <div class="column information">
-            <h3>@T("Footer.Information")</h3>
-            <ul>
-                @if (Model.SitemapEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Sitemap")">@T("Sitemap")</a></li>
-                }
-                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo") })">@T("ShippingReturns")</a></li>
-                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">@T("PrivacyNotice")</a></li>
-                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">@T("ConditionsOfUse")</a></li>
-                <li><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("aboutus") })">@T("AboutUs")</a></li>
-                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
-            </ul>
-        </div>
-        <div class="column customer-service">
-            <h3>@T("Footer.CustomerService")</h3>
-            <ul>
-                <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a> </li>
-                @if (Model.NewsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("NewsArchive")">@T("News")</a></li>
-                }
-                @if (Model.BlogEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
-                }
-                @if (Model.ForumEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
-                }
-                @if (Model.RecentlyViewedProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">@T("Products.RecentlyViewedProducts")</a></li>
-                }
-                @if (Model.CompareProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("CompareProducts")">@T("Products.Compare.List")</a></li>
-                }
-                @if (Model.RecentlyAddedProductsEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("RecentlyAddedProducts")">@T("Products.NewProducts")</a></li>
-                }
-            </ul>
-        </div>
-        <div class="column my-account">
-            <h3>@T("Footer.MyAccount")</h3>
-            <ul>
-                <li><a href="@Url.RouteUrl("CustomerInfo")" class="account">@T("Account.MyAccount")</a></li>
-                @if (!Model.HideOrders)
-                {
-                    <li><a href="@Url.RouteUrl("CustomerOrders")">@T("Account.CustomerOrders")</a></li>
-                }
-                @if (!Model.HideAddresses)
-                {
-                    <li><a href="@Url.RouteUrl("CustomerAddresses")" class="">@T("Account.CustomerAddresses")</a></li>
-                }
-                @if (Model.ShoppingCartEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">@T("ShoppingCart")</a></li>
-                }
-                @if (Model.WishlistEnabled)
-                {
-                    <li><a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist">@T("Wishlist")</a></li>
-                }
-            </ul>
-        </div>
-        <div class="column follow-us">
-            <h3>@T("Footer.FollowUs")</h3>
-            <ul>
-                @if (!string.IsNullOrEmpty(Model.FacebookLink))
-                {
-                    <li class="facebook"><a href="@Model.FacebookLink" target="_blank">@T("Footer.FollowUs.Facebook")</a></li>
-                }
-                                @if (!string.IsNullOrEmpty(Model.TwitterLink))
-                {
-                    <li class="twitter"><a href="@Model.TwitterLink" target="_blank">@T("Footer.FollowUs.Twitter")</a></li>
-                }
-                                @if (Model.NewsEnabled)
-                {
-                    <li class="rss"><a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a></li>
-                }
-                                @if (!string.IsNullOrEmpty(Model.YoutubeLink))
-                {
-                    <li class="youtube"><a href="@Model.YoutubeLink" target="_blank">@T("Footer.FollowUs.Youtube")</a></li>
-                }
-                                @if (!string.IsNullOrEmpty(Model.GooglePlusLink))
-                {
-                    <li class="google-plus"><a href="@Model.GooglePlusLink" target="_blank">@T("Footer.FollowUs.GooglePlus")</a></li>
-                }
-            </ul>
-        </div>
-    </div>
-    <div class="footer-poweredby">
-        Powered by <a href="http://www.nopcommerce.com/">nopCommerce</a>
-        @*Would you like to remove the "Powered by nopCommerce" link in the bottom of the footer?
-            Find more info here http://www.nopcommerce.com/copyrightremoval.aspx*@
-    </div>
     @if (Model.DisplayTaxShippingInfoFooter)
     {
         var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
         <div class="footer-tax-shipping">
-            @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("shippinginfo")}))
+            @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
         </div>
     }
     <div class="footer-disclaimer">
