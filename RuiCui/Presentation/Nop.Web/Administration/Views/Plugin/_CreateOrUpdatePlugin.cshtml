@@ -52,25 +52,8 @@
 
 @helper TabInfo()
 {
-    @(Html.LocalizedEditor<PluginModel, PluginLocalizedModel>("plugin-localized",
-@<table class="adminContent">
-    <tr>
-        <td class="adminTitle">
-            @Html.NopLabelFor(model => model.Locales[item].FriendlyName):
-        </td>
-        <td class="adminData">
-            @Html.EditorFor(model => model.Locales[item].FriendlyName)
-            @Html.ValidationMessageFor(model => model.Locales[item].FriendlyName)
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            @Html.HiddenFor(model => model.Locales[item].LanguageId)
-        </td>
-    </tr>
-    </table>
-,
-@<table class="adminContent">
+    
+<table class="adminContent">
     <tr>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.FriendlyName):
@@ -81,7 +64,7 @@
         </td>
     </tr>
     </table>
-))
+
     <table class="adminContent">
         <tr>
             <td class="adminTitle">

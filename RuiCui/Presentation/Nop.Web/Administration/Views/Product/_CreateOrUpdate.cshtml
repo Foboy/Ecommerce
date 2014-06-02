@@ -3,7 +3,13 @@
 @Html.HiddenFor(model => model.Id)
 
 
-
+<div class="options">
+    <input type="submit" value="@T("Admin.Common.Preview")" onclick="javascript:OpenWindow('@Url.RouteUrl("Product", new { SeName = Model.SeName })', 800, 600, true); return false;" class="k-button" />
+    <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+    <input type="submit" name="save-continue" class="k-button" value="@T("Admin.Common.SaveContinue")" />
+    <input type="submit" id="copyproduct" name="copyproduct" class="k-button" value="@T("Admin.Catalog.Products.Copy")" />
+    <span id="product-delete" class="k-button">@T("Admin.Common.Delete")</span>
+</div>
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">

@@ -116,34 +116,8 @@
             </tr>
         }
     </table>
-    @(Html.LocalizedEditor<TopicModel, TopicLocalizedModel>("topic-info-localized",
-                @<table class="adminContent">
-                    <tr>
-                        <td class="adminTitle">
-                            @Html.NopLabelFor(model => model.Locales[item].Title):
-                        </td>
-                        <td class="adminData">
-                            @Html.EditorFor(model => model.Locales[item].Title)
-                            @Html.ValidationMessageFor(model => model.Locales[item].Title)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="adminTitle">
-                            @Html.NopLabelFor(model => model.Locales[item].Body):
-                        </td>
-                        <td class="adminData">
-                            @Html.EditorFor(model => model.Locales[item].Body, "RichEditor")
-                            @Html.ValidationMessageFor(model => model.Locales[item].Body)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            @Html.HiddenFor(model => model.Locales[item].LanguageId)
-                        </td>
-                    </tr>
-                </table>
-                ,
-                @<table class="adminContent">
+   
+                <table class="adminContent">
                     <tr>
                         <td class="adminTitle">
                             @Html.NopLabelFor(model => model.Title):
@@ -163,56 +137,12 @@
                         </td>
                     </tr>
                 </table>
-            ))
+            
 }
 @helper TabSeo()
     {
-    @(Html.LocalizedEditor<TopicModel, TopicLocalizedModel>("topic-seo-localized",
-               @<table class="adminContent">
-                   <tr>
-                       <td class="adminTitle">
-                           @Html.NopLabelFor(model => model.Locales[item].MetaKeywords):
-                       </td>
-                       <td class="adminData">
-                           @Html.EditorFor(model => model.Locales[item].MetaKeywords)
-                           @Html.ValidationMessageFor(model => model.Locales[item].MetaKeywords)
-                       </td>
-                   </tr>
-                   <tr>
-                       <td class="adminTitle">
-                           @Html.NopLabelFor(model => model.Locales[item].MetaDescription):
-                       </td>
-                       <td class="adminData">
-                           @Html.TextAreaFor(model => model.Locales[item].MetaDescription)
-                           @Html.ValidationMessageFor(model => model.Locales[item].MetaDescription)
-                       </td>
-                   </tr>
-                   <tr>
-                       <td class="adminTitle">
-                           @Html.NopLabelFor(model => model.Locales[item].MetaTitle):
-                       </td>
-                       <td class="adminData">
-                           @Html.EditorFor(model => model.Locales[item].MetaTitle)
-                           @Html.ValidationMessageFor(model => model.Locales[item].MetaTitle)
-                       </td>
-                   </tr>
-                <tr>
-                    <td class="adminTitle">
-                        @Html.NopLabelFor(model => model.Locales[item].SeName):
-                    </td>
-                    <td class="adminData">
-                        @Html.EditorFor(model => model.Locales[item].SeName)
-                        @Html.ValidationMessageFor(model => model.Locales[item].SeName)
-                    </td>
-                </tr>
-                   <tr>
-                       <td colspan="2">
-                           @Html.HiddenFor(model => model.Locales[item].LanguageId)
-                       </td>
-                   </tr>
-               </table>
-               ,
-               @<table class="adminContent">
+   
+               <table class="adminContent">
                    <tr>
                        <td class="adminTitle">
                            @Html.NopLabelFor(model => model.MetaKeywords):
@@ -249,7 +179,7 @@
                             @Html.ValidationMessageFor(model => model.SeName)
                         </td>
                     </tr>
-               </table>))
+               </table>
 }
 
 @helper TabStores()

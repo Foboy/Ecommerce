@@ -52,25 +52,8 @@
 
 @helper TabInfo()
 {
-    @(Html.LocalizedEditor<CurrencyModel, CurrencyLocalizedModel>("currency-info-localized",
-                @<table class="adminContent">
-                    <tr>
-                        <td class="adminTitle">
-                            @Html.NopLabelFor(model => model.Locales[item].Name):
-                        </td>
-                        <td class="adminData">
-                            @Html.EditorFor(model => model.Locales[item].Name)
-                            @Html.ValidationMessageFor(model => model.Locales[item].Name)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            @Html.HiddenFor(model => model.Locales[item].LanguageId)
-                        </td>
-                    </tr>
-                </table>
-                ,
-                @<table class="adminContent">
+  
+                <table class="adminContent">
                     <tr>
                         <td class="adminTitle">
                             @Html.NopLabelFor(model => model.Name):
@@ -81,7 +64,7 @@
                         </td>
                     </tr>
                 </table>
-            ))
+            
     <table class="adminContent">
         <tr>
             <td class="adminTitle">
