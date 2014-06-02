@@ -1,10 +1,17 @@
 ﻿@model SearchBoxModel
 @using Nop.Web.Models.Catalog;
-@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()" }))
+@using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()", @class = "search-form clearfix" }))
 {
-    <input type="text" class="search-box-text" id="small-searchterms" @(Model.AutoCompleteEnabled ? Html.Raw(" autocomplete=\"off\"") : null)
-                value="@T("Search.SearchBox.Tooltip")" name="q"  onfocus="if(this.value=='@T("Search.SearchBox.Tooltip")')this.value=''" onblur="if(this.value=='') {this.value = '@T("Search.SearchBox.Tooltip")';}" />
-    <input type="submit" class="button-1 search-box-button" value="@T("Search")" />
+    <input class="search-text" type="text" id="small-searchterms" @(Model.AutoCompleteEnabled ? Html.Raw(" autocomplete=\"off\"") : null)
+           value="@T("Search.SearchBox.Tooltip")" name="q" onfocus="if(this.value=='@T("Search.SearchBox.Tooltip")')this.value=''" onblur="if(this.value=='') {this.value = '@T("Search.SearchBox.Tooltip")';}" />
+    <input type="submit" class="search-btn iconfont" value="&#xe630;" />
+    <!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
+    <div class="hot-words">
+        <a href="#">翡翠</a>
+        <a href="#">玉佛</a>
+        <a href="#">念珠</a>
+
+    </div>
     <script type="text/javascript">
 
         function check_small_search_form() {
