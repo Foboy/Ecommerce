@@ -12,8 +12,8 @@
             @T("Admin.System.QueuedEmails")
         </div>
         <div class="options">
-            <input type="button" id="delete-selected" class="k-button" value="@T("Admin.System.QueuedEmails.DeleteSelected")" />
-            <input type="submit" name="delete-all" class="k-button" value="@T("Admin.System.QueuedEmails.DeleteAll")" onclick="return confirm('@T("Admin.Common.AreYouSure")'); " />
+            <input type="button" id="delete-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.System.QueuedEmails.DeleteSelected")" />
+            <input type="submit" name="delete-all" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.System.QueuedEmails.DeleteAll")" onclick="return confirm('@T("Admin.Common.AreYouSure")'); " />
         </div>
     </div>
     <table width="100%">
@@ -71,12 +71,12 @@
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.GoDirectlyToNumber)
-                <input type="submit" name="go-to-email-by-number" class="k-button" value="@T("Admin.Common.Go")" />
+                <input type="submit" name="go-to-email-by-number" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="button" id="btnSearch" class="k-button" value="@T("Admin.Common.Search")" />
+                <input type="button" id="btnSearch" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
             </td>
         </tr>
     </table>

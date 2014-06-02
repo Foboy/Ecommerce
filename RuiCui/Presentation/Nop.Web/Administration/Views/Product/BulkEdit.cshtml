@@ -22,7 +22,8 @@
                 @Html.NopLabelFor(model => model.SearchProductName):
             </td>
             <td class="adminData">
-                @Html.EditorFor(model => model.SearchProductName)
+                @Html.EditorFor(model => model.SearchProductName,new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品名称" }, })
+                <input type="button" id="search-products" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
             </td>
         </tr>
         <tr>
@@ -47,11 +48,6 @@
             </td>
             <td class="adminData">
                 @Html.DropDownList("SearchProductTypeId", Model.AvailableProductTypes)
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="button" id="search-products" class="k-button" value="@T("Admin.Common.Search")" />
             </td>
         </tr>
     </table>
@@ -148,7 +144,7 @@
                             pageable: {
                                 refresh: true
                             },
-                            toolbar: ["save", "cancel"],
+                            toolbar: ["保存操作", "取消操作"],
                             editable: {
                                 confirmation: false,
                                 //bulk editing
