@@ -860,6 +860,10 @@
     <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.pdb" />
     <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="Content\ueditor\net\net.sln" />
+    <Content Include="Content\ueditor\net\upload\image\20140602\6353731869050987842962588.png" />
+    <Content Include="Content\ueditor\net\upload\image\20140602\6353731872906808381250935.jpg" />
+    <Content Include="Content\ueditor\net\upload\image\20140602\6353731872912308696236843.png" />
+    <Content Include="Content\ueditor\net\upload\image\20140602\6353731896517658843713851.jpg" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.css" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.min.css" />
     <Content Include="Content\ueditor\themes\default\dialogbase.css" />
