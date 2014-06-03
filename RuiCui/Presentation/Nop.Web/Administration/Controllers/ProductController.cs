@@ -765,7 +765,7 @@ namespace Nop.Admin.Controllers
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        public ActionResult Create(ProductModel model, bool continueEditing)
+        public ActionResult Create(ProductModel model,string currentoption, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -813,7 +813,7 @@ namespace Nop.Admin.Controllers
                 _customerActivityService.InsertActivity("AddNewProduct", _localizationService.GetResource("ActivityLog.AddNewProduct"), product.Name);
                 
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Products.Added"));
-                return continueEditing ? RedirectToAction("Edit", new { id = product.Id }) : RedirectToAction("List");
+                return continueEditing ? RedirectToAction("Edit", new { id = product.Id, currentoption = currentoption }) : RedirectToAction("List");
             }
 
             //If we got this far, something failed, redisplay form
@@ -824,8 +824,9 @@ namespace Nop.Admin.Controllers
         }
 
         //edit product
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id,string currentoption=null)
         {
+            ViewBag.CurrentOption = string.IsNullOrEmpty(currentoption) ? "#collapseOne" : currentoption;
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
 
@@ -857,7 +858,7 @@ namespace Nop.Admin.Controllers
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        public ActionResult Edit(ProductModel model, bool continueEditing)
+        public ActionResult Edit(ProductModel model,string currentoption, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -941,9 +942,9 @@ namespace Nop.Admin.Controllers
                 if (continueEditing)
                 {
                     //selected tab
-                    SaveSelectedTabIndex();
+                    // SaveSelectedTabIndex();
 
-                    return RedirectToAction("Edit", new {id = product.Id});
+                    return RedirectToAction("Edit", new { id = product.Id, currentoption = currentoption });
                 }
                 else
                 {
