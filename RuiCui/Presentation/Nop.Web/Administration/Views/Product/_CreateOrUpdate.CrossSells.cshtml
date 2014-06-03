@@ -78,7 +78,7 @@
         </tr>
         <tr>
             <td width="100%">
-                <input type="submit" id="btnAddNewCrossSellProduct" name="btnAddNewCrossSellProduct" value="@T("Admin.Catalog.Products.CrossSells.AddNew")" onclick="javascript:OpenWindow('@(Url.Action("CrossSellProductAddPopup", "Product", new { productId = Model.Id, btnId = "btnRefreshCrossSellProducts", formId = "product-form" }))    ', 800, 800, true); return false;" class="k-button" />
+                <input type="submit" id="btnAddNewCrossSellProduct" name="btnAddNewCrossSellProduct" value="@T("Admin.Catalog.Products.CrossSells.AddNew")" onclick="javascript:OpenWindow('@(Url.Action("CrossSellProductAddPopup", "Product", new { productId = Model.Id, btnId = "btnRefreshCrossSellProducts", formId = "product-form" }))    ', 800, 800, true); return false;" class="btn btn-sm btn-primary btn-flat " />
                 <input type="submit" id="btnRefreshCrossSellProducts" name="btnRefreshCrossSellProducts" style="display: none" />
                 <script type="text/javascript">
                     $(document).ready(function () {

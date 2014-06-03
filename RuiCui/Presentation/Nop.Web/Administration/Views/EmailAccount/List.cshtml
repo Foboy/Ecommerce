@@ -8,7 +8,7 @@
         @T("Admin.Configuration.EmailAccounts")
     </div>
     <div class="options">
-        <a href="@Url.Action("Create")" class="k-button">@T("Admin.Common.AddNew")</a>
+        <a href="@Url.Action("Create")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.AddNew")</a>
     </div>
 </div>
 <table class="adminContent">
@@ -70,7 +70,7 @@
                         }, {
                             field: "Id",
                             title: "@T("Admin.Configuration.EmailAccounts.Fields.MarkAsDefaultEmail")",
-                            template: '<a href="@Url.Content("~/Admin/EmailAccount/MarkAsDefaultEmail/")#=Id#" class="k-button">@T("Admin.Configuration.EmailAccounts.Fields.MarkAsDefaultEmail")</a>'
+                            template: '<a href="@Url.Content("~/Admin/EmailAccount/MarkAsDefaultEmail/")#=Id#" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Configuration.EmailAccounts.Fields.MarkAsDefaultEmail")</a>'
                         }, {
                             field: "Id",
                             title: "@T("Admin.Common.Edit")",
