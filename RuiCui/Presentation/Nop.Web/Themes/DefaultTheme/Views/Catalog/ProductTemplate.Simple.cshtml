@@ -5,6 +5,8 @@
 @{
     Layout = "~/Views/Shared/_Root.cshtml";
 
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/goods-detail.css");
+
     //title, meta
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
     Html.AddMetaDescriptionParts(Model.MetaDescription);
@@ -22,17 +24,7 @@
 <div class="goods-detail-info row clearfix">
     <div class="span14 J_mi_goodsPic_block">
         <div class="goods-pic-box  " id="J_mi_goodsPicBox">
-            <div class="goods-big-pic">
-                <img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=430&height=430" class="J_goodsBigPic" id="J_BigPic" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=800&height=800 2x">
-            </div>
-            <div class="goods-small-pic clearfix">
-                <ul id="goodsPicList">
-                    <li class="current"><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1UmxTBQhv1RXrhCrK.jpg?width=138&height=138 2x"></li>
-                    <li class=""><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1HRxTBT_T1RXrhCrK.jpg?width=138&height=138 2x"></li>
-                    <li class=""><img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=69&height=69" data-src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=430&height=430" data-src-b="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=800&height=800" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1fcxTBQJv1RXrhCrK.jpg?width=138&height=138 2x"></li>
-                </ul>
-            </div>
-
+            @Html.Partial("_ProductDetailsPictures", Model)
             <span class="icon-slides icon-slides-prev" title="上一张" id="goodsPicPrev">上一张</span>
             <span class="icon-slides icon-slides-next" title="下一张" id="goodsPicNext">下一张</span>
         </div>
@@ -41,7 +33,7 @@
         <dl class="goods-info-box ">
             <dt class="goods-info-head">
                 <dl>
-                    <dt id="goodsName">手机支架 小蜜蜂</dt>
+                    <dt id="goodsName">@Model.Name</dt>
                     <dd class="goods-info-head-price clearfix">
                         <div class="left-part">
                             <b class="J_mi_goodsPrice">19</b><i>&nbsp;元</i>
@@ -154,7 +146,7 @@
                 </ul>
             </div>
             <div class="box-bd" id="goodsDesc">
-                <p><img alt="" src="http://img01.mifile.cn/images/accs/xmf_01.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_02.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_03.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_04.jpg"><img alt="" src="http://img01.mifile.cn/images/accs/xmf_05.jpg"><img alt="" src="http://p.www.xiaomi.com/images/1202/xinluzhang02.jpg"><img alt="" src="http://p.www.xiaomi.com/images/1202/xinliuzhang03.jpg" style="width: 720px; height: 871px; "><img alt="" src="http://p.www.xiaomi.com/images/1202/xinluzhang04.jpg"></p>
+                @Html.Raw(Model.FullDescription)
             </div>
         </div>
         <!-- 商品描述 END-->
