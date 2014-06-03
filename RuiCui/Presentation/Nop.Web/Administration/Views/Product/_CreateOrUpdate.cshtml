@@ -8,6 +8,7 @@
     <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
     <input type="submit" name="save-continue" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.SaveContinue")" />
     <input type="submit" id="copyproduct" name="copyproduct" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Catalog.Products.Copy")" />
+    <input type="text" name="currentoption" id="currentoption" value="@ViewBag.CurrentOption" style="display:none" />
     <span id="product-delete" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.Delete")</span>
 </div>
 <br />
@@ -15,27 +16,26 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                     基本信息
                 </a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
+        <div id="collapseOne" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabInfo()
-          
             </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                  商品图片
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    商品图片
                 </a>
             </h4>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse in">
+        <div id="collapseTwo" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabPictures()
              </div>
@@ -44,12 +44,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                  规格参数分类
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    规格参数分类
                 </a>
             </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse in">
+        <div id="collapseThree" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabCategories()
                 <hr />
@@ -62,12 +62,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
                     关联商品
                 </a>
             </h4>
         </div>
-        <div id="collapse4" class="panel-collapse collapse in">
+        <div id="collapseFour" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabRelatedProducts()
                 <hr/>
@@ -80,12 +80,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
                     权限控制
                 </a>
             </h4>
         </div>
-        <div id="collapse5" class="panel-collapse collapse in">
+        <div id="collapseFive" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabAcl()
                 <hr />
@@ -96,12 +96,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
                     折扣价格
                 </a>
             </h4>
         </div>
-        <div id="collapse6" class="panel-collapse collapse in">
+        <div id="collapseSix" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabTierPrices()
                 <hr />
@@ -114,12 +114,12 @@
         <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" data-toggle="collapse" data-parent="#accordion" href="#collapseorder">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseorder">
                     权限控制
                 </a>
             </h4>
         </div>
-            <div id="collapseorder" class="panel-collapse collapse in">
+            <div id="collapseorder" class="panel-collapse collapse ">
                 <div class="panel-body">
                     @TabPurchasedWithOrders()
                 </div>
@@ -133,6 +133,10 @@
 
 <script>
     $(document).ready(function () {
+        $($("#currentoption").val()).attr("class", "panel-collapse collapse in");
+        $('.commonalink').bind('click', function () {
+            $("#currentoption").val($(this).attr('href'));
+        })
         //$("#product-edit").kendoTabStrip({
         //    animation: {
         //        open: {
@@ -141,12 +145,12 @@
         //    },
         //    select: tabstrip_on_tab_select
         //});
-        $('.collapse').collapse();
+        
     });
 </script>
 
 
-
+ 
 
 @helper TabInfo()
 {

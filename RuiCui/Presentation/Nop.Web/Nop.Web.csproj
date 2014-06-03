@@ -1563,6 +1563,8 @@
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unlink.gif" />
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unordered.gif" />
     <Content Include="Themes\DefaultTheme\Content\css\base.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\goods-detail.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\goods-list.css" />
     <Content Include="Themes\DefaultTheme\Content\css\main.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-x.png" />
