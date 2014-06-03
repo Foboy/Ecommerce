@@ -11,10 +11,10 @@
             @T("Admin.Orders.EditOrderDetails") - @Model.Id @Html.ActionLink("(" + T("Admin.Orders.BackToList") + ")", "List")
         </div>
         <div class="options">
-            @if (!Model.IsLoggedInAsVendor)
+            @*@if (!Model.IsLoggedInAsVendor)
             {
                 <a href="@Url.Action("PdfInvoice", new { orderId = Model.Id })" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Orders.PdfInvoice")</a>
-            }
+            }*@
             @if (!Model.IsLoggedInAsVendor)
             {
                 <span id="order-delete" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.Delete")</span>

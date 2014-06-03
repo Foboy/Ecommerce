@@ -28,6 +28,7 @@
         Html.AppendCssFileParts("~/Administration/Content/styles.css");
     }
     Html.AppendScriptParts("~/Scripts/kendo/2014.1.318/kendo.web.min.js");
+    Html.AppendScriptParts("~/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CHS.min.js");
     Html.AppendScriptParts("~/Scripts/admin.common.js");
     Html.AppendScriptParts("~/Scripts/jquery-migrate-1.2.1.min.js");
     Html.AppendScriptParts("~/Scripts/jquery-ui-1.10.3.custom.min.js");
@@ -312,6 +313,9 @@
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="/Administration/Content/js/AdminLTE/dashboard.js" type="text/javascript"></script>
+    <script >
+        kendo.culture("zh-CHS");
+    </script>
 
 </body>
 </html>

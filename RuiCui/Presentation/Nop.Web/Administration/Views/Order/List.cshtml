@@ -74,30 +74,30 @@
                 @Html.DropDownList("ShippingStatusId", Model.AvailableShippingStatuses)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.StoreId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("StoreId", Model.AvailableStores)
             </td>
-        </tr>
-        <tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
+        </tr>*@
+        @*<tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.VendorId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("VendorId", Model.AvailableVendors)
             </td>
-        </tr>
-       <tr>
+        </tr>*@
+       @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.OrderGuid):
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.OrderGuid)
             </td>
-        </tr>
+        </tr>*@
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.GoDirectlyToNumber):

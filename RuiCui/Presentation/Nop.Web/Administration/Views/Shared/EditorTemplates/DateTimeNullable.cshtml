@@ -3,6 +3,9 @@
 <input id="@ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty)" name="@ViewData.TemplateInfo.GetFullHtmlFieldName(string.Empty)" value="@(Model > DateTime.MinValue || Model.HasValue ? Model.Value.ToString(CultureInfo.CurrentCulture.DateTimeFormat) : null)" />
 <script>
     $(document).ready(function () {
-        $("#@ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty)").kendoDateTimePicker();
+        kendo.culture("zh-CN");
+        $("#@ViewData.TemplateInfo.GetFullHtmlFieldId(string.Empty)").kendoDateTimePicker({
+            format: "yyyy-dd-MM hh:mm tt" //format is used to format the value of the widget and to parse the input.
+        });
     });
 </script>

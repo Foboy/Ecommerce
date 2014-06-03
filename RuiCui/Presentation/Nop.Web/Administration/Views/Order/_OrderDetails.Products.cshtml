@@ -342,14 +342,14 @@
             </table>
         </td>
     </tr>
-    @if (!String.IsNullOrEmpty(Model.CheckoutAttributeInfo) && !Model.IsLoggedInAsVendor)
+    @*@if (!String.IsNullOrEmpty(Model.CheckoutAttributeInfo) && !Model.IsLoggedInAsVendor)
     {
         <tr>
             <td class="adminData">
                 @Html.Raw(Model.CheckoutAttributeInfo)
             </td>
         </tr>
-    }
+    }*@
     @if (!Model.IsLoggedInAsVendor)
     {
         <tr>
