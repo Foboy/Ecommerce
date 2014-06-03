@@ -48,24 +48,24 @@ namespace Nop.Admin.Controllers
         private readonly CatalogSettings _catalogSettings;
 
         #endregion
-        
+
         #region Constructors
 
         public CategoryController(ICategoryService categoryService, ICategoryTemplateService categoryTemplateService,
-            IManufacturerService manufacturerService, IProductService productService, 
+            IManufacturerService manufacturerService, IProductService productService,
             ICustomerService customerService,
-            IUrlRecordService urlRecordService, 
-            IPictureService pictureService, 
+            IUrlRecordService urlRecordService,
+            IPictureService pictureService,
             ILanguageService languageService,
-            ILocalizationService localizationService, 
+            ILocalizationService localizationService,
             ILocalizedEntityService localizedEntityService,
             IDiscountService discountService,
             IPermissionService permissionService,
-            IAclService aclService, 
+            IAclService aclService,
             IStoreService storeService,
             IStoreMappingService storeMappingService,
-            IExportManager exportManager, 
-            IVendorService vendorService, 
+            IExportManager exportManager,
+            IVendorService vendorService,
             ICustomerActivityService customerActivityService,
             CatalogSettings catalogSettings)
         {
@@ -91,7 +91,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Utilities
 
         [NonAction]
@@ -287,7 +287,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region List / tree
 
         public ActionResult Index()
@@ -310,7 +310,7 @@ namespace Nop.Admin.Controllers
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
 
-            var categories = _categoryService.GetAllCategories(model.SearchCategoryName, 
+            var categories = _categoryService.GetAllCategories(model.SearchCategoryName,
                 command.Page - 1, command.PageSize, true);
             var gridModel = new DataSourceResult
             {
@@ -324,7 +324,7 @@ namespace Nop.Admin.Controllers
             };
             return Json(gridModel);
         }
-        
+
         public ActionResult Tree()
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
@@ -374,14 +374,14 @@ namespace Nop.Admin.Controllers
             model.PageSize = 4;
             model.Published = true;
             model.IncludeInTopMenu = true;
-            model.AllowCustomersToSelectPageSize = true;            
+            model.AllowCustomersToSelectPageSize = true;
             model.PageSizeOptions = _catalogSettings.DefaultCategoryPageSizeOptions;
 
             return View(model);
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        public ActionResult Create(CategoryModel model, bool continueEditing)
+        public ActionResult Create(CategoryModel model, string currentoption, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
@@ -418,7 +418,7 @@ namespace Nop.Admin.Controllers
                 _customerActivityService.InsertActivity("AddNewCategory", _localizationService.GetResource("ActivityLog.AddNewCategory"), category.Name);
 
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Categories.Added"));
-                return continueEditing ? RedirectToAction("Edit", new { id = category.Id }) : RedirectToAction("List");
+                return continueEditing ? RedirectToAction("Edit", new { id = category.Id, currentoption = currentoption }) : RedirectToAction("List");
             }
 
             //If we got this far, something failed, redisplay form
@@ -435,13 +435,14 @@ namespace Nop.Admin.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, string currentoption = null)
         {
+            ViewBag.CurrentOption = string.IsNullOrEmpty(currentoption) ? "#collapseOne" : currentoption;
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
 
             var category = _categoryService.GetCategoryById(id);
-            if (category == null || category.Deleted) 
+            if (category == null || category.Deleted)
                 //No category found with the specified id
                 return RedirectToAction("List");
 
@@ -471,7 +472,7 @@ namespace Nop.Admin.Controllers
         }
 
         [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
-        public ActionResult Edit(CategoryModel model, bool continueEditing)
+        public ActionResult Edit(CategoryModel model, string currentoption, bool continueEditing)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
@@ -533,9 +534,9 @@ namespace Nop.Admin.Controllers
                 if (continueEditing)
                 {
                     //selected tab
-                    SaveSelectedTabIndex();
+                    //SaveSelectedTabIndex();
 
-                    return RedirectToAction("Edit", category.Id);
+                    return RedirectToAction("Edit", new { id = category.Id, currentoption = currentoption });
                 }
                 else
                 {
@@ -578,7 +579,7 @@ namespace Nop.Admin.Controllers
             SuccessNotification(_localizationService.GetResource("Admin.Catalog.Categories.Deleted"));
             return RedirectToAction("List");
         }
-        
+
 
         #endregion
 
@@ -668,7 +669,7 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
                 return AccessDeniedView();
-            
+
             var model = new CategoryModel.AddCategoryProductModel();
             //categories
             model.AvailableCategories.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
@@ -721,7 +722,7 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
-        
+
         [HttpPost]
         [FormValueRequired("save")]
         public ActionResult ProductAddPopup(string btnId, string formId, CategoryModel.AddCategoryProductModel model)

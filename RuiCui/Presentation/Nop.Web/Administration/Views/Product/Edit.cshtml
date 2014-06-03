@@ -3,6 +3,7 @@
     //page title
     ViewBag.Title = T("Admin.Catalog.Products.EditProductDetails").Text;
 }
+
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "product-form" }))
 {
     <div class="section-header">
@@ -17,6 +18,8 @@
 @Html.DeleteConfirmation("product-delete")
 
 @*copy product form*@
+
+
 <div id="copyproduct-window" style="display:none;">
     @using (Html.BeginForm("CopyProduct", "Product"))
     {
