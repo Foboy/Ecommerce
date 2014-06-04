@@ -4,15 +4,21 @@
 
 @if (Model.Count > 0)
 {
-    <div class="product-grid home-page-product-grid">
-        <div class="title">
-            <strong>@T("HomePage.Products")</strong>
-        </div>
-        @foreach (var item in Model)
-        {
-            <div class="item-box">
-                @Html.Partial("_ProductBox", item)
-            </div>
-        }
+    <div class="box-hd"> <div class="title"> 热门产品 </div> </div>
+    <div class="box-bd">
+        <ul style="padding-left:0px;">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@Url.RouteUrl("Product", new { SeName = item.SeName })" target="_blank">
+                        <h2>@item.Name</h2>
+                        <h2>@item.ProductPrice.Price</h2>
+                        <div class="star"> <span class="icon-stat icon-stat-5"></span> </div>
+                        <img class="leftImg" alt="@item.DefaultPictureModel.AlternateText" src="@item.DefaultPictureModel.ImageUrl" srcset="@item.DefaultPictureModel.ImageUrl" title="@item.DefaultPictureModel.Title" />
+                    </a>
+                </li>
+            }
+
+        </ul>
     </div>
 }

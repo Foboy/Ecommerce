@@ -64,9 +64,12 @@
         </div>
     </div>
 </div>
-<div class="xm-line-box goods-list-box">
-    <div class="box-bd">
-        <div class="span4">
+<div class="row">
+    <div class="span5 goods-detail-desc">
+        <div class="xm-box goods-alsobuy xm-goods-side-list">
+            @Html.Action("HomepageProducts", "Catalog")
+        </div>
+        <div class="xm-box goods-alsobuy xm-goods-side-list">
             @if (IsSectionDefined("left"))
             {
                 @RenderSection("left")
@@ -74,7 +77,6 @@
             else
             {
                 @Html.Widget("left_side_column_before")
-                @Html.Action("CategoryNavigation", "Catalog", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
                 @Html.Widget("left_side_column_after_category_navigation")
                 @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
                 @Html.Action("VendorNavigation", "Catalog")
@@ -82,10 +84,13 @@
                 @Html.Widget("left_side_column_after")
             }
         </div>
-        <div class="goods-list-section  span16">
+    </div>
+    <div class="xm-line-box goods-list-box span15">
+        <div class="goods-list-section ">
             @Html.Widget("main_column_before")
             @RenderBody()
             @Html.Widget("main_column_after")
         </div>
     </div>
+
 </div>

@@ -22,101 +22,76 @@
 <!--product breadcrumb-->
 @Html.Action("ProductBreadcrumb", "Catalog", new { productId = Model.Id })
 <div class="goods-detail-info row clearfix">
-    <div class="span14 J_mi_goodsPic_block">
-        <div class="goods-pic-box  " id="J_mi_goodsPicBox">
+    <div class="span12 J_mi_goodsPic_block">
+        <div class="goods-pic-box  ">
             @Html.Partial("_ProductDetailsPictures", Model)
-            <span class="icon-slides icon-slides-prev" title="上一张" id="goodsPicPrev">上一张</span>
-            <span class="icon-slides icon-slides-next" title="下一张" id="goodsPicNext">下一张</span>
         </div>
     </div>
-    <div class="span6 goods-info-rightbox">
-        <dl class="goods-info-box ">
-            <dt class="goods-info-head">
-                <dl>
-                    <dt id="goodsName">@Model.Name</dt>
-                    <dd class="goods-info-head-price clearfix">
-                        <div class="left-part">
-                            <b class="J_mi_goodsPrice">19</b><i>&nbsp;元</i>
-                            <del><span class="J_mi_marketPrice"> </span></del>
-                        </div>
-                        <div class="right-part">
+    <div class="span8 goods-info-rightbox">
+@using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
+{
+    <div class="overview">
+        <div class="product-name">
+            <h1 itemprop="name">
+                @Model.Name
+            </h1>
+        </div>
+        @{
+        var dataDictPrice = new ViewDataDictionary();
+        dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+        @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+        }
+        @if (!String.IsNullOrEmpty(Model.ShortDescription))
+        {
+            <div class="short-description">
+                @Html.Raw(Model.ShortDescription)
+            </div>
+        }
+        @Html.Widget("productdetails_overview_top")
+        <!--product SKU, manufacturer part number, stock info-->
+        @Html.Partial("_SKU_Man_Stock", Model)
+        <!--Back in stock subscription-->
+        @Html.Partial("_BackInStockSubscription", Model)
+        <!--product manufacturers-->
+        @Html.Action("ProductManufacturers", "Catalog", new { productId = Model.Id })
+        <!--product reviews-->
+        @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
+        <!--sample download-->
+        @Html.Partial("_DownloadSample", Model)
+        <!--attributes-->
+        @{
+        var dataDictAttributes = new ViewDataDictionary();
+        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
+        @Html.Partial("_ProductAttributes", Model.ProductVariantAttributes, dataDictAttributes)
+        }
+        <!--gift card-->
+        @{
+        var dataDictGiftCard = new ViewDataDictionary();
+        dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
+        @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+        }
+        <!--price & add to cart-->
+        @{
 
-                        </div>
-
-                    </dd>
-                    <dd class="goods-info-head-userfaq">
-                        <ul>
-
-
-                            <li class="mobile">适用于所有手机</li>
-                            <li class="faq J_pro_related_btns">
-                                <span class="icon-stat icon-stat-5 J_mi_goods_starNum" data-class="icon-stat-5"></span>
-                                <a href="#goodsComment">26085人评价</a>
-                                <span class="separator">|</span>
-                                <a href="#goodsFaq">1个提问</a>
-                            </li>
-
-                            <!--特殊提示-->
-                            <!--特殊提示-->
-
-
-
-                        </ul>
-                    </dd>
-
-
-
-
-                    <dd class="goods-info-head-colors clearfix">
-                        <span>可选颜色：</span>
-                        <div class="clearfix">
-                            <div class="colorli">
-                                <a href="http://www.mi.com/item/1134900195 " class="" title="路障锥">
-                                    <img class="square" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1R9ZvB7xT1RXrhCrK.jpg?width=25&height=25" />
-                                </a>
-                            </div>
-
-                            <div class="colorli">
-                                <a href="http://www.mi.com/item/1134900194 " class="coloractive" title="小蜜蜂">
-                                    <img class="square" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1dSJvB4ET1RXrhCrK.jpg?width=25&height=25" />
-                                </a>
-                            </div>
-
-                        </div>
-                    </dd>
-
-
-                    <dd class="goods-info-head-cart" id="goodsDetailBtnBox">
-                        <a href="http://order.mi.com/cart/add/2134900203" id="goodsDetailAddCartBtn" class="btn btn-primary goods-add-cart-btn" data-disabled="false" data-gid="2134900203" data-package="false">
-                            <i class="iconfont ">&#xe624;</i>加入购物车
-                        </a>
-                        <a id="goodsDetailCollectBtn" data-isfavorite="false" class="btn btn-dake  goods-collect-btn">
-                            <i class="iconfont">&#xe60a;</i>
-                        </a>
-                    </dd>
-
-
-                </dl>
-            </dt>
-            <dd class="goods-info-head-intro">
-            </dd>
-            <dd class="goods-info-foot">
-                <span class="iconfont">&#xe602;</span>
-                <a href="http://www.mi.com/accessories/5">查看更多手机支架</a>
-            </dd>
-        </dl>
+        var dataDictAddToCart = new ViewDataDictionary();
+        dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+        @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
+        }
+        @Html.Action("ShareButton", "Catalog")
+        @Html.Widget("productdetails_overview_bottom")
+    </div>
+}
     </div>
 
 </div>
 <div class="row goods-detail-desc">
     <!--S left side-->
     <div class="span5">
-
-        <div class="xm-box goods-recent" id="goodsRectScan">
-
-        </div>
-        <div class="xm-box goods-alsobuy xm-goods-side-list" id="goodsAlsoBuy">
+        <div class="xm-box goods-alsobuy xm-goods-side-list">
             @Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })
+        </div>
+        <div class="xm-box goods-alsobuy xm-goods-side-list">
+            @Html.Action("RelatedProducts", "Catalog", new { productId = Model.Id })
         </div>
     </div>
     <!--E left side-->
@@ -157,28 +132,7 @@
                 </div>
 
             </div>
-            <div class="box-bd">
-                <table>
-                    <thead>
-
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>商品编号</th>
-                            <td>1134900194</td>
-                            <th class="th1"></th>
-                            <td class="td1"></td>
-                        </tr>
-                        <tr>
-                            <th>颜色</th>
-                            <td>小蜜蜂</td>
-                            <th class="th1"></th>
-                            <td class="td1"></td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            @Html.Action("ProductSpecifications", "Catalog", new { productId = Model.Id })
         </div>
         <!--E 规格-->
         <!--S 商品评论 -->
@@ -253,86 +207,5 @@
         </div> -->
 
 
-    </div>
-</div>
-<div class="page product-details-page">
-    <div class="page-body">
-        @Html.Widget("productdetails_top")
-        @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
-        {
-            <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
-                <div class="product-essential">
-                    @Html.Widget("productdetails_before_pictures")
-                    <!--product pictures-->
-                    @Html.Partial("_ProductDetailsPictures", Model)
-                    @Html.Widget("productdetails_after_pictures")
-                    <div class="overview">
-                        <div class="product-name">
-                            <h1 itemprop="name">
-                                @Model.Name
-                            </h1>
-                        </div>
-                        @if (!String.IsNullOrEmpty(Model.ShortDescription))
-                        {
-                            <div class="short-description">
-                                @Html.Raw(Model.ShortDescription)
-                            </div>
-                        }
-                        @Html.Widget("productdetails_overview_top")
-                        <!--product SKU, manufacturer part number, stock info-->
-                        @Html.Partial("_SKU_Man_Stock", Model)
-                        <!--Back in stock subscription-->
-                        @Html.Partial("_BackInStockSubscription", Model)
-                        <!--product manufacturers-->
-                        @Html.Action("ProductManufacturers", "Catalog", new { productId = Model.Id })
-                        <!--product reviews-->
-                        @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
-                        <!--sample download-->
-                        @Html.Partial("_DownloadSample", Model)
-                        <!--attributes-->
-                        @{
-                            var dataDictAttributes = new ViewDataDictionary();
-                            dataDictAttributes.TemplateInfo.HtmlFieldPrefix = string.Format("attributes_{0}", Model.Id);
-                            @Html.Partial("_ProductAttributes", Model.ProductVariantAttributes, dataDictAttributes)                  
-                        }
-                        <!--gift card-->
-                        @{
-                            var dataDictGiftCard = new ViewDataDictionary();
-                            dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = string.Format("giftcard_{0}", Model.Id);
-                            @Html.Partial("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
-                        }
-                        <!--price & add to cart-->
-                        @{
-                            var dataDictPrice = new ViewDataDictionary();
-                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
-                            
-                            var dataDictAddToCart = new ViewDataDictionary();
-                            dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                            @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)                    
-                        }
-                        @Html.Action("ProductEmailAFriendButton", "Catalog", new { productId = Model.Id })
-                        @Html.Action("CompareProductsButton", "Catalog", new { productId = Model.Id })
-                        @Html.Action("ShareButton", "Catalog")
-                        @Html.Widget("productdetails_overview_bottom")
-                    </div>
-                    @if (!String.IsNullOrEmpty(Model.FullDescription))
-                    {
-                        <div class="full-description" itemprop="description">
-                            @Html.Raw(Model.FullDescription)
-                        </div>
-                    }
-                </div>
-                @Html.Widget("productdetails_before_collateral")
-                <div class="product-collateral">
-                    @Html.Action("ProductTierPrices", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductSpecifications", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductTags", "Catalog", new { productId = Model.Id })
-                    @Html.Action("ProductsAlsoPurchased", "Catalog", new { productId = Model.Id })
-                    @Html.Action("RelatedProducts", "Catalog", new { productId = Model.Id })
-                </div>
-            </div>
-        }
-        @Html.Widget("productdetails_bottom")
     </div>
 </div>
