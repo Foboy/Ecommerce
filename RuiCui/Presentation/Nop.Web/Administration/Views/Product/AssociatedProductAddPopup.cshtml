@@ -44,38 +44,38 @@
                 @Html.DropDownList("SearchCategoryId", Model.AvailableCategories)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchManufacturerId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("SearchManufacturerId", Model.AvailableManufacturers)
             </td>
-        </tr>
-        <tr>
+        </tr>*@
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchStoreId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("SearchStoreId", Model.AvailableStores)
             </td>
-        </tr>
-        <tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
+        </tr>*@
+        @*<tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchVendorId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
             </td>
-        </tr>
-        <tr>
+        </tr>*@
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchProductTypeId):
             </td>
             <td class="adminData">
                 @Html.DropDownList("SearchProductTypeId", Model.AvailableProductTypes)
             </td>
-        </tr>
+        </tr>*@
         <tr>
             <td colspan="2">
                 <input type="button" id="search-products" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
