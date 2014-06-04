@@ -118,7 +118,7 @@
                             </td>
                         </tr>
                     }
-                    @if (Model.ShippingAddress.CountryEnabled)
+                    @*@if (Model.ShippingAddress.CountryEnabled)
                     {
                         <tr>
                             <td>
@@ -128,7 +128,7 @@
                                 @Model.ShippingAddress.CountryName
                             </td>
                         </tr>
-                    }
+                    }*@
                     @if (!Model.IsLoggedInAsVendor)
                     {
                         <tr>
@@ -138,10 +138,10 @@
                         </tr>
                     }
                 </table>
-                <div style="padding-top: 15px;">
+                @*<div style="padding-top: 15px;">
                     <img alt="google maps" src="@Url.Content("~/Administration/Content/images/google-maps.gif")" />
                     <a href="@Html.Raw(Model.ShippingAddressGoogleMapsUrl)" target="_blank">@T("Admin.Orders.Fields.ShippingAddress.ViewOnGoogleMaps")</a>
-                </div>
+                </div>*@
             </td>
         </tr>
         <tr>

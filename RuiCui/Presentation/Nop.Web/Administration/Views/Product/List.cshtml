@@ -94,7 +94,7 @@
                 @Html.DropDownList("SearchProductTypeId", Model.AvailableProductTypes)
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.GoDirectlyToSku):
             </td>
@@ -102,7 +102,7 @@
                 @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
                 <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
             </td>
-        </tr>
+        </tr>*@
        
     </table>
     <p>
