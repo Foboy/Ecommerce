@@ -198,7 +198,7 @@
         {
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.OrderSubtotalExclTax):
+              订单小计  @*@Html.NopLabelFor(model => model.OrderSubtotalExclTax)*@:
             </td>
             <td class="adminData">
                 @Model.OrderSubtotalExclTax
@@ -244,7 +244,7 @@
         {
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.OrderShippingExclTax):
+              运费 @*@Html.NopLabelFor(model => model.OrderShippingExclTax)*@:
             </td>
             <td class="adminData">
                 @Model.OrderShippingExclTax
@@ -289,7 +289,7 @@
         </tr>
             }
         }
-        if (Model.DisplayTax)
+        @*if (Model.DisplayTax)
         {
         <tr>
             <td class="adminTitle">
@@ -299,7 +299,7 @@
                 @Model.Tax
             </td>
         </tr>
-        }
+        }*@
         if (!String.IsNullOrEmpty(Model.OrderTotalDiscount))
         {
         <tr>
