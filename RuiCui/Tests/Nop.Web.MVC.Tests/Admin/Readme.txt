@@ -1,1 +1,1 @@
-﻿This folder contains tests for Nop.Admin project (admin area)      
+﻿This folder contains tests for Nop.Admin project (admin area)        
