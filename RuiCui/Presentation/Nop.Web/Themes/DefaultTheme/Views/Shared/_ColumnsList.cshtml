@@ -30,67 +30,36 @@
     }
 }
 <div class="xm-line-box filter-box">
-    <div class="box-hd">
-        <h3 class="title">后盖与个性化配件</h3>
-    </div>
-    <div class="box-bd">
-        <div class="filter-lists">
-            <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
-                <dt>分类：</dt>
-                <dd>
-                    <ul id="typeCat" class="clearfix">
-                        <li class="first "><a href="http://www.mi.com/accessories/1">全部</a></li>
-                        <li class="current"><a href="http://www.mi.com/accessories/2">后盖</a></li>
-                        <li><a href="http://www.mi.com/accessories/3">贴纸</a></li>
-                        <li><a href="http://www.mi.com/accessories/4">挂饰</a></li>
-                        <li><a href="http://www.mi.com/accessories/5">手机支架</a></li>
-                        <li><a href="http://www.mi.com/accessories/6">耳机绕线器</a></li>
-                        <li><a href="http://www.mi.com/accessories/104">米键</a></li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl class="xm-filter-list  category-filter-list clearfix">
-                <dt>机型：</dt>
-                <dd>
-                    <ul id="typeAdapt" class="clearfix">
-                        <li class="first current"><a href="http://www.mi.com/accessories/2">全部</a></li>
-                        <li><a href="http://www.mi.com/accessories/2-16" rel="nofollow">小米手机2/2S</a></li>
-                        <li><a href="http://www.mi.com/accessories/2-32" rel="nofollow">小米手机2A</a></li>
-                        <li><a href="http://www.mi.com/accessories/2-64" rel="nofollow">红米手机</a></li>
-                        <li><a href="http://www.mi.com/accessories/2-8192" rel="nofollow">红米Note</a></li>
-                    </ul>
-                </dd>
-            </dl>
-        </div>
-    </div>
+    @RenderSection("CategorySelector");
 </div>
 <div class="row">
-    <div class="span5 goods-detail-desc">
-        <div class="xm-box goods-alsobuy xm-goods-side-list">
-            @Html.Action("HomepageProducts", "Catalog")
-        </div>
-        <div class="xm-box goods-alsobuy xm-goods-side-list">
-            @if (IsSectionDefined("left"))
-            {
-                @RenderSection("left")
-            }
-            else
-            {
-                @Html.Widget("left_side_column_before")
-                @Html.Widget("left_side_column_after_category_navigation")
-                @Html.Action("ManufacturerNavigation", "Catalog", new { currentManufacturerId = currentManufacturerId })
-                @Html.Action("VendorNavigation", "Catalog")
-                @Html.Action("NewsletterBox", "Newsletter")
-                @Html.Widget("left_side_column_after")
-            }
-        </div>
-    </div>
-    <div class="xm-line-box goods-list-box span15">
-        <div class="goods-list-section ">
-            @Html.Widget("main_column_before")
-            @RenderBody()
-            @Html.Widget("main_column_after")
+    <div class="col col4">
+        <div class="goods-detail-desc">
+            <div class="xm-box goods-alsobuy xm-goods-side-list">
+                @Html.Action("HomepageProducts", "Catalog")
+            </div>
+            <div class="xm-box goods-alsobuy xm-goods-side-list">
+                @if (IsSectionDefined("left"))
+                {
+                    @RenderSection("left")
+                }
+                else
+                {
+                    @Html.Widget("left_side_column_before")
+                    @Html.Widget("left_side_column_after_category_navigation")
+                    @Html.Action("NewsletterBox", "Newsletter")
+                    @Html.Widget("left_side_column_after")
+                }
+            </div>
         </div>
     </div>
-
+    <div class="col col17">
+        <div class="xm-line-box goods-list-box">
+            <div class="goods-list-section ">
+                @Html.Widget("main_column_before")
+                @RenderBody()
+                @Html.Widget("main_column_after")
+            </div>
+        </div>
+    </div>
 </div>

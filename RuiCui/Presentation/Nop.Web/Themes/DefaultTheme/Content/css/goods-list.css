@@ -246,6 +246,7 @@
         }
 }
 
+
 .goods-detail-desc .xm-goods-side-list {
     border: none;
     overflow: hidden;
@@ -295,3 +296,4 @@
             .goods-detail-desc .xm-goods-side-list .box-bd ul li a:hover h2 {
                 color: #ff4a00;
             }
+
