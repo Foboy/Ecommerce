@@ -11,7 +11,7 @@ var Checkout = {
         this.loadWaiting = false;
         this.failureUrl = failureUrl;
 
-        Accordion.disallowAccessToNextSections = false;
+        //Accordion.disallowAccessToNextSections = false;
     },
 
     ajaxFailure: function () {
@@ -61,24 +61,19 @@ var Checkout = {
     },
 
     gotoSection: function (section) {
-        section = $('#opc-' + section);
-        section.addClass('allow');
-        Accordion.openSection(section);
+        //section = $('#opc-' + section);
+        //section.addClass('allow');
+        //Accordion.openSection(section);
     },
 
     back: function () {
         if (this.loadWaiting) return;
-        Accordion.openPrevSection(true, true);
+        //Accordion.openPrevSection(true, true);
     },
 
     setStepResponse: function (response) {
         if (response.update_section) {
             $('#checkout-' + response.update_section.name + '-load').html(response.update_section.html);
-        }
-        if (response.allow_sections) {
-            response.allow_sections.each(function (e) {
-                $('#opc-' + e).addClass('allow');
-            });
         }
         
         //TODO move it to a new method
@@ -89,6 +84,23 @@ var Checkout = {
             Shipping.newAddress(!$('#shipping-address-select').val());
         }
 
+        setTimeout(function () {
+            switch (response.update_section.name) {
+                case "shipping":
+                    Shipping.save();
+                    break;
+                case "shipping-method":
+                    ShippingMethod.save();
+                    break;
+                case "payment-method":
+                    PaymentMethod.save();
+                    break;
+                case "payment-info":
+                    PaymentInfo.save();
+                    break;
+            }
+        }, 1);
+
         if (response.goto_section) {
             Checkout.gotoSection(response.goto_section);
             return true;
@@ -97,6 +109,7 @@ var Checkout = {
             location.href = response.redirect;
             return true;
         }
+
         return false;
     }
 };
@@ -160,9 +173,9 @@ var Billing = {
         }
         if (Billing.disableBillingAddressCheckoutStep) {
             if (response.wrong_billing_address) {
-                Accordion.showSection('#opc-billing');
+                //Accordion.showSection('#opc-billing');
             } else {
-                Accordion.hideSection('#opc-billing');
+                //Accordion.hideSection('#opc-billing');
             }
         }
 

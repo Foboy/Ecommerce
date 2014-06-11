@@ -2,10 +2,11 @@
 @using Nop.Web.Models.Checkout;
 @using Nop.Core.Infrastructure;
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
-    Html.AddScriptParts("~/Scripts/public.accordion.js");
-    Html.AddScriptParts("~/Scripts/public.onepagecheckout.js");
+    Html.AddScriptParts("~/Themes/DefaultTheme/Content/js/public.onepagecheckout.js");
+
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/checkout.css");
 
     var storeLocation = EngineContext.Current.Resolve<Nop.Core.IWebHelper>().GetStoreLocation();
 
@@ -35,160 +36,370 @@
         confirmOrderStepNumber--;
     }
 }
-<div class="page checkout-page">
-    <div class="page-title">
-        <h1>@T("Checkout")</h1>
-    </div>
-    <div class="page-body checkout-data">
-        <ol class="opc" id="checkout-steps">
-            <li id="opc-billing" class="tab-section allow">
-                <div class="step-title">
-                    <span class="number">@billingAddressStepNumber</span>
-                    <h2>@T("Checkout.BillingAddress")</h2>
-                </div>
-                <div id="checkout-step-billing" class="step a-item" style="display: none;">
-                    <form id="co-billing-form" action="">
+<div class="checkout-box">
+    <div class="checkout-box-bd" id="checkout-steps">
+        <div class="xm-box" style="display:none;">
+            <div class="box-hd ">
+                <h2 class="title">账单地址</h2>
+                <!---->
+            </div>
+            <div class="box-bd">
+                <form id="co-billing-form" action="">
                     <div id="checkout-billing-load">
                         @Html.Action("OpcBillingForm", "Checkout")
                         @*billing address content will be loaded here*@
                     </div>
-                    </form>
-                    <script type="text/javascript">
-                        Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
-                        if ($("#billing-address-select").length > 0) {
-                            Billing.newAddress(!$('#billing-address-select').val());
-                        }
-                    </script>
-                    <div class="buttons" id="billing-buttons-container">
-                        <input type="button" title="@T("Common.Continue")" class="button-1 new-address-next-step-button" onclick="Billing.save()" value="@T("Common.Continue")" />
-                        <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                    </div>
+                </form>
+                <script type="text/javascript">
+                    Billing.init('#co-billing-form', '@(storeLocation)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
+                    if ($("#billing-address-select").length > 0) {
+                        Billing.newAddress(!$('#billing-address-select').val());
+                    }
+                </script>
+            </div>
+        </div>
+
+        @if (Model.ShippingRequired)
+        {
+
+            <div class="xm-box">
+                <div class="box-hd ">
+                    <h2 class="title">收货地址</h2>
+                    <!---->
                 </div>
-            </li>
-            @if (Model.ShippingRequired)
-            {
-                <li id="opc-shipping" class="tab-section">
-                    <div class="step-title">
-                        <span class="number">@shippingAddressStepNumber</span>
-                        <h2>@T("Checkout.ShippingAddress")</h2>
-                    </div>
-                    <div id="checkout-step-shipping" class="step a-item" style="display: none;">
-                        <form action="" id="co-shipping-form">
+                <div class="box-bd">
+                    <form action="" id="co-shipping-form">
                         <div id="checkout-shipping-load">
                             @*shipping address content will be loaded here*@
                         </div>
-                        </form>
-                        <script type="text/javascript">
-                            Shipping.init('#co-shipping-form', '@(storeLocation)checkout/OpcSaveShipping/');
-                            if ($("#shipping-address-select").length > 0) {
-                                Shipping.newAddress(!$('#shipping-address-select').val());
-                            }
-                        </script>
-                        <div class="buttons" id="shipping-buttons-container">
-                            <p class="back-link">
-                                <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a></p>
-                            <input type="button" class="button-1 new-address-next-step-button" title="@T("Common.Continue")" onclick="Shipping.save()" value="@T("Common.Continue")" />
-                            <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
-                        </div>
-                    </div>
-                </li>
-                <li id="opc-shipping_method" class="tab-section">
-                    <div class="step-title">
-                        <span class="number">@shippingMethodStepNumber</span>
-                        <h2>@T("Checkout.ShippingMethod")</h2>
-                    </div>
-                    <div id="checkout-step-shipping-method" class="step a-item" style="display: none;">
-                        <form id="co-shipping-method-form" action="">
-                        <div id="checkout-shipping-method-load">
-                            @*shipping methods content will be loaded here*@
-                        </div>
-                        <script type="text/javascript">
-                            ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
-                        </script>
-                        <div class="buttons" id="shipping-method-buttons-container">
-                            <p class="back-link">
-                                <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a></p>
-                            <input type="button" class="button-1 shipping-method-next-step-button" onclick="ShippingMethod.save()" value="@T("Common.Continue")" />
-                            <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                        </div>
-                        </form>
-                    </div>
-                </li>
-            }
-            <li id="opc-payment_method" class="tab-section">
-                <div class="step-title">
-                    <span class="number">@paymentMethodStepNumber</span>
-                    <h2>@T("Checkout.PaymentMethod")</h2>
+                    </form>
+                    <script type="text/javascript">
+                        Shipping.init('#co-shipping-form', '@(storeLocation)checkout/OpcSaveShipping/');
+                        if ($("#shipping-address-select").length > 0) {
+                            Shipping.newAddress(!$('#shipping-address-select').val());
+                        }
+                    </script>
                 </div>
-                <div id="checkout-step-payment-method" class="step a-item" style="display: none;">
-                    <form action="" id="co-payment-method-form">
+            </div>
+    <div class="xm-box">
+        <div class="box-hd ">
+            <h2 class="title">配送方式</h2>
+            <!---->
+        </div>
+        <div class="box-bd">
+            <form id="co-shipping-method-form" action="">
+                <div id="checkout-shipping-method-load">
+                    @*shipping methods content will be loaded here*@
+                </div>
+                <script type="text/javascript">
+                    ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/');
+                </script>
+            </form>
+        </div>
+    </div>
+        }
+        <div class="xm-box">
+            <div class="box-hd ">
+                <h2 class="title">支付方式</h2>
+                <!---->
+            </div>
+            <div class="box-bd">
+                <form action="" id="co-payment-method-form">
                     <div id="checkout-payment-method-load">
                         @*payment methods content will be loaded here*@ Payment is not required
                     </div>
-                    </form>
-                    <script type="text/javascript">
-                        PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/');
-                    </script>
-                    <div class="buttons" id="payment-method-buttons-container">
-                        <p class="back-link">
-                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a></p>
-                        <input type="button" class="button-1 payment-method-next-step-button" onclick="PaymentMethod.save()" value="@T("Common.Continue")" />
-                        <span class="please-wait" id="payment-method-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                    </div>
-                </div>
-            </li>
-            <li id="opc-payment_info" class="tab-section">
-                <div class="step-title">
-                    <span class="number">@paymentInfoStepNumber</span>
-                    <h2>@T("Checkout.PaymentInfo")</h2>
-                </div>
-                <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
-                    <form action="" id="co-payment-info-form">
+                </form>
+                <script type="text/javascript">
+                    PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/');
+                </script>
+            </div>
+        </div>
+        <div class="xm-box">
+            <div class="box-hd ">
+                <h2 class="title">支付信息</h2>
+                <!---->
+            </div>
+            <div class="box-bd">
+                <form action="" id="co-payment-info-form">
                     <div id="checkout-payment-info-load">
                         @*payment info content will be loaded here*@ Payment is not required
                     </div>
-                    </form>
-                    <script type="text/javascript">
-                        PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
-                    </script>
-                    <div class="buttons" id="payment-info-buttons-container">
-                        <p class="back-link">
-                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a></p>
-                        <input type="button" class="button-1 payment-info-next-step-button" onclick="PaymentInfo.save()" value="@T("Common.Continue")" />
-                        <span class="please-wait" id="payment-info-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
-                    </div>
+                </form>
+                <script type="text/javascript">
+                    PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
+                </script>
+            </div>
+        </div>
+        <div class="xm-box">
+            <div class="box-hd ">
+                <h2 class="title">订单确认</h2>
+                <!---->
+            </div>
+            <div class="box-bd">
+                <div id="checkout-confirm-order-load">
+                    @*confirm order content will be loaded here*@
                 </div>
-            </li>
-            <li id="opc-confirm_order" class="tab-section">
-                <div class="step-title">
-                    <span class="number">@confirmOrderStepNumber</span>
-                    <h2>@T("Checkout.ConfirmOrder")</h2>
+                <script type="text/javascript">
+                    ConfirmOrder.init('@(storeLocation)checkout/OpcConfirmOrder/', '@(storeLocation)checkout/completed/');
+                </script>
+            </div>
+        </div>
+
+        <div id="checkoutPayment">
+            <!-- 支付方式 -->
+            <div class="xm-box">
+                <div class="box-hd ">
+                    <h2 class="title">支付方式</h2>
                 </div>
-                <div id="checkout-step-confirm-order" class="step a-item" style="display: none;">
-                    <div id="checkout-confirm-order-load">
-                        @*confirm order content will be loaded here*@
-                    </div>
-                    <script type="text/javascript">
-                        ConfirmOrder.init('@(storeLocation)checkout/OpcConfirmOrder/', '@(storeLocation)checkout/completed/');
-                    </script>
-                    <div class="buttons" id="confirm-order-buttons-container">
-                        <p class="back-link">
-                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>@T("Common.Back")</a></p>
-                        <input type="button" class="button-1 confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="@T("Common.Confirm")" />
-                        <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
-                    </div>
+                <div class="box-bd">
+                    <ul id="checkoutPaymentList" class="checkout-option-list clearfix J_optionList">
+                        <li class="item selected">
+                            <input type="radio" name="Checkout[pay_id]" checked="checked" value="1">
+                            <p>
+                                在线支付                                <span></span>
+                            </p>
+                        </li>
+                    </ul>
                 </div>
-            </li>
-        </ol>
+            </div>
+            <!-- 支付方式 END-->
+            <div class="xm-box">
+                <div class="box-hd ">
+                    <h2 class="title">配送方式</h2>
+                </div>
+                <div class="box-bd">
+                    <ul id="checkoutShipmentList" class="checkout-option-list clearfix J_optionList">
+                        <li class="item selected">
+                            <input type="radio" data-price="10" name="Checkout[shipment_id]" checked="checked" value="2">
+                            <p>
+                                加配送费 10 元                                <span></span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 配送方式 END-->                    <!-- 配送方式 END-->
+        </div>
+        <!-- 送货时间 -->
+        <div class="xm-box">
+            <div class="box-hd">
+                <h2 class="title">送货时间</h2>
+            </div>
+            <div class="box-bd">
+                <ul class="checkout-option-list clearfix J_optionList">
+                    <li class="item selected"><input type="radio" checked="checked" name="Checkout[best_time]" value="1"><p>不限送货时间<span>周一至周日</span></p></li>
+                    <li class="item "><input type="radio" name="Checkout[best_time]" value="2"><p>工作日送货<span>周一至周五</span></p></li>
+                    <li class="item "><input type="radio" name="Checkout[best_time]" value="3"><p>双休日、假日送货<span>周六至周日</span></p></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 送货时间 END-->
+        <!-- 发票信息 -->
+        <div class="xm-box">
+            <div class="box-hd">
+                <h2 class="title">发票信息</h2>
+            </div>
+            <div class="box-bd">
+                <ul class="checkout-option-list checkout-option-invoice clearfix J_optionList J_optionInvoice">
+                    <li class="hide">
+                        电子个人发票4
+
+                    </li>
+                    <li class="item selected">
+                        <!--<label><input type="radio"  class="needInvoice" value="0" name="Checkout[invoice]">不开发票</label>-->
+                        <input type="radio" checked="checked" value="4" name="Checkout[invoice]">
+                        <p>电子发票</p>
+                    </li>
+                    <li class="item ">
+                        <input type="radio" value="2" name="Checkout[invoice]">
+                        <p>普通发票</p>
+                    </li>
+                </ul>
+                <p id="eInvoiceTip" class="e-invoice-tip">电子发票是税务局认可的有效凭证，可作为售后维权凭据。开票后不可更换纸质发票，如需报销请选择普通发票。<a href="http://bbs.xiaomi.cn/thread-9285999-1-1.html" target="_blank">什么是电子发票？</a></p>
+                <div class="invoice-info nvoice-info-1" id="checkoutInvoiceElectronic" style="display:none;">
+
+                    <p class="tip">电子发票目前仅对个人用户开具，不可用于单位报销 </p>
+                    <p>发票内容：购买商品明细</p>
+                    <p>发票抬头：个人</p>
+                    <p>
+                        <span class="hide"><input type="radio" value="4" name="Checkout[invoice_type]" checked="checked" id="electronicPersonal" class="invoiceType"></span>
+                        <dl>
+                            <dt>什么是电子发票?</dt>
+                            <dd>&#903; 电子发票是纸质发票的映像，是税务局认可的有效凭证，与传统纸质发票具有同等法律效力，可作为售后维权凭据。</dd>
+                            <dd>&#903; 开具电子服务于个人，开票后不可更换纸质发票，不可用于单位报销。</dd>
+                            <dd>&#903; 您在订单详情的"发票信息"栏可查看、下载您的电子发票。<a href="http://bbs.xiaomi.cn/thread-9285999-1-1.html" target="_blank">什么是电子发票？</a></dd>
+                        </dl>
+                    </p>
+                </div>
+                <div class="invoice-info invoice-info-2" id="checkoutInvoiceDetail" style="display:none;">
+                    <p>发票内容：购买商品明细</p>
+                    <p>
+                        发票抬头：请确认单位名称正确,以免因名称错误耽搁您的报销。注：合约机话费仅能开个人发票
+                    </p>
+                    <ul class="type clearfix J_invoiceType">
+                        <li class="hide">
+                            <input type="radio" value="0" name="Checkout[invoice_type]" id="noNeedInvoice">
+                        </li>
+                        <li class="">
+
+                            <input class="invoiceType" type="radio" id="commonPersonal" name="Checkout[invoice_type]" value="1">
+                            个人
+                        </li>
+                        <li>
+                            <input class="invoiceType" type="radio" name="Checkout[invoice_type]" value="2">
+                            单位
+                        </li>
+                    </ul>
+                    <div id='CheckoutInvoiceTitle' class="hide invoice-title">
+                        <label for="Checkout[invoice_title]">单位名称：</label>
+                        <input name="Checkout[invoice_title]" type="text" maxlength="49" value="" class="input"> <span class="tip-msg J_tipMsg"></span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- 发票信息 END-->
     </div>
-    <script type="text/javascript">
-        Accordion.init('checkout-steps', '.step-title', true);
-        Accordion.openSection('#opc-billing');
-        Checkout.init('@(storeLocation)cart/');
-        if (Billing.disableBillingAddressCheckoutStep)
-        {
-            Accordion.hideSection('#opc-billing');
-            Billing.save();
-        }
-    </script>
+
+        <div class="checkout-box-ft">
+            <!-- 商品清单 -->
+            <div id="checkoutGoodsList" class="checkout-goods-box">
+                <div class="xm-box">
+                    <div class="box-hd">
+                        <h2 class="title">确认商品及优惠券</h2>
+                    </div>
+                    <div class="box-bd">
+                        <dl class="checkout-goods-list">
+                            <dt class="clearfix">
+                                <span class="col col-1">商品名称</span>
+                                <span class="col col-2">单品价格</span>
+                                <span class="col col-3">购买数量</span>
+                                <span class="col col-4">小计</span>
+                            </dt>
+                            <dd class="item clearfix">
+                                <div class="item-row">
+                                    <div class="col col-1">
+                                        <div class="g-pic">
+                                            <img src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1p.VTBXdT1RXrhCrK.jpg?width=40&height=40" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1p.VTBXdT1RXrhCrK.jpg?width=80&height=80 2x" width="40" height="40" />
+                                        </div>
+                                        <div class="g-info">
+                                            <a href="http://www.mi.com/item/1140800002" target="_blank">
+                                                小米移动电源5200mAh 银色
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="col col-2">49元</div>
+                                    <div class="col col-3">1</div>
+                                    <div class="col col-4">49元</div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <div class="checkout-count clearfix">
+                            <div class="checkout-count-extend xm-add-buy">
+                                <div class="item" id="checkoutCouponBox">
+                                    <input type="checkbox" name="Checkout[useCoupon]" id="useCoupon">
+                                    <i class="iconfont icon-checkbox ">&#xe626;</i>
+                                    使用优惠券
+                                    <span class="coupon-result" id="couponResult"></span>
+
+                                </div>
+                                <!-- item E -->
+
+                                <div class="coupon-box" id="couponBox">
+                                    <span class="arrow-border"></span><span class="arrow-bg"></span>
+                                    <div class="coupon-tab-nav clearfix" id="couponTabNav">
+                                        <span class="nav-item current">填写礼品券码</span><span class="nav-item couponList">查看我账户中的优惠券</span>
+                                    </div>
+                                    <div class="coupon-tab-con" id="couponTabCon">
+                                        <div class="con-item current">
+                                            <div class="con-item-bd">
+                                                <input type="text" name="couponCode" id="couponCode" class="coupon-code">
+                                            </div>
+                                            <div class="con-item-ft">
+                                                <p class='coupon-tip' id="checkCouponTip"></p>
+                                                <a href="#" class="btn btn-lineDakeLight btn-small J_cancelCouponBtn">取消</a><a href="#" class="btn btn-primary btn-small" id="checkCouponBtn">确认使用</a>
+                                            </div>
+                                        </div>
+                                        <!-- con-item -->
+                                        <div class="con-item">
+
+                                            <div class="con-item-bd">
+                                                <span>没有优惠券可以选择</span>
+                                            </div>
+                                        </div>
+                                        <!-- con-item -->
+                                    </div>
+                                    <!-- tab-con -->
+                                </div>
+                                <!-- coupon-box -->
+                                <div class="item J_addBuy ">
+                                    <input type="checkbox" data-isbatch="false" id="Gift664" name="Checkout[gift][]" data-goodsid="2134900285-0-1-664" data-actid="664" data-itemid="8888888_0_bargain_664_total_1_sale" data-price="1" value="2134900285">
+                                    <i class="iconfont icon-checkbox ">&#xe626;</i>+1元得礼品包装：环保手提礼品袋 <!--￥1-->
+                                </div>
+
+                            </div>
+                            <!-- checkout-count-extend -->
+                            <div class="checkout-price">
+                                <ul>
+                                    <li>
+                                        商品件数：<span>1件</span>
+                                    </li>
+                                    <li>
+                                        金额合计：<span>49元</span>
+                                    </li>
+                                    <li>
+                                        活动优惠：<span>-0.00元</span>
+                                        <script type="text/javascript">checkoutConfig.activityDiscountMoney = 0.00;</script>
+                                    </li>
+                                    <li>
+                                        优惠券抵扣：<span id="couponDesc">-0元</span>
+                                    </li>
+                                    <li>
+                                        运费：<span id="postageDesc">10元</span>
+                                    </li>
+                                </ul>
+                                <p class="checkout-total">应付总额：<span><strong id="totalPrice">59</strong>元</span></p>
+                            </div>
+                            <!--  -->
+                        </div>
+                    </div>
+                </div>
+
+                <!--S 加价购 产品选择弹框 -->
+                <div class="modal hide modal-choose-pro" id="J_choosePro-664">
+                    <div class="modal-header">
+                        <span class="close" data-dismiss='modal'><i class="iconfont">&#xe617;</i></span>
+                        <h3>选择产品</h3>
+                        <div class="more">
+                            <div class="xm-recommend-page clearfix">
+                                <a class="page-btn-prev   J_carouselPrev iconfont" href="javascript: void(0);">&#xe604;</a><a class="page-btn-next  J_carouselNext iconfont" href="javascript: void(0);">&#xe605;</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body J_chooseProCarousel">
+                        <div class="J_carouselWrap modal-choose-pro-list-wrap">
+                            <ul class="clearfix J_carouselList"></ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-disabled J_chooseProBtn">加入购物车</a>
+                    </div>
+                </div>
+                <!--E 加价购 产品选择弹框 -->
+            </div>
+            <!-- 商品清单 END -->
+            <input type="hidden" id="couponType" name="Checkout[couponsType]">
+            <input type="hidden" id="couponValue" name="Checkout[couponsValue]">
+            <div class="checkout-confirm">
+                <div id="submitAddress"></div>
+                <a href="http://order.mi.com/cart" class="btn btn-lineDakeLight btn-back-cart">返回购物车</a>
+                <input type="submit" class="btn btn-primary" value="立即下单" id="checkoutToPay" />
+            </div>
+        </div>
 </div>
+    <script type="text/javascript">
+        Checkout.init('@(storeLocation)cart/');
+        Billing.save();
+    </script>

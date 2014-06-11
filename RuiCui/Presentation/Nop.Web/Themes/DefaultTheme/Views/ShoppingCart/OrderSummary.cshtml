@@ -225,6 +225,8 @@
         <div class="shop-cart-total">
             @Html.Action("OrderTotals", "ShoppingCart", new { isEditable = Model.IsEditable })
         </div>
+@if (Model.IsEditable)
+{
         <div class="shop-cart-action clearfix">
             @if (String.IsNullOrEmpty(Model.MinOrderSubtotalWarning))
             {
@@ -255,6 +257,7 @@
                 <span class="shop-cart-coudan"></span>
             </div>
         </div>
+}
     </div>
     <!-- 购物车统计 END-->
         }
@@ -266,6 +269,4 @@
         @Html.Widget("order_summary_content_after")
     </div>
 </div>
-    <div class="xm-line-box hot-pro J_hotProCarousel">
-        @Html.Action("CrossSellProducts", "Catalog")
-    </div>
+
