@@ -29,3 +29,10 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Nop
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.pdb
+C:\myProject\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Description.txt
+C:\myProject\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\logo.jpg
+C:\myProject\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Nop.Plugin.Payments.AliPay.dll
+C:\myProject\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Nop.Plugin.Payments.AliPay.pdb
+C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.csprojResolveAssemblyReference.cache
+C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.dll
+C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.pdb
