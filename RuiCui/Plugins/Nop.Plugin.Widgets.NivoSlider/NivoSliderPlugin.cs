@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <returns>Widget zones</returns>
         public IList<string> GetWidgetZones()
         {
-            return new List<string>() { "home_page_top" };
+            return new List<string>() { "home_page_top","test" };
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
             actionName = "Configure";
-            controllerName = "WidgetsNivoSlider";
+            controllerName = "IndexController";
             routeValues = new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers" }, { "area", null } };
         }
 
@@ -96,7 +96,47 @@ namespace Nop.Plugin.Widgets.NivoSlider
             _settingService.SaveSetting(settings);
 
 
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1", "Picture 1");
+    
+            //NivoIndexRightSettings
+            var settingsIndexRight = new NivoIndexRightSettings()
+            {
+                Picture1Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner1.jpg"), "image/pjpeg", "banner_1", true).Id,
+                Text1 = "",
+                Link1 = _webHelper.GetStoreLocation(false),
+                Picture2Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner2.jpg"), "image/pjpeg", "banner_2", true).Id,
+                Text2 = "",
+                Link2 = _webHelper.GetStoreLocation(false),
+                Picture3Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner3.jpg"), "image/pjpeg", "banner_3", true).Id,
+                Text3 = "",
+                Link3 = _webHelper.GetStoreLocation(false),
+                //Picture4Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner4.jpg"), "image/pjpeg", "banner_4", true).Id,
+                //Text4 = "",
+                //Link4 = _webHelper.GetStoreLocation(false),
+            };
+            _settingService.SaveSetting(settingsIndexRight);
+
+
+     
+            //NivoIndexSliderRootSettings
+            var settingsNivoIndexSliderRoot = new NivoIndexSliderRootSettings()
+            {
+                Picture1Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner1.jpg"), "image/pjpeg", "banner_1", true).Id,
+                Text1 = "",
+                Link1 = _webHelper.GetStoreLocation(false),
+                Picture2Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner2.jpg"), "image/pjpeg", "banner_2", true).Id,
+                Text2 = "",
+                Link2 = _webHelper.GetStoreLocation(false),
+                Picture3Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner3.jpg"), "image/pjpeg", "banner_3", true).Id,
+                Text3 = "",
+                Link3 = _webHelper.GetStoreLocation(false),
+                //Picture4Id = _pictureService.InsertPicture(File.ReadAllBytes(sampleImagesPath + "banner4.jpg"), "image/pjpeg", "banner_4", true).Id,
+                //Text4 = "",
+                //Link4 = _webHelper.GetStoreLocation(false),
+            };
+            _settingService.SaveSetting(settingsNivoIndexSliderRoot);
+
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1", "×ó 1");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture2", "Picture 2");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture3", "Picture 3");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture4", "Picture 4");
@@ -108,6 +148,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Link", "URL");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Link.Hint", "Enter URL. Leave empty if you don't want this picture to be clickable.");
 
+
             base.Install();
         }
 
@@ -118,6 +159,8 @@ namespace Nop.Plugin.Widgets.NivoSlider
         {
             //settings
             _settingService.DeleteSetting<NivoSliderSettings>();
+            _settingService.DeleteSetting<NivoIndexRightSettings>();
+            _settingService.DeleteSetting<NivoIndexSliderRootSettings>();
 
             //locales
             this.DeletePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1");
