@@ -80,10 +80,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\WidgetsIndexSliderRootController.cs" />
+    <Compile Include="Controllers\WidgetsIndexRightController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\WidgetsNivoSliderController.cs" />
     <Compile Include="Infrastructure\Cache\ModelCacheEventConsumer.cs" />
     <Compile Include="Infrastructure\DependencyRegistrar.cs" />
+    <Compile Include="Models\ConfigurationIndexSliderRootModel.cs" />
+    <Compile Include="Models\ConfigurationIndexRightModel.cs" />
+    <Compile Include="Models\PublicInfoIndexSliderRootModel.cs" />
+    <Compile Include="Models\PublicInfoIndexRightModel.cs" />
+    <Compile Include="NivoIndexSliderRootSettings.cs" />
     <Compile Include="NivoSliderPlugin.cs" />
+    <Compile Include="NivoIndexRightSettings.cs" />
     <Compile Include="NivoSliderSettings.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\PublicInfoModel.cs" />
@@ -171,6 +180,11 @@
   <ItemGroup>
     <Content Include="Content\nivoslider\README" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureIndexRight.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureIndexSliderRoot.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexRight.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexSliderRoot.cshtml" />
+    <EmbeddedResource Include="Views\index.cshtml" />
     <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
