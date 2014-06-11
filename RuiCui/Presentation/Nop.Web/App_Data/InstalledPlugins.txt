@@ -28,3 +28,4 @@ Tax.CountryStateZip
 Widgets.GoogleAnalytics
 Widgets.NivoSlider
 FoxNetSoft.Plugin.Misc.ModularProducts
+Payments.AliPay

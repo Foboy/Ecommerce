@@ -2,20 +2,20 @@
 @using Nop.Web.Models.Checkout
 @using Nop.Web.Models.ShoppingCart;
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_Root.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/shopcart.css");
 }
 @if (!Model.OnePageCheckoutEnabled)
 {
     @Html.Action("CheckoutProgress", "Checkout", new {step = CheckoutProgressStep.Cart})
 }
-<div class="page shopping-cart-page">
-    <div class="page-title">
-        <h1>@T("ShoppingCart")</h1>
-    </div>
-    <div class="page-body">
-        @Html.Partial("OrderSummary", Model)
-    </div>
+<div id="shopCartBox">
+    @Html.Partial("OrderSummary", Model)
+</div>
+<div class="xm-line-box hot-pro J_hotProCarousel">
+    @Html.Action("CrossSellProducts", "Catalog")
 </div>

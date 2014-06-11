@@ -11,7 +11,7 @@ var Checkout = {
         this.loadWaiting = false;
         this.failureUrl = failureUrl;
 
-        Accordion.disallowAccessToNextSections = true;
+        Accordion.disallowAccessToNextSections = false;
     },
 
     ajaxFailure: function () {
@@ -108,7 +108,7 @@ var Checkout = {
 var Billing = {
     form: false,
     saveUrl: false,
-    disableBillingAddressCheckoutStep: false,
+    disableBillingAddressCheckoutStep: true,
 
     init: function (form, saveUrl, disableBillingAddressCheckoutStep) {
         this.form = form;
