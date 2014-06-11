@@ -1,0 +1,36 @@
+﻿@model Nop.Plugin.Widgets.NivoSlider.Models.PublicInfoIndexRightModel
+@{
+    Layout = "";
+
+}
+@using System
+@using Nop.Web.Framework.UI
+
+@helper RenderSliderLine(string pictureUrl, string text, string link, string dataTransition = "")
+{
+    if (!string.IsNullOrEmpty(pictureUrl))
+    {    
+        <div class="slide">
+             @if (!string.IsNullOrEmpty(link))
+             {
+            <a href="@link" target="_blank">
+                <img src="@pictureUrl" data-src-r="@pictureUrl" data-src-r-2x="@pictureUrl" srcset="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
+            </a>
+             }
+             else
+             {
+            <img src="@pictureUrl" data-src-r="@pictureUrl" data-src-r-2x="@pictureUrl" srcset="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
+             }
+        
+        </div>
+
+    }
+
+}
+<div id="J_homeSlider" class="xm-slider">
+    @RenderSliderLine(Model.Picture1Url, Model.Text1, Model.Link1)
+    @RenderSliderLine(Model.Picture2Url, Model.Text2, Model.Link2)
+    @RenderSliderLine(Model.Picture3Url, Model.Text3, Model.Link3, "slideInLeft")
+    @RenderSliderLine(Model.Picture4Url, Model.Text4, Model.Link4)
+    @RenderSliderLine(Model.Picture5Url, Model.Text5, Model.Link5)
+</div>
