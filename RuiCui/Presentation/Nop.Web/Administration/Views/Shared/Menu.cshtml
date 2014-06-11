@@ -9,12 +9,20 @@
         .GetPlugins<IAdminMenuPlugin>()
         .Where(x => x.Authenticate())
         .ToList();
+    var currentController = ViewContext.RouteData.Values["controller"];
+    var currentAction = ViewContext.RouteData.Values["action"];
 }
-@helper RenderMenuItem(Nop.Web.Framework.Menu.SiteMapNode item)
+@helper RenderMenuItem(Nop.Web.Framework.Menu.SiteMapNode item,string currentController,string currentAction)
 {
     string url = null;
+    bool active = false;
     if (!string.IsNullOrEmpty(item.ControllerName) && !string.IsNullOrEmpty(item.ActionName))
     {
+        if (item.ControllerName.Equals(currentController, StringComparison.OrdinalIgnoreCase) && item.ActionName.Equals(currentAction, StringComparison.OrdinalIgnoreCase))
+        {
+            active = true;
+        }
+            
         url = Url.Action(item.ActionName, item.ControllerName, item.RouteValues, null, null);
     }
     else if (!string.IsNullOrEmpty(item.Url))
@@ -25,7 +33,7 @@
 
         @if (!String.IsNullOrEmpty(url))
         {
-            <a href="@url">
+            <a href="@url" @Html.Raw((active ? "class=\"activelink\"" : ""))>
                 <i class="fa fa-dashboard"></i> <span>@item.Title</span>
             </a>
         }
@@ -42,17 +50,17 @@
             <ul class="treeview-menu">
                 @foreach (var childItem in item.ChildNodes.Where(x => x.Visible))
                 {
-                    @RenderMenuItem(childItem)
+                    @RenderMenuItem(childItem, currentController, currentAction)
                 }
             </ul>
         }
         </li>
 }
 
-<ul class="sidebar-menu">
+<ul class="sidebar-menu" id="sidebar-root-menu">
     @foreach (var item in siteMap.RootNode.ChildNodes.Where(x => x.Visible))
     {
-        @RenderMenuItem(item)
+        @RenderMenuItem(item, string.Format("{0}", currentController), string.Format("{0}", currentAction))
     }
     @*plugin custom items*@
     @if (adminMenuPlugins.Any())
@@ -66,6 +74,9 @@
         {
             pluginRootMenuItem.ChildNodes.Add(adminMenuPlugin.BuildMenuItem());
         }
-        @RenderMenuItem(pluginRootMenuItem)
+        @RenderMenuItem(pluginRootMenuItem, string.Format("{0}", currentController), string.Format("{0}", currentAction))
     }
 </ul>
+<script type="text/javascript">
+    $("#sidebar-root-menu a.activelink").parents("li").addClass("active");
+</script>

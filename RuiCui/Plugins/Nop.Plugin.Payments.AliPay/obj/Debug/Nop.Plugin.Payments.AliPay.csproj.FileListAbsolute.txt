@@ -26,6 +26,5 @@ E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Des
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\logo.jpg
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Nop.Plugin.Payments.AliPay.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\Payments.AliPay\Nop.Plugin.Payments.AliPay.pdb
-E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.csprojResolveAssemblyReference.cache
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.dll
 E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.Payments.AliPay\obj\Debug\Nop.Plugin.Payments.AliPay.pdb
