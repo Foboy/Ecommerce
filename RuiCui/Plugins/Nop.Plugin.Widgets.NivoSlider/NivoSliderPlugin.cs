@@ -45,7 +45,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
             actionName = "Configure";
-            controllerName = "IndexController";
+            controllerName = "Index";
             routeValues = new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers" }, { "area", null } };
         }
 
