@@ -14,6 +14,12 @@ namespace Nop.Plugin.Widgets.NivoSlider.Infrastructure
             //we cache presentation models between requests
             builder.RegisterType<WidgetsNivoSliderController>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+            builder.RegisterType<IndexController>()
+            .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+            builder.RegisterType<WidgetsIndexRightController>()
+            .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
+            builder.RegisterType<WidgetsIndexSliderRootController>()
+            .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"));
         }
 
         public int Order

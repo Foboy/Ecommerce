@@ -2166,6 +2166,7 @@
     <Content Include="Themes\DefaultTheme\Content\js\categoryTree.js" />
     <Content Include="Themes\DefaultTheme\Content\js\index.js" />
     <Content Include="Themes\DefaultTheme\Content\js\jquery.js" />
+    <Content Include="Themes\DefaultTheme\Content\js\public.onepagecheckout.js" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\indeterminate.gif" />
