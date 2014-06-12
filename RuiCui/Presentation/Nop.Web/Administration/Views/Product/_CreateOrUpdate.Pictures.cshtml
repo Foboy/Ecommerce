@@ -100,7 +100,7 @@
                 var displayOrder = $("#@Html.FieldIdFor(model => model.AddPictureModel.DisplayOrder)").val();
                 
                 if (pictureId == 0) {
-                    alert('Upload picture first');
+                    alert('请先添加图片');
                     return;
                 }
 
@@ -116,7 +116,7 @@
                         $('#addProductPicture').attr('disabled', false);
                     },
                     error:function (xhr, ajaxOptions, thrownError){
-                        alert('Failed to add product picture.');
+                        alert('添加图片失败');
                         $('#addProductPicture').attr('disabled', false);
                     }  
                 });

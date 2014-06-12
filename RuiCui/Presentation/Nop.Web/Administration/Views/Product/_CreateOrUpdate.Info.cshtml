@@ -376,7 +376,7 @@
             @Html.NopLabelFor(model => model.ShowOnHomePage):
         </td>
         <td class="adminData">
-            @Html.EditorFor(model => model.ShowOnHomePage)y
+            @Html.EditorFor(model => model.ShowOnHomePage)
             @Html.ValidationMessageFor(model => model.ShowOnHomePage)
         </td>
     </tr>
@@ -473,7 +473,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.SpecialPrice):
+           商品特价:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.SpecialPrice) [@Model.PrimaryStoreCurrencyCode]
@@ -482,7 +482,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.SpecialPriceStartDateTimeUtc):
+           特价开始时间:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.SpecialPriceStartDateTimeUtc)
@@ -491,7 +491,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.SpecialPriceEndDateTimeUtc):
+            特价结束时间:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.SpecialPriceEndDateTimeUtc)
@@ -1064,7 +1064,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.AvailableStartDateTimeUtc):
+            商品上架时间:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.AvailableStartDateTimeUtc)
@@ -1073,7 +1073,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.AvailableEndDateTimeUtc):
+            商品下架时间:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.AvailableEndDateTimeUtc)
@@ -1082,7 +1082,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.Published):
+            是否上架:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.Published)

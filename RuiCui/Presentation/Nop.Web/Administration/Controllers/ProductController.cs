@@ -1927,7 +1927,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品图片");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -1957,7 +1957,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
 
@@ -1993,7 +1993,7 @@ namespace Nop.Admin.Controllers
 
             var productPicture = _productService.GetProductPictureById(model.Id);
             if (productPicture == null)
-                throw new ArgumentException("No product picture found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品图片");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null)
@@ -2001,7 +2001,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productPicture.ProductId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
 
@@ -2019,7 +2019,7 @@ namespace Nop.Admin.Controllers
 
             var productPicture = _productService.GetProductPictureById(id);
             if (productPicture == null)
-                throw new ArgumentException("No product picture found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品图片");
 
             var productId = productPicture.ProductId;
 
@@ -2029,7 +2029,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
             var pictureId = productPicture.PictureId;
@@ -2088,7 +2088,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
 
@@ -2128,7 +2128,7 @@ namespace Nop.Admin.Controllers
 
             var psa = _specificationAttributeService.GetProductSpecificationAttributeById(model.Id);
             if (psa == null)
-                return Content("No product specification attribute found with the specified id");
+                return Content("没有使用指定的id找到产品规格属性");
 
             var productId = psa.Product.Id;
 
@@ -2138,7 +2138,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
 
@@ -2159,7 +2159,7 @@ namespace Nop.Admin.Controllers
 
             var psa = _specificationAttributeService.GetProductSpecificationAttributeById(id);
             if (psa == null)
-                throw new ArgumentException("No specification attribute found with the specified id");
+                throw new ArgumentException("没有使用指定的id找到产品规格属性");
 
             var productId = psa.ProductId;
 
@@ -2169,7 +2169,7 @@ namespace Nop.Admin.Controllers
                 var product = _productService.GetProductById(productId);
                 if (product != null && product.VendorId != _workContext.CurrentVendor.Id)
                 {
-                    return Content("This is not your product");
+                    return Content("这不是你的产品");
                 }
             }
 
@@ -2227,7 +2227,7 @@ namespace Nop.Admin.Controllers
 
             var tag = _productTagService.GetProductTagById(id);
             if (tag == null)
-                throw new ArgumentException("No product tag found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品标签");
             _productTagService.DeleteProductTag(tag);
 
             return new NullJsonResult();
@@ -2299,11 +2299,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var orders = _orderService.SearchOrders(
                 productId: productId,
@@ -2697,11 +2697,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var tierPricesModel = product.TierPrices
                 .OrderBy(x => x.StoreId)
@@ -2713,7 +2713,7 @@ namespace Nop.Admin.Controllers
                     if (x.StoreId > 0)
                     {
                         var store = _storeService.GetStoreById(x.StoreId);
-                        storeName = store != null ? store.Name : "Deleted";
+                        storeName = store != null ? store.Name : "删除";
                     }
                     else
                     {
@@ -2750,11 +2750,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(model.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var tierPrice = new TierPrice()
             {
@@ -2780,15 +2780,15 @@ namespace Nop.Admin.Controllers
 
             var tierPrice = _productService.GetTierPriceById(model.Id);
             if (tierPrice == null)
-                throw new ArgumentException("No tier price found with the specified id");
+                throw new ArgumentException("无级的价格与指定id发现");
 
             var product = _productService.GetProductById(tierPrice.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             tierPrice.StoreId = model.StoreId;
             tierPrice.CustomerRoleId = model.CustomerRoleId > 0 ? model.CustomerRoleId : (int?) null;
@@ -2807,16 +2807,16 @@ namespace Nop.Admin.Controllers
 
             var tierPrice = _productService.GetTierPriceById(id);
             if (tierPrice == null)
-                throw new ArgumentException("No tier price found with the specified id");
+                throw new ArgumentException("无级的价格与指定id发现");
 
             var productId = tierPrice.ProductId;
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             _productService.DeleteTierPrice(tierPrice);
 
@@ -2838,11 +2838,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var productVariantAttributes = _productAttributeService.GetProductVariantAttributesByProductId(productId);
             var productVariantAttributesModel = productVariantAttributes
@@ -2889,12 +2889,12 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(model.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
             {
-                return Content("This is not your product");
+                return Content("这不是你的产品");
             }
 
             var pva = new ProductVariantAttribute()
@@ -2919,15 +2919,15 @@ namespace Nop.Admin.Controllers
 
             var pva = _productAttributeService.GetProductVariantAttributeById(model.Id);
             if (pva == null)
-                throw new ArgumentException("No product variant attribute found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品变型属性");
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             pva.ProductAttributeId = model.ProductAttributeId;
             pva.TextPrompt = model.TextPrompt;
@@ -2947,17 +2947,17 @@ namespace Nop.Admin.Controllers
 
             var pva = _productAttributeService.GetProductVariantAttributeById(id);
             if (pva == null)
-                throw new ArgumentException("No product variant attribute found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品变型属性");
 
             var productId = pva.ProductId;
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             _productAttributeService.DeleteProductVariantAttribute(pva);
 
@@ -2978,7 +2978,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3011,7 +3011,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3049,11 +3049,11 @@ namespace Nop.Admin.Controllers
 
             var pva = _productAttributeService.GetProductVariantAttributeById(productVariantAttributeId);
             if (pva == null)
-                throw new ArgumentException("No product variant attribute found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品变型属性");
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3078,15 +3078,15 @@ namespace Nop.Admin.Controllers
 
             var pva = _productAttributeService.GetProductVariantAttributeById(productVariantAttributeId);
             if (pva == null)
-                throw new ArgumentException("No product variant attribute found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品变型属性");
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null  && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var values = _productAttributeService.GetProductVariantAttributeValues(productVariantAttributeId);
             var gridModel = new DataSourceResult
@@ -3138,11 +3138,11 @@ namespace Nop.Admin.Controllers
 
             var pva = _productAttributeService.GetProductVariantAttributeById(productAttributeAttributeId);
             if (pva == null)
-                throw new ArgumentException("No product variant attribute found with the specified id");
+                throw new ArgumentException("没有与指定id发现产品变型属性");
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3192,7 +3192,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(pva.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null&& product.VendorId != _workContext.CurrentVendor.Id)
@@ -3202,7 +3202,7 @@ namespace Nop.Admin.Controllers
             {
                 //ensure valid color is chosen/entered
                 if (String.IsNullOrEmpty(model.ColorSquaresRgb))
-                    ModelState.AddModelError("", "Color is required");
+                    ModelState.AddModelError("", "颜色必填");
                 try
                 {
                     var color = System.Drawing.ColorTranslator.FromHtml(model.ColorSquaresRgb);
@@ -3277,7 +3277,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(pvav.ProductVariantAttribute.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3343,7 +3343,7 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(pvav.ProductVariantAttribute.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
@@ -3353,7 +3353,7 @@ namespace Nop.Admin.Controllers
             {
                 //ensure valid color is chosen/entered
                 if (String.IsNullOrEmpty(model.ColorSquaresRgb))
-                    ModelState.AddModelError("", "Color is required");
+                    ModelState.AddModelError("", "颜色必填");
                 try
                 {
                     var color = System.Drawing.ColorTranslator.FromHtml(model.ColorSquaresRgb);
@@ -3419,15 +3419,15 @@ namespace Nop.Admin.Controllers
 
             var pvav = _productAttributeService.GetProductVariantAttributeValueById(id);
             if (pvav == null)
-                throw new ArgumentException("No product variant attribute value found with the specified id");
+                throw new ArgumentException("使用指定的id没有发现产品变型属性值");
 
             var product = _productService.GetProductById(pvav.ProductVariantAttribute.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             _productAttributeService.DeleteProductVariantAttributeValue(pvav);
 
@@ -3516,11 +3516,11 @@ namespace Nop.Admin.Controllers
 
             var associatedProduct = _productService.GetProductById(model.AssociatedToProductId);
             if (associatedProduct == null)
-                return Content("Cannot load a product");
+                return Content("无法加载产品");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && associatedProduct.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             //a vendor should have access only to his products
             model.IsLoggedInAsVendor = _workContext.CurrentVendor != null;
@@ -3545,11 +3545,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var productVariantAttributeCombinations = _productAttributeService.GetAllProductVariantAttributeCombinations(productId);
             var productVariantAttributesModel = productVariantAttributeCombinations
@@ -3598,15 +3598,15 @@ namespace Nop.Admin.Controllers
 
             var pvac = _productAttributeService.GetProductVariantAttributeCombinationById(model.Id);
             if (pvac == null)
-                throw new ArgumentException("No product variant attribute combination found with the specified id");
+                throw new ArgumentException("使用指定的id没有发现产品变型属性组合");
 
             var product = _productService.GetProductById(pvac.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             pvac.StockQuantity = model.StockQuantity1;
             pvac.AllowOutOfStockOrders = model.AllowOutOfStockOrders1;
@@ -3627,15 +3627,15 @@ namespace Nop.Admin.Controllers
 
             var pvac = _productAttributeService.GetProductVariantAttributeCombinationById(id);
             if (pvac == null)
-                throw new ArgumentException("No product variant attribute combination found with the specified id");
+                throw new ArgumentException("使用指定的id没有发现产品变型属性组合");
 
             var product = _productService.GetProductById(pvac.ProductId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var productId = pvac.ProductId;
             _productAttributeService.DeleteProductVariantAttributeCombination(pvac);
@@ -3840,11 +3840,11 @@ namespace Nop.Admin.Controllers
 
             var product = _productService.GetProductById(productId);
             if (product == null)
-                throw new ArgumentException("No product found with the specified id");
+                throw new ArgumentException("没有产品具有指定的id找到");
 
             //a vendor should have access only to his products
             if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
-                return Content("This is not your product");
+                return Content("这不是你的产品");
 
             var allAttributesXml = _productAttributeParser.GenerateAllCombinations(product);
             foreach (var attributesXml in allAttributesXml)
