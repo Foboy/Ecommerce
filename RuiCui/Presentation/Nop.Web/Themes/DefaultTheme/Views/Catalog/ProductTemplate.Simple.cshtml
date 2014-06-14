@@ -22,7 +22,7 @@
 <!--product breadcrumb-->
 @Html.Action("ProductBreadcrumb", "Catalog", new { productId = Model.Id })
 <div class="goods-detail-info row clearfix">
-    <div class="col col11 J_mi_goodsPic_block">
+    <div class="col col10">
         <div class="goods-pic-box  ">
             @Html.Partial("_ProductDetailsPictures", Model)
         </div>
@@ -32,7 +32,7 @@
 {
     <div class="overview">
         <div class="product-name">
-            <h1 itemprop="name">
+            <h1 class="googds-info-name">
                 @Model.Name
             </h1>
         </div>
@@ -41,12 +41,12 @@
         dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
         @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
         }
-        @if (!String.IsNullOrEmpty(Model.ShortDescription))
+        @*@if (!String.IsNullOrEmpty(Model.ShortDescription))
         {
             <div class="short-description">
                 @Html.Raw(Model.ShortDescription)
             </div>
-        }
+        }*@
         @Html.Widget("productdetails_overview_top")
         <!--product SKU, manufacturer part number, stock info-->
         @Html.Partial("_SKU_Man_Stock", Model)

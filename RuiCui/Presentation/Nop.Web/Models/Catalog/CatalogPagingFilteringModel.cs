@@ -71,7 +71,7 @@ namespace Nop.Web.Models.Catalog
         {
             #region Const
 
-            private const string QUERYSTRINGPARAM = "price";
+            public const string QUERYSTRINGPARAM = "price";
 
             #endregion 
 
@@ -360,6 +360,14 @@ namespace Nop.Web.Models.Catalog
                         item.SpecificationAttributeName = x.SpecificationAttributeName;
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
 
+                        var alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
+                        if (alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
+                            alreadyFilteredOptionIds.Remove(x.SpecificationAttributeOptionId);
+                        string newQueryParam = GenerateFilteredSpecQueryParam(alreadyFilteredOptionIds);
+                        string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                        filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                        item.FilterUrl = filterUrl;
+
                         return item;
                     }).ToList();
 
@@ -384,6 +392,8 @@ namespace Nop.Web.Models.Catalog
 
                     //remove filter URL
                     string removeFilterUrl = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                    removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
+                    removeFilterUrl = webHelper.RemoveQueryString(removeFilterUrl, PriceRangeFilterModel.QUERYSTRINGPARAM);
                     removeFilterUrl = ExcludeQueryStringParams(removeFilterUrl, webHelper);
                     this.RemoveFilterUrl = removeFilterUrl;
                 }

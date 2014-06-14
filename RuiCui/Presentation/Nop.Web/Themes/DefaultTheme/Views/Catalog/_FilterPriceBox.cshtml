@@ -22,31 +22,38 @@
 }
 @if (Model.Enabled)
 {
-    <div class="product-filters price-range-filter">
-        <div class="filter-title">
-            <strong>@T("Filtering.PriceRangeFilter")</strong>
-        </div>
-        <div class="filter-content">
-            @if (selectedItem == null)
-            {
-                <ul class="price-range-selector">
+    if (selectedItem == null)
+    {
+        <dl class="xm-filter-list  category-filter-list clearfix">
+            <dt>价格区间 ：</dt>
+            <dd>
+                <ul id="typeAdapt" class="clearfix">
+
                     @foreach (var item in Model.Items)
                     {
                         <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a> </li>
                     }
+
                 </ul>
-            }
-            else
-            {
-                <div class="selected-price-range">
-                    @FormatPriceRangeText(selectedItem)
+            </dd>
+        </dl>
+    }
+    else
+    {
+        <dl class="xm-filter-list  category-filter-list clearfix">
+            <dt class="condition-title">价格区间：</dt>
+            <dd>
+                <ul class="clearfix">
+                    <li class="condition">
+                        @FormatPriceRangeText(selectedItem)
+                        <a href="@Model.RemoveFilterUrl"><i class="iconfont">&#xf00b3;</i></a>
+                    </li>
+                    <li class="condition">
+                        <a href="@Model.RemoveFilterUrl">全部移除</a>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+    }
 
-                </div>
-                <div class="remove-filter">
-                    <a href="@Model.RemoveFilterUrl" class="remove-price-range-filter">@T("Filtering.PriceRangeFilter.Remove")</a>
-                </div>
-            }
-        </div>
-
-    </div>
 }

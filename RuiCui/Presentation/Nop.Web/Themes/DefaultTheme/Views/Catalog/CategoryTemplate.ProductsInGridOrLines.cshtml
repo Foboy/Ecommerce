@@ -54,65 +54,60 @@
 </div>
 <div class="box-bd">
     <div class="filter-lists">
-        <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
-            <dt>款式：</dt>
-            <dd>
-                <ul id="typeCat" class="clearfix">
-                    <li class="first "><a href="http://www.mi.com/accessories/1">观音</a></li>
-                    <li><a href="http://www.mi.com/accessories/2">玉佛</a></li>
-                    <li><a href="http://www.mi.com/accessories/3">如意</a></li>
-                    <li><a href="http://www.mi.com/accessories/4">节节高</a></li>
-                </ul>
-            </dd>
-        </dl>
-        <dl class="xm-filter-list  category-filter-list clearfix">
-            <dt>种地：</dt>
-            <dd>
-                <ul id="typeAdapt" class="clearfix">
-                    <li class="first"><a href="http://www.mi.com/accessories/2">满绿</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-16" rel="nofollow">多彩</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-32" rel="nofollow">水种</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-64" rel="nofollow">翠色</a></li>
-                </ul>
-            </dd>
-        </dl>
-        <dl class="xm-filter-list  category-filter-list clearfix">
-            <dt class="condition-title">已选条件：</dt>
-            <dd>
-                <ul class="clearfix">
-                    <li class="condition">
-                        <a href="http://www.mi.com/accessories/2">满绿</a>
-                        <i class="iconfont">&#xf00b3;</i>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-        <div class="product-filters-wrapper">
-            @*filtering*@
-            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
-            {
-                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
-            }
-            @*filtering*@
-            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
-            {
-                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
-            }
-        </div>
+@if (Model.SubCategories.Count > 0)
+{
+    <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
+        <dt>款式：</dt>
+        <dd>
+            <ul id="typeCat" class="clearfix">
+@foreach (var item in Model.SubCategories)
+{
+    <li class="first "><a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@item.Name</a></li>
+}
+            </ul>
+        </dd>
+    </dl>
+}
+        @*filtering*@
+        @{
+            ViewDataDictionary filters = new ViewDataDictionary();
+            filters.Add("SpecFilter", Model.PagingFilteringContext.SpecificationFilter);
+            filters.Add("PriceFilter", Model.PagingFilteringContext.PriceRangeFilter);
+            @Html.Partial("_FilterBox", null, filters)
+        }
     </div>
 </div>
 }
-
+<div class="product-sorting" style="display:none;">
+    @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
+</div>
 <div class="box-hd">
     <div class="filter-lists">
         <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
             <dd>
                 <ul id="typeOrder" class="clearfix">
-                    <li class="current first"><a href="http://www.mi.com/accessories/2-0-0-0-1-0" rel="nofollow">推荐</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-0-1-0-1-0" rel="nofollow">最新</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-0-10-0-1-0" rel="nofollow">价格从高到低</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-0-8-0-1-0" rel="nofollow">价格从低到高</a></li>
-                    <li><a href="http://www.mi.com/accessories/2-0-3-0-1-0" rel="nofollow">关注度</a></li>
+                    @if (Model.PagingFilteringContext.AvailableSortOptions.Count > 0)
+                    {
+                        foreach (var item in Model.PagingFilteringContext.AvailableSortOptions)
+                        {
+                            if (item.Value.Contains("orderby=0"))
+                            {
+                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">默认</a></li>
+                            }
+                            else if (item.Value.Contains("orderby=15"))
+                            {
+                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">最新</a></li>
+                            }
+                            else if (item.Value.Contains("orderby=11"))
+                            {
+                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">价格从高到低</a></li>
+                            }
+                            else if (item.Value.Contains("orderby=10"))
+                            {
+                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">价格从低到高</a></li>
+                            }
+                        }
+                    }
                 </ul>
             </dd>
         </dl>
@@ -120,8 +115,9 @@
     </div>
     <div class="more">
         <div class="filter-stock">
-            <a href="http://www.mi.com/accessories/2-0-0-0-1-1"><i class="icon-check iconfont ">&#xe626;</i>仅显示特惠商品</a>&nbsp;&nbsp;
-            <a href="http://www.mi.com/accessories/2-0-0-1-1-0"><i class="icon-check iconfont ">&#xe626;</i>仅显示有货商品</a>
+            <!--
+            <a href=""><i class="icon-check iconfont ">&#xe626;</i>仅显示特惠商品</a>&nbsp;&nbsp;
+            <a href=""><i class="icon-check iconfont ">&#xe626;</i>仅显示有货商品</a>-->
         </div>
     </div>
 </div>

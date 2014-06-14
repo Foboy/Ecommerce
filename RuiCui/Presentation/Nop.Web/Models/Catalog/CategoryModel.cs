@@ -50,6 +50,8 @@ namespace Nop.Web.Models.Catalog
             public string SeName { get; set; }
 
             public PictureModel PictureModel { get; set; }
+
+            public bool IsCurrent { get; set; }
         }
 
 		#endregion
