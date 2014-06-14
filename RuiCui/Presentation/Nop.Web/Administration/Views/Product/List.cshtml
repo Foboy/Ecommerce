@@ -16,10 +16,10 @@
         <div class="options">
             <a href="@Url.Action("Create")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.AddNew")</a>
             <a href="@Url.Action("DownloadCatalogAsPdf")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Catalog.Products.List.DownloadPDF")</a>
-            <a href="@Url.Action("ExportXmlAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.All")</a>
-            <input type="button" id="exportxml-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ExportToXml.Selected")" />
+            @*<a href="@Url.Action("ExportXmlAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.All")</a>
+            <a  id="exportxml-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.Selected")</a>*@
             <a href="@Url.Action("ExportExcelAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToExcel.All")</a>
-            <input type="button" id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ExportToExcel.Selected")" />
+            <a  id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat " >@T("Admin.Common.ExportToExcel.Selected")</a>
             @if (!Model.IsLoggedInAsVendor)
 {
     //a vendor cannot import products
@@ -171,11 +171,11 @@
                                     field: "Name",
                                     title: "@T("Admin.Catalog.Products.Fields.Name")",
                                     width: 300
-                                }, {
+                                }@*, {
                                     field: "Sku",
                                     title: "@T("Admin.Catalog.Products.Fields.Sku")",
                                     width: 100
-                                }, {
+                                }*@, {
                                     field: "Price",
                                     title: "@T("Admin.Catalog.Products.Fields.Price")",
                                     width: 150,
@@ -184,27 +184,27 @@
                                 }, {
                                     field: "StockQuantity",
                                     title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
-                                    width: 100,
+                                    width: 50,
                                     //if not a grouped product
                                     //AND "manage inventory" is "Track inventory"
                                     //then display
                                     template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
-                                }, {
+                                }, @*{
                                     field: "ProductTypeName",
                                     title: "@T("Admin.Catalog.Products.Fields.ProductType")",
                                     width: 100
-                                }, {
+                                },*@ {
                                     field: "Published",
                                     title: "@T("Admin.Catalog.Products.Fields.Published")",
-                                    width: 100,
+                                    width: 50,
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
                                     template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
                                 }, {
                                     field: "Id",
-                                    title: "@T("Admin.Common.Edit")",
-                                    width: 100,
-                                    template: '<a href="Edit/#=Id#">@T("Admin.Common.Edit")</a>'
+                                    title: "操作",
+                                    width: 200,
+                                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 800, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
                                 }
                             ]
                         } );
