@@ -1262,18 +1262,21 @@ namespace Nop.Web.Controllers
             //subcategories
             //We cache whether we have subcategories
             IList<Category> subcategories = null;
-            string hasSubcategoriesCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_SUBCATEGORIES_KEY, categoryId,
+            int rootid=categoryId;
+            if (category.ParentCategoryId > 0)
+                rootid = category.ParentCategoryId;
+            string hasSubcategoriesCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_SUBCATEGORIES_KEY, rootid,
                 string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
             var hasSubcategoriesCache = _cacheManager.Get<bool?>(hasSubcategoriesCacheKey);
             if (!hasSubcategoriesCache.HasValue)
             {
-                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(categoryId);
+                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(rootid);
                 hasSubcategoriesCache = subcategories.Count > 0;
                 _cacheManager.Set(hasSubcategoriesCacheKey, hasSubcategoriesCache, 60);
             }
             if (hasSubcategoriesCache.Value && subcategories == null)
             {
-                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(categoryId);
+                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(rootid);
             }
             if (subcategories != null)
             {
@@ -1286,6 +1289,7 @@ namespace Nop.Web.Controllers
                         Id = x.Id,
                         Name = subCatName,
                         SeName = x.GetSeName(),
+                        IsCurrent = categoryId == x.Id
                     };
 
                     //prepare picture model
