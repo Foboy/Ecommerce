@@ -1,0 +1,102 @@
+﻿@using Nop.Web.Models.Catalog;
+@{
+    CatalogPagingFilteringModel.SpecificationFilterModel specModel = ViewData["SpecFilter"] as CatalogPagingFilteringModel.SpecificationFilterModel;
+    CatalogPagingFilteringModel.PriceRangeFilterModel priceModel =ViewData["PriceFilter"] as CatalogPagingFilteringModel.PriceRangeFilterModel;
+    var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
+    var selectedItem = priceModel.Items.FirstOrDefault(x => x.Selected);
+
+}
+@helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
+{
+    string rangeText = "";
+    if (String.IsNullOrWhiteSpace(filterItem.From))
+    {
+        rangeText = string.Format(T("Filtering.PriceRangeFilter.Under").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.To));
+    }
+    else if (String.IsNullOrWhiteSpace(filterItem.To))
+    {
+        rangeText = string.Format(T("Filtering.PriceRangeFilter.Over").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.From));
+    }
+    else
+    {
+        rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", filterItem.From, filterItem.To);
+    }
+    <text>@Html.Raw(rangeText)</text>
+}
+@helper RemoveSpecFilter() { 
+
+    
+}
+@if (specModel.Enabled)
+{
+    if (specModel.NotFilteredItems.Count > 0)
+    {
+        foreach (var group in notFilteredItemsGroups)
+        {
+            var groupList = group.ToList();
+            <dl class="xm-filter-list  category-filter-list clearfix">
+                <dt>@groupList[0].SpecificationAttributeName ：</dt>
+                <dd>
+                    <ul id="typeAdapt" class="clearfix">
+                        @foreach (var spec in groupList)
+                        {
+                            <li>
+                                <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
+                            </li>
+                        }
+                    </ul>
+                </dd>
+            </dl>
+        }
+    }
+}
+@if (priceModel.Enabled)
+{
+    if (selectedItem == null)
+    {
+        <dl class="xm-filter-list  category-filter-list clearfix">
+            <dt>价格区间 ：</dt>
+            <dd>
+                <ul id="typeAdapt" class="clearfix">
+
+                    @foreach (var item in priceModel.Items)
+                    {
+                        <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a> </li>
+                    }
+
+                </ul>
+            </dd>
+        </dl>
+    }
+}
+@if (specModel.Enabled || priceModel.Enabled)
+{
+    if (specModel.AlreadyFilteredItems.Count > 0 || selectedItem != null)
+    {
+        <dl class="xm-filter-list  category-filter-list clearfix">
+            <dt class="condition-title">已选条件：</dt>
+            <dd>
+                <ul class="clearfix">
+                    @if (selectedItem != null)
+                    { 
+                    <li class="condition">
+                        @FormatPriceRangeText(selectedItem)
+                        <a href="@priceModel.RemoveFilterUrl"><i class="iconfont">&#xf00b3;</i></a>
+                    </li>
+                        
+                    }
+                    @foreach (var item in specModel.AlreadyFilteredItems)
+                    {
+                        <li class="condition">
+                            <strong>@(item.SpecificationAttributeName)：</strong>@item.SpecificationAttributeOptionName
+                            <a href="@item.FilterUrl"><i class="iconfont">&#xf00b3;</i></a>
+                        </li>
+                    }
+                    <li class="condition">
+                        <a href="?specs=&price=">全部移除</a>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+    }
+}

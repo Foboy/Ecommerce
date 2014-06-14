@@ -2,50 +2,48 @@
 @using Nop.Web.Models.Catalog;
 @{
     var notFilteredItemsGroups = Model.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
+   
 }
 @if (Model.Enabled)
 {
-    <div class="product-filters product-spec-filter">
-        <div class="filter-content">
-            @if (Model.NotFilteredItems.Count > 0)
-            {
-                <div class="available-items">
-                    @foreach (var group in notFilteredItemsGroups)
-                    {
-                        var groupList = group.ToList();
-                        
-                        <ul class="group">
-                            <li class="title">
-                                <strong>@groupList[0].SpecificationAttributeName</strong>
+    if (Model.NotFilteredItems.Count > 0)
+    {
+        foreach (var group in notFilteredItemsGroups)
+        {
+            var groupList = group.ToList();
+            <dl class="xm-filter-list  category-filter-list clearfix">
+                <dt>@groupList[0].SpecificationAttributeName ：</dt>
+                <dd>
+                    <ul id="typeAdapt" class="clearfix">
+                        @foreach (var spec in groupList)
+                        {
+                            <li>
+                                <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
                             </li>
-
-                            @foreach (var spec in groupList)
-                            {
-                                <li class="item">
-                                    <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
-                                </li>
-                            }
-                        </ul> 
-                    }
-                </div>
-            }
-            @if (Model.AlreadyFilteredItems.Count > 0)
-            {
-                <div class="already-filtered-items">
-                    <div class="filter-title">
-                        @T("Filtering.SpecificationFilter.CurrentlyFilteredBy")
-                    </div>
+                        }
+                    </ul>
+                </dd>
+            </dl>
+        }
+    }
+    if (Model.AlreadyFilteredItems.Count > 0)
+    {
+        <dl class="xm-filter-list  category-filter-list clearfix">
+            <dt class="condition-title">已选条件：</dt>
+            <dd>
+                <ul class="clearfix">
                     @foreach (var item in Model.AlreadyFilteredItems)
                     {
-                        <div class="item">
-                            <strong>@(item.SpecificationAttributeName):</strong> @item.SpecificationAttributeOptionName
-                        </div>
+                        <li class="condition">
+                            <strong>@(item.SpecificationAttributeName)：</strong>@item.SpecificationAttributeOptionName
+                            <a href="http://www.mi.com/accessories/2"><i class="iconfont">&#xf00b3;</i></a>
+                        </li>
                     }
-                </div>
-                <div class="remove-filter">
-                    <a href="@Model.RemoveFilterUrl">@T("Filtering.SpecificationFilter.Remove")</a>
-                </div>
-            }
-        </div>
-    </div>
+                    <li class="condition">
+                        <a href="@Model.RemoveFilterUrl">全部移除</a>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+    }
 }
