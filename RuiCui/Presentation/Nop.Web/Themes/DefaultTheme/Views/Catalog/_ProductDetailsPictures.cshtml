@@ -9,7 +9,7 @@
     int productPerRow = EngineContext.Current.Resolve<MediaSettings>().ProductThumbPerRowOnProductDetailsPage;
 }
 <div class="gallery">
-    <div class="picture">
+    <div class="goods-big-pic">
         @if (Model.DefaultPictureZoomEnabled)
         {
             <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
