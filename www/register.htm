@@ -5,22 +5,19 @@
 <title>瑞翠华光帐户 - 注册</title>
 <link href="css/register.css" rel="stylesheet" type="text/css"/>
 <link href="/static/res/FXwO78u/css/passport/manfind.css" rel="stylesheet" type="text/css"/>
-
-
 <script src="/static/res/42916/scripts/jquery-1.5.1.min.js"></script>
 <script src="/static/res/8JJZk6~/scripts/jquery/form.js"></script>
 <script src="/static/res/64371/scripts/common/more/placeholder.js"></script>
 
 <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?c64922fe907004774c797344b7063851";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?c64922fe907004774c797344b7063851";
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+  })();
 </script>
-
 <script>
 ;(function (){
   var _locale="zh_CN";
@@ -256,22 +253,29 @@ var _hmt = _hmt || [];
     </a>         
   </div>
 </div>
+
 <form id="fvmaskForm" onsubmit="return false;">
-    <div id="fvmask">
-        <div class="mask_bg"></div>
-        <div class="main_panel">
-            <div class="modal-header"><span data-dismiss="modal" class="close" onclick="$('#fvmask').hide();$(document.body).css('overflow','scroll');"></span><h3>图片验证码</h3></div>
-            <div class="img_wrapper mid"><img onclick="this.src += '&_=' + (+new Date);" id="img_code"></div>
-            <div class="img_reload"  onclick="document.getElementById('img_code').src += '&_=' + (+new Date);">看不清换一张</div>
-            <div class="mid t2_input">
-                <input id="ticket2" class="input_kuang code-area errortip item val_m" type="text" autocomplete="off" isrequired="true" name="ticket" placeholder="请输入图形中的字符，不区分大小写">
-                <span class="check_tips empty_tip" _orig="输入错误，请重新输入">输入错误，请重新输入</span>
-            </div>
-            <div class="mid smt_wrapper sub_bg"><input class="no_bg" type="button" value="提交" id="further_veri">
-            </div>
-        </div>
+  <div id="fvmask">
+    <div class="mask_bg"></div>
+    <div class="main_panel">
+      <div class="modal-header">
+        <span data-dismiss="modal" class="close" onclick="$('#fvmask').hide();$(document.body).css('overflow','scroll');"></span>
+        <h3>图片验证码</h3>
+      </div>
+      <div class="img_wrapper mid">
+        <img onclick="this.src += '&_=' + (+new Date);" id="img_code">
+      </div>
+      <div class="img_reload"  onclick="document.getElementById('img_code').src += '&_=' + (+new Date);">看不清换一张</div>
+      <div class="mid t2_input">
+        <input id="ticket2" class="input_kuang code-area errortip item val_m" type="text" autocomplete="off" isrequired="true" name="ticket" placeholder="请输入图形中的字符，不区分大小写">
+        <span class="check_tips empty_tip" _orig="输入错误，请重新输入">输入错误，请重新输入</span>
+      </div>
+      <div class="mid smt_wrapper sub_bg"><input class="no_bg" type="button" value="提交" id="further_veri">
+      </div>
     </div>
+  </div>
 </form>
+
 <div class="suc_content reg-account nojsp">
   <div class="suc_kuang">
     <div class="hei_513">
@@ -283,8 +287,10 @@ var _hmt = _hmt || [];
         <input type="radio" name="registerMethod" class="Mradio marl_40" id="tab1" clickFor="#regByEmail"/>
         <label for="tab1" hidefocus="true">用电子邮箱注册</label>
       </div>
+
+      <!--邮箱注册-->
       <form method="post" action='/pass/register' id="regByEmail">
-      <input type="hidden" name="passToken" id="passToken" value="" />
+        <input type="hidden" name="passToken" id="passToken" value="" />
         <input type="hidden" name="passport_ph" id="passport_ph" value="" />
         <input type="hidden" name="qs" value="" />
         <dl class="login-dl clearfix">
@@ -293,11 +299,11 @@ var _hmt = _hmt || [];
             <input type="text" name="email" id="emailInp" class="input_kuang val_m item errortip address" value="" isRequired="true" rule="^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,6}$" autocomplete="off" />
             <span class="check_tips error_tip" id="emailCode">邮箱格式错误</span>
             <span class="check_tips empty_tip">请输入邮箱</span>
-      <span class="check_tips succ_tips"></span>
+            <span class="check_tips succ_tips"></span>
           </dd>
-    <dt class="dt_l">设置密码：</dt>
-    <dd class="dd_r dd_r_pos clearfix" id="pwdTd">
-      <input type="password" class="input_kuang item val_m errortip password" isRequired="true" id="pwd" name="password" autocomplete="off" />
+          <dt class="dt_l">设置密码：</dt>
+          <dd class="dd_r dd_r_pos clearfix" id="pwdTd">
+            <input type="password" class="input_kuang item val_m errortip password" isRequired="true" id="pwd" name="password" autocomplete="off" />
             <span class="check_tips error_tip" id="tips_val"></span>
             <span class="check_tips empty_tip">请输入新密码</span>
             <span class="prompt_info" id="pos_email">密码长度8~16位，数字、字母、字符至少包含两种</span>
@@ -309,43 +315,40 @@ var _hmt = _hmt || [];
             <span class="tips_4" style="display:none;">密码不能与邮箱相同</span>
             <span class="tips_6" style="display:none;">密码长度8~16位，数字、字母、字符至少包含两种</span>
             <span class="tips_7" style="display:none;">密码不能全为字符</span>
-    </dd>
+          </dd>
           <dt class="dt_l">确认密码：</dt>
-    <dd class="dd_r clearfix">
+          <dd class="dd_r clearfix">
             <input type="password" class="input_kuang val_m item errortip" name="repassword" isRequired="true" repeat="#pwd" autocomplete="off" />
             <span class="check_tips repeat_tip">密码输入不一致</span>
             <span class="check_tips empty_tip">请输入确认密码</span>
-      <span class="check_tips succ_tips"></span>
-    </dd>
+            <span class="check_tips succ_tips"></span>
+          </dd>
           <dt class="dt_l" style="margin-top:10px;">验证码：</dt>
           <dd class="dd_r clearfix" style="margin-top:10px;">
             <input id="imginput" type="text" class="input_kuang val_m item errortip checkcode" name="inputcode" isRequired="true" autocomplete="off" />
             <img src="/pass/getCode?icodeType=register" onclick="this.src = this.src + '&_=' + new Date().getTime()"/>
-      <span class="checkcode_span">点击图片刷新验证码
-            <br/>
-        <i class="code_error">
-        
-        </i>
-      </span>
+            <span class="checkcode_span">点击图片刷新验证码<br/><i class="code_error"></i></span>
           </dd>
-    <dt class="dt_l">&nbsp;</dt>
-    <dd class="dd_r la_height clearfix">
+          <dt class="dt_l">&nbsp;</dt>
+          <dd class="dd_r la_height clearfix">
             <div class="sub_login flt_l"><input type="submit" class="no_bg" value="立即注册" /></div>
           </dd>
-  </dl>
-      </form><!-- email end -->
+        </dl>
+      </form>
+      <!-- email end -->
+
+      <!--手机注册-->
       <form method="post" action='/pass/register' id="regByPhone">
         <!--用来对付IE11不支持autocomplete="off"-->
         <div style="display: none;">
             <input type="text"><input type="password">
-        </div>
-        
-      <input type="hidden" name="passToken" id="passToken" value="" />
+        </div>        
+        <input type="hidden" name="passToken" id="passToken" value="" />
         <input type="hidden" name="passport_ph" id="passport_ph" value="" />
         <input type="hidden" name="qs" value="" />
-  <dl class="login-dl clearfix" style="display:none;">
-    <dt class="dt_l">手机号码：</dt>
-    <dd class="dd_r clearfix" id="phoneInner" style="height:auto;">
+        <dl class="login-dl clearfix" style="display:none;">
+          <dt class="dt_l">手机号码：</dt>
+          <dd class="dd_r clearfix" id="phoneInner" style="height:auto;">
             <input type="text" class="input_kuang" name="phone" rule="(^1[3|4|5|8]\d{9}$)|(^\++\d{2,}$)" value="" isRequired="true" id="phoneNum" autocomplete="off" />
             <input class="mt_login val_m getCode noSend" disabled="disabled" id="sendRegister" type="button" value="获取验证码" />
             <span class="check_tips error_tip" id="phoneCode">手机号码格式错误</span>
@@ -376,50 +379,56 @@ var _hmt = _hmt || [];
             <span class="tips_3">密码不能全为数字</span>
             <span class="tips_6" style="display:none;">密码长度8~16位，数字、字母、字符至少包含两种</span>
             <span class="tips_7" style="display:none;">密码不能全为字符</span>
-    </dd>
+          </dd>
           <dt class="dt_l">确认密码：</dt>
-    <dd class="dd_r clearfix" style="position:relative;">
+          <dd class="dd_r clearfix" style="position:relative;">
             <input type="password" class="input_kuang val_m item errortip" name="repassword" isRequired="true" repeat="#phone_pwd" autocomplete="off" />
             <span class="check_tips repeat_tip">密码输入不一致</span>
-      <span class="check_tips empty_tip">请输入确认密码</span>
-      <span class="check_tips succ_tips"></span>
-      <span onclick="$('#security_tips').toggle();" title="点击查看帐号安全指示" class="prevnum_info check_tips" style="width: auto; display: inline; position: absolute; cursor: pointer; left: 247px;top:0;/*background-image: url(/pass/static/img/passport/num_info2.png);*/" id="open_security_tips"></span>
-      <div style="padding:20px;margin-left:320px;margin-top:-210px;display:none;z-index:100;position:absolute;background:rgb(236,236,236);border:1px solid #d9d9d9;width:600px;" id="security_tips">
-          <div style="position:absolute;right:10px;top:10px;cursor:pointer;" onclick="$('#security_tips').hide();">关闭</div>
-          <h1 style="font-size:24px;">帐号安全提示</h1>
-          <p><b style="font-weight:bold;">安全的密码设置原则：</b></p>
-          <ol style="list-style-type:decimal;list-style-position:inside;">
+            <span class="check_tips empty_tip">请输入确认密码</span>
+            <span class="check_tips succ_tips"></span>
+            <span onclick="$('#security_tips').toggle();" title="点击查看帐号安全指示" class="prevnum_info check_tips" style="width: auto; display: inline; position: absolute; cursor: pointer; left: 247px;top:0;/*background-image: url(/pass/static/img/passport/num_info2.png);*/" id="open_security_tips"></span>
+            <div style="padding:20px;margin-left:320px;margin-top:-210px;display:none;z-index:100;position:absolute;background:rgb(236,236,236);border:1px solid #d9d9d9;width:600px;" id="security_tips">
+              <div style="position:absolute;right:10px;top:10px;cursor:pointer;" onclick="$('#security_tips').hide();">关闭</div>
+              <h1 style="font-size:24px;">帐号安全提示</h1>
+              <p><b style="font-weight:bold;">安全的密码设置原则：</b></p>
+              <ol style="list-style-type:decimal;list-style-position:inside;">
                 <li>不要使用过于简单的密码，包括简单的纯数字或者简单常见的单词字母。</li>
                 <li>不要使用和自己相关直接信息作为密码，包括个人的生日，姓名的字母等容易被他人猜测到的信息。</li>
                 <li>建议使用数字，字母，字符组合的密码，这样的密码极难被破解。</li>
                 <li>建议对于每个重要的网站使用不同的密码，避免所有重要帐户被破解。</li>
                 <li>建议对于每个重要的网站使用不同的密码，避免所有重要帐户被破解。</li>
-          </ol>
-          <hr/>
-          <p><b style="font-weight:bold;">安全的使用环境：</b></p>
-          <ol style="list-style-type:decimal;list-style-position:inside;">
+              </ol>
+              <hr/>
+              <p><b style="font-weight:bold;">安全的使用环境：</b></p>
+              <ol style="list-style-type:decimal;list-style-position:inside;">
                 <li>尽量不要使用公共电脑输入您的帐号和密码。</li>
                 <li>定期更新您个人电脑的操作系统和浏览器。</li>
                 <li>在您的个人电脑上安装您信任的杀毒软件，并保持定期扫描和杀毒软件的更新。</li>
                 <li>不要在非小米的网站输入小米帐号的用户名和密码。</li>
                 <li>不要点击不确定来源的链接地址，避免电脑中病毒或者进入钓鱼网站。</li>
-          </ol>
-          <hr/>
-          <p><b style="font-weight:bold;">帐号安全提示</b></p>
-          <ol style="list-style-type:decimal;list-style-position:inside;">
+              </ol>
+              <hr/>
+              <p><b style="font-weight:bold;">帐号安全提示</b></p>
+              <ol style="list-style-type:decimal;list-style-position:inside;">
                 <li>确认你的账户绑定的手机号码可用，我们可以在关键的时候通过手机验证码来保护帐号的安全， 并及时通知您的帐号的状态。</li>
                 <li>及时更新安全手机，邮箱。确保手机，邮箱是正常使用的。</li>
                 <li>建议在帐号中打开安全令牌的绑定，登录时候输入安全令牌的动态码。</li>
-          </ol>
-      </div>
-    </dd>
-    <dt class="dt_l">&nbsp;</dt>
-    <dd class="dd_r clearfix la_height">
+              </ol>
+            </div>
+          </dd>
+          <dt class="dt_l">&nbsp;</dt>
+          <dd class="dd_r clearfix la_height">
             <div class="sub_login flt_l"><input type="submit" class="no_bg" value="立即注册" /></div>
           </dd>
-  </dl>  
-      </form><!-- phone end -->
-      <p class="p_cor_hui">点击“立即注册”，即表示您同意并愿意遵守瑞翠华光<a href="http://p.www.xiaomi.com/policy/eula.html" class="cor_yellow" target="_blank">用户协议</a>和<a href="http://p.www.xiaomi.com/policy/privacy.html" class="cor_yellow" target="_blank">隐私政策</a></p>
+        </dl>  
+      </form>
+      <!-- phone end -->
+
+      <p class="p_cor_hui">点击“立即注册”，即表示您同意并愿意遵守瑞翠华光
+        <a href="http://p.www.xiaomi.com/policy/eula.html" class="cor_yellow" target="_blank">用户协议</a>
+        和
+        <a href="http://p.www.xiaomi.com/policy/privacy.html" class="cor_yellow" target="_blank">隐私政策</a>
+      </p>
     </div>
     <div class="suc_botm"></div><!--这部分是卷角效果-->
   </div>
