@@ -4,7 +4,7 @@
 @model Nop.Plugin.Widgets.NivoSlider.Models.ConfigurationModel
 @using Nop.Web.Framework;
 @Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
-@using (Html.BeginForm())
+@using (Html.BeginForm("ConfigureSlider","Index"))
 {
     <fieldset>
         <legend><strong>@T("Plugins.Widgets.NivoSlider.Picture1")</strong></legend>
