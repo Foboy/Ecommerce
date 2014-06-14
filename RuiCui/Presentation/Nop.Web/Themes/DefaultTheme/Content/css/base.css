@@ -290,6 +290,9 @@ a {
     color: #333;
     display:inline-block;
 }
+.icon-margin {
+    margin-right:5px;
+}
 
 .btn-yellow:hover, .btn-yellow:focus, .btn-yellow.active, .btn-yellow:active {
         color: #fff;

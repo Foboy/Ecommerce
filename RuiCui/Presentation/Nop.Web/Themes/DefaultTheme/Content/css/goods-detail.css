@@ -213,16 +213,19 @@ dl.goods-info-box {
 .product-info {
     font-size:14px;
     color:#333;
-    height:30px;
-    line-height:30px;
+    height:35px;
+    line-height:35px;
 }
 .product-info-content{
     margin-left:6px;
 }
 .add-product {
-    margin-top:20px;
+    margin-top:10px;
     position:relative;
     margin-bottom:20px; 
+}
+.add-to-cart-panel {
+    margin-top:10px;
 }
 .add-cart {
     height:40px;
@@ -240,6 +243,19 @@ dl.goods-info-box {
     font-size:16px;
     text-align:center;
     margin-left:30px;
+}
+
+.addnum-input {
+    border:1px solid #dfdfdf;
+    height:20px;
+    line-height:20px;
+    width:60px;
+    text-align:center;
+}
+.addnum-btn {
+    color:#c3c3c3;
+    font-size:14px;
+    font-weight:normal;
 }
 
 
