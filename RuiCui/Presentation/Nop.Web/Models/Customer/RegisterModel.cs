@@ -132,6 +132,10 @@ namespace Nop.Web.Models.Customer
 
         public bool DisplayCaptcha { get; set; }
 
+        
         public IList<CustomerAttributeModel> CustomerAttributes { get; set; }
+
+
+        
     }
 }

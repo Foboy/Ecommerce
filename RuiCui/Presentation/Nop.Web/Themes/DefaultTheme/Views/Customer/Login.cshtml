@@ -3,7 +3,6 @@
 @using Nop.Core;
 @using Nop.Core.Infrastructure;
 @{
-    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Login").Text);
@@ -16,48 +15,36 @@
         registerUrl = webHelper.ModifyQueryString(registerUrl, "returnurl=" + HttpUtility.UrlEncode(this.Context.Request.QueryString["returnUrl"]), null);
     }
 }
-<div class="page login-page">
-    <div class="page-title">
-        <h1>@T("Account.Login.Welcome")</h1>
-    </div>
-    @Html.Partial("_ExternalAuthentication.AssociateMessage")
-    @Html.Partial("_ExternalAuthentication.Errors")
-    <div class="page-body">
-        <div class="customer-blocks">
-            @if (Model.CheckoutAsGuest)
-            {
-                <div class="new-wrapper checkout-as-guest-or-register-block">
-                    <div class="title">
-                        <strong>@T("Account.Login.CheckoutAsGuestOrRegister")</strong>
-                    </div>
-                    <div class="text">
-                        @Html.Action("TopicBlock", "Topic", new { systemName = "CheckoutAsGuestOrRegister" })
-                    </div>
-                    <div class="buttons">
-                        <input type="button" class="button-1 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl("Checkout")'" value="@T("Account.Login.CheckoutAsGuest")" />
-                        <input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="new-wrapper register-block">
-                    <div class="title">
-                        <strong>@T("Account.Login.NewCustomer")</strong>
-                    </div>
-                    <div class="text">
-                        @T("Account.Login.NewCustomerText")
-                    </div>
-                    <div class="buttons">
-                        <input type="button" class="button-1 register-button" onclick="location.href='@registerUrl'" value="@T("Account.Register")" />
-                    </div>
-                </div>
-            }
-            <div class="returning-wrapper">
-                <div class="title">
-                    <strong>@T("Account.Login.ReturningCustomer")</strong>
-                </div>
-                <div class="form-fields">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>瑞翠华光科技 - 登录</title>
+    <link href="~/Themes/DefaultTheme/Content/css/login.css" rel="stylesheet" />
+    <script src="~/Themes/DefaultTheme/Content/js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        })
+    </script>
+
+</head>
+<body>
+    <div class="layout">
+        <div class="nl-content">
+            <div class="nl-logo-area">
+                <a href="javascript:void(0)">
+                    <img src="~/Themes/DefaultTheme/Content/Images/logo.jpg" width="70" />
+                </a>
+            </div>
+            <h1 class="nl-login-title">瑞翠华光</h1>
+            <div>
+                <p class="nl-login-intro">
+                    <a href="#" target="_blank">slogan</a>
+                </p>
+            </div>
+            <div class="nl-frame-container">
+                <div class="ng-form-area show-place">
                     @using (Html.BeginForm())
                     {
                         <div class="message-error">
@@ -65,49 +52,62 @@
                         </div>
                         if (Model.UsernamesEnabled)
                         {
-                        <div class="inputs">
-                            @Html.LabelFor(m => m.Username, new { }, ":") 
-                            @Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus" })
-                            @Html.ValidationMessageFor(m => m.Username)
-                        </div>
+                            <div class="inputs">
+                                @Html.LabelFor(m => m.Username, new { }, ":")
+                                @Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus" })
+                                @Html.ValidationMessageFor(m => m.Username)
+                            </div>
                         }
                         else
                         {
-                        <div class="inputs">
-                            @Html.LabelFor(m => m.Email, new { }, ":")
-                            @Html.TextBoxFor(m => m.Email, new { @class = "email", autofocus = "autofocus" })
-                            @Html.ValidationMessageFor(m => m.Email)
-                        </div>
+                            <div class="inputs">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "enter-item first-enter-item", autofocus = "autofocus" })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
                         }
                         <div class="inputs">
-                            @Html.LabelFor(m => m.Password, new { }, ":")
-                            @Html.PasswordFor(m => m.Password, new { @class = "password" })
+                            @*@Html.LabelFor(m => m.Password, new { }, ":")*@
+                            @Html.PasswordFor(m => m.Password, new { @class = "enter-item last-enter-item" })
                             @Html.ValidationMessageFor(m => m.Password)
                         </div>
-                        <div class="inputs reversed">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                            <span class="forgot-password">
-                                @Html.RouteLink(T("Account.Login.ForgotPassword").Text, "PasswordRecovery")
-                            </span>
-                        </div>
+
                         if (Model.DisplayCaptcha)
                         {
-                        <div class="captcha-box">
-                            @Html.Raw(Html.GenerateCaptcha())
-                        </div>
+                            <div class="captcha-box">
+                                @Html.Raw(Html.GenerateCaptcha())
+                            </div>
                         }
                         <div class="buttons">
-                            <input class="button-1 login-button" type="submit" value="@T("Account.Login.LoginButton")" />
+                            <input class="button orange" type="submit" value="立即登录" />
                         </div>
-                       
+                        <div class="ng-foot clearfix">
+                            <div id="custom_display_8">
+                                <div class="ng-cookie-area">
+                                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "checkbox" })
+                                    @Html.LabelFor(m => m.RememberMe, "两周内自动登录")
+                                </div>
+                            </div>
+                            <div class="ng-link-area">
+                                <span>
+                                    <a href="javascript:void(0);">其他方式登录</a>
+                                </span>
+                                <span> | </span>
+                                <span>
+                                    <a href="passwordrecovery">忘记密码？</a>
+                                </span>
+                            </div>
+                        </div>
+                        <span id="custom_display_128">
+                            <a href="register" class="button" target="_blank">注册帐户</a>
+                        </span>
+
                     }
                 </div>
             </div>
         </div>
-        <div class="external-authentication">
-            @Html.Action("ExternalMethods", "ExternalAuthentication")
+        <div class="nl-footer">
+            <p class="nl-f-copyright">版权所有 © 2014 瑞翠商城 保留所有权利 </p>
         </div>
-        @Html.Action("TopicBlock", "Topic", new { systemName = "LoginRegistrationInfo" })
     </div>
-</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-@charset"utf-8";
+﻿@charset"utf-8";
 body,h1,h2,h3,h4,h5,h6,blockquote,p,pre,dl,dd,ol,ul,caption,th,td,form,fieldset,legend,input,button,textarea,address{margin:0;padding:0}
 h1,h2,h3,h4,h5,h6{font-size:100%}
 ol,ul{list-style:none}
@@ -117,6 +117,9 @@ i.val_m{font-style:normal; font-size:14px;}
 .other{ padding:30px 0 0 83px; text-align:left; color:#999; }
 .action{ color:#F60; text-decoration:underline; }
 .back{ display:inline-block; margin-top:55px; color:#F60; text-decoration:underline;}
+.errormessage {
+    color:#f60745;margin:10px
+}
 
 /*-- 取回密码等相关部分 --*/
 .retrieve_pwd{ border-bottom:1px dashed #E3E3E3; padding:30px; height:24px; line-height:24px; color:#FF7E00; text-align:left; font-size:24px; font-weight:400;}
@@ -249,7 +252,7 @@ p.sent_p b{margin-left:10px;}
 .checkcode{width:100px;}
 .checkcode_span{display:inline-block; *display:inline; zoom:1; width:200px; overflow:hidden; vertical-align:middle;}
 .checkcode_span i{font-style:normal;}
-.code_error{color:#f60745;}
+.code_error{color:#f60745;font-style:normal;}
 
 /* tb 第三方判断部分 */
 .mes_p{line-height:1.5; color:#333; font-size:14px; font-weight:bold; margin:0 0 30px 40px;}
