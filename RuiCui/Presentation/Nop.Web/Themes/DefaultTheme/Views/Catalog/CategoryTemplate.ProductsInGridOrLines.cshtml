@@ -87,6 +87,18 @@
                 </ul>
             </dd>
         </dl>
+        <div class="product-filters-wrapper">
+            @*filtering*@
+            @if (Model.PagingFilteringContext.PriceRangeFilter.Enabled)
+            {
+                @Html.Partial("_FilterPriceBox", Model.PagingFilteringContext.PriceRangeFilter, new ViewDataDictionary())
+            }
+            @*filtering*@
+            @if (Model.PagingFilteringContext.SpecificationFilter.Enabled)
+            {
+                @Html.Partial("_FilterSpecsBox", Model.PagingFilteringContext.SpecificationFilter, new ViewDataDictionary())
+            }
+        </div>
     </div>
 </div>
 }

@@ -1,0 +1,298 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>瑞翠华光科技 - 登录</title>
+<link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+<div class="layout">
+  <div class="nl-content">
+    <div class="nl-logo-area" id="custom_display_1">
+        <a href="javascript:void(0)">
+            <img src="img/logo.jpg" width="70" width="70"/>
+        </a>
+    </div>
+    <h1 class="nl-login-title" id="custom_display_256">瑞翠华光</h1>
+    <div id="custom_display_2">
+        <p class="nl-login-intro">
+          <a href="http://www.xiaomi.com/" target="_blank">slogan</a>
+        </p>
+    </div>
+    <div class="nl-frame-container">
+        
+
+        <div class="ng-form-area show-place" id="form-area">
+            <form method="post" action="/pass/serviceLoginAuth2" id="miniLogin" onsubmit="return MiniLogin.validateForm();">
+              <div class="shake-area" id="shake_area" style="z-index:30;">
+                <div class="enter-area">
+                  <input type="text" class="enter-item first-enter-item" id="miniLogin_username" data-rule="(^[\w.\-]+@(?:[a-z0-9]+(?:-[a-z0-9]+)*\.)+[a-z]{2,6}$)|(^1\d{10}$)|(^\d{3,}$)|(^\++\d{2,}$)" autocomplete="off">
+                  <i class="placeholder" id="message_INPUT_IDENTITY">邮箱/手机号码</i>
+                  <span class="error-tip"><em class="error-ico"></em><span class="error-msg"></span></span>
+                </div>
+                <div class="enter-area" style="z-index:20;">
+                  <input type="password" class="enter-item last-enter-item" id="miniLogin_pwd" autocomplete="off" data-rule="">
+                  <i class="placeholder" id="message_INPUT_PASSWORD">密码</i>
+                </div>
+              </div>
+              <div class="enter-area img-code-area" id="img_code_area" style="display:none;">
+                <img src="" class="code-img" id="code_img">
+                <input type="text" class="enter-item code-enter-item" id="miniLogin_captCode" autocomplete="off" maxlength="12">
+                <i class="placeholder" id="message_INPUT_CONFIRM">验证码</i>
+                <span class="error-tip"><em class="error-ico"></em><span class="error-msg" id="code_error_tips"></span></span>
+              </div>
+              <input class="button orange" type="submit" id="message_LOGIN_IMMEDIATELY" value="立即登录">
+              <div class="ng-foot clearfix">
+                <div id="custom_display_8">
+                  <div class="ng-cookie-area" id="cookie_area">
+                    <input type="hidden" id="auto"><em class="checkbox" id="checkbox_item"></em><span id="message_AUTOLOGIN_TWOWEEKS">两周内自动登录</span>
+                  </div>
+                </div>
+                <div class="ng-link-area">
+                  <span id="custom_display_16">
+                    <a href="javascript:void(0);" id="other_method">其他方式登录</a>
+                  </span>
+                  <span id="custom_display_32"> | </span>
+                  <span id="custom_display_64">
+                    <a href="/pass/forgetPassword" id="message_FORGET_PASSWORD" target="_blank">忘记密码？</a>
+                  </span>
+                </div>
+              </div>
+              <span id="custom_display_128">
+                <a href="/pass/register" class="button" id="message_REGISTER" target="_blank">注册帐户</a>
+              </span>
+              <a style="display:none" id="redirectLink" href="" target="_top"></a>
+              <a style="display:none" id="redirectTwoPhraseLoginLink" href=""></a>
+            </form>
+        </div>
+
+    </div>
+  </div>
+  <div class="nl-footer" id="custom_display_4">
+    <p class="nl-f-copyright">版权所有 © 2014 瑞翠商城 保留所有权利 </p>
+  </div>
+</div>
+</body>
+<script>
+function setCookie(c_name, value, expiredays){
+  var exdate=new Date();
+  exdate.setDate(exdate.getDate() + expiredays);
+  document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+if(location.search && location.search.length>2){
+  setCookie("OriginLoginURL",location.href);
+}
+function getParam(paramName) {
+  var paramValue = "", isFound = false;
+
+  if (location.search.length === 0) {
+    return paramValue;
+  }
+
+  if (location.search.indexOf("?") == 0 && location.search.indexOf("=") > 1) {
+    arrSource = location.search.substring(1, location.search.length).split("&");
+    i = 0;
+    while (i < arrSource.length && !isFound) {
+      if (arrSource[i].indexOf("=") > 0) {
+        if (arrSource[i].split("=")[0].toLowerCase() == paramName.toLowerCase()) {
+            paramValue = arrSource[i].split("=")[1];
+            isFound = true;
+        }
+      }
+      i++;
+    }
+  }
+  return paramValue;
+};
+/*DOM Tools*/
+function domShow(el){
+  if(el && el.nodeType===1 && el.style.display==='none'){
+    var tmp=el._oldDisplay||"";
+    el.style.display=tmp;
+  }
+}
+function domHide(el){
+  if(el && el.nodeType===1 && el.style.display!=="none"){
+    el._oldDisplay=el.style.display||"";
+    el.style.display="none";
+  }
+}
+/*begin of custom display*/
+var customDisplayByParam=(function(){
+  var CUSTOM_DISPLAY_BIT=8;
+  var showCustomDisplay=function(i,tmp){
+    var el=document.getElementById("custom_display_"+tmp);
+    !!tmp ? domHide( el ) : domShow(el);
+  }
+  return function(param){
+    if(typeof param==='number'){
+      for(var i=0;i<=CUSTOM_DISPLAY_BIT;i++){
+        showCustomDisplay(i, (param & (1<<i)) );
+      }
+    }
+  }
+})();
+customDisplayByParam( parseInt(getParam("_customDisplay"))||0 );
+  /*处理特殊字符 < > */
+function htmlspecialchars(str){
+   return (str+"").replace(/\</g,"&lt").replace(/\>/g,"&gt");
+}
+var loginTitle=decodeURIComponent( getParam("lsrp_appName") );
+if(loginTitle){
+  var lsrpContent=document.getElementById("lsrp_appName");
+  loginTitle=htmlspecialchars( loginTitle );
+  /*处理高亮显示*/
+  loginTitle=loginTitle.replace(/\$\{(.*)\}\$/g,function(a,b,c){
+    return '<span class="strong-color">'+b+'</span>';
+  });
+  lsrpContent.innerHTML=loginTitle;
+}
+/*end of custom displya*/
+function hasClass(el,cls){
+    ocls=el.className.split(/\s+/);
+    ocls.unshift("0");
+    ocls.push("0");
+    return ocls.join(",").indexOf(","+cls+",") > -1
+}
+function removeClass(el,cls){
+  ocls=el.className.split(/\s+/);
+  for(var i=0;i<ocls.length;i++){
+    if(ocls[i]===cls){
+      ocls.splice(i,1);break;
+    }
+  }
+  el.className=ocls.join(" ");
+}
+function addClass(el,cls){
+  var ocls=el.className;
+  if(ocls){
+    if(!hasClass(el,cls)){
+      el.className+=' '+cls;
+    }
+  }else{
+    el.className=cls;
+  }
+}
+function setMiniWindow(mini){
+  var miniMode=window._windowMiniMode;
+  if(mini){
+    !miniMode && addClass(document.body,'mini-window');
+    window._windowMiniMode=1;
+  }else{
+    miniMode && removeClass(document.body,'mini-window');
+    window._windowMiniMode=0;
+  }
+}
+var openWin=location.search.indexOf("mini=true")>-1;
+function resizeWindow(){
+  var width=window.innerWidth;
+  if(typeof width!=='number'){
+    if(document.compatMode=='CSS1Compat'){
+      width=document.documentElement.clientWidth;
+    }else{
+      width=document.body.clientWidth;
+    }
+  }
+  if(width<610){
+    setMiniWindow(true)
+  }else{
+    setMiniWindow(false);
+  }
+}
+if(openWin){
+  setMiniWindow(true);
+}else{
+  resizeWindow();
+  window.onresize=function(){
+    if(window._resizetimeTc){
+      clearTimeout(window._resizetimeTc);
+    }
+    window._resizetimeTc=setTimeout(function(){
+      resizeWindow();
+    },20);
+  }
+}
+var Environment=(function(){
+  var hostname=location.hostname;
+  if( hostname.indexOf("onebox")>-1 ){
+    return 'onebox';
+  }else if(hostname.indexOf("preview")>-1){
+    return 'preview';
+  }else{
+    return 'release';
+  }
+})();
+var pass_env="https://account.xiaomi.com/pass/serviceLogin";
+var hide_third=getParam("hide_third");
+var iframeSrc = Environment=='onebox'?"/pass/static/v5login_onebox.html?inframe=true&onetimeEncode=true": "/pass/static/v5login.html?inframe=true&onetimeEncode=true";
+if(hide_third){ 
+  iframeSrc +="&hide_third=true";
+}
+var callback = encodeURIComponent("http://order.mi.com/login/callback?followup=http%3A%2F%2Fwww.mi.com&sign=MjMyMGJhNjNmZmM2NTc0YWM4NzdkN2IzMjNlZjhmMzhhODAxMDZiNg,,");
+var sid = encodeURIComponent("mi_eshop");
+var qs = encodeURIComponent("%3Fcallback%3Dhttp%253A%252F%252Forder.mi.com%252Flogin%252Fcallback%253Ffollowup%253Dhttp%25253A%25252F%25252Fwww.mi.com%2526sign%253DMjMyMGJhNjNmZmM2NTc0YWM4NzdkN2IzMjNlZjhmMzhhODAxMDZiNg%252C%252C%26sid%3Dmi_eshop");
+var hidden = encodeURIComponent("");
+var sign = encodeURIComponent("6f/KJ3piD5EyDCFo/PvvBBLTXxI=");
+var _customDisplay=parseInt(getParam("_customDisplay"),10)||0;
+var serviceParam = encodeURIComponent('{"checkSafePhone":false}');
+
+function change_lang(lang){
+  var url = window.location.href;
+  var reg = new RegExp("(^|&)_locale=([^&]*)(&|$)");
+  var r = window.location.search.substr(1).match(reg);
+  if (r!=null){
+    var locale = unescape(r[2]);
+    url = url.replace("_locale="+locale, "_locale="+lang);
+  }else{
+    if( /\?/.test(url) ){
+      url += "&_locale="+lang;
+    }else{
+      url += "?_locale="+lang;
+    }
+  }
+  window.location.href=url.replace("serviceLoginAuth2","serviceLogin");
+}
+
+String.prototype.Trim = function() {
+  return this.replace(/^\s+/g, "").replace(/\s+$/g, "");
+};
+
+
+function getCookie(key) {
+  var cookie = document.cookie;
+  var cookieArray = cookie.split(';');
+  var val = "";
+  for (var i = 0; i < cookieArray.length; i++) {
+      if (cookieArray[i].Trim().substr(0, key.length) == key) {
+    val = cookieArray[i].Trim().substr(key.length + 1);
+    break;
+      }
+  }
+  return unescape(val);
+};
+
+
+  var url = window.location.href;
+  var matched = url.match(/\b(_locale=en)|(_locale=zh_TW)|(_locale=zh_CN)\b/);
+  iframeSrc = iframeSrc + (matched ? "&" + matched[0] : ""); 
+  var cookieLocale = getCookie("uLocale");
+  if( cookieLocale == 'zh_CN' || /_locale=zh_CN/.test(url) ){
+    document.body.className += ' zh_CN';
+  }
+  if( cookieLocale == 'zh_TW' || /_locale=zh_TW/.test(url) ){
+    document.body.className += ' zh_TW';
+  }
+  if( cookieLocale == 'en' || /_locale=en/.test(url) ){
+    document.body.className += ' en';
+  }
+  if (cookieLocale && !matched) {
+   iframeSrc = iframeSrc + "&_locale=" + cookieLocale;   
+  } 
+  var queryPart =  "&callback=" + callback + "&sid=" + sid + "&qs=" + qs + "&sign=" + sign + "&serviceParam="+ serviceParam +"&hidden=" + hidden+"&_customDisplay="+_customDisplay;
+  iframeSrc = iframeSrc + queryPart+"&_dc=20140530";
+  document.getElementById("miniLoginFrame").src = iframeSrc;
+
+
+</script>
+</html>
+
