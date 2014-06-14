@@ -9,7 +9,6 @@
         @T("Admin.ContentManagement.Widgets.Configure") - @Model.FriendlyName @Html.ActionLink("(" + T("Admin.ContentManagement.Widgets.BackToList") + ")", "List")
     </div>
 </div>
-@Model.ConfigurationRouteValues 11
 @if (!String.IsNullOrEmpty(Model.ConfigurationActionName))
 {
     @Html.Action(Model.ConfigurationActionName, Model.ConfigurationControllerName, Model.ConfigurationRouteValues);
@@ -18,4 +17,3 @@ else
 {
     @T("Admin.Common.ConfigurationNotRequired")
 }
-22
