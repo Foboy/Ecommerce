@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <returns>Widget zones</returns>
         public IList<string> GetWidgetZones()
         {
-            return new List<string>() { "home_page_top","test" };
+            return new List<string>() { "home_page_top", "home_page_right", "home_page_root" };
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         public void GetConfigurationRoute(out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
             actionName = "Configure";
-            controllerName = "IndexController";
+            controllerName = "Index";
             routeValues = new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers" }, { "area", null } };
         }
 
@@ -58,14 +58,30 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <param name="routeValues">Route values</param>
         public void GetDisplayWidgetRoute(string widgetZone, out string actionName, out string controllerName, out RouteValueDictionary routeValues)
         {
-            actionName = "PublicInfo";
-            controllerName = "WidgetsNivoSlider";
+            actionName = "";
+            controllerName = "";
             routeValues = new RouteValueDictionary()
             {
                 {"Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers"},
                 {"area", null},
                 {"widgetZone", widgetZone}
             };
+            switch (widgetZone)
+            {
+                case "home_page_top":
+                       actionName = "PublicInfoSlider";
+                       controllerName = "Index";
+                    break;
+                case "home_page_right":
+                    actionName = "PublicInfoIndexRight";
+                    controllerName = "Index";
+                    break;
+                case "home_page_root":
+                    actionName = "PublicInfoRoot";
+                    controllerName = "Index";
+                    break;
+            }
+         
         }
         
         /// <summary>
