@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Widgets.NivoSlider.Models.IndexModel
+@using Nop.Web.Framework;
+
+<img src="@Url.Content("~/Plugins/Widgets.NivoSlider/Content/nivoslider/sample-images/banner1.jpg")" border="0" usemap="#planetmap" alt="Planets" border="0" />
+
+<map name="planetmap" id="planetmap">
+    <area shape="rect" coords="0,180,139,14" href="@Url.Action("Configure1", "Index", new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers" }, { "area", "" } }))" style="cursor: pointer" alt="Venus" title="1111" />
+
+
+    <area shape="rect" coords="0,129,161,10" href="@Url.Action("Configure2", "Index")" alt="Mercury" title="222" />
+
+
+    <area shape="rect" coords="0,0,110,260" href="@Url.Action("Configure3", "Index")" alt="Sun" title="333" />
+
+
+</map>
+
+    <br />
+        @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.Configure", Model._ConfigurationModel)
+        <br />
+         @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexRight", Model._ConfigurationIndexRightModel)
+        <br />
+        @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexSliderRoot", Model._ConfigurationIndexSliderRootModel)

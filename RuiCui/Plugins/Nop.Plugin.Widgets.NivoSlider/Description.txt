@@ -1,8 +1,8 @@
 ﻿Group: Widgets
-FriendlyName: Nivo Slider
+FriendlyName: 首页广告位
 SystemName: Widgets.NivoSlider
-Version: 1.03
+Version: 1.14
 SupportedVersions: 3.30
-Author: nopCommerce team
+Author: foby
 DisplayOrder: 1
 FileName: Nop.Plugin.Widgets.NivoSlider.dll
