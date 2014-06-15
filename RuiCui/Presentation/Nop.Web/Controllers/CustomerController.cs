@@ -1855,6 +1855,8 @@ namespace Nop.Web.Controllers
 
                     model.SuccessfullyChanged = true;
                     model.Result = _localizationService.GetResource("Account.PasswordRecovery.PasswordHasBeenChanged");
+                    return Redirect("/login");
+                    
                 }
                 else
                 {
