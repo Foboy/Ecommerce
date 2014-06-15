@@ -17,6 +17,7 @@
                 <td class="adminData">
                     @Html.EditorFor(model => model.Picture1Id)
                     @Html.ValidationMessageFor(model => model.Picture1Id)
+                    <input type="submit" id="btnAddNewProduct" name="btnAddNewProduct" value="选择产品" onclick="javascript:OpenWindow('@(Url.Action("ProductAddPopup", "Index", new { categoryId = 0, btnId = "btnRefreshProducts", formId = "category-form" }))', 800, 800, true); return false;" class="btn btn-sm btn-primary btn-flat " />
                 </td>
             </tr>
             <tr>

@@ -7,6 +7,18 @@ using Nop.Services.Configuration;
 using Nop.Services.Media;
 using Nop.Services.Stores;
 using Nop.Web.Framework.Controllers;
+using Nop.Web.Framework.Kendoui;
+using Nop.Core.Domain.Catalog;
+using Nop.Services.Catalog;
+using Nop.Services.Localization;
+using System.Collections.Generic;
+using System.Linq;
+using Nop.Web.Framework;
+using Nop.Web.Framework.Controllers;
+using Nop.Web.Framework.Kendoui;
+using Nop.Web.Framework.Mvc;
+using Nop.Services.Vendors;
+using AutoMapper;
 
 namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 {
@@ -19,19 +31,33 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
         private readonly ISettingService _settingService;
         private readonly ICacheManager _cacheManager;
 
-        public IndexController(IWorkContext workContext,
+        private readonly ICategoryService _categoryService;
+        private readonly ILocalizationService _localizationService;
+        private readonly IProductService _productService;
+        private readonly IManufacturerService _manufacturerService;
+        private readonly IVendorService _vendorService;
+
+        public IndexController(ICategoryService categoryService, ILocalizationService localizationService, IWorkContext workContext,
+              IManufacturerService manufacturerService,
+            IVendorService vendorService,
+            IProductService productService,
             IStoreContext storeContext,
             IStoreService storeService, 
             IPictureService pictureService,
             ISettingService settingService,
             ICacheManager cacheManager)
         {
+            this._manufacturerService = manufacturerService;
+            this._categoryService = categoryService;
+            this._localizationService = localizationService;
+            this._productService = productService;
             this._workContext = workContext;
             this._storeContext = storeContext;
             this._storeService = storeService;
             this._pictureService = pictureService;
             this._settingService = settingService;
             this._cacheManager = cacheManager;
+            this._vendorService = vendorService;
         }
 
         protected string GetPictureUrl(int pictureId)
@@ -47,6 +73,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
                 return url;
             });
         }
+        #region
+
         [AdminAuthorize]
         [ChildActionOnly]
         public ActionResult Configure()
@@ -166,6 +194,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 
             return  model;
         }
+        #endregion
 
         #region Slider
 
@@ -303,11 +332,11 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             model.Text5 = nivoSliderSettings.Text5;
             model.Link5 = nivoSliderSettings.Link5;
 
-            if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&
-                string.IsNullOrEmpty(model.Picture3Url) && string.IsNullOrEmpty(model.Picture4Url) &&
-                string.IsNullOrEmpty(model.Picture5Url))
-                //no pictures uploaded
-                return Content("");
+            //if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&
+            //    string.IsNullOrEmpty(model.Picture3Url) && string.IsNullOrEmpty(model.Picture4Url) &&
+            //    string.IsNullOrEmpty(model.Picture5Url))
+            //    //no pictures uploaded
+            //    return Content("");
 
 
             return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfo", model);
@@ -401,22 +430,33 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             model.Text1 = nivoSliderSettings.Text1;
             model.Link1 = nivoSliderSettings.Link1;
 
+
+
+            //if (string.IsNullOrEmpty(model.Picture1Url))
+            //    //no pictures uploaded
+            //    return Content("");
+
+
+            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexRight", model);
+        }
+        [ChildActionOnly]
+        public ActionResult PublicInfoIndexRight2(string widgetZone)
+        {
+            var nivoSliderSettings = _settingService.LoadSetting<NivoIndexRightSettings>(_storeContext.CurrentStore.Id);
+
+            var model = new PublicInfoIndexRightModel();
+
             model.Picture2Url = GetPictureUrl(nivoSliderSettings.Picture2Id);
             model.Text2 = nivoSliderSettings.Text2;
             model.Link2 = nivoSliderSettings.Link2;
 
-            model.Picture3Url = GetPictureUrl(nivoSliderSettings.Picture3Id);
-            model.Text3 = nivoSliderSettings.Text3;
-            model.Link3 = nivoSliderSettings.Link3;
+
+            //if ( string.IsNullOrEmpty(model.Picture2Url))
+            //    //no pictures uploaded
+            //    return Content("");
 
 
-            if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&
-                string.IsNullOrEmpty(model.Picture3Url))
-                //no pictures uploaded
-                return Content("");
-
-
-            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexRight", model);
+            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexRight2", model);
         }
         #endregion indexright
 
@@ -518,16 +558,110 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 
 
 
-            if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&
-                string.IsNullOrEmpty(model.Picture3Url))
-                //no pictures uploaded
-                return Content("");
+            //if (string.IsNullOrEmpty(model.Picture1Url) && string.IsNullOrEmpty(model.Picture2Url) &&
+            //    string.IsNullOrEmpty(model.Picture3Url))
+            //    //no pictures uploaded
+            //    return Content("");
 
 
             return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexSliderRoot", model);
         }
 
         #endregion root
-      
+
+        #region ProductAddPopup
+
+        public ActionResult ProductAddPopup(int categoryId)
+        {
+
+            var model = new CategoryModel.AddCategoryProductModel();
+            //categories
+            model.AvailableCategories.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            var categories = _categoryService.GetAllCategories(showHidden: true);
+            foreach (var c in categories)
+                model.AvailableCategories.Add(new SelectListItem() { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
+
+            //manufacturers
+            model.AvailableManufacturers.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            foreach (var m in _manufacturerService.GetAllManufacturers(showHidden: true))
+                model.AvailableManufacturers.Add(new SelectListItem() { Text = m.Name, Value = m.Id.ToString() });
+
+            //stores
+            model.AvailableStores.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            foreach (var s in _storeService.GetAllStores())
+                model.AvailableStores.Add(new SelectListItem() { Text = s.Name, Value = s.Id.ToString() });
+
+            //vendors
+            model.AvailableVendors.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            foreach (var v in _vendorService.GetAllVendors(0, int.MaxValue, true))
+                model.AvailableVendors.Add(new SelectListItem() { Text = v.Name, Value = v.Id.ToString() });
+
+            //product types
+            model.AvailableProductTypes = ProductType.SimpleProduct.ToSelectList(false).ToList();
+            model.AvailableProductTypes.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+
+           // Response.Redirect("/Admin/Widget/ConfigureWidget?systemName=Widgets.NivoSlider");
+            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ProductAddPopup", model);
+        }
+
+        [HttpPost]
+        public ActionResult ProductAddPopupList(DataSourceRequest command, CategoryModel.AddCategoryProductModel model)
+        {
+
+            var gridModel = new DataSourceResult();
+            var products = _productService.SearchProducts(
+                categoryIds: new List<int>() { model.SearchCategoryId },
+                manufacturerId: model.SearchManufacturerId,
+                storeId: model.SearchStoreId,
+                vendorId: model.SearchVendorId,
+                productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
+                keywords: model.SearchProductName,
+                pageIndex: command.Page - 1,
+                pageSize: command.PageSize,
+                showHidden: true
+                );
+            gridModel.Data = products.Select(x =>ToModel(x));
+            gridModel.Total = products.TotalCount;
+
+            return Json(gridModel);
+        }
+        public static ProductModel ToModel( Product entity)
+        {
+            return Mapper.Map<Product, ProductModel>(entity);
+        }
+        [HttpPost]
+        [FormValueRequired("save")]
+        public ActionResult ProductAddPopup(string btnId, string formId, CategoryModel.AddCategoryProductModel model)
+        {
+
+            if (model.SelectedProductIds != null)
+            {
+                foreach (int id in model.SelectedProductIds)
+                {
+                    var product = _productService.GetProductById(id);
+                    if (product != null)
+                    {
+                        var existingProductCategories = _categoryService.GetProductCategoriesByCategoryId(model.CategoryId, 0, int.MaxValue, true);
+                        if (existingProductCategories.FindProductCategory(id, model.CategoryId) == null)
+                        {
+                            _categoryService.InsertProductCategory(
+                                new ProductCategory()
+                                {
+                                    CategoryId = model.CategoryId,
+                                    ProductId = id,
+                                    IsFeaturedProduct = false,
+                                    DisplayOrder = 1
+                                });
+                        }
+                    }
+                }
+            }
+
+            ViewBag.RefreshPage = true;
+            ViewBag.btnId = btnId;
+            ViewBag.formId = formId;
+            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ProductAddPopup", model);
+        }
+        #endregion
     }
 }

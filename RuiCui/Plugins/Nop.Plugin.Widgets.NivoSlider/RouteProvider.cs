@@ -23,6 +23,11 @@ namespace Nop.Plugin.Shipping.ByWeight
      new { controller = "Index", action = "ConfigureRoot", },
      new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
 );
+            routes.MapRoute("Plugin.Widgets.NivoSlider.ProductAddPopup",
+     "Plugins/Index/ProductAddPopup",
+     new { controller = "Index", action = "ProductAddPopup", },
+     new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
         }
         public int Priority
         {

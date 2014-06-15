@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <returns>Widget zones</returns>
         public IList<string> GetWidgetZones()
         {
-            return new List<string>() { "home_page_top", "home_page_right", "home_page_root" };
+            return new List<string>() { "home_page_top", "home_page_right", "home_page_root", "home_page_right2" };
         }
 
         /// <summary>
@@ -74,6 +74,10 @@ namespace Nop.Plugin.Widgets.NivoSlider
                     break;
                 case "home_page_right":
                     actionName = "PublicInfoIndexRight";
+                    controllerName = "Index";
+                    break;
+                case "home_page_right2":
+                    actionName = "PublicInfoIndexRight2";
                     controllerName = "Index";
                     break;
                 case "home_page_root":
