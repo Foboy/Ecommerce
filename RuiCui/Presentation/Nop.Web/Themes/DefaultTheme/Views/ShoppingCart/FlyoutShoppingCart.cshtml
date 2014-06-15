@@ -1,6 +1,6 @@
 ﻿@model MiniShoppingCartModel
 @using Nop.Web.Models.ShoppingCart;
-<a id="J_miniCart" class="mini-cart" href="@Url.RouteUrl("ShoppingCart")"><i class="iconfont">&#xe609;</i>@T("ShoppingCart")<span class="mini-cart-num J_cartNum">@T("ShoppingCart.HeaderQuantity", Model.TotalProducts)</span></a>
+<a id="J_miniCart" class="mini-cart wcolor " href="@Url.RouteUrl("ShoppingCart")"><i class="iconfont font12 wcolor">&#xf0148;</i>@T("ShoppingCart")<span class="mini-cart-num J_cartNum">@T("ShoppingCart.HeaderQuantity", Model.TotalProducts)</span></a>
 <div id="J_miniCartList" class="mini-cart-list">
     @if (Model.TotalProducts == 0)
     {
@@ -17,7 +17,7 @@
                     <img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title">
                 </a>
                 <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" class="name">@item.ProductName</a><span class="price">@item.UnitPrice 元 x @item.Quantity</span>
-                <a class="btn-del delItem" href="javascript: void(0);" gid="2135100051_0_buy"><i class="iconfont"></i></a>
+                <a class="btn-del delItem" href="javascript: void(0);" gid="2135100051_0_buy"><i class="font10 hcolor iconfont">&#xf00b3;</i></a>
             </li>
             if (!String.IsNullOrEmpty(item.AttributeInfo))
             {

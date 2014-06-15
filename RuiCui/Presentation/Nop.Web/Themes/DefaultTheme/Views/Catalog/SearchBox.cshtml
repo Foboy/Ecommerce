@@ -4,7 +4,7 @@
 {
     <input class="search-text" type="text" id="small-searchterms" @(Model.AutoCompleteEnabled ? Html.Raw(" autocomplete=\"off\"") : null)
            value="@T("Search.SearchBox.Tooltip")" name="q" onfocus="if(this.value=='@T("Search.SearchBox.Tooltip")')this.value=''" onblur="if(this.value=='') {this.value = '@T("Search.SearchBox.Tooltip")';}" />
-    <input type="submit" class="search-btn iconfont" value="&#xe630;" />
+    <input type="submit" class="search-btn iconfont font12" value="&#xf012c;" />
     <!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
     <div class="hot-words">
         <a href="#">翡翠</a>
