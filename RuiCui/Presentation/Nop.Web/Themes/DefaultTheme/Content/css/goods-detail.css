@@ -35,6 +35,12 @@ em {
 }
 
 
+.option-list li {
+    float:left;
+    margin-right:10px;
+    height:35px;
+    line-height:35px;
+}
 
 .goods-pic-box {
     position: relative;
@@ -66,13 +72,17 @@ em {
         height: 430px;
         cursor: pointer;
     }
+.product-name {
+    margin-bottom:10px;
+}
 
 .googds-info-name {
     color: #333333;
     font-size: 24px;
     font-weight:normal;
-    line-height: 55px;
+    line-height: 35px;
 }
+
 .goods-info-rightbox {
     background-color:#f5f5f5;
     padding-left:30px;
@@ -577,10 +587,10 @@ dl.goods-info-box {
             }
 
 .goods-detail-desc .xm-goods-side-list {
+    width: 204px;
     border: none;
     overflow: hidden;
     _zoom: 1;
-    _width: 310px;
 }
 
     .goods-detail-desc .xm-goods-side-list .box-hd .title {
