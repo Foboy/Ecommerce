@@ -128,7 +128,12 @@ body {
     color: #8c8c8c;
     background-color: #fff;
 }
-
+.font12 {
+    font-size:12px;
+}
+.basecolor {
+    color:#F68B1F;
+}
 .container {
     margin-right: auto;
     margin-left: auto;
@@ -165,11 +170,10 @@ a {
     color: #8c8c8c;
     text-decoration: none;
 }
-
-    a:hover, a:focus {
-        color: #ff4a00;
-        text-decoration: none;
-    }
+a:hover, a:focus {
+    color: #F68B1F;
+    text-decoration: none;
+}
 
 .clearfix {
     *zoom: 1;
