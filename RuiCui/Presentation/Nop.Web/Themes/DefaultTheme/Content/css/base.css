@@ -143,6 +143,9 @@ body {
 .hcolor {
     color:#8c8c8c;
 }
+.left-list-w {
+    width:204px;
+}
 .container {
     margin-right: auto;
     margin-left: auto;
