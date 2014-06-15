@@ -28,8 +28,8 @@ else
 @if (Model.WishlistEnabled)
 {
     <span class="sep">|</span><a href="@Url.RouteUrl("Wishlist")">
-        <span>@T("Wishlist")</span>
-        <span>@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
+        <span>收藏夹</span>
+        <span id="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
     </a>
 }
 @Html.Widget("header_links_after")

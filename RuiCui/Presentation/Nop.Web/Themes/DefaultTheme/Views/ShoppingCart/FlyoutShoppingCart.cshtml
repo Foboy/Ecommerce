@@ -16,8 +16,8 @@
                 <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" title="@item.Picture.Title" class="pic">
                     <img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title">
                 </a>
-                <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" class="name">@item.ProductName</a><span class="price">@item.UnitPrice 元 x @item.Quantity</span>
-                <a class="btn-del delItem" href="javascript: void(0);" gid="2135100051_0_buy"><i class="font10 hcolor iconfont">&#xf00b3;</i></a>
+                <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" class="name">@item.ProductName</a><span class="price">@item.UnitPrice x @item.Quantity</span>
+                <a class="btn-del delItem" style="display:none;" href="javascript: void(0);"><i class="font10 hcolor iconfont">&#xf00b3;</i></a>
             </li>
             if (!String.IsNullOrEmpty(item.AttributeInfo))
             {

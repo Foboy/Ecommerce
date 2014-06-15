@@ -371,7 +371,7 @@ a:hover, a:focus {
     height: 63px;
     text-indent: -9999em;
     overflow: hidden;
-    background-image: url("http://img03.mifile.cn/webfile/images/2014/cn/icon/iconTag.png");
+    background-image: url("../images/iconTag.png");
     background-repeat: no-repeat;
 }
 
@@ -419,7 +419,7 @@ a:hover, a:focus {
     width: 65px;
     height: 14px;
     overflow: hidden;
-    background-image: url("http://img03.mifile.cn/webfile/images/2014/cn/icon/icon-stat.png");
+    background-image: url("../images/icon-stat.png");
     background-repeat: no-repeat;
 }
 
@@ -2738,3 +2738,8 @@ a:hover, a:focus {
 .ajax-loading-block-window{position:fixed;top:50%;left:50%;width:128px;height:128px;overflow:hidden;z-index:1104;}
 .ajax-loading-block-window .loading-image{position:absolute;top:0;left:0;width:128px;height:128px;background-image:url('../images/ajax_loader_large.gif');}
 .please-wait{background:url('../images/ajax_loader_small.gif') no-repeat;padding-left:20px;}
+
+
+.admin-header-links {
+    display:none;
+}

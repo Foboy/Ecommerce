@@ -354,10 +354,10 @@
 <table class="adminContent">
     <tr>
         <td class="adminTitle">
-            @Html.NopLabelFor(model => model.AdminComment):
+            管理员打分:
         </td>
         <td class="adminData">
-            @Html.TextAreaFor(model => model.AdminComment)
+            @Html.EditorFor(model => model.AdminComment)
             @Html.ValidationMessageFor(model => model.AdminComment)
         </td>
     </tr>

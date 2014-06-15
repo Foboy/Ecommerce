@@ -102,6 +102,7 @@ var AjaxCart = {
     },
 
     success_desktop: function (response) {
+        console.log(response)
         if (response.updatetopcartsectionhtml) {
             $(AjaxCart.topcartselector).html(response.updatetopcartsectionhtml);
         }
@@ -109,7 +110,8 @@ var AjaxCart = {
             $(AjaxCart.topwishlistselector).html(response.updatetopwishlistsectionhtml);
         }
         if (response.updateflyoutcartsectionhtml) {
-            $(AjaxCart.flyoutcartselector).replaceWith(response.updateflyoutcartsectionhtml);
+            
+            $(AjaxCart.flyoutcartselector).html($("<div>" + response.updateflyoutcartsectionhtml + "</div>").find(AjaxCart.flyoutcartselector).html());
         }
         if (response.message) {
             //display notification

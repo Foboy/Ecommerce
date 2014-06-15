@@ -10,14 +10,22 @@
 }
 <div class="gallery">
     <div class="goods-big-pic">
-        @if (Model.DefaultPictureZoomEnabled)
-        {
-            <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" id="main-product-img-lightbox-anchor-@Model.Id">
-                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
+            <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" class="pictures_popup_link">
+                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
             </a>
+@for (int i = 0; i < Model.PictureModels.Count; i++)
+{
+    var picture = Model.PictureModels[i];
+    if (picture.FullSizeImageUrl.Equals(@Model.DefaultPictureModel.FullSizeImageUrl))
+    {
+        continue;
+    }
+    <a href="@picture.FullSizeImageUrl" class="pictures_popup_link">
+    </a>
+}
             <script type="text/javascript">
                 $(document).ready(function () {
-                    $('#main-product-img-lightbox-anchor-@Model.Id').magnificPopup(
+                    $('.pictures_popup_link').magnificPopup(
                     {
                         type: 'image',
                         removalDelay: 300,
@@ -27,11 +35,6 @@
                     });
                 });
             </script>
-        }
-        else
-        {
-            <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img-@Model.Id" />
-        }
     </div>
     @if (Model.PictureModels.Count > 1)
     {
@@ -44,7 +47,7 @@
                 {
                 @Html.Raw("<div>")
                 }
-                <a class="thumb-popup-link" href="@picture.FullSizeImageUrl" title="@Model.Name">
+                <a class="thumb-popup-link" href="javascript:void(0);" data-src="@picture.FullSizeImageUrl" title="@Model.Name">
                     <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
                 </a>
                 if ((i % productPerRow == (productPerRow - 1)) ||
@@ -57,14 +60,10 @@
         </div>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('.thumb-popup-link').magnificPopup(
-                {
-                    type: 'image',
-                    removalDelay: 300,
-                    gallery: {
-                        enabled: true
-                    }
+                $(".thumb-popup-link").click(function () {
+                    $("#main-product-img").attr("src", $(this).attr("data-src"));
                 });
+               
             });
         </script>
     }
