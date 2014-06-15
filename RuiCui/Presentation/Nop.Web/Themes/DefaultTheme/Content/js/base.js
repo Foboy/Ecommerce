@@ -459,7 +459,7 @@ XIAOMI.app.navMenus = function () {
 }(),
 XIAOMI.app.navCategory = function () {
     function toggleCategoryList(option) {
-        "show" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xe606;"), $categoryList.show()) : "static" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryList.show()) : ($categoryContainer.removeClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xe608;"), $categoryList.hide().find(".nav-category-list").children("li").removeClass("current"))
+        "show" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02aa;"), $categoryList.show()) : "static" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryList.show()) : ($categoryContainer.removeClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02a9;"), $categoryList.hide().find(".nav-category-list").children("li").removeClass("current"))
     }
     function bindChildrenList() {
         var timeoutChildrenList;
@@ -503,7 +503,7 @@ XIAOMI.app.navCategory = function () {
         var isCategoryStatic = "undefined" != typeof isCategoryToggled ? isCategoryToggled : !1;
         if (false, addSrcset($(".nav-category-list")), isCategoryStatic) toggleCategoryList("static");
         else {
-            $categoryTriggerBtn.append('<i class="iconfont">&#xe608;</i>');
+            $categoryTriggerBtn.append('<i class="iconfont">&#xf02a9;</i>');
             var timeoutCategory;
             $categoryContainer.on({
                 mouseenter: function () {
