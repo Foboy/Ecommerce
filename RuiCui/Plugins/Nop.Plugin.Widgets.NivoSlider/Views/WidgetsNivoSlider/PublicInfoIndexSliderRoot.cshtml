@@ -6,29 +6,18 @@
 @using System
 @using Nop.Web.Framework.UI
 
-@helper RenderSliderLine(string pictureUrl, string text, string link, string dataTransition = "")
-{
-    if (!string.IsNullOrEmpty(pictureUrl))
-    {    
-        <div class="slide">
-             @if (!string.IsNullOrEmpty(link))
-             {
-            <a href="@link" target="_blank">
-                <img src="@pictureUrl" data-src-r="@pictureUrl" data-src-r-2x="@pictureUrl" srcset="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
-            </a>
-             }
-             else
-             {
-            <img src="@pictureUrl" data-src-r="@pictureUrl" data-src-r-2x="@pictureUrl" srcset="@pictureUrl" data-thumb="@pictureUrl" data-transition="@dataTransition" alt="" title="@text" />
-             }
-        
-        </div>
-
-    }
-
-}
-<div id="J_homeSlider" class="xm-slider">
-    @RenderSliderLine(Model.Picture1Url, Model.Text1, Model.Link1)
-    @RenderSliderLine(Model.Picture2Url, Model.Text2, Model.Link2)
-    @RenderSliderLine(Model.Picture3Url, Model.Text3, Model.Link3, "slideInLeft")
+<div class="hd-show-item hd-show-item-first">
+    <a href="@Model.Link1">
+        <img alt="@Model.Text1" src="@Model.Picture1Url" />
+    </a>
+</div>
+<div class="hd-show-item ">
+    <a href="@Model.Link2">
+        <img alt="@Model.Text2" src="@Model.Picture2Url" />
+    </a>
+</div>
+<div class="hd-show-item ">
+    <a href="@Model.Link3">
+        <img alt="@Model.Text3" src="@Model.Picture3Url" />
+    </a>
 </div>
