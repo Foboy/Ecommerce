@@ -22,7 +22,7 @@
     @if (!Model.DisableBuyButton || !Model.DisableWishlistButton)
     {
         <div class="add-to-cart-panel">
-            @Html.LabelFor(model => model.EnteredQuantity, new { @class = "product-info" }, ":")
+            &nbsp;&nbsp;&nbsp;&nbsp;@Html.LabelFor(model => model.EnteredQuantity, new { @class = "product-info" }, ":")
             @if (Model.AllowedQuantities.Count > 0)
             {
                 @Html.DropDownListFor(model => model.EnteredQuantity, Model.AllowedQuantities, new {@class = "qty-dropdown"})
