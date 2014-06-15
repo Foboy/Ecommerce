@@ -907,7 +907,7 @@
     height: 360px;
     padding: 4px;
     transition: border-color 0.5s ease 0s;
-    position: relative;;
+    position: relative;
 }
 .brick-item .item-content:hover {
     *background: #ffffff;
@@ -919,7 +919,7 @@
     height: 170px;
     padding: 4px;
     transition: border-color 0.5s ease 0s;
-    position: relative;;
+    position: relative;
 }
 .brick-item .item-content-m:hover {
     *background: #ffffff;
