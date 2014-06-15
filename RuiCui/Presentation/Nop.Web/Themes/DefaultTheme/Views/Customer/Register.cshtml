@@ -327,23 +327,23 @@
                             <dl class="login-dl clearfix">
                                 <dt class="dt_l">邮箱：</dt>
                                 <dd class="dd_r clearfix">
-                                    @Html.TextBoxFor(model => model.Email, new { @class = "input_kuang val_m item errortip address " })
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "input_kuang val_m item errortip address ",placeholder = "邮箱" })
                                     @Html.ValidationMessageFor(model => model.Email ,"", new { @class = "errormessage "})
                                 </dd>
                                 <dt class="dt_l">设置密码：</dt>
                                 <dd class="dd_r dd_r_pos clearfix" id="pwdTd">
-                                    @Html.PasswordFor(model => model.Password, new { @class = "input_kuang val_m item errortip address " })
+                                    @Html.PasswordFor(model => model.Password, new { @class = "input_kuang val_m item errortip address ", placeholder = "密码" })
                                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "errormessage" })
                                 </dd>
                                 <dt class="dt_l">确认密码：</dt>
                                 <dd class="dd_r clearfix">
-                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "input_kuang val_m item errortip address " })
+                                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "input_kuang val_m item errortip address ", placeholder = "确认密码" })
                                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "errormessage "})
                                 </dd>
 
                                 <dt class="dt_l" style="margin-top:10px;">验证码：</dt>
                                 <dd class="dd_r clearfix" style="margin-top:10px;">
-                                    <input type="text" class="input_kuang val_m item errortip checkcode" name="_mvcCaptchaText" id="_mvcCaptchaText" />
+                                    <input type="text" class="input_kuang val_m item errortip checkcode" name="_mvcCaptchaText" id="_mvcCaptchaText"  placeholder="验证码" />
                                     <div style="margin-top:10px">
                                         @Html.MvcCaptcha()
                                     </div>
