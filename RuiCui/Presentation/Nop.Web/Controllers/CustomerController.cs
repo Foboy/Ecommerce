@@ -35,6 +35,7 @@ using Nop.Web.Framework.Security;
 using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
+using Webdiyer.WebControls.Mvc;
 
 namespace Nop.Web.Controllers
 {
@@ -90,7 +91,7 @@ namespace Nop.Web.Controllers
 
         public CustomerController(IAuthenticationService authenticationService,
             IDateTimeHelper dateTimeHelper,
-            DateTimeSettings dateTimeSettings, 
+            DateTimeSettings dateTimeSettings,
             TaxSettings taxSettings,
             ILocalizationService localizationService,
             IWorkContext workContext,
@@ -102,7 +103,7 @@ namespace Nop.Web.Controllers
             IGenericAttributeService genericAttributeService,
             ICustomerRegistrationService customerRegistrationService,
             ITaxService taxService, RewardPointsSettings rewardPointsSettings,
-            CustomerSettings customerSettings,AddressSettings addressSettings, ForumSettings forumSettings,
+            CustomerSettings customerSettings, AddressSettings addressSettings, ForumSettings forumSettings,
             OrderSettings orderSettings, IAddressService addressService,
             ICountryService countryService, IStateProvinceService stateProvinceService,
             IOrderTotalCalculationService orderTotalCalculationService,
@@ -110,8 +111,8 @@ namespace Nop.Web.Controllers
             ICurrencyService currencyService, IPriceFormatter priceFormatter,
             IPictureService pictureService, INewsLetterSubscriptionService newsLetterSubscriptionService,
             IForumService forumService, IShoppingCartService shoppingCartService,
-            IOpenAuthenticationService openAuthenticationService, 
-            IBackInStockSubscriptionService backInStockSubscriptionService, 
+            IOpenAuthenticationService openAuthenticationService,
+            IBackInStockSubscriptionService backInStockSubscriptionService,
             IDownloadService downloadService, IWebHelper webHelper,
             ICustomerActivityService customerActivityService, MediaSettings mediaSettings,
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
@@ -409,7 +410,7 @@ namespace Nop.Web.Controllers
                 model.CustomerAttributes.Add(caModel);
             }
 
-            #endregion 
+            #endregion
 
             model.NavigationModel = GetCustomerNavigationModel(customer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Info;
@@ -424,7 +425,7 @@ namespace Nop.Web.Controllers
             model.AllowCustomersToSetTimeZone = _dateTimeSettings.AllowCustomersToSetTimeZone;
             foreach (var tzi in _dateTimeHelper.GetSystemTimeZones())
                 model.AvailableTimeZones.Add(new SelectListItem() { Text = tzi.DisplayName, Value = tzi.Id, Selected = (excludeProperties ? tzi.Id == model.TimeZoneId : tzi.Id == _dateTimeHelper.CurrentTimeZone.Id) });
-            
+
             model.DisplayVatNumber = _taxSettings.EuVatEnabled;
             //form fields
             model.GenderEnabled = _customerSettings.GenderEnabled;
@@ -450,7 +451,7 @@ namespace Nop.Web.Controllers
             model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
             model.CheckUsernameAvailabilityEnabled = _customerSettings.CheckUsernameAvailabilityEnabled;
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnRegistrationPage;
-            
+
             //countries and states
             if (_customerSettings.CountryEnabled)
             {
@@ -512,7 +513,7 @@ namespace Nop.Web.Controllers
                 model.CustomerAttributes.Add(caModel);
             }
 
-            #endregion 
+            #endregion
         }
 
         [NonAction]
@@ -599,10 +600,10 @@ namespace Nop.Web.Controllers
                             {
                                 foreach (var item in cblAttributes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                                 {
-                                        int selectedAttributeId = int.Parse(item);
-                                        if (selectedAttributeId > 0)
-                                            selectedAttributes = _customerAttributeParser.AddCustomerAttribute(selectedAttributes,
-                                                attribute, selectedAttributeId.ToString());
+                                    int selectedAttributeId = int.Parse(item);
+                                    if (selectedAttributeId > 0)
+                                        selectedAttributes = _customerAttributeParser.AddCustomerAttribute(selectedAttributes,
+                                            attribute, selectedAttributeId.ToString());
                                 }
                             }
                         }
@@ -622,7 +623,7 @@ namespace Nop.Web.Controllers
                     case AttributeControlType.Datepicker:
                     case AttributeControlType.ColorSquares:
                     case AttributeControlType.FileUpload:
-                        //not supported customer attributes
+                    //not supported customer attributes
                     default:
                         break;
                 }
@@ -634,12 +635,12 @@ namespace Nop.Web.Controllers
         #endregion
 
         #region Login / logout / register
-        
+
         [NopHttpsRequirement(SslRequirement.Yes)]
         public ActionResult Login(bool? checkoutAsGuest, string returnUrl)
         {
             var model = new LoginModel();
-            
+
             model.UsernamesEnabled = _customerSettings.UsernamesEnabled;
             model.CheckoutAsGuest = checkoutAsGuest.HasValue ? checkoutAsGuest.Value : false;
             model.DisplayCaptcha = _captchaSettings.Enabled && _captchaSettings.ShowOnLoginPage;
@@ -740,6 +741,7 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+        [ValidateMvcCaptcha("_mvcCaptchaText")]
         [HttpPost]
         [CaptchaValidator]
         [ValidateAntiForgeryToken]
@@ -748,12 +750,12 @@ namespace Nop.Web.Controllers
             //check whether registration is allowed
             if (_customerSettings.UserRegistrationType == UserRegistrationType.Disabled)
                 return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Disabled });
-            
+
             if (_workContext.CurrentCustomer.IsRegistered())
             {
                 //Already registered customer. 
                 _authenticationService.SignOut();
-                
+
                 //Save a new record
                 _workContext.CurrentCustomer = _customerService.InsertGuestCustomer();
             }
@@ -795,7 +797,7 @@ namespace Nop.Web.Controllers
                     if (_taxSettings.EuVatEnabled)
                     {
                         _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.VatNumber, model.VatNumber);
-                        
+
                         string vatName = "";
                         string vatAddress = "";
                         var vatNumberStatus = _taxService.GetVatNumberStatus(model.VatNumber, out vatName, out vatAddress);
@@ -856,8 +858,8 @@ namespace Nop.Web.Controllers
                             }
                             //else
                             //{
-                                //When registering, not checking the newsletter check box should not take an existing email address off of the subscription list.
-                                //_newsLetterSubscriptionService.DeleteNewsLetterSubscription(newsletter);
+                            //When registering, not checking the newsletter check box should not take an existing email address off of the subscription list.
+                            //_newsLetterSubscriptionService.DeleteNewsLetterSubscription(newsletter);
                             //}
                         }
                         else
@@ -877,14 +879,14 @@ namespace Nop.Web.Controllers
 
                     //save customer attributes
                     _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
-                    
+
                     //login customer now
                     if (isApproved)
                         _authenticationService.SignIn(customer, true);
 
                     //associated with external account (if possible)
                     TryAssociateAccountWithExternalAccount(customer);
-                    
+
                     //insert default address (if possible)
                     var defaultAddress = new Address()
                     {
@@ -892,7 +894,7 @@ namespace Nop.Web.Controllers
                         LastName = customer.GetAttribute<string>(SystemCustomerAttributeNames.LastName),
                         Email = customer.Email,
                         Company = customer.GetAttribute<string>(SystemCustomerAttributeNames.Company),
-                        CountryId = customer.GetAttribute<int>(SystemCustomerAttributeNames.CountryId) > 0 ? 
+                        CountryId = customer.GetAttribute<int>(SystemCustomerAttributeNames.CountryId) > 0 ?
                             (int?)customer.GetAttribute<int>(SystemCustomerAttributeNames.CountryId) : null,
                         StateProvinceId = customer.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId) > 0 ?
                             (int?)customer.GetAttribute<int>(SystemCustomerAttributeNames.StateProvinceId) : null,
@@ -921,7 +923,7 @@ namespace Nop.Web.Controllers
                     //notifications
                     if (_customerSettings.NotifyNewCustomerRegistration)
                         _workflowMessageService.SendCustomerRegisteredNotificationMessage(customer, _localizationSettings.DefaultAdminLanguageId);
-                    
+
                     switch (_customerSettings.UserRegistrationType)
                     {
                         case UserRegistrationType.EmailValidation:
@@ -1005,8 +1007,8 @@ namespace Nop.Web.Controllers
 
                 if (UsernameIsValid(username))
                 {
-                    if (_workContext.CurrentCustomer != null && 
-                        _workContext.CurrentCustomer.Username != null && 
+                    if (_workContext.CurrentCustomer != null &&
+                        _workContext.CurrentCustomer.Username != null &&
                         _workContext.CurrentCustomer.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase))
                     {
                         statusText = _localizationService.GetResource("Account.CheckUsernameAvailability.CurrentUsername");
@@ -1025,7 +1027,7 @@ namespace Nop.Web.Controllers
 
             return Json(new { Available = usernameAvailable, Text = statusText });
         }
-        
+
         public ActionResult Logout()
         {
             //external authentication
@@ -1073,7 +1075,7 @@ namespace Nop.Web.Controllers
             _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.AccountActivationToken, "");
             //send welcome message
             _workflowMessageService.SendCustomerWelcomeMessage(customer, _workContext.WorkingLanguage.Id);
-            
+
             var model = new AccountActivationModel();
             model.Result = _localizationService.GetResource("Account.AccountActivation.Activated");
             return View(model);
@@ -1249,7 +1251,7 @@ namespace Nop.Web.Controllers
 
                     //save customer attributes
                     _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer, SystemCustomerAttributeNames.CustomCustomerAttributes, customerAttributes);
-                    
+
                     return RedirectToRoute("CustomerInfo");
                 }
             }
@@ -1263,7 +1265,7 @@ namespace Nop.Web.Controllers
             PrepareCustomerInfoModel(model, customer, true);
             return View(model);
         }
-        
+
         #endregion
 
         #region Addresses
@@ -1414,7 +1416,7 @@ namespace Nop.Web.Controllers
                     _stateProvinceService, () => _countryService.GetAllCountries());
             return View(model);
         }
-           
+
         #endregion
 
         #region Orders
@@ -1517,7 +1519,7 @@ namespace Nop.Web.Controllers
         {
             if (!IsCurrentUserRegistered())
                 return new HttpUnauthorizedResult();
-            
+
             var customer = _workContext.CurrentCustomer;
 
             var model = new CustomerDownloadableProductsModel();
@@ -1545,7 +1547,7 @@ namespace Nop.Web.Controllers
                 if (_downloadService.IsLicenseDownloadAllowed(item))
                     itemModel.LicenseId = item.LicenseDownloadId.HasValue ? item.LicenseDownloadId.Value : 0;
             }
-            
+
             return View(model);
         }
 
@@ -1563,7 +1565,7 @@ namespace Nop.Web.Controllers
             var model = new UserAgreementModel();
             model.UserAgreementText = product.UserAgreementText;
             model.OrderItemGuid = orderItemId;
-            
+
             return View(model);
         }
 
@@ -1598,11 +1600,11 @@ namespace Nop.Web.Controllers
             //current amount/balance
             int rewardPointsBalance = customer.GetRewardPointsBalance();
             decimal rewardPointsAmountBase = _orderTotalCalculationService.ConvertRewardPointsToAmount(rewardPointsBalance);
-            decimal rewardPointsAmount =_currencyService.ConvertFromPrimaryStoreCurrency(rewardPointsAmountBase,_workContext.WorkingCurrency);
+            decimal rewardPointsAmount = _currencyService.ConvertFromPrimaryStoreCurrency(rewardPointsAmountBase, _workContext.WorkingCurrency);
             model.RewardPointsBalance = rewardPointsBalance;
             model.RewardPointsAmount = _priceFormatter.FormatPrice(rewardPointsAmount, true, false);
             //minimum amount/balance
-            int minimumRewardPointsBalance =_rewardPointsSettings.MinimumRewardPointsToUse;
+            int minimumRewardPointsBalance = _rewardPointsSettings.MinimumRewardPointsToUse;
             decimal minimumRewardPointsAmountBase = _orderTotalCalculationService.ConvertRewardPointsToAmount(minimumRewardPointsBalance);
             decimal minimumRewardPointsAmount = _currencyService.ConvertFromPrimaryStoreCurrency(minimumRewardPointsAmountBase, _workContext.WorkingCurrency);
             model.MinimumRewardPointsBalance = minimumRewardPointsBalance;
@@ -1742,8 +1744,8 @@ namespace Nop.Web.Controllers
 
             //If we got this far, something failed, redisplay form
             model.AvatarUrl = _pictureService.GetPictureUrl(
-                customer.GetAttribute<int>(SystemCustomerAttributeNames.AvatarPictureId), 
-                _mediaSettings.AvatarPictureSize, 
+                customer.GetAttribute<int>(SystemCustomerAttributeNames.AvatarPictureId),
+                _mediaSettings.AvatarPictureSize,
                 false);
             return View(model);
         }
@@ -1762,7 +1764,7 @@ namespace Nop.Web.Controllers
 
             model.NavigationModel = GetCustomerNavigationModel(customer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Avatar;
-            
+
             var customerAvatar = _pictureService.GetPictureById(customer.GetAttribute<int>(SystemCustomerAttributeNames.AvatarPictureId));
             if (customerAvatar != null)
                 _pictureService.DeletePicture(customerAvatar);
@@ -1814,7 +1816,7 @@ namespace Nop.Web.Controllers
         public ActionResult PasswordRecoveryConfirm(string token, string email)
         {
             var customer = _customerService.GetCustomerByEmail(email);
-            if (customer == null )
+            if (customer == null)
                 return RedirectToRoute("HomePage");
 
             var cPrt = customer.GetAttribute<string>(SystemCustomerAttributeNames.PasswordRecoveryToken);
@@ -1823,7 +1825,7 @@ namespace Nop.Web.Controllers
 
             if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
                 return RedirectToRoute("HomePage");
-            
+
             var model = new PasswordRecoveryConfirmModel();
             return View(model);
         }
@@ -1842,7 +1844,7 @@ namespace Nop.Web.Controllers
 
             if (!cPrt.Equals(token, StringComparison.InvariantCultureIgnoreCase))
                 return RedirectToRoute("HomePage");
-            
+
             if (ModelState.IsValid)
             {
                 var response = _customerRegistrationService.ChangePassword(new ChangePasswordRequest(email,
