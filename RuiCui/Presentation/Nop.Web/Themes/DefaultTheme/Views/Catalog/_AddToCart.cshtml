@@ -29,9 +29,10 @@
             }
             else
             {
-                <i class="iconfont addnum-btn product-info-content">&#xf0175;</i>
+                
+                <a href="javascript:void(0);" id="num_minus"><i class="iconfont addnum-btn product-info-content">&#xf0176;</i></a>
                     @Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "addnum-input" })
-                <i class="iconfont addnum-btn">&#xf0176;</i>
+    <a href="javascript:void(0);" id="num_plus"><i class="iconfont addnum-btn">&#xf0175;</i></a>
 
                 //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
                 if (!Model.DisableBuyButton)
@@ -44,7 +45,20 @@
                                      return false;
                                  }
                              });
-                         });
+                    });
+                    $("#num_plus").click(function () {
+                        var num =parseInt($(".addnum-input").val());
+                        if (!isNaN(num))
+                        {
+                            $(".addnum-input").val(num+1);
+                        }
+                    });
+                    $("#num_minus").click(function () {
+                        var num = parseInt($(".addnum-input").val());
+                        if (!isNaN(num) && num >1 ) {
+                            $(".addnum-input").val(num-1);
+                        }
+                    });
                 </script>
                  }
             }
@@ -62,16 +76,16 @@
     {
         addToCartText = Model.AvailableForPreOrder ? T("ShoppingCart.PreOrder").Text : T("ShoppingCart.AddToCart").Text;
     }
-    <a id="add-to-cart-button-@Model.ProductId" class="btn-primary add-cart" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;" >
+    <a id="add-to-cart-button-@Model.ProductId" href="javascript:void(0);" class="btn-primary add-cart" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;" >
         <i class="iconfont icon-margin">&#xf0175;</i>加入购物车
     </a>
 }
         @if (!Model.DisableWishlistButton && Model.UpdatedShoppingCartItemId == 0)
-{
-    <a id="add-to-wishlist-button-@Model.ProductId" class="btn-yellow wishbtn" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;">
-        <i class="iconfont icon-margin">&#xf0144;</i>收藏
-    </a>
-}
+        {
+            <a id="add-to-wishlist-button-@Model.ProductId" href="javascript:void(0);" class="btn-yellow wishbtn" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;">
+                <i class="iconfont icon-margin">&#xf0144;</i>收藏
+            </a>
+        }
     </div>
     }
     @Html.Widget("productdetails_add_info")

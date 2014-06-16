@@ -63,34 +63,10 @@
     <script src="~/Themes/DefaultTheme/Content/js/base.js"></script>
     <script>
     XIAOMI.namespace("GLOBAL_CONFIG,GLOBAL_VAR");
-    XIAOMI.GLOBAL_CONFIG = {
-        orderSite: "http://order.mi.com",
-        wwwSite: "http://www.mi.com",
-        damiaoSite: "http://tp.hd.mi.com/",
-        logoutUrl: "http://order.mi.com/site/logout",
-        quickLoginUrl: "https://account.xiaomi.com/pass/static/login.html",
-        //图片上传路径地址
-        uploadUrl: "http://viewapi.xiaomi.com",
-        //图片远程存储地址
-        imgSaveUrl: "http://img06.mifile.cn/v1/MI_574AF0887F5D0",
-        //评论查询地址
-        commentUrl: "http://test.comment.com",
-        //评论Api地址
-        commentApiUrl: "http://comment.order.mi.com",
-        //侧边栏数据接口
-        sideBarApiUrl: "http://prs.www.xiaomi.com"
-    }
-    XIAOMI.app.setLoginInfo.orderUrl = XIAOMI.GLOBAL_CONFIG.orderSite + '/user/order';
-    XIAOMI.app.setLoginInfo.logoutUrl = XIAOMI.GLOBAL_CONFIG.logoutUrl;
-    XIAOMI.app.setLoginInfo.init(XIAOMI.GLOBAL_CONFIG);
+    XIAOMI.GLOBAL_CONFIG = {}
 
     //全站需要直接执行的函数
     jQuery(function ($) {
-        var oLogin = new XIAOMI.app.miniLogin();
-        oLogin.init();
-
-        // 搜索
-        XIAOMI.app.search.init();
 
         // miniCart
         XIAOMI.app.miniCart.init();
@@ -106,8 +82,6 @@
         });
         XIAOMI.app.navCategory.init();
 
-        // 绑定尾部公共事件
-        XIAOMI.app.footer.init();
     });
     </script>
 </body>
