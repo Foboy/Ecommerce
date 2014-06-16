@@ -54,7 +54,8 @@
                 @Html.EditorFor(model => model.SearchIncludeSubCategories)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchManufacturerId):
             </td>
@@ -62,7 +63,8 @@
                 @Html.DropDownList("SearchManufacturerId", Model.AvailableManufacturers)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchStoreId):
             </td>
@@ -70,7 +72,8 @@
                 @Html.DropDownList("SearchStoreId", Model.AvailableStores)
             </td>
         </tr>
-        <tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchVendorId):
             </td>
@@ -78,6 +81,14 @@
                 @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
             </td>
         </tr>
+        @*<tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.SearchVendorId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
+            </td>
+        </tr>*@
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchWarehouseId):
@@ -86,7 +97,8 @@
                 @Html.DropDownList("SearchWarehouseId", Model.AvailableWarehouses)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchProductTypeId):
             </td>

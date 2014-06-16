@@ -9,7 +9,7 @@
     <div class="section-header">
         <div class="title">
             <img src="@Url.Content("~/Administration/Content/images/ico-catalog.png")" alt="" />
-            @T("Admin.Catalog.Products.EditProductDetails") - @Model.Name @Html.ActionLink("(" + T("Admin.Catalog.Products.BackToList") + ")", "List")
+            @T("Admin.Catalog.Products.EditProductDetails") - @Model.Name @Html.ActionLink(T("Admin.Catalog.Products.BackToList").Text, "List", new { area = "" }, new { @class = "btn btn-sm btn-primary btn-flat " })
         </div>
 
     </div>
