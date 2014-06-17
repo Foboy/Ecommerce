@@ -92,13 +92,25 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ConfigurationIndexSliderRootModel.cs" />
     <Compile Include="Models\ConfigurationIndexRightModel.cs" />
+    <Compile Include="Models\ConfigurationNewModel.cs" />
+    <Compile Include="Models\ConfigurationStarModel.cs" />
+    <Compile Include="Models\ConfigurationLikeModel.cs" />
+    <Compile Include="Models\ConfigurationHotModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\PublicInfoIndexSliderRootModel.cs" />
     <Compile Include="Models\PublicInfoIndexRightModel.cs" />
     <Compile Include="Models\IndexModel.cs" />
+    <Compile Include="Models\PublicInfoNewModel.cs" />
+    <Compile Include="Models\PublicInfoStarModel.cs" />
+    <Compile Include="Models\PublicInfoLikeModel.cs" />
+    <Compile Include="Models\PublicInfoHotModel.cs" />
     <Compile Include="NivoIndexSliderRootSettings.cs" />
     <Compile Include="NivoSliderPlugin.cs" />
     <Compile Include="NivoIndexRightSettings.cs" />
+    <Compile Include="NivoSliderNewSettings.cs" />
+    <Compile Include="NivoSliderHotSettings.cs" />
+    <Compile Include="NivoSliderStarSettings.cs" />
+    <Compile Include="NivoSliderLikeSettings.cs" />
     <Compile Include="NivoSliderSettings.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\PublicInfoModel.cs" />
@@ -124,6 +136,9 @@
     <Content Include="Content\nivoslider\license.txt" />
     <Content Include="Content\nivoslider\nivo-slider.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\nivoslider\sample-images\瑞翠商城.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\nivoslider\themes\bar\arrows.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -183,6 +198,9 @@
     <Content Include="Scripts\jquery.nivo.slider.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\mapper.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\nivoslider\README" />
@@ -192,9 +210,19 @@
     <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexRight.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexSliderRoot.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\index.cshtml" />
-    <Content Include="Views\WidgetsNivoSlider\ProductAddPopup.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ProductAddPopup.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexRight2.cshtml" />
-    <None Include="web.config" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureNew.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureHot.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureLike.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureStar.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoHot.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoNew.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoStar.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoLike.cshtml" />
+    <None Include="web.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Nop.Core\Nop.Core.csproj">

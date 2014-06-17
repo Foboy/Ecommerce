@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <returns>Widget zones</returns>
         public IList<string> GetWidgetZones()
         {
-            return new List<string>() { "home_page_top", "home_page_right", "home_page_root", "home_page_right2" };
+            return new List<string>() { "home_page_top", "home_page_right", "home_page_root", "home_page_right2", "home_page_hot", "home_page_new", "home_page_star", "home_page_like" };
         }
 
         /// <summary>
@@ -82,6 +82,22 @@ namespace Nop.Plugin.Widgets.NivoSlider
                     break;
                 case "home_page_root":
                     actionName = "PublicInfoRoot";
+                    controllerName = "Index";
+                    break;
+                case "home_page_new":
+                    actionName = "PublicInfoNew";
+                    controllerName = "Index";
+                    break;
+                case "home_page_hot":
+                    actionName = "PublicInfoHot";
+                    controllerName = "Index";
+                    break;
+                case "home_page_star":
+                    actionName = "PublicInfoStar";
+                    controllerName = "Index";
+                    break;
+                case "home_page_like":
+                    actionName = "PublicInfoLike";
                     controllerName = "Index";
                     break;
             }
@@ -155,6 +171,18 @@ namespace Nop.Plugin.Widgets.NivoSlider
             };
             _settingService.SaveSetting(settingsNivoIndexSliderRoot);
 
+            var settingNivoSliderHotSettings = new NivoSliderHotSettings();
+            _settingService.SaveSetting(settingNivoSliderHotSettings);
+
+            var settingNivoSliderNewSettings = new NivoSliderNewSettings();
+            _settingService.SaveSetting(settingNivoSliderNewSettings);
+
+            var settingNivoSliderStarSettings = new NivoSliderStarSettings();
+            _settingService.SaveSetting(settingNivoSliderStarSettings);
+
+            var settingNivoSliderLikeSettings = new NivoSliderLikeSettings();
+            _settingService.SaveSetting(settingNivoSliderLikeSettings);
+
 
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1", "×ó 1");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture2", "Picture 2");
@@ -181,6 +209,10 @@ namespace Nop.Plugin.Widgets.NivoSlider
             _settingService.DeleteSetting<NivoSliderSettings>();
             _settingService.DeleteSetting<NivoIndexRightSettings>();
             _settingService.DeleteSetting<NivoIndexSliderRootSettings>();
+            _settingService.DeleteSetting<NivoSliderHotSettings>();
+            _settingService.DeleteSetting<NivoSliderLikeSettings>();
+            _settingService.DeleteSetting<NivoSliderNewSettings>();
+            _settingService.DeleteSetting<NivoSliderStarSettings>();
 
             //locales
             this.DeletePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1");

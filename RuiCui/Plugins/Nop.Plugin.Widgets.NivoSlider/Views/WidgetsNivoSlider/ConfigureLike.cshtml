@@ -1,10 +1,10 @@
 ﻿@{
     Layout = "";
 }
-@model Nop.Plugin.Widgets.NivoSlider.Models.ConfigurationModel
+@model Nop.Plugin.Widgets.NivoSlider.Models.ConfigurationLikeModel
 @using Nop.Web.Framework;
 @Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
-@using (Html.BeginForm("ConfigureSlider","Index"))
+@using (Html.BeginForm("ConfigureLike","Index"))
 {
     <fieldset>
         <legend><strong>@T("Plugins.Widgets.NivoSlider.Picture1")</strong></legend>
