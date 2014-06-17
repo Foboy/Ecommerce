@@ -20,6 +20,8 @@ namespace Nop.Web.Models.Catalog
         public string FullDescription { get; set; }
         public string SeName { get; set; }
 
+        public int Score { get; set; }
+
         //price
         public ProductPriceModel ProductPrice { get; set; }
         //picture

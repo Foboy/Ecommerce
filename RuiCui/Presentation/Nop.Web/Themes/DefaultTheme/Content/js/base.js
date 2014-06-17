@@ -341,7 +341,7 @@ XIAOMI.app.miniCart = {
         return "undefined" != typeof miniCartDisable && miniCartDisable ? !1 : (_this.elmCartBtn.on({
             mouseenter: function () {
                 clearTimeout(timeOut),
-                $(this).hasClass("mini-cart-on") || ($(this).addClass("mini-cart-on"), _this.show(), _this.getData())
+                $(this).hasClass("mini-cart-on") || ($(this).addClass("mini-cart-on"), _this.show())
             },
             mouseleave: function () {
                 timeOut = setTimeout(function () {
@@ -359,11 +359,6 @@ XIAOMI.app.miniCart = {
                 },
                 _this.speed)
             }
-        }), void _this.elmCartList.on("click", ".delItem",
-        function (e) {
-            var gId = $(this).attr("gid");
-            e.preventDefault(),
-            _this.delGoods(gId)
         }))
     },
     show: function () {
@@ -374,30 +369,6 @@ XIAOMI.app.miniCart = {
         var _this = this;
         _this.elmCartBtn.removeClass("mini-cart-on"),
         _this.elmCartList.hide()
-    },
-    delGoods: function (gId) {
-        var _this = this;
-        XIAOMI.app.updateMiniCart();
-    },
-    getData: function () {
-        var _this = this;
-        XIAOMI.app.updateMiniCart();
-    },
-    formatData: function (data) {
-        var _this = this;
-        if (0 === data.errorno && data.totalItem > 0) {
-            var lens = data.items.length,
-            goodsUrl = null,
-            listHtml = "<ul>",
-            countHtml = '<div class="count clearfix"><span class="total">共计 <em>' + data.total + "</em> 件商品<strong>合计：<em>" + data.totalPrice + '元</em></strong></span><a href="' + XIAOMI.GLOBAL_CONFIG.orderSite + '/cart"  class="btn btn-primary">去购物车结算</a></div>';
-            if (data.totalItem > 5) {
-                var listHeight = 335;
-                listHtml = '<ul style="height:' + listHeight + 'px;overflow-x:hidden;overflow-y:scroll">'
-            }
-            for (var i = 0; lens > i; i += 1) 0 === data.items[i].noLink ? (goodsUrl = XIAOMI.GLOBAL_CONFIG.orderSite + "/item/" + data.items[i].product_id, listHtml += '<li class="clearfix"><a href="' + goodsUrl + '" class="pic"><img alt="" src="' + data.items[i].image_url + '?width=60&height=60"></a><a href="' + goodsUrl + '" class="name">' + data.items[i].product_name + '</a><span class="price">' + data.items[i].salePrice + "元 x " + data.items[i].num + '</span><a class="btn-del delItem" href="javascript: void(0);" gid="' + data.items[i].itemId + '"><i class="iconfont">&#xe607;</i></a></li>') : listHtml += '<li class="clearfix"><span class="pic"><img alt="" src="' + data.items[i].image_url + '"></span><span   class="name">' + data.items[i].product_name + '</span><span class="price">' + data.items[i].salePrice + "元 x " + data.items[i].num + '</span><a class="btn-del delItem" href="javascript: void(0);" gid="' + data.items[i].itemId + '"><i class="iconfont">&#xe607;</i></a></li>';
-            listHtml += "</ul>",
-            _this.elmCartList.html(listHtml + countHtml)
-        } else _this.elmCartList.html('<p class="loading">购物车中还没有商品，赶紧选购吧！</p>')
     }
 },
 
@@ -459,7 +430,7 @@ XIAOMI.app.navMenus = function () {
 }(),
 XIAOMI.app.navCategory = function () {
     function toggleCategoryList(option) {
-        "show" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xe606;"), $categoryList.show()) : "static" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryList.show()) : ($categoryContainer.removeClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xe608;"), $categoryList.hide().find(".nav-category-list").children("li").removeClass("current"))
+        "show" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02aa;"), $categoryList.show()) : "static" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryList.show()) : ($categoryContainer.removeClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02a9;"), $categoryList.hide().find(".nav-category-list").children("li").removeClass("current"))
     }
     function bindChildrenList() {
         var timeoutChildrenList;
@@ -503,7 +474,7 @@ XIAOMI.app.navCategory = function () {
         var isCategoryStatic = "undefined" != typeof isCategoryToggled ? isCategoryToggled : !1;
         if (false, addSrcset($(".nav-category-list")), isCategoryStatic) toggleCategoryList("static");
         else {
-            $categoryTriggerBtn.append('<i class="iconfont">&#xe608;</i>');
+            $categoryTriggerBtn.append('<i class="iconfont">&#xf02a9;</i>');
             var timeoutCategory;
             $categoryContainer.on({
                 mouseenter: function () {

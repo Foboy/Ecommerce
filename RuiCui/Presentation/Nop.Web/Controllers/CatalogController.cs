@@ -42,6 +42,7 @@ using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Catalog;
 using Nop.Web.Models.Media;
+using System.Text.RegularExpressions;
 
 namespace Nop.Web.Controllers
 {
@@ -319,6 +320,7 @@ namespace Nop.Web.Controllers
                 throw new ArgumentNullException("products");
 
             var models = new List<ProductOverviewModel>();
+            Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
             foreach (var product in products)
             {
                 var model = new ProductOverviewModel()
@@ -329,6 +331,26 @@ namespace Nop.Web.Controllers
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
                 };
+                
+                //score
+                if (string.IsNullOrWhiteSpace(product.AdminComment))
+                {
+                    model.Score = 100;
+                }
+                else
+                {
+                    string adminComment = product.AdminComment.Trim();
+
+                    var result = scoreReg.Match(adminComment).Groups;
+                    if (result.Count > 1)
+                    {
+                        model.Score = Convert.ToInt32(result[1].Value);
+                    }
+                    else
+                    {
+                        model.Score = 100;
+                    }
+                }
                 //price
                 if (preparePriceModel)
                 {

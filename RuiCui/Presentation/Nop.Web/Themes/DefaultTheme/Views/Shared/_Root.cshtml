@@ -24,7 +24,7 @@
         <div class="search-section">
             @Html.Action("SearchBox", "Catalog")
         </div>
-        <div class="cart-section">
+        <div class="cart-section" id="flyout-cart">
             @Html.Action("FlyoutShoppingCart", "ShoppingCart")
         </div>
     </div>
@@ -118,7 +118,7 @@
     @Html.Action("JavaScriptDisabledWarning", "Common")
     <div class="master-wrapper-content">
         <script type="text/javascript">
-            AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
+            AjaxCart.init(false, '#J_miniCart .J_cartNum', '#wishlist-qty', '#J_miniCartList');
         </script>
         @Html.Partial("Header")
 

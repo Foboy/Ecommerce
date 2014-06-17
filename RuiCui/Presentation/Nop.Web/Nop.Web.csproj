@@ -1574,6 +1574,7 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\demo.html" />
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.css" />
     <Content Include="Themes\DefaultTheme\Content\css\index.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\login.css" />
     <Content Include="Themes\DefaultTheme\Content\css\main.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
@@ -1854,6 +1855,7 @@
     <Content Include="Themes\DefaultTheme\Content\Images\flags\zm.png" />
     <Content Include="Themes\DefaultTheme\Content\Images\flags\zw.png" />
     <Content Include="Themes\DefaultTheme\Content\Images\logo.jpg" />
+    <Content Include="Themes\DefaultTheme\Content\Images\sprite_all2.png" />
     <Content Include="Themes\DefaultTheme\Content\Images\Thumbs\0000001_book_100.jpeg" />
     <Content Include="Themes\DefaultTheme\Content\Images\Thumbs\0000002_computers_100.jpeg" />
     <Content Include="Themes\DefaultTheme\Content\Images\Thumbs\0000003_desktops.jpg" />
