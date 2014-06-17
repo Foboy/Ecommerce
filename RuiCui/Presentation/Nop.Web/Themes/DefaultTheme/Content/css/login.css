@@ -101,8 +101,11 @@ position: absolute; top:50%; left:0; margin-top: -317px;
 .shake-area,
 .code-enter-item {margin-bottom: 16px;}
 .button {margin: 16px 0 0 0;}
-.ta-qq,.ta-weibo,.ta-alipay,.ta-facebook,.checkbox,.checked,.error-ico{background-image: url(/static/img/passport/sprite_all2.png); 
-    _background-image: url(/static/img/passport/sprite_all_82.png)}
+.hide {
+visibility: hidden !important;
+}
+.ta-qq,.ta-weibo,.ta-alipay,.ta-facebook,.checkbox,.checked,.error-ico{background-image: url(../../Content/Images/sprite_all2.png); 
+    _background-image: url(../../Content/Images/sprite_all2.png)}
 /* 第三方存在的时候支付宝不出现 */
 .has_third .ta-alipay{display: none;}
 .en .ng-cookie-area{width: 110px;}

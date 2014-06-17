@@ -23,6 +23,31 @@ namespace Nop.Plugin.Shipping.ByWeight
      new { controller = "Index", action = "ConfigureRoot", },
      new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
 );
+            routes.MapRoute("Nop.Plugin.Widgets.NivoSlider.ProductAddPopup",
+     "Plugins/WidgetsNivoSlider/ProductAddPopup",
+     new { controller = "Index", action = "ProductAddPopup", },
+     new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
+            routes.MapRoute("Plugin.Widgets.NivoSlider.ConfigureHot",
+"Plugins/Index/ConfigureHot",
+new { controller = "Index", action = "ConfigureHot", },
+new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
+            routes.MapRoute("Plugin.Widgets.NivoSlider.ConfigureNew",
+"Plugins/Index/ConfigureNew",
+new { controller = "Index", action = "ConfigureNew", },
+new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
+            routes.MapRoute("Plugin.Widgets.NivoSlider.ConfigureStar",
+"Plugins/Index/ConfigureStar",
+new { controller = "Index", action = "ConfigureStar", },
+new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
+            routes.MapRoute("Plugin.Widgets.NivoSlider.ConfigureLike",
+"Plugins/Index/ConfigureLike",
+new { controller = "Index", action = "ConfigureLike", },
+new[] { "Nop.Plugin.Widgets.NivoSlider.Controllers" }
+);
         }
         public int Priority
         {

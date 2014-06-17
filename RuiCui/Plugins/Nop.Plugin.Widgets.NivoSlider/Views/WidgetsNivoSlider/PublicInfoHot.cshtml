@@ -1,0 +1,70 @@
+﻿@model Nop.Plugin.Widgets.NivoSlider.Models.PublicInfoHotModel
+@{
+    Layout = "";
+
+}
+@using System
+@using Nop.Web.Framework.UI
+
+<div class="home-star-goods">
+    <div class="xm-plain-box J_starGoodsCarousel">
+        <div class="box-hd">
+            <h3 class="title">热卖产品</h3>
+            <div class="more">
+                <div class="xm-recommend-page clearfix">
+                    <a class="page-btn-prev page-btn-prev-disabled iconfont J_carouselPrev" href="javascript: void(0);">&#xe604;</a><a class="page-btn-next iconfont J_carouselNext" href="javascript: void(0);">&#xe605;</a>
+                </div>
+            </div>
+        </div>
+        <div class="box-bd">
+            <div class="xm-star-goods-list-wrap J_carouselWrap">
+                <div class="xm-star-goods-list clearfix J_carouselList">
+                    <div class="xm-star-goods-item">
+                        <div class="item-content">
+                            <span class="item-thumb">
+                                <a href="@Model.Link1">
+                                    <img src="@Model.Picture1Url" alt="@Model.Text1" />
+                                </a>
+                            </span>
+                            <span class="item-title"><a href="@Model.Link1">@Model.Text1</a></span>
+                            <span class="item-desc"></span>
+                        </div>
+                    </div>
+                    <div class="xm-star-goods-item">
+                        <div class="item-content">
+                            <span class="item-thumb">
+                                <a href="@Model.Link2">
+                                    <img src="@Model.Picture2Url" alt="@Model.Text2" />
+                                </a>
+                            </span>
+                            <span class="item-title"><a href="@Model.Link2">@Model.Text2</a></span>
+                            <span class="item-desc"></span>
+                        </div>
+                    </div>
+                    <div class="xm-star-goods-item">
+                        <div class="item-content">
+                            <span class="item-thumb">
+                                <a href="@Model.Link3">
+                                    <img src="@Model.Picture3Url" alt="@Model.Text3" />
+                                </a>
+                            </span>
+                            <span class="item-title"><a href="@Model.Link3">@Model.Text3</a></span>
+                            <span class="item-desc"></span>
+                        </div>
+                    </div>
+                    <div class="xm-star-goods-item">
+                        <div class="item-content">
+                            <span class="item-thumb">
+                                <a href="@Model.Link4">
+                                    <img src="@Model.Picture4Url" alt="@Model.Text4" />
+                                </a>
+                            </span>
+                            <span class="item-title"><a href="@Model.Link4">@Model.Text4</a></span>
+                            <span class="item-desc"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,26 +1,57 @@
 ﻿@{
     Layout = "";
+    Html.AppendCssFileParts("~/Plugins/Widgets.NivoSlider/Content/nivoslider/nivo-slider.css");
+   Html.AppendScriptParts("~/Plugins/Widgets.NivoSlider/Scripts/mapper.js");
 }
 @model Nop.Plugin.Widgets.NivoSlider.Models.IndexModel
 @using Nop.Web.Framework;
 
-<img src="@Url.Content("~/Plugins/Widgets.NivoSlider/Content/nivoslider/sample-images/banner1.jpg")" border="0" usemap="#planetmap" alt="Planets" border="0" />
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#index" data-toggle="tab">首页配置图</a></li>
+    <li><a href="#tab1" data-toggle="tab">首页滑动图配置</a></li>
+    <li><a href="#tab2" data-toggle="tab">滑动图右侧配置</a></li>
+    <li><a href="#tab3" data-toggle="tab">滑动图底部配置</a></li>
+    <li><a href="#tab4" data-toggle="tab">热卖单品</a></li>
+    <li><a href="#tab5" data-toggle="tab">新品上架</a></li>
+    <li><a href="#tab6" data-toggle="tab">明星单品</a></li>
+    <li><a href="#tab7" data-toggle="tab">大家都喜欢</a></li>
+</ul>
 
-<map name="planetmap" id="planetmap">
-    <area shape="rect" coords="0,180,139,14" href="@Url.Action("Configure1", "Index", new RouteValueDictionary() { { "Namespaces", "Nop.Plugin.Widgets.NivoSlider.Controllers" }, { "area", "" } }))" style="cursor: pointer" alt="Venus" title="1111" />
+<div class="tab-content">
+    <div class="tab-pane active" id="index">
+     
+        <img src="@Url.Content("~/Plugins/Widgets.NivoSlider/Content/nivoslider/sample-images/瑞翠商城.png")" class="mapper" border="0" usemap="#planetmap" alt="Planets" />
+     
+        <map name="planetmap" id="planetmap">
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="120,80,378,213" onclick="showTab('tab1')" style="cursor: pointer" alt="Venus" title="首页滑动图" />
 
 
-    <area shape="rect" coords="0,129,161,10" href="@Url.Action("Configure2", "Index")" alt="Mercury" title="222" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="375,81,468,268" onclick="showTab('tab2')" alt="Mercury" title="右边广告位" />
 
 
-    <area shape="rect" coords="0,0,110,260" href="@Url.Action("Configure3", "Index")" alt="Sun" title="333" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="122,220,379,266" onclick="showTab('tab3')" alt="Sun" title="滑动图底部广告位" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="38,289,466,394" onclick="showTab('tab4')" alt="Sun" title="热卖单品" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="38,423,466,563" onclick="showTab('tab5')" alt="Sun" title="新品上架" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="38,585,466,725" onclick="showTab('tab6')" alt="Sun" title="明星单品" />
+            <area shape="rect" class="icolor000000 forcegroup" rel="green,red,blue" coords="38,745,466,885" onclick="showTab('tab7')" alt="Sun" title="大家都喜欢" />
+
+        </map>
+    </div>
+    <div class="tab-pane" id="tab1">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.Configure", Model._ConfigurationModel)</div>
+    <div class="tab-pane" id="tab2">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexRight", Model._ConfigurationIndexRightModel)</div>
+    <div class="tab-pane" id="tab3">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexSliderRoot", Model._ConfigurationIndexSliderRootModel)</div>
+    <div class="tab-pane" id="tab4">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureHot", Model._ConfigurationHotModel)</div>
+    <div class="tab-pane" id="tab5">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureNew", Model._ConfigurationNewModel)</div>
+    <div class="tab-pane" id="tab6">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureStar", Model._ConfigurationStarModel)</div>
+    <div class="tab-pane" id="tab7">@Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureLike", Model._ConfigurationLikeModel)</div>
+</div>
+
+<script>
+    function showTab(name)
+    {
+        $('#myTab a[href="#' + name + '"]').tab('show');
+    }
+  
+    </script>
 
 
-</map>
-
-    <br />
-        @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.Configure", Model._ConfigurationModel)
-        <br />
-         @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexRight", Model._ConfigurationIndexRightModel)
-        <br />
-        @Html.Partial("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.ConfigureIndexSliderRoot", Model._ConfigurationIndexSliderRootModel)

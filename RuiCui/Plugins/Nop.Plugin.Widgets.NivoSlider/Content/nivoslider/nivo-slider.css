@@ -112,3 +112,7 @@
 .nivo-controlNav a.active {
 	font-weight:bold;
 }
+.mapper {
+    max-width:750px;
+    height:auto;
+}

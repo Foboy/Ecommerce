@@ -33,7 +33,7 @@ namespace Nop.Plugin.Widgets.NivoSlider
         /// <returns>Widget zones</returns>
         public IList<string> GetWidgetZones()
         {
-            return new List<string>() { "home_page_top", "home_page_right", "home_page_root" };
+            return new List<string>() { "home_page_top", "home_page_right", "home_page_root", "home_page_right2", "home_page_hot", "home_page_new", "home_page_star", "home_page_like" };
         }
 
         /// <summary>
@@ -76,8 +76,28 @@ namespace Nop.Plugin.Widgets.NivoSlider
                     actionName = "PublicInfoIndexRight";
                     controllerName = "Index";
                     break;
+                case "home_page_right2":
+                    actionName = "PublicInfoIndexRight2";
+                    controllerName = "Index";
+                    break;
                 case "home_page_root":
                     actionName = "PublicInfoRoot";
+                    controllerName = "Index";
+                    break;
+                case "home_page_new":
+                    actionName = "PublicInfoNew";
+                    controllerName = "Index";
+                    break;
+                case "home_page_hot":
+                    actionName = "PublicInfoHot";
+                    controllerName = "Index";
+                    break;
+                case "home_page_star":
+                    actionName = "PublicInfoStar";
+                    controllerName = "Index";
+                    break;
+                case "home_page_like":
+                    actionName = "PublicInfoLike";
                     controllerName = "Index";
                     break;
             }
@@ -151,18 +171,30 @@ namespace Nop.Plugin.Widgets.NivoSlider
             };
             _settingService.SaveSetting(settingsNivoIndexSliderRoot);
 
+            var settingNivoSliderHotSettings = new NivoSliderHotSettings();
+            _settingService.SaveSetting(settingNivoSliderHotSettings);
 
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1", "×ó 1");
+            var settingNivoSliderNewSettings = new NivoSliderNewSettings();
+            _settingService.SaveSetting(settingNivoSliderNewSettings);
+
+            var settingNivoSliderStarSettings = new NivoSliderStarSettings();
+            _settingService.SaveSetting(settingNivoSliderStarSettings);
+
+            var settingNivoSliderLikeSettings = new NivoSliderLikeSettings();
+            _settingService.SaveSetting(settingNivoSliderLikeSettings);
+
+
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1", "Í¼Æ¬1");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture2", "Picture 2");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture3", "Picture 3");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture4", "Picture 4");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture5", "Picture 5");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture", "Picture");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture.Hint", "Upload picture.");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Text", "Comment");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Text.Hint", "Enter comment for picture. Leave empty if you don't want to display any text.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture", "Í¼Æ¬");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture.Hint", "ÉÏ´«Í¼Æ¬");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Text", "±êÌâ");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Text.Hint", "");
             this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Link", "URL");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Link.Hint", "Enter URL. Leave empty if you don't want this picture to be clickable.");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Widgets.NivoSlider.Link.Hint", "");
 
 
             base.Install();
@@ -177,6 +209,10 @@ namespace Nop.Plugin.Widgets.NivoSlider
             _settingService.DeleteSetting<NivoSliderSettings>();
             _settingService.DeleteSetting<NivoIndexRightSettings>();
             _settingService.DeleteSetting<NivoIndexSliderRootSettings>();
+            _settingService.DeleteSetting<NivoSliderHotSettings>();
+            _settingService.DeleteSetting<NivoSliderLikeSettings>();
+            _settingService.DeleteSetting<NivoSliderNewSettings>();
+            _settingService.DeleteSetting<NivoSliderStarSettings>();
 
             //locales
             this.DeletePluginLocaleResource("Plugins.Widgets.NivoSlider.Picture1");
