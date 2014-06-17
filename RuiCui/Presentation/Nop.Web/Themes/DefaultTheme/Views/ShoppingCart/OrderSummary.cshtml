@@ -145,7 +145,7 @@
                         <!--E 活动相关-->
                         @if (!String.IsNullOrEmpty(Model.CheckoutAttributeInfo))
                         {
-                            <dd class="selected-checkout-attributes">
+                            <dd class="selected-checkout-attributes" style="display:none;">
                                 @Html.Raw(Model.CheckoutAttributeInfo)
                             </dd>
                         }
@@ -176,7 +176,10 @@
                 <div class="shop-cart-box-ft clearfix">
                     <!--S 加价购-->
                     <div class="xm-add-buy">
-                        @Html.Partial("_CheckoutAttributes", Model.CheckoutAttributes, new ViewDataDictionary())
+                        <div style="display:none;">
+                            @Html.Partial("_CheckoutAttributes", Model.CheckoutAttributes, new ViewDataDictionary())
+                        </div>
+
                         @Html.Widget("order_summary_cart_footer")
                         @if (Model.IsEditable)
                         {
@@ -189,7 +192,7 @@
                                 </div>
                             }
                         }
-                        <div class="cart-collaterals">
+                        <div class="cart-collaterals" style="display:none;">
                             @if (Model.IsEditable)
                             {
                                 <div class="deals">

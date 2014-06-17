@@ -1142,7 +1142,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 
         [HttpPost]
         [AdminAuthorize]
-        public ActionResult ConfigureNew(ConfigurationStarModel model)
+        public ActionResult ConfigureStar(ConfigurationStarModel model)
         {
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
@@ -1356,7 +1356,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
 
         [HttpPost]
         [AdminAuthorize]
-        public ActionResult ConfigureNew(ConfigurationLikeModel model)
+        public ActionResult ConfigureLike(ConfigurationLikeModel model)
         {
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);

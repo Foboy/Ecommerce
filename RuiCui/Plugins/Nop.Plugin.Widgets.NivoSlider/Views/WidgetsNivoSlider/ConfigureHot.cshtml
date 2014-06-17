@@ -17,8 +17,7 @@
                 <td class="adminData">
                     @Html.EditorFor(model => model.Picture1Id)
                     @Html.ValidationMessageFor(model => model.Picture1Id)
-                    <input type="submit" id="btnAddNewProduct" name="btnAddNewProduct" value="选择产品" onclick="javascript:OpenWindow('@(Url.RouteUrl("Nop.Plugin.Widgets.NivoSlider.ProductAddPopup", new { categoryId = 0 }))', 800, 800, true); return false;" class="btn btn-sm btn-primary btn-flat " />
-                </td>
+                 </td>
             </tr>
             <tr>
                 <td class="adminTitle">
@@ -157,7 +156,7 @@
     <table class="adminContent">
         <tr>
             <td colspan="2">
-                <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+                <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
             </td>
         </tr>
     </table>
