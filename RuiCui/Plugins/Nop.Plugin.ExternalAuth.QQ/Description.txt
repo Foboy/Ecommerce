@@ -1,0 +1,8 @@
+﻿Group: ExternalAuth methods
+FriendlyName: QQ authentication
+SystemName: ExternalAuth.QQ
+Version: 1.25
+SupportedVersions: 3.30
+Author: ForBoy team
+DisplayOrder: 1
+FileName: Nop.Plugin.ExternalAuth.QQ.dll
