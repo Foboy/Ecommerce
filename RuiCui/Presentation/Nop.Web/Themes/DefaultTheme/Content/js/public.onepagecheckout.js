@@ -83,7 +83,7 @@ var Checkout = {
         if ($("#shipping-address-select").length > 0) {
             Shipping.newAddress(!$('#shipping-address-select').val());
         }
-
+        /*
         setTimeout(function () {
             switch (response.update_section.name) {
                 case "shipping":
@@ -99,7 +99,7 @@ var Checkout = {
                     PaymentInfo.save();
                     break;
             }
-        }, 1);
+        }, 1);*/
 
         if (response.goto_section) {
             Checkout.gotoSection(response.goto_section);

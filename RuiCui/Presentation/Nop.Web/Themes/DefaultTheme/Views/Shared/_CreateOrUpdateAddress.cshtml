@@ -39,7 +39,10 @@
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.FirstName)
     </div>
-    <div class="inputs">
+    <div class="inputs" style="display:none;">
+        @{
+            Model.LastName = "　";
+        }
         @Html.LabelFor(model => model.LastName, new { }, ":")
             @Html.EditorFor(model => model.LastName)
         @Html.RequiredHint()
