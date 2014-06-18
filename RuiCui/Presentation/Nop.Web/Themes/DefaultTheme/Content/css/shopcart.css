@@ -16,7 +16,7 @@ em {
     width: 94px;
     height: 32px;
     margin: 0 auto;
-    background: url("http://p.www.xiaomi.com/zt/2013//shopCart-icon-activity.png") no-repeat;
+    background: url("../images/shopCart-icon-activity.png") no-repeat;
     text-indent: -9999px;
 }
 
@@ -547,12 +547,7 @@ em {
     margin-left: -320px;
 }
 
-.shop-cart-empty {
-    width: 540px;
-    margin: 35px auto 0;
-    padding: 50px 0 105px;
-    background: url("http://p.www.xiaomi.com/zt/2013//shopCart-empty-mitu.jpg") no-repeat right 0;
-}
+
 
     .shop-cart-empty h2 {
         width: 280px;

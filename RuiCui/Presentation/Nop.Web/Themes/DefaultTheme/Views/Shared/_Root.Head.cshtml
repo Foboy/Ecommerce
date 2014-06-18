@@ -62,25 +62,25 @@
     @Html.NopScripts(this.Url, ResourceLocation.Foot)
     <script src="~/Themes/DefaultTheme/Content/js/base.js"></script>
     <script>
-    XIAOMI.namespace("GLOBAL_CONFIG,GLOBAL_VAR");
-    XIAOMI.GLOBAL_CONFIG = {}
+    Foboy.namespace("GLOBAL_CONFIG,GLOBAL_VAR");
+    Foboy.GLOBAL_CONFIG = {}
 
     //全站需要直接执行的函数
     jQuery(function ($) {
 
         // miniCart
-        XIAOMI.app.miniCart.init();
+        Foboy.app.miniCart.init();
         // 更新miniCart数量
-        XIAOMI.app.updateMiniCart();
+        Foboy.app.updateMiniCart();
 
         // 商品分类导航
-        XIAOMI.app.navMenus.init($('.J_menuNavMain'), {
+        Foboy.app.navMenus.init($('.J_menuNavMain'), {
             menuSelector: '.nav-main-item',
             submenuSelector: '.nav-main-children',
             effect: 'slide',
             triggerEvent: 'hover'
         });
-        XIAOMI.app.navCategory.init();
+        Foboy.app.navCategory.init();
 
     });
     </script>
