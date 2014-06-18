@@ -29,3 +29,4 @@ Widgets.GoogleAnalytics
 Widgets.NivoSlider
 FoxNetSoft.Plugin.Misc.ModularProducts
 Payments.AliPay
+ExternalAuth.QQ
