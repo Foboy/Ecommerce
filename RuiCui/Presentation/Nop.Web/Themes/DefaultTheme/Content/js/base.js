@@ -1,15 +1,15 @@
-/*! www.xiaomi.com - v1.1.0 - 2014 */
-if ("undefined" == typeof XIAOMI || !XIAOMI) var XIAOMI = {};
-XIAOMI.namespace = function () {
+
+if ("undefined" == typeof Foboy || !Foboy) var Foboy = {};
+Foboy.namespace = function () {
     var i, j, d, a = arguments,
     o = null;
-    for (i = 0; i < a.length; i += 1) for (d = ("" + a[i]).split("."), o = XIAOMI, j = "XIAOMI" == d[0] ? 1 : 0; j < d.length; j += 1) o[d[j]] = o[d[j]] || {},
+    for (i = 0; i < a.length; i += 1) for (d = ("" + a[i]).split("."), o = Foboy, j = "Foboy" == d[0] ? 1 : 0; j < d.length; j += 1) o[d[j]] = o[d[j]] || {},
     o = o[d[j]];
     return o
 },
-XIAOMI.lang = XIAOMI.lang || {},
+Foboy.lang = Foboy.lang || {},
 function () {
-    var L = XIAOMI.lang,
+    var L = Foboy.lang,
     OP = Object.prototype,
     ARRAY_TOSTRING = "[object Array]",
     FUNCTION_TOSTRING = "[object Function]",
@@ -172,8 +172,8 @@ function () {
     },
     OB.augmentObject(L, OB, !0),
     L.augment = L.augmentProto,
-    XIAOMI.augment = L.augmentProto,
-    XIAOMI.extend = L.extend
+    Foboy.augment = L.augmentProto,
+    Foboy.extend = L.extend
 }();; (function () {
     function parse(s, buf, offset) {
         var i = buf && offset || 0,
@@ -271,24 +271,24 @@ function () {
         _global.uuid = uuid
     }
 }).call(this);;
-XIAOMI.namespace("app.updateMiniCart, app.addShopCart, app.addShopCartEvent"),
-XIAOMI.app.updateMiniCart = function () {
+Foboy.namespace("app.updateMiniCart, app.addShopCart, app.addShopCartEvent"),
+Foboy.app.updateMiniCart = function () {
 },
-XIAOMI.app.addShopCart = function (gid, callback, obj) {
+Foboy.app.addShopCart = function (gid, callback, obj) {
     if (gid && "function" == typeof callback) {
-        var ajaxUrl = XIAOMI.GLOBAL_CONFIG.orderSite + "/cart/add/" + gid;
+        var ajaxUrl = Foboy.GLOBAL_CONFIG.orderSite + "/cart/add/" + gid;
         $.ajax({
             url: ajaxUrl,
             dataType: "jsonp",
             jsonp: "jsonpcallback",
             success: function (data) {
                 callback(data, obj),
-                XIAOMI.app.updateMiniCart()
+                Foboy.app.updateMiniCart()
             }
         })
     }
 },
-XIAOMI.app.addShopCartEvent = function (options) {
+Foboy.app.addShopCartEvent = function (options) {
     var op = {
         obj: ".xmAddShopCart",
         callback: null
@@ -301,24 +301,24 @@ XIAOMI.app.addShopCartEvent = function (options) {
         isPackage = $(this).attr("data-package");
         if ("false" === isDisabled) {
             if ($(this).attr("data-disabled", "true"), !gid || "true" === isPackage || null === op.callback) return !0;
-            var dmSkuArr = XIAOMI.GLOBAL_CONFIG.damiaoGoodsId ? XIAOMI.GLOBAL_CONFIG.damiaoGoodsId : !1,
+            var dmSkuArr = Foboy.GLOBAL_CONFIG.damiaoGoodsId ? Foboy.GLOBAL_CONFIG.damiaoGoodsId : !1,
             isToDm = !1;
             if (dmSkuArr !== !1 && "object" == typeof dmSkuArr) for (var i = 0; i < dmSkuArr.length; i += 1) if (gid === dmSkuArr[i]) {
                 isToDm = !0;
                 break
             }
             if (isToDm === !0) {
-                var dmLogin = new XIAOMI.app.miniLogin;
-                XIAOMI.app.cookie("serviceToken") ? XIAOMI.app.dmFun.init({
+                var dmLogin = new Foboy.app.miniLogin;
+                Foboy.app.cookie("serviceToken") ? Foboy.app.dmFun.init({
                     sku: gid,
                     callback: op.callback,
                     obj: $(this)
-                }) : XIAOMI.app.cookie("userId") ? (dmLogin._proxyiframe(), XIAOMI.app.dmFun.init({
+                }) : Foboy.app.cookie("userId") ? (dmLogin._proxyiframe(), Foboy.app.dmFun.init({
                     sku: gid,
                     callback: op.callback,
                     obj: $(this)
                 })) : dmLogin._toLogin()
-            } else XIAOMI.app.addShopCart(gid, op.callback, $(this))
+            } else Foboy.app.addShopCart(gid, op.callback, $(this))
         }
         return !1
     })
@@ -329,8 +329,8 @@ function () {
     console[method] || (console[method] = noop)
 }(),
 
-XIAOMI.namespace("app.miniCart"),
-XIAOMI.app.miniCart = {
+Foboy.namespace("app.miniCart"),
+Foboy.app.miniCart = {
     elmCartBtn: $("#J_miniCart"),
     elmCartList: $("#J_miniCartList"),
     loadingStr: '<p class="loading">数据加载中，请稍后...</p>',
@@ -372,8 +372,8 @@ XIAOMI.app.miniCart = {
     }
 },
 
-XIAOMI.namespace("app.navMenus, app.navigation"),
-XIAOMI.app.navMenus = function () {
+Foboy.namespace("app.navMenus, app.navigation"),
+Foboy.app.navMenus = function () {
     function toggleMenu(elm, curIndex, show, opt) {
         var options, $menu, $elm = $(elm);
         return options = $.extend({},
@@ -428,7 +428,7 @@ XIAOMI.app.navMenus = function () {
         init: init
     }
 }(),
-XIAOMI.app.navCategory = function () {
+Foboy.app.navCategory = function () {
     function toggleCategoryList(option) {
         "show" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02aa;"), $categoryList.show()) : "static" === option ? ($categoryContainer.addClass("nav-category-toggled"), $categoryList.show()) : ($categoryContainer.removeClass("nav-category-toggled"), $categoryTriggerBtn.find(".iconfont").html("&#xf02a9;"), $categoryList.hide().find(".nav-category-list").children("li").removeClass("current"))
     }
@@ -502,12 +502,12 @@ XIAOMI.app.navCategory = function () {
         init: init
     }
 }(),
-XIAOMI.namespace("app.placeholder"),
-XIAOMI.app.placeholder = function (el, opt) {
+Foboy.namespace("app.placeholder"),
+Foboy.app.placeholder = function (el, opt) {
     var defaults, options, elmPlaceholder, elm = $(el),
     isPlaceholderSupported = "placeholder" in document.createElement("input");
     return 0 === elm.length ? elm : elm.length > 1 ? (elm.each(function () {
-        XIAOMI.app.placeholder($(this), opt)
+        Foboy.app.placeholder($(this), opt)
     }), this) : (defaults = {
         blurClass: "xm-ph-blur"
     },
@@ -521,8 +521,8 @@ XIAOMI.app.placeholder = function (el, opt) {
         }
     }))))
 },
-XIAOMI.namespace("app.carousel"),
-XIAOMI.app.carousel = function () {
+Foboy.namespace("app.carousel"),
+Foboy.app.carousel = function () {
     function init(elm, opt) {
         function slideList(targetPage) {
             var offsetX = "-" + targetPage * itemWidth * itemPerSlide + "px";
