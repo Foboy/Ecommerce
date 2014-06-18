@@ -18,6 +18,9 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         [AllowHtml]
         public string Text1 { get; set; }
         public bool Text1_OverrideForStore { get; set; }
+        public string Description1 { get; set; }
+        public bool Description1_OverrideForStore { get; set; }
+
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Link")]
         [AllowHtml]
         public string Link1 { get; set; }
@@ -31,6 +34,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         [AllowHtml]
         public string Text2 { get; set; }
         public bool Text2_OverrideForStore { get; set; }
+        public string Description2 { get; set; }
+        public bool Description2_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Link")]
         [AllowHtml]
         public string Link2 { get; set; }
@@ -44,6 +49,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         [AllowHtml]
         public string Text3 { get; set; }
         public bool Text3_OverrideForStore { get; set; }
+        public string Description3 { get; set; }
+        public bool Description3_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Link")]
         [AllowHtml]
         public string Link3 { get; set; }
@@ -57,6 +64,8 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         [AllowHtml]
         public string Text4 { get; set; }
         public bool Text4_OverrideForStore { get; set; }
+        public string Description4 { get; set; }
+        public bool Description4_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Link")]
         [AllowHtml]
         public string Link4 { get; set; }
