@@ -650,7 +650,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
         }
 
         [ChildActionOnly]
-        public ActionResult PublicInfoIndexRight(string widgetZone)
+        public ActionResult PublicInfoIndexRightTop(string widgetZone)
         {
             var nivoSliderSettings = _settingService.LoadSetting<NivoIndexRightSettings>(_storeContext.CurrentStore.Id);
 
@@ -666,7 +666,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Controllers
             //    return Content("");
 
 
-            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexRight", model);
+            return View("Nop.Plugin.Widgets.NivoSlider.Views.WidgetsNivoSlider.PublicInfoIndexRightTop", model);
         }
         [ChildActionOnly]
         public ActionResult PublicInfoIndexRight2(string widgetZone)

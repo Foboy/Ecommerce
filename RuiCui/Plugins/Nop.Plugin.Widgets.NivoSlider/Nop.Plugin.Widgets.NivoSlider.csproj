@@ -207,7 +207,7 @@
     <None Include="packages.config" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureIndexRight.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\ConfigureIndexSliderRoot.cshtml" />
-    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexRight.cshtml" />
+    <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexRightTop.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\PublicInfoIndexSliderRoot.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\index.cshtml" />
     <EmbeddedResource Include="Views\WidgetsNivoSlider\ProductAddPopup.cshtml" />
