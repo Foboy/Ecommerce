@@ -15,7 +15,7 @@ namespace Nop.Plugin.ExternalAuth.QQ
             );
 
             routes.MapRoute("Plugin.ExternalAuth.QQ.LoginCallback",
-                 "Plugins/ExternalAuthFacebook/LoginCallback",
+                 "Plugins/ExternalAuthQQ/LoginCallback",
                  new { controller = "ExternalAuthQQ", action = "LoginCallback" },
                  new[] { "Nop.Plugin.ExternalAuth.QQ.Controllers" }
             );

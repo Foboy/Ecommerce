@@ -149,7 +149,11 @@ namespace Nop.Web.Infrastructure
                             "customer/checkusernameavailability",
                             new { controller = "Customer", action = "CheckUsernameAvailability" },
                             new[] { "Nop.Web.Controllers" });
-
+            routes.MapLocalizedRoute("ThirdAccountRegister",
+                            "thirdaccountregister/{styleId}",
+                            new { controller = "Customer", action = "ThirdAccountRegister" },
+                            new { styleId = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
             //shopping cart
             routes.MapLocalizedRoute("ShoppingCart",
                             "cart/",

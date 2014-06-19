@@ -36,12 +36,14 @@ using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
 using Webdiyer.WebControls.Mvc;
+using QConnectSDK;
 
 namespace Nop.Web.Controllers
 {
     public partial class CustomerController : BasePublicController
     {
         #region Fields
+        private readonly IExternalAuthorizer _authorizer;
         private readonly IAuthenticationService _authenticationService;
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly DateTimeSettings _dateTimeSettings;
@@ -89,7 +91,7 @@ namespace Nop.Web.Controllers
 
         #region Ctor
 
-        public CustomerController(IAuthenticationService authenticationService,
+        public CustomerController(IExternalAuthorizer authorizer, IAuthenticationService authenticationService,
             IDateTimeHelper dateTimeHelper,
             DateTimeSettings dateTimeSettings,
             TaxSettings taxSettings,
@@ -118,6 +120,7 @@ namespace Nop.Web.Controllers
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
             CaptchaSettings captchaSettings, ExternalAuthenticationSettings externalAuthenticationSettings)
         {
+            this._authorizer = authorizer;
             this._authenticationService = authenticationService;
             this._dateTimeHelper = dateTimeHelper;
             this._dateTimeSettings = dateTimeSettings;
@@ -994,6 +997,42 @@ namespace Nop.Web.Controllers
             return View(model);
         }
 
+
+        public ActionResult ThirdAccountRegister(int styleId)
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 初次第三方账号登录注册绑定
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="styleId">1：表示第三方账号为qq 2：表示第三方账号是新浪</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ThirdAccountRegister(RegisterModel model, int styleId)
+        {
+            switch (styleId)
+            {
+                case 1:
+                    QOpenClient qzone = (QOpenClient)this.Session["QzoneOauth"];
+                    var parameters = Session["QQAuthorizeParameters"] as OpenAuthenticationParameters;
+                    var claims = new UserClaims();
+                    claims.Contact = new ContactClaims();
+                    claims.Contact.Email = model.Email;
+                    parameters.UserClaims.Clear();
+                    parameters.UserClaims.Add(claims);
+                    var result = _authorizer.Authorize(parameters);
+                    break;
+
+                case 2:
+                    break;
+                default:
+                    break;
+            }
+            return Redirect(Url.Action("Index", "Home"));
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult CheckUsernameAvailability(string username)
@@ -1856,7 +1895,7 @@ namespace Nop.Web.Controllers
                     model.SuccessfullyChanged = true;
                     model.Result = _localizationService.GetResource("Account.PasswordRecovery.PasswordHasBeenChanged");
                     return Redirect("/login");
-                    
+
                 }
                 else
                 {

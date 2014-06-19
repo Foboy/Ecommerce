@@ -12,11 +12,16 @@ using System.Web.Mvc;
 using QConnectSDK.Context;
 using QConnectSDK.Api;
 using QConnectSDK.Config;
+using QConnectSDK;
+using Nop.Plugin.ExternalAuth.QQ.Core;
+using Nop.Web.Framework;
+using System.Collections.Generic;
 
 namespace Nop.Plugin.ExternalAuth.QQ.Controllers
 {
     public class ExternalAuthQQController : BasePluginController
     {
+        private readonly IExternalAuthorizer _authorizer;
         private readonly ISettingService _settingService;
         private readonly IPermissionService _permissionService;
         private readonly IOpenAuthenticationService _openAuthenticationService;
@@ -26,7 +31,8 @@ namespace Nop.Plugin.ExternalAuth.QQ.Controllers
         private readonly IWorkContext _workContext;
         private readonly IPluginFinder _pluginFinder;
 
-        public ExternalAuthQQController(ISettingService settingService,
+        public ExternalAuthQQController(IExternalAuthorizer authorizer,
+            ISettingService settingService,
             IPermissionService permissionService,
             IOpenAuthenticationService openAuthenticationService,
             ExternalAuthenticationSettings externalAuthenticationSettings,
@@ -35,6 +41,7 @@ namespace Nop.Plugin.ExternalAuth.QQ.Controllers
             IWorkContext workContext,
             IPluginFinder pluginFinder)
         {
+            this._authorizer = authorizer;
             this._settingService = settingService;
             this._permissionService = permissionService;
             this._openAuthenticationService = openAuthenticationService;
@@ -127,8 +134,9 @@ namespace Nop.Plugin.ExternalAuth.QQ.Controllers
             return View("Nop.Plugin.ExternalAuth.QQ.Views.ExternalAuthQQ.PublicInfo");
         }
 
-        [NonAction]
-        private ActionResult LoginInternal(string returnUrl, bool verifyResponse)
+
+        [HttpGet]
+        public ActionResult Login(string returnUrl)
         {
             var processor = _openAuthenticationService.LoadExternalAuthenticationMethodBySystemName("ExternalAuth.QQ");
             if (processor == null ||
@@ -136,62 +144,109 @@ namespace Nop.Plugin.ExternalAuth.QQ.Controllers
                 !processor.PluginDescriptor.Installed ||
                 !_pluginFinder.AuthenticateStore(processor.PluginDescriptor, _storeContext.CurrentStore.Id))
                 throw new NopException("QQ模块没有被装载");
-
             var viewModel = new LoginModel();
             TryUpdateModel(viewModel);
-            var context = new QzoneContext(string.Empty, new QQConnectConfig("204134", "4c46ac3122a0ccb5ebf14b2a77de3516", "http://www.win8charm.com/account/QQCallback.aspx", "https://graph.qq.com/oauth2.0/authorize"));
+            var authenticationUrl = RequestAuthentication();
+            return new RedirectResult(authenticationUrl);
+        }
+
+        [ChildActionOnly]
+        public string RequestAuthentication()
+        {
+            var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+            var qqExternalAuthSettings = _settingService.LoadSetting<QQExternalAuthSettings>(storeScope);
+            var context = new QzoneContext(string.Empty, new QQConnectConfig(qqExternalAuthSettings.AppKey, qqExternalAuthSettings.AppSecret, qqExternalAuthSettings.CallBackURI, qqExternalAuthSettings.AuthorizeURL));
             string state = Guid.NewGuid().ToString().Replace("-", "");
             string scope = "get_user_info,add_share,list_album,upload_pic,check_page_fans,add_t,add_pic_t,del_t,get_repost_list,get_info,get_other_info,get_fanslist,get_idolist,add_idol,del_idol,add_one_blog,add_topic,get_tenpay_addr";
             var authenticationUrl = context.GetAuthorizationUrl(state, scope);
-            //request token, request token secret 需要保存起来
-            //在demo演示中，直接保存在全局变量中.真实情况需要网站自己处理
             Session["requeststate"] = state;
-            //Response.Redirect(authenticationUrl);
-            return new RedirectResult(authenticationUrl);
-            //var result = _oAuthProviderFacebookAuthorizer.Authorize(returnUrl, verifyResponse);
-            //switch (result.AuthenticationStatus)
-            //{
-            //    case OpenAuthenticationStatus.Error:
-            //        {
-            //            if (!result.Success)
-            //                foreach (var error in result.Errors)
-            //                    ExternalAuthorizerHelper.AddErrorsToDisplay(error);
-
-            //            return new RedirectResult(Url.LogOn(returnUrl));
-            //        }
-            //    case OpenAuthenticationStatus.AssociateOnLogon:
-            //        {
-            //            return new RedirectResult(Url.LogOn(returnUrl));
-            //        }
-            //    case OpenAuthenticationStatus.AutoRegisteredEmailValidation:
-            //        {
-            //            //result
-            //            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation });
-            //        }
-            //    case OpenAuthenticationStatus.AutoRegisteredAdminApproval:
-            //        {
-            //            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.AdminApproval });
-            //        }
-            //    case OpenAuthenticationStatus.AutoRegisteredStandard:
-            //        {
-            //            return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard });
-            //        }
-            //    default:
-            //        break;
-            //}
-
-            //if (result.Result != null) return result.Result;
-            //return HttpContext.Request.IsAuthenticated ? new RedirectResult(!string.IsNullOrEmpty(returnUrl) ? returnUrl : "~/") : new RedirectResult(Url.LogOn(returnUrl));
+            return authenticationUrl;
         }
 
-        public ActionResult Login(string returnUrl)
+        /// <summary> 
+        /// 回调页面 
+        /// </summary>
+
+        public ActionResult LoginCallback(LoginModel model, string returnUrl)
         {
-            return LoginInternal(returnUrl, false);
+            QOpenClient qzone = (QOpenClient)this.Session["QzoneOauth"];
+            var verifier = Request.Params["code"];
+            var state = Request.Params["state"];
+            if (Request.Params["code"] != null)
+            {
+                if (qzone == null)
+                {
+                    var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+                    var qqExternalAuthSettings = _settingService.LoadSetting<QQExternalAuthSettings>(storeScope);
+                    qzone = new QOpenClient(verifier, state, new QQConnectConfig(qqExternalAuthSettings.AppKey, qqExternalAuthSettings.AppSecret, qqExternalAuthSettings.CallBackURI, qqExternalAuthSettings.AuthorizeURL));
+                    if (qzone != null)
+                    {
+                        this.Session["QzoneOauth"] = qzone;
+                    }
+                }
+                else
+                {
+                    qzone = (QOpenClient)this.Session["QzoneOauth"];
+                }
+                string requestState = Session["requeststate"].ToString();
+                if (state == requestState)
+                {
+                    if (qzone.OAuthToken != null)
+                    {
+                        if (string.IsNullOrEmpty(qzone.OAuthToken.OpenId))
+                            throw new Exception("Authentication result does not contain openid");
+
+                        if (string.IsNullOrEmpty(qzone.OAuthToken.AccessToken))
+                            throw new Exception("Authentication result does not contain accesstoken data");
+                        var parameters = new OAuthAuthenticationParameters(Provider.SystemName)
+                        {
+                            ExternalIdentifier = qzone.OAuthToken.OpenId,
+                            OAuthToken = qzone.OAuthToken.AccessToken,
+                            OAuthAccessToken = qzone.OAuthToken.OpenId,
+                            
+                        };
+                        UserClaims claims = new UserClaims();
+                        claims.Contact = new ContactClaims(); 
+                        parameters.AddClaim(claims);
+                        Session["QQAuthorizeParameters"] = parameters;
+                        var result = _authorizer.Authorize(parameters);
+                        switch (result.Status)
+                        {
+                            case OpenAuthenticationStatus.Error:
+                                {
+                                    if (!result.Success)
+                                        foreach (var error in result.Errors)
+                                            ExternalAuthorizerHelper.AddErrorsToDisplay(error);
+                                    return RedirectToRoute("ThirdAccountRegister", new { styleId = 1 });
+                                }
+                            case OpenAuthenticationStatus.AssociateOnLogon:
+                                {
+                                    return new RedirectResult(Url.LogOn(returnUrl));
+                                }
+                            case OpenAuthenticationStatus.AutoRegisteredEmailValidation:
+                                {
+                                    //result
+                                    return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation });
+                                }
+                            case OpenAuthenticationStatus.AutoRegisteredAdminApproval:
+                                {
+                                    return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.AdminApproval });
+                                }
+                            case OpenAuthenticationStatus.AutoRegisteredStandard:
+                                {
+                                    return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.Standard });
+                                }
+                            default:
+                                break;
+                        }
+
+                    }
+                    return Redirect(Url.Action("Index", "Home"));
+                }
+            }
+            return View();
         }
 
-        public ActionResult LoginCallback(string returnUrl)
-        {
-            return LoginInternal(returnUrl, true);
-        }
+        
     }
 }
