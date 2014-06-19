@@ -2,6 +2,8 @@
     Layout = "~/Views/Shared/_Root.cshtml";
 }
 @{
+    
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/usercenter.css");
     //current category ID
     int currentCategoryId = 0;
     if (Url.RequestContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
@@ -29,7 +31,15 @@
     }
 }
 <div class="row">
-    @Html.Widget("main_column_before")
-    @RenderBody()
-    @Html.Widget("main_column_after")
+    <div class="col col4">
+        @if (IsSectionDefined("left"))
+        {
+            @RenderSection("left")
+        }
+    </div>
+    <div class="col col16">
+        @Html.Widget("main_column_before")
+        @RenderBody()
+        @Html.Widget("main_column_after")
+    </div>
 </div>

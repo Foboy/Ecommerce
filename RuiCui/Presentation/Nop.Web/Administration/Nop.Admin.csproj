@@ -2367,10 +2367,10 @@
     <Content Include="Content\js\plugins\slimScroll\slimScroll.jquery.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClassDiagram1.cd" />
+    <Content Include="Views\Shared\EditorTemplates\UEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\EditorTemplates\UEditor.cshtml" />
+    <None Include="Properties\PublishProfiles\nopadmin.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -867,10 +867,6 @@
     <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.pdb" />
     <Content Include="Content\ueditor\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="Content\ueditor\net\net.sln" />
-    <Content Include="Content\ueditor\net\upload\image\20140602\6353731869050987842962588.png" />
-    <Content Include="Content\ueditor\net\upload\image\20140602\6353731872906808381250935.jpg" />
-    <Content Include="Content\ueditor\net\upload\image\20140602\6353731872912308696236843.png" />
-    <Content Include="Content\ueditor\net\upload\image\20140602\6353731896517658843713851.jpg" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.css" />
     <Content Include="Content\ueditor\themes\default\css\ueditor.min.css" />
     <Content Include="Content\ueditor\themes\default\dialogbase.css" />
@@ -1041,6 +1037,7 @@
     <Content Include="Content\ueditor\third-party\video-js\font\vjs.svg" />
     <Content Include="Content\ueditor\third-party\video-js\font\vjs.ttf" />
     <Content Include="Content\ueditor\third-party\video-js\font\vjs.woff" />
+    <None Include="Properties\PublishProfiles\nop.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -3413,6 +3410,7 @@
     <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\ueditor\net\upload\image\20140602\" />
     <Folder Include="Plugins\bin\" />
   </ItemGroup>
   <ItemGroup>

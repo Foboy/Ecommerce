@@ -485,7 +485,7 @@ a:hover, a:focus {
     height: 69px;
     text-indent: -9999em;
     overflow: hidden;
-    background-image: url("http://p.www.xiaomi.com/zt/2013/icon-slides.png");
+    background-image: url("../images/icon-slides.png");
     background-repeat: no-repeat;
     _filter: alpha(opacity=40);
 }
@@ -2228,7 +2228,7 @@ a:hover, a:focus {
             height: 32px;
             margin: 20px auto;
             text-indent: -9999em;
-            background: url(http://s1.mi.com/zt/2013/loading.gif) no-repeat 50% 50%;
+            background: url(../images/loading.gif) no-repeat 50% 50%;
             overflow: hidden;
             *zoom: 1;
         }
@@ -2252,7 +2252,7 @@ a:hover, a:focus {
         .xm-goods-item .item-thumb img {
             width: 220px;
             height: 220px;
-            background: url(http://s1.mi.com/zt/2013/loading.gif) no-repeat 50% 50%;
+            background: url(../images/loading.gif) no-repeat 50% 50%;
         }
 
     .xm-goods-item .item-title {
@@ -2436,7 +2436,7 @@ a:hover, a:focus {
     height: 12px;
     margin-right: 2px;
     *font-size: 0;
-    background-image: url(http://s1.mi.com/zt/2013/icon-goods-list.png);
+    background-image: url(../images/icon-goods-list.png);
 }
 
 .xm-filter-list dd li .icon-order-ascending {
@@ -2489,7 +2489,7 @@ a:hover, a:focus {
     width: 11px;
     height: 5px;
     _font-size: 0;
-    background: url(http://s1.mi.com/zt/2013/icon-arrow-down.png) no-repeat 0 0;
+    background: url(h../images/icon-arrow-down.png) no-repeat 0 0;
 }
 
 .xm-select.toggled .arrow-down {
@@ -2677,12 +2677,6 @@ a:hover, a:focus {
         background-image: linear-gradient(to left, #fff 20%, rgba(255,255,255,0));
     }
 
-    .xm-dm-queue .mitu-walk {
-        width: 450px;
-        height: 200px;
-        margin: 10px auto 0;
-        background: url(http://p.www.xiaomi.com/open/131101/images/animate-mitu.png?4) repeat-x 0;
-    }
 
 .xm-dm-error {
     width: 900px;
@@ -2691,11 +2685,6 @@ a:hover, a:focus {
     margin-top: -250px;
 }
 
-    .xm-dm-error .modal-body {
-        height: 360px;
-        padding: 140px 50px 0 385px;
-        background: url(http://p.www.xiaomi.com/open/131101/images/mitu-2.png) no-repeat 5px 0;
-    }
 
     .xm-dm-error h3 {
         color: #333;
