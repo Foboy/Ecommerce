@@ -6,5 +6,6 @@ namespace Nop.Plugin.ExternalAuth.QQ.Models
         public string ExternalIdentifier { get; set; }
         public string KnownProvider { get; set; }
         public string ReturnUrl { get; set; }
+        public string Email { get; set; }
     }
 }

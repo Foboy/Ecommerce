@@ -217,6 +217,7 @@ namespace Nop.Services.Authentication.External
             return new AuthorizationResult(OpenAuthenticationStatus.Authenticated);
         }
 
+
         #endregion
     }
 }

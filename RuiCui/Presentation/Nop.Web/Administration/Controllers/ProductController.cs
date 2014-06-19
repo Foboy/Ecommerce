@@ -826,7 +826,7 @@ namespace Nop.Admin.Controllers
         //edit product
         public ActionResult Edit(int id,string currentoption=null)
         {
-            ViewBag.CurrentOption = string.IsNullOrEmpty(currentoption) ? "#collapseOne" : currentoption;
+            ViewBag.CurrentOption = string.IsNullOrEmpty(currentoption) ? "" : currentoption;
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
 

@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ExternalAuthQQController.cs" />
+    <Compile Include="Core\OAuthAuthenticationParameters.cs" />
+    <Compile Include="Core\Provider.cs" />
     <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

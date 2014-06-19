@@ -108,6 +108,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="QConnectSDK">
+      <HintPath>..\..\packages\QConnectSDK.dll</HintPath>
+    </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\..\packages\recaptcha.1.0.5.0\lib\.NetFramework 4.0\Recaptcha.dll</HintPath>
     </Reference>
@@ -3404,6 +3407,7 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.ttf" />
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.woff" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterBox.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />
