@@ -38,9 +38,14 @@
                 <dt>@groupList[0].SpecificationAttributeName ：</dt>
                 <dd>
                     <ul id="typeAdapt" class="clearfix">
+                        @{
+                            var firstSpec = 0;
+                        }
                         @foreach (var spec in groupList)
                         {
-                            <li>
+                            <li class="@if (firstSpec++==0){<text>first</text>}
+                                                                     else
+                                                                     {<text></text>}">
                                 <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
                             </li>
                         }
@@ -58,10 +63,14 @@
             <dt>价格区间 ：</dt>
             <dd>
                 <ul id="typeAdapt" class="clearfix">
-
+                    @{
+                        var firstSpec = 0;
+                    }
                     @foreach (var item in priceModel.Items)
                     {
-                        <li><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a> </li>
+                        <li class="@if (firstSpec++==0){<text>first</text>}
+                                                                     else
+                                                                     {<text></text>}"><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
                     }
 
                 </ul>
