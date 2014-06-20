@@ -18,9 +18,9 @@ a {
     margin-bottom: 20px;
 }
 
-    .uc-full-box .col-8 {
-        width: 485px;
-    }
+.uc-full-box .col-8 {
+    width: 485px;
+}
 
 .uc-box {
     margin-left: 20px;
@@ -1071,6 +1071,8 @@ a {
         .uc-order-detail-item .order-detail-table th, .uc-order-detail-item .order-detail-table td {
             padding: 0;
             border: 1px solid #dfdfdf;
+            height:35px;
+            text-align:center;
         }
 
         .uc-order-detail-item .order-detail-table .column-t {
@@ -1777,6 +1779,50 @@ a {
             padding: 6px 0;
             background: #f3f3f3;
         }
+.compensate-content .buttons {
+    margin:20px 0 0 160px;
+}
+.box-bd h4 {
+    font-weight:normal;
+    color:#ff4a00;
+    font-size:12px;
+    margin:0px;
+}
+.form-fields {
+    padding:0 20px;
+    font-size:14px;
+}
+.gender_label {
+    margin-right:10px;
+    width:20px;
+}
+.input_info {
+    padding:25px 0 0 0;
+}
+.address_input_info {
+    padding-top:15px;
+}
+.input_info  label {
+    margin-right:10px;
+    display:inline-block;
+    width:120px;
+    text-align:right;
+}
+.input_info  input[type=text] {
+    height:20px;
+    padding:8px;
+    width:200px;
+}
+.input_info  select {
+    height:28px;
+    padding:4px;
+    width:80px;
+    margin-right:8px;
+}
+.gender_label {
+    margin-right:10px;
+    width:20px;
+}
 
     .uc-coupon-section .coupon-type-cash .coupon-item {
         border-color: #f32f39;

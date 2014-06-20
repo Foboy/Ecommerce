@@ -10,113 +10,189 @@
 {
     @Html.Partial("MyAccountNavigation", Model.NavigationModel, new ViewDataDictionary())
 }
-<div class="page account-page address-list-page">
-    <div class="page-title">
-        <h1>@T("Account.MyAccount") - @T("Account.CustomerAddresses")</h1>
+<div class="xm-line-box uc-box">
+    <div class="box-hd">
+        <h3 class="title">收货地址管理</h3>
     </div>
-    <div class="page-body">
-        <div class="address-list">
-            @if (Model.Addresses.Count > 0)
-            {
-                for (int i = 0; i < Model.Addresses.Count; i++)
-                {
-                    var address = Model.Addresses[i];
-                    
-                <div class="section address-item">
-                    <div class="title">
-                        <strong>@address.FirstName @address.LastName</strong>
-                    </div>
-                    <ul class="info">
-                        <li class="name">
-                            @address.FirstName @address.LastName
-                        </li>
-                        <li class="email">
-                            @Html.LabelFor(model => model.Addresses[i].Email, new { }, ":")
-                            @address.Email
-                        </li>
-                        @if (address.PhoneEnabled)
-                        {
-                            <li class="phone">
-                                @Html.LabelFor(model => model.Addresses[i].PhoneNumber, new { }, ":")
-                                @address.PhoneNumber
-                            </li>
-                        }
-                        @if (address.FaxEnabled)
-                        {
-                            <li class="fax">
-                                @Html.LabelFor(model => model.Addresses[i].FaxNumber, new { }, ":")
-                                @address.FaxNumber
-                            </li>
-                        }
-                        @if (address.CompanyEnabled && !String.IsNullOrEmpty(address.Company))
-                        {
-                            <li class="company">@address.Company</li>
-                        }
-                        @if (address.StreetAddressEnabled)
-                        {
-                            <li class="address1">
-                                @address.Address1
-                            </li>
-                        }
-                        @if (address.StreetAddress2Enabled && !String.IsNullOrEmpty(address.Address2))
-                        {
-                            <li class="address2">
-                                @address.Address2
-                            </li>
-                        }
-                        @if (address.CityEnabled || address.StateProvinceEnabled || address.ZipPostalCodeEnabled)
-                        {
-                            var cityStateZip = "";
-                            if (address.CityEnabled)
-                            {
-                                cityStateZip = address.City;
-                                if (address.StateProvinceEnabled || address.ZipPostalCodeEnabled)
-                                {
-                                    cityStateZip += ",";
-                                }
-                            }
-                            if (address.StateProvinceEnabled)
-                            {
-                                if (!String.IsNullOrEmpty(cityStateZip))
-                                {
-                                    cityStateZip += " ";
-                                }
-                                cityStateZip += address.StateProvinceName;
-                            }
-                            if (address.ZipPostalCodeEnabled)
-                            {
-                                if (!String.IsNullOrEmpty(cityStateZip))
-                                {
-                                    cityStateZip += " ";
-                                }
-                                cityStateZip += address.ZipPostalCode;
-                            }
-                            
-                            <li class="city-state-zip">
-                                @cityStateZip
-                            </li>
-                        }
-                        @if (address.CountryEnabled && !String.IsNullOrEmpty(address.CountryName))
-                        {
-                            <li class="country">
-                                @address.CountryName
-                            </li>
-                        }
-                    </ul>
-                    <div class="buttons">
-                        <input type="button" class="button-2 edit-address-button" onclick="location.href='@(Url.RouteUrl("CustomerAddressEdit", new { addressId = address.Id }))'" value='@T("Common.Edit")' />
-                        <input type="button" class="button-2 delete-address-button" onclick="if (confirm('@(T("Common.AreYouSure").Text)')) {location.href='@(Url.RouteUrl("CustomerAddressDelete", new { addressId = address.Id }))';}" value="@T("Common.Delete")" />
-                    </div>
+    <div class="box-bd">
+        <div class="compensate-content">
+            <h4>新增收货地址</h4>
+            <div class="form-fields">
+                <div class="address_input_info input_info">
+                    <label>收货人姓名：</label>
+                    <input type="text" />
                 </div>
-                }
-            }
-            else
-            {
-                @T("Account.CustomerAddresses.NoAddresses")
-            }
-        </div>
-        <div class="add-button">
-            <input type="button" class="button-1 add-address-button" onclick="location.href='@Url.RouteUrl("CustomerAddressAdd")'" value="@T("Common.AddNew")" />
+                <div class="address_input_info input_info">
+                    <label>收货地址：</label>
+                    <select>
+                        <option>选择省市</option>
+                    </select>
+                    <select>
+                        <option>选择城市</option>
+                    </select>
+                    <select>
+                        <option>选择区县</option>
+                    </select>
+                </div>
+                <div class="address_input_info input_info">
+                    <label>街道地址：</label>
+                    <input type="text" style="width:400px;" />
+                </div>
+                <div class="address_input_info input_info">
+                    <label>邮政编码：</label>
+                    <input type="text" />
+                </div>
+                <div class="address_input_info input_info">
+                    <label>手机号码：</label>
+                    <input type="text" />
+                </div>
+                <div class="address_input_info input_info">
+                    <label>电话号码：</label>
+                    <input type="text" style="width:30px;" />
+                    <label style="width:20px;">-</label>
+                    <input type="text" style="width:115px;" />
+                </div>
+                <div class="buttons">
+                    <input type="submit" value="保存" name="save-info-button" class="btn btn-primary btn-small" />
+                </div>
+            </div>
         </div>
     </div>
+    <div class="box-bd">
+        <h4>已存收货地址</h4>
+        <div class="uc-order-list-box">
+            <ul class="uc-order-detail-list">
+                <li class="uc-order-detail-item">
+                    <table class="order-detail-table">
+                        <thead>
+                            <tr>
+                                <th>收货人</th>
+                                <th>所在地区</th>
+                                <th>街道地址</th>
+                                <th>邮编</th>
+                                <th>电话/手机</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>王晓</td>
+                                <td>四川省成都市锦江区</td>
+                                <td>水碾河南三街37号创意仓库9栋1楼</td>
+                                <td>610081</td>
+                                <td>18628188705</td>
+                                <td>
+                                    <a>编辑</a>|
+                                    <a>删除</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+            </ul>
+        </div>
+            <div class="address-list">
+                @if (Model.Addresses.Count > 0)
+                {
+                    for (int i = 0; i < Model.Addresses.Count; i++)
+                    {
+                        var address = Model.Addresses[i];
+
+                        <div class="section address-item">
+                            <div class="title">
+                                <strong>@address.FirstName @address.LastName</strong>
+                            </div>
+                            <ul class="info">
+                                <li class="name">
+                                    @address.FirstName @address.LastName
+                                </li>
+                                <li class="email">
+                                    @Html.LabelFor(model => model.Addresses[i].Email, new { }, ":")
+                                    @address.Email
+                                </li>
+                                @if (address.PhoneEnabled)
+                                {
+                                    <li class="phone">
+                                        @Html.LabelFor(model => model.Addresses[i].PhoneNumber, new { }, ":")
+                                        @address.PhoneNumber
+                                    </li>
+                                }
+                                @if (address.FaxEnabled)
+                                {
+                                    <li class="fax">
+                                        @Html.LabelFor(model => model.Addresses[i].FaxNumber, new { }, ":")
+                                        @address.FaxNumber
+                                    </li>
+                                }
+                                @if (address.CompanyEnabled && !String.IsNullOrEmpty(address.Company))
+                                {
+                                    <li class="company">@address.Company</li>
+                                }
+                                @if (address.StreetAddressEnabled)
+                                {
+                                    <li class="address1">
+                                        @address.Address1
+                                    </li>
+                                }
+                                @if (address.StreetAddress2Enabled && !String.IsNullOrEmpty(address.Address2))
+                                {
+                                    <li class="address2">
+                                        @address.Address2
+                                    </li>
+                                }
+                                @if (address.CityEnabled || address.StateProvinceEnabled || address.ZipPostalCodeEnabled)
+                                {
+                                    var cityStateZip = "";
+                                    if (address.CityEnabled)
+                                    {
+                                        cityStateZip = address.City;
+                                        if (address.StateProvinceEnabled || address.ZipPostalCodeEnabled)
+                                        {
+                                            cityStateZip += ",";
+                                        }
+                                    }
+                                    if (address.StateProvinceEnabled)
+                                    {
+                                        if (!String.IsNullOrEmpty(cityStateZip))
+                                        {
+                                            cityStateZip += " ";
+                                        }
+                                        cityStateZip += address.StateProvinceName;
+                                    }
+                                    if (address.ZipPostalCodeEnabled)
+                                    {
+                                        if (!String.IsNullOrEmpty(cityStateZip))
+                                        {
+                                            cityStateZip += " ";
+                                        }
+                                        cityStateZip += address.ZipPostalCode;
+                                    }
+
+                                    <li class="city-state-zip">
+                                        @cityStateZip
+                                    </li>
+                                }
+                                @if (address.CountryEnabled && !String.IsNullOrEmpty(address.CountryName))
+                                {
+                                    <li class="country">
+                                        @address.CountryName
+                                    </li>
+                                }
+                            </ul>
+                            <div class="buttons">
+                                <input type="button" class="button-2 edit-address-button" onclick="location.href='@(Url.RouteUrl("CustomerAddressEdit", new { addressId = address.Id }))'" value='@T("Common.Edit")' />
+                                <input type="button" class="button-2 delete-address-button" onclick="if (confirm('@(T("Common.AreYouSure").Text)')) {location.href='@(Url.RouteUrl("CustomerAddressDelete", new { addressId = address.Id }))';}" value="@T("Common.Delete")" />
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    @T("Account.CustomerAddresses.NoAddresses")
+                }
+            </div>
+            <div class="add-button">
+                <input type="button" class="button-1 add-address-button" onclick="location.href='@Url.RouteUrl("CustomerAddressAdd")'" value="@T("Common.AddNew")" />
+            </div>
+        </div>
 </div>
