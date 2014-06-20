@@ -1808,7 +1808,7 @@ a {
     width:120px;
     text-align:right;
 }
-.input_info  input[type=text] {
+.input_info  input[type=text],input[type=password] {
     height:20px;
     padding:8px;
     width:200px;
