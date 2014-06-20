@@ -52,21 +52,11 @@
                         <div class="message-error">
                             @Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text)
                         </div>
-                        if (Model.UsernamesEnabled)
-                        {
-                            <div class="inputs">
-                                @Html.LabelFor(m => m.Username, new { }, ":")
-                                @Html.TextBoxFor(m => m.Username, new { @class = "username", autofocus = "autofocus" })
-                                @Html.ValidationMessageFor(m => m.Username)
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="inputs">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "enter-item first-enter-item", autofocus = "autofocus", placeholder = "邮箱/手机号码" })
-                                @Html.ValidationMessageFor(m => m.Email)
-                            </div>
-                        }
+                        <div class="inputs">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "enter-item first-enter-item", autofocus = "autofocus", placeholder = "邮箱/手机号码" })
+                            @Html.ValidationMessageFor(m => m.Email)
+                        </div>
+
                         <div class="inputs">
                             @*@Html.LabelFor(m => m.Password, new { }, ":")*@
                             @Html.PasswordFor(m => m.Password, new { @class = "enter-item last-enter-item", placeholder = "密码" })
@@ -91,7 +81,7 @@
                             </div>
                             <div class="ng-link-area">
                                 <span>
-                                    <a  id="other_login">其他方式登录</a>
+                                    <a id="other_login">其他方式登录</a>
                                 </span>
                                 <span> | </span>
                                 <span>
@@ -105,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span >
+                        <span>
                             <a href="register" class="button" target="_blank">注册帐户</a>
                         </span>
                     }
