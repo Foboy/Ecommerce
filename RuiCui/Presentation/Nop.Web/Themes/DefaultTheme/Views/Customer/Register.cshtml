@@ -325,6 +325,11 @@
                             </div>
                             @Html.Partial("_ExternalAuthentication.AssociateMessage")
                             <dl class="login-dl clearfix">
+                                <dt class="dt_l">昵称：</dt>
+                                <dd class="dd_r clearfix">
+                                    @Html.TextBoxFor(model => model.Username, new { @class = "input_kuang val_m item errortip address ", placeholder = "昵称" })
+                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "errormessage " })
+                                </dd>
                                 <dt class="dt_l">邮箱：</dt>
                                 <dd class="dd_r clearfix">
                                     @Html.TextBoxFor(model => model.Email, new { @class = "input_kuang val_m item errortip address ",placeholder = "邮箱" })

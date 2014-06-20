@@ -780,14 +780,19 @@ namespace Nop.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (_customerSettings.UsernamesEnabled && model.Username != null)
+                //if (_customerSettings.UsernamesEnabled && model.Username != null)
+                //{
+                //    model.Username = model.Username.Trim();
+                //}
+                if (!string.IsNullOrEmpty(model.Username))
                 {
                     model.Username = model.Username.Trim();
                 }
-
                 bool isApproved = _customerSettings.UserRegistrationType == UserRegistrationType.Standard;
+                //var registrationRequest = new CustomerRegistrationRequest(customer, model.Email,
+                //    _customerSettings.UsernamesEnabled ? model.Username : model.Email, model.Password, _customerSettings.DefaultPasswordFormat, isApproved);
                 var registrationRequest = new CustomerRegistrationRequest(customer, model.Email,
-                    _customerSettings.UsernamesEnabled ? model.Username : model.Email, model.Password, _customerSettings.DefaultPasswordFormat, isApproved);
+                   string.IsNullOrEmpty(model.Username) ? model.Email : model.Username, model.Password, _customerSettings.DefaultPasswordFormat, isApproved);
                 var registrationResult = _customerRegistrationService.RegisterCustomer(registrationRequest);
                 if (registrationResult.Success)
                 {
