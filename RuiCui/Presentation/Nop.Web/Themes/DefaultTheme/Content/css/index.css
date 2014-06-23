@@ -389,14 +389,13 @@
 
 .home-hd-show .hd-show-item {
     float: left;
-    width: 241px;
-    height: 136px;
-    border-right: 1px solid #dfdfdf;
+    width: 242px;
+    height: 137px;
     overflow: hidden;
     _zoom: 1;
 }
 .home-hd-show .hd-show-item-first {
-    width: 243px;
+    width: 242px;
 }
 
 .home-hd-show .hd-show-item img {
@@ -571,25 +570,33 @@
     background: #f32f39;
 }
 .home-cc-div{
-    width: 223px;
+    width: 222px;
     height: 90px;
     border-right: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
     overflow: hidden;
 }
 .home-new{
-    width: 223px;
+    width: 222px;
     height: 289px;
     border-right: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    overflow: hidden;
+    background:none repeat scroll 0 0 #fafafa;
+}
+.home-cc-div2{
+    width: 222px;
+    height: 137px;
+    border-right: 1px solid #dfdfdf;
+    border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
     overflow: hidden;
 }
-.home-cc-div2{
-    width: 223px;
-    height: 136px;
+
+.hd-show-item-border {
     border-right: 1px solid #dfdfdf;
-    border-bottom: 1px solid #dfdfdf;
-    overflow: hidden;
 }
 
 .home-hot-goods {
@@ -927,3 +934,42 @@
     border-color: rgba(243,243,243,0.8);
 }
 
+/*瑞翠快报*/
+.home-new-title {
+    background: none repeat scroll 0 0 #f32f39;
+    color: #fff;
+    display: block;
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width: 70px;
+}
+.home-new ul {
+    list-style-type:none;
+    margin:8px 10px 0 10px;
+    padding:0;
+}
+
+.home-new li {
+    border-top: 1px solid #dfdfdf;
+    color: #333;
+}
+.home-new li.first {
+    border-top: 0 none;
+}
+.home-new li a{
+    color:#333;
+    display:block;
+    padding:10px 10px 10px 0;
+    position:relative;
+}
+.home-new li .dot{
+    font-family:sans-serif;
+    margin:0 3px 0 0 ;
+}
+.home-new li .iconfont {
+    position:absolute;
+    right:0;
+    top:10px;
+}
