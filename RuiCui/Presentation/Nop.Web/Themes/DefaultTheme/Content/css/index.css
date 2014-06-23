@@ -228,7 +228,7 @@
 }
 
 .xm-star-goods-list-wrap .xm-star-goods-item .item-thumb img {
-    width: 220px;
+    width: 273px;
     height: 220px;
 }
 
@@ -915,6 +915,10 @@
     padding: 4px;
     transition: border-color 0.5s ease 0s;
     position: relative;
+}
+.brick-item  .item-content img{
+    width:372px;
+    height: 360px;
 }
 .brick-item .item-content:hover {
     *background: #ffffff;
