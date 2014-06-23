@@ -300,6 +300,17 @@ a:hover, a:focus {
     border-color: #6d6d6d;
     color: #fff;
 }
+.btn-white {
+    background-color: #fff;
+    border-color: #ddd;
+    color: #ddd;
+}
+.btn-white:hover, .btn-white:focus, .btn-white.active, .btn-white:active {
+    color: #333;
+    border-color: #dfdfdf;
+    background-color: #dfdfdf;
+}
+
 
     .btn-dake:hover, .btn-dake:focus, .btn-dake.active, .btn-dake:active {
         color: #fff;
@@ -313,11 +324,11 @@ a:hover, a:focus {
     color: #333;
 }
 
-    .btn-dakeLight:hover, .btn-dakeLight:focus, .btn-dakeLight.active, .btn-dakeLight:active {
-        color: #333;
-        border-color: #dfdfdf;
-        background-color: #dfdfdf;
-    }
+.btn-dakeLight:hover, .btn-dakeLight:focus, .btn-dakeLight.active, .btn-dakeLight:active {
+    color: #333;
+    border-color: #dfdfdf;
+    background-color: #dfdfdf;
+}
 
 .btn-lineDakeLight {
     background-color: #fafafa;

@@ -723,7 +723,7 @@ em {
         }
 
 .checkout-count-extend {
-    float: left;
+    float: right;
     position: relative;
 }
 
@@ -1147,4 +1147,23 @@ em {
     .checkout-goods-list .item .col-1 {
         width: 570px;
     }
+}
+
+.address-list li {
+    position: relative;
+}
+.address-info {
+    padding-left:20px;
+}
+.address-list li.selected {
+    line-height: 32px;
+    margin-bottom: 7px;
+    margin-top: 5px;
+    background-color: #fff5cc;
+    border: 1px solid #ffe580;
+}
+.method-list li {
+    float:left;
+    margin-right:40px;
+    font-size:16px;
 }
