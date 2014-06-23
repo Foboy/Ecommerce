@@ -34,15 +34,7 @@
                     <a href="@Url.RouteUrl("CustomerDownloadableProducts")">@T("Account.DownloadableProducts")</a>
                 </li>
             }
-            @if (!Model.HideBackInStockSubscriptions)
-            {
-                <li class="@if (Model.SelectedTab == CustomerNavigationEnum.BackInStockSubscriptions)
-                                                                                   {<text>current</text>}
-                                                                                   else
-                                                                                   {<text></text>}">
-                    <a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")">@T("Account.BackInStockSubscriptions")</a>
-                </li>
-            }
+ 
             @if (!Model.HideRewardPoints)
             {
                 <li class="@if (Model.SelectedTab == CustomerNavigationEnum.RewardPoints)
@@ -52,7 +44,17 @@
                     <a href="@Url.RouteUrl("CustomerRewardPoints")">@T("Account.RewardPoints")</a>
                 </li>
             }
-            @if (!Model.HideChangePassword)
+            
+                 @if (!Model.HideBackInStockSubscriptions)
+            {
+                <li class="@if (Model.SelectedTab == CustomerNavigationEnum.BackInStockSubscriptions)
+                                                                                   {<text>current</text>}
+                                                                                   else
+                                                                                   {<text></text>}">
+                    <a href="@Url.RouteUrl("CustomerBackInStockSubscriptions")">@T("Account.BackInStockSubscriptions")</a>
+                </li>
+            }
+            @*@if (!Model.HideChangePassword)
             {
                 <li class="@if (Model.SelectedTab == CustomerNavigationEnum.ChangePassword)
                                                                              {<text>current</text>}
@@ -60,16 +62,7 @@
                                                                              {<text></text>}">
                     <a href="@Url.RouteUrl("CustomerChangePassword")">@T("Account.ChangePassword")</a>
                 </li>
-            }
-            @if (!Model.HideAvatar)
-            {
-                <li class="@if (Model.SelectedTab == CustomerNavigationEnum.Avatar)
-                                                                     {<text>current</text>}
-                                                                     else
-                                                                     {<text></text>}">
-                    <a href="@Url.RouteUrl("CustomerAvatar")">@T("Account.Avatar")</a>
-                </li>
-            }
+            }*@
             @if (!Model.HideForumSubscriptions)
             {
                 <li class="@if (Model.SelectedTab == CustomerNavigationEnum.ForumSubscriptions)
@@ -106,7 +99,16 @@
                                                                    {<text></text>}">
                     <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.CustomerInfo")</a>
                 </li>
-            }           
+            }    
+            @if (!Model.HideAvatar)
+            {
+                <li class="@if (Model.SelectedTab == CustomerNavigationEnum.Avatar)
+                                                                     {<text>current</text>}
+                                                                     else
+                                                                     {<text></text>}">
+                    <a href="@Url.RouteUrl("CustomerAvatar")">@T("Account.Avatar")</a>
+                </li>
+            }       
             @if (!Model.HideChangePassword)
             {
                 <li class="@if (Model.SelectedTab == CustomerNavigationEnum.ChangePassword)
