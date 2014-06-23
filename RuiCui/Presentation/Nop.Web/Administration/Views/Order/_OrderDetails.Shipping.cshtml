@@ -176,9 +176,9 @@
 
                     </script>
                     <div id="divShippingMethod" style="display: inline-block;">@Html.EditorFor(model => model.ShippingMethod)</div>
-                    <input type="submit" value="@T("Admin.Common.Edit")" onclick=" toggleEditShippingMethod(true);return false; " id="btnEditShippingMethod" class="adminButton" />
-                    <input type="submit" value="@T("Admin.Common.Save")" id="btnSaveShippingMethod" name="save-shipping-method" class="adminButton" onclick=" return confirm('@T("Admin.Common.AreYouSure")'); " />
-                    <input type="submit" value="@T("Admin.Common.Cancel")" onclick=" toggleEditShippingMethod(false);return false; " id="btnCancelShippingMethod" class="adminButton" />
+    <input type="submit" value="@T("Admin.Common.Edit")" onclick=" toggleEditShippingMethod(true);return false; " id="btnEditShippingMethod" class="btn btn-sm btn-primary btn-flat" />
+    <input type="submit" value="@T("Admin.Common.Save")" id="btnSaveShippingMethod" name="save-shipping-method" class="btn btn-sm btn-primary btn-flat" onclick="return confirm('@T("admin.common.areyousure")'); " />
+    <input type="submit" value="@T(" admin.common.cancel")" onclick=" toggleEditShippingMethod(false);return false; " id="btnCancelShippingMethod" class="btn btn-sm btn-primary btn-flat" />
                 }
             </td>
         </tr>
