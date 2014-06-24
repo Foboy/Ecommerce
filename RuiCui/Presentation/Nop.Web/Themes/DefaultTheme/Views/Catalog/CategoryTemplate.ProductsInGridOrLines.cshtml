@@ -88,24 +88,41 @@
                 <ul id="typeOrder" class="clearfix">
                     @if (Model.PagingFilteringContext.AvailableSortOptions.Count > 0)
                     {
+                        var first = 0;
+                        var firstCss = " first";
                         foreach (var item in Model.PagingFilteringContext.AvailableSortOptions)
                         {
+                            if (first++ > 0)
+                            {
+                                firstCss = "";
+                            }
+
                             if (item.Value.Contains("orderby=0"))
                             {
-                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">默认</a></li>
+                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                    <a href="@item.Value" rel="nofollow">默认</a>
+                                </li>
                             }
                             else if (item.Value.Contains("orderby=15"))
                             {
-                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">最新</a></li>
+                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                    <a href="@item.Value" rel="nofollow">最新</a>
+                                </li>
                             }
                             else if (item.Value.Contains("orderby=11"))
                             {
-                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">价格从高到低</a></li>
+                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                    <a href="@item.Value" rel="nofollow">价格从高到低</a>
+                                </li>
                             }
                             else if (item.Value.Contains("orderby=10"))
                             {
-                                <li @(item.Selected ? "class=current" : "")><a href="@item.Value" rel="nofollow">价格从低到高</a></li>
+                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                    <a href="@item.Value" rel="nofollow">价格从低到高</a>
+                                </li>
                             }
+
+
                         }
                     }
                 </ul>
