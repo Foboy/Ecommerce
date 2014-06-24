@@ -570,18 +570,20 @@
     background: #f32f39;
 }
 .home-cc-div{
-    width: 222px;
+    width: 223px;
     height: 90px;
     border-right: 1px solid #dfdfdf;
-    border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
     overflow: hidden;
 }
+.home-cc-div img {
+    width:223px;
+    height:90px;
+}
 .home-new{
-    width: 222px;
+    width: 223px;
     height: 289px;
     border-right: 1px solid #dfdfdf;
-    border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
     overflow: hidden;
     background:none repeat scroll 0 0 #fafafa;
@@ -593,6 +595,10 @@
     border-left: 1px solid #dfdfdf;
     border-bottom: 1px solid #dfdfdf;
     overflow: hidden;
+}
+.home-cc-div2 img {
+    width:222px;
+    height:137px;
 }
 
 .hd-show-item-border {
@@ -906,6 +912,10 @@
     width: 390px;
     height: 190px;
 }
+.brick-item .brick-item-level img{
+    width: 370px;
+    height: 170px;
+}
 .brick-item-last{
     width: 195px;
 }
@@ -931,6 +941,10 @@
     padding: 4px;
     transition: border-color 0.5s ease 0s;
     position: relative;
+}
+.brick-item .brick-item-m img {
+    width:176px;
+    height:170px;
 }
 .brick-item .item-content-m:hover {
     *background: #ffffff;
