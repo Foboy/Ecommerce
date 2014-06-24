@@ -25,9 +25,9 @@
         <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
             @T("Admin.Common.SEO")
         </li>
-        <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+        @*<li  @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
             @T("Admin.ContentManagement.Topics.Stores")
-        </li>
+        </li>*@
     </ul>
     <div>
         @TabInfo()
@@ -35,9 +35,9 @@
     <div>
         @TabSeo()
     </div>
-    <div>
+    @*<div style="display:none;">
         @TabStores()
-    </div>
+    </div>*@
 </div>
 <script>
     $(document).ready(function () {
@@ -77,7 +77,7 @@
                 @Html.ValidationMessageFor(model => model.SystemName)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.IsPasswordProtected):
             </td>
@@ -132,7 +132,7 @@
                             @Html.NopLabelFor(model => model.Body):
                         </td>
                         <td class="adminData">
-                            @Html.EditorFor(x => x.Body, "RichEditor")
+                            @Html.EditorFor(x => x.Body, "UEditor")
                             @Html.ValidationMessageFor(model => model.Body)
                         </td>
                     </tr>

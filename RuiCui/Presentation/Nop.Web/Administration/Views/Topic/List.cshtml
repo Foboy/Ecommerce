@@ -12,7 +12,7 @@
         <a href="@Url.Action("Create")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.AddNew")</a>
     </div>
 </div>
-<table width="100%">
+<table style="display:none;" width="100%">
     <tr>
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.SearchStoreId):
@@ -75,14 +75,16 @@
                         columns: [{
                             field: "SystemName",
                             title: "@T("Admin.ContentManagement.Topics.Fields.SystemName")"
-                        }, {
+                        },
+                        @*{
                             field: "IsPasswordProtected",
                             title: "@T("Admin.ContentManagement.Topics.Fields.IsPasswordProtected")",
                             width: 100,
                             headerAttributes: { style: "text-align:center" },
                             attributes: { style: "text-align:center" },
                             template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsPasswordProtected#.gif" />'
-                        }, {
+                        },*@
+                        {
                             field: "IncludeInSitemap",
                             title: "@T("Admin.ContentManagement.Topics.Fields.IncludeInSitemap")",
                             width: 100,

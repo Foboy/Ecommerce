@@ -10,9 +10,9 @@
         <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
             @T("Admin.Common.SEO")
         </li>
-        <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+        @*<li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
             @T("Admin.ContentManagement.News.NewsItems.Stores")
-        </li>
+        </li>*@
     </ul>
     <div>
         @TabInfo()
@@ -20,9 +20,9 @@
     <div>
         @TabSeo()
     </div>
-    <div>
+    @*<div>
         @TabStores()
-    </div>
+    </div>*@
 </div>
 <script>
     $(document).ready(function () {
@@ -54,7 +54,7 @@
 @helper TabInfo()
 {
     <table class="adminContent">
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.LanguageId):
             </td>
@@ -85,7 +85,7 @@
                 @Html.NopLabelFor(model => model.Full):
             </td>
             <td class="adminData">
-                @Html.EditorFor(x => x.Full, "RichEditor")
+                @Html.EditorFor(x => x.Full, "UEditor")
                 @Html.ValidationMessageFor(model => model.Full)
             </td>
         </tr>
