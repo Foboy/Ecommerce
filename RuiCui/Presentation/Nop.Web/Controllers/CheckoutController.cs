@@ -1254,6 +1254,114 @@ namespace Nop.Web.Controllers
             return PartialView("OpcBillingAddress", billingAddressModel);
         }
 
+        public object OpcAllPartialView()
+        {
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
+                .ToList();
+            if (cart.Count == 0)
+                throw new Exception("Your cart is empty");
+
+            var billingAddressModel = PrepareBillingAddressModel(prePopulateNewAddressWithCustomerFields: true);
+            var billingPartial = new
+            {
+                update_section = new UpdateSectionJsonModel()
+                {
+                    name = "billing",
+                    html = this.RenderPartialViewToString("OpcBillingAddress", billingAddressModel)
+                },
+                wrong_billing_address = true,
+            };
+
+            var shippingMethodModel = PrepareShippingMethodModel(cart);
+
+            if (_shippingSettings.BypassShippingMethodSelectionIfOnlyOne &&
+                shippingMethodModel.ShippingMethods.Count == 1)
+            {
+                //if we have only one shipping method, then a customer doesn't have to choose a shipping method
+                _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                    SystemCustomerAttributeNames.SelectedShippingOption,
+                    shippingMethodModel.ShippingMethods.First().ShippingOption,
+                    _storeContext.CurrentStore.Id);
+
+                //load next step
+                return OpcLoadStepAfterShippingMethod(cart);
+            }
+            else
+            {
+                return Json(new
+                {
+                    update_section = new UpdateSectionJsonModel()
+                    {
+                        name = "shipping-method",
+                        html = this.RenderPartialViewToString("OpcShippingMethods", shippingMethodModel)
+                    },
+                    goto_section = "shipping_method"
+                });
+            }
+
+            //Check whether payment workflow is required
+            //we ignore reward points during cart total calculation
+            bool isPaymentWorkflowRequired = IsPaymentWorkflowRequired(cart, true);
+            if (isPaymentWorkflowRequired)
+            {
+                //payment is required
+                var paymentMethodModel = PreparePaymentMethodModel(cart);
+
+                if (_paymentSettings.BypassPaymentMethodSelectionIfOnlyOne &&
+                    paymentMethodModel.PaymentMethods.Count == 1 && !paymentMethodModel.DisplayRewardPoints)
+                {
+                    //if we have only one payment method and reward points are disabled or the current customer doesn't have any reward points
+                    //so customer doesn't have to choose a payment method
+
+                    var selectedPaymentMethodSystemName = paymentMethodModel.PaymentMethods[0].PaymentMethodSystemName;
+                    _genericAttributeService.SaveAttribute<string>(_workContext.CurrentCustomer,
+                        SystemCustomerAttributeNames.SelectedPaymentMethod,
+                        selectedPaymentMethodSystemName, _storeContext.CurrentStore.Id);
+
+                    var paymentMethodInst = _paymentService.LoadPaymentMethodBySystemName(selectedPaymentMethodSystemName);
+                    if (paymentMethodInst == null ||
+                        !paymentMethodInst.IsPaymentMethodActive(_paymentSettings) ||
+                        !_pluginFinder.AuthenticateStore(paymentMethodInst.PluginDescriptor, _storeContext.CurrentStore.Id))
+                        throw new Exception("Selected payment method can't be parsed");
+
+                    return OpcLoadStepAfterPaymentMethod(paymentMethodInst, cart);
+                }
+                else
+                {
+                    //customer have to choose a payment method
+                    return Json(new
+                    {
+                        update_section = new UpdateSectionJsonModel()
+                        {
+                            name = "payment-method",
+                            html = this.RenderPartialViewToString("OpcPaymentMethods", paymentMethodModel)
+                        },
+                        goto_section = "payment_method"
+                    });
+                }
+            }
+            else
+            {
+                //payment is not required
+                _genericAttributeService.SaveAttribute<string>(_workContext.CurrentCustomer,
+                    SystemCustomerAttributeNames.SelectedPaymentMethod, null, _storeContext.CurrentStore.Id);
+
+                var confirmOrderModel = PrepareConfirmOrderModel(cart);
+                return Json(new
+                {
+                    update_section = new UpdateSectionJsonModel()
+                    {
+                        name = "confirm-order",
+                        html = this.RenderPartialViewToString("OpcConfirmOrder", confirmOrderModel)
+                    },
+                    goto_section = "confirm_order"
+                });
+            }
+        }
+        
+
         [ValidateInput(false)]
         public ActionResult OpcSaveBilling(FormCollection form)
         {
@@ -1363,6 +1471,13 @@ namespace Nop.Web.Controllers
                 _logger.Warning(exc.Message, exc, _workContext.CurrentCustomer);
                 return Json(new { error = 1, message = exc.Message });
             }
+        }
+
+        [ChildActionOnly]
+        public ActionResult OpcShippingForm()
+        {
+            var shippingAddressModel = PrepareShippingAddressModel(prePopulateNewAddressWithCustomerFields: true);
+            return PartialView("OpcShippingAddress", shippingAddressModel);
         }
 
         [ValidateInput(false)]
