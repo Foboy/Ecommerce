@@ -1,12 +1,16 @@
 ﻿@model WishlistModel
 @using Nop.Web.Models.ShoppingCart;
 @{
-    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+    Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
     //title
     Html.AddTitleParts(T("PageTitle.Wishlist").Text);
 
     Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/shopcart.css");
+}
+@section left
+{
+    @Html.Partial("../Customer/MyAccountNavigation", Model.NavigationModel, new ViewDataDictionary())
 }
 <div id="shopCartBox">
     <div class="shop-cart-box">
