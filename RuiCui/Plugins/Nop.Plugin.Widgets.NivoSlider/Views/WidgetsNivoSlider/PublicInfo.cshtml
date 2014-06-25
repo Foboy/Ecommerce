@@ -9,7 +9,7 @@
 
 @helper RenderSliderLine(string pictureUrl, string text, string link, string dataTransition = "")
 {
-    if (!string.IsNullOrEmpty(pictureUrl))
+    if (!string.IsNullOrEmpty(pictureUrl.Trim()))
     {    
         <div class="slide">
              @if (!string.IsNullOrEmpty(link))

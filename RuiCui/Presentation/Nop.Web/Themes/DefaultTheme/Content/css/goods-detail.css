@@ -240,15 +240,24 @@ dl.goods-info-box {
 .add-cart {
     height:40px;
     line-height:40px;
-    width:250px;
+    width:180px;
     color:#fff;
     font-size:16px;
     text-align:center;
 }
+.once-pay {
+    height:40px;
+    line-height:40px;
+    width:180px;
+    color:#fff;
+    font-size:16px;
+    text-align:center;
+    margin-left:30px;
+}
 .wishbtn {
     height:40px;
     line-height:40px;
-    width:100px;
+    width:80px;
     color:#fff;
     font-size:16px;
     text-align:center;

@@ -1576,6 +1576,7 @@
     <Content Include="Themes\DefaultTheme\Content\css\index.css" />
     <Content Include="Themes\DefaultTheme\Content\css\login.css" />
     <Content Include="Themes\DefaultTheme\Content\css\main.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\news.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
@@ -3408,7 +3409,12 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.woff" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\ShoppingCart\CheckoutOrderSummary.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexLastProducts.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexTuiJin.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexJingPing.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexVip.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexNoProblem.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Home\IndexSold.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

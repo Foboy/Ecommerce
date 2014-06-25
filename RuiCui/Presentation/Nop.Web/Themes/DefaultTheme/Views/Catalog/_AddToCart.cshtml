@@ -66,20 +66,25 @@
         </div>
     <div class="add-product">
         @if (!Model.DisableBuyButton)
-{
-    var addToCartText = "";
-    if (Model.UpdatedShoppingCartItemId > 0)
-    {
-        addToCartText = T("ShoppingCart.AddToCart.Update").Text;
-    }
-    else
-    {
-        addToCartText = Model.AvailableForPreOrder ? T("ShoppingCart.PreOrder").Text : T("ShoppingCart.AddToCart").Text;
-    }
-    <a id="add-to-cart-button-@Model.ProductId" href="javascript:void(0);" class="btn-primary add-cart" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;" >
-        <i class="iconfont icon-margin">&#xf0175;</i>加入购物车
-    </a>
-}
+        {
+            var addToCartText = "";
+            if (Model.UpdatedShoppingCartItemId > 0)
+            {
+                addToCartText = T("ShoppingCart.AddToCart.Update").Text;
+            }
+            else
+            {
+                addToCartText = Model.AvailableForPreOrder ? T("ShoppingCart.PreOrder").Text : T("ShoppingCart.AddToCart").Text;
+            }
+            <a id="add-to-cart-button-@Model.ProductId" href="javascript:void(0);" class="btn-primary add-cart" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;" >
+                <i class="iconfont icon-margin">&#xf0175;</i>加入购物车
+            </a>
+        }
+        
+        <a href="javascript:void(0);" class="btn-brown once-pay" data-productid="@Model.ProductId" >
+            立即购买
+        </a>
+
         @if (!Model.DisableWishlistButton && Model.UpdatedShoppingCartItemId == 0)
         {
             <a id="add-to-wishlist-button-@Model.ProductId" href="javascript:void(0);" class="btn-yellow wishbtn" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;">

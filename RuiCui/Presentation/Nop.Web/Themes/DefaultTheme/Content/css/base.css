@@ -266,6 +266,27 @@ a:hover, a:focus {
     box-sizing: content-box;
 }
 
+.btn-block {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.btn-brown {
+    background-color: #826f5e;
+    border-color: #826f5e;
+    color: #fff;
+    display:inline-block;
+}
+.btn-brown:hover, .btn-brown:focus, .btn-brown.active, btn-brown:active {
+    color: #fff;
+    border-color: #6E584D;
+    background-color: #6E584D;
+}
 .btn-primary {
     background-color: #F68B1F;
     border-color: #F68B1F;
@@ -273,11 +294,11 @@ a:hover, a:focus {
     display:inline-block;
 }
 
-    .btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active {
-        color: #fff;
-        border-color: #FF9D3A;
-        background-color: #FF9D3A;
-    }
+.btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active {
+    color: #fff;
+    border-color: #FF9D3A;
+    background-color: #FF9D3A;
+}
 
 .btn-yellow {
     background-color: #ffdb3d;
