@@ -20,50 +20,50 @@
         </div>
     }
     @if (!Model.DisableBuyButton || !Model.DisableWishlistButton)
-    {
-        <div class="add-to-cart-panel">
-            &nbsp;&nbsp;&nbsp;&nbsp;@Html.LabelFor(model => model.EnteredQuantity, new { @class = "product-info" }, ":")
-            @if (Model.AllowedQuantities.Count > 0)
-            {
-                @Html.DropDownListFor(model => model.EnteredQuantity, Model.AllowedQuantities, new {@class = "qty-dropdown"})
-            }
-            else
-            {
-                
+{
+    <dl class="add-to-cart-panel product-info">
+        <dt>&nbsp;&nbsp;&nbsp;&nbsp;@Html.LabelFor(model => model.EnteredQuantity, new { @class = "" }, "：")</dt>
+        @if (Model.AllowedQuantities.Count > 0)
+        {
+            @Html.DropDownListFor(model => model.EnteredQuantity, Model.AllowedQuantities, new { @class = "qty-dropdown" })
+        }
+        else
+        {
+            <dd>
                 <a href="javascript:void(0);" id="num_minus"><i class="iconfont addnum-btn product-info-content">&#xf0176;</i></a>
-                    @Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "addnum-input" })
-    <a href="javascript:void(0);" id="num_plus"><i class="iconfont addnum-btn">&#xf0175;</i></a>
-
-                //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
-                if (!Model.DisableBuyButton)
-                {
+                @Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "addnum-input" })
+                <a href="javascript:void(0);" id="num_plus"><i class="iconfont addnum-btn">&#xf0175;</i></a>
+            </dd>
+            <dd class="font12">(库存：30)</dd>
+            //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
+            if (!Model.DisableBuyButton)
+            {
                 <script type="text/javascript">
-                    $(document).ready(function() {
-                        $("#@Html.FieldIdFor(model => model.EnteredQuantity)").keydown(function(event) {
-                                 if (event.keyCode == 13) {
-                                     $("#add-to-cart-button-@Model.ProductId").click();
-                                     return false;
-                                 }
-                             });
+                    $(document).ready(function () {
+                        $("#@Html.FieldIdFor(model => model.EnteredQuantity)").keydown(function (event) {
+                            if (event.keyCode == 13) {
+                                $("#add-to-cart-button-@Model.ProductId").click();
+                                return false;
+                            }
+                        });
                     });
                     $("#num_plus").click(function () {
-                        var num =parseInt($(".addnum-input").val());
-                        if (!isNaN(num))
-                        {
-                            $(".addnum-input").val(num+1);
+                        var num = parseInt($(".addnum-input").val());
+                        if (!isNaN(num)) {
+                            $(".addnum-input").val(num + 1);
                         }
                     });
                     $("#num_minus").click(function () {
                         var num = parseInt($(".addnum-input").val());
-                        if (!isNaN(num) && num >1 ) {
-                            $(".addnum-input").val(num-1);
+                        if (!isNaN(num) && num > 1) {
+                            $(".addnum-input").val(num - 1);
                         }
                     });
                 </script>
-                 }
             }
-           
-        </div>
+        }
+
+    </dl>
     <div class="add-product">
         @if (!Model.DisableBuyButton)
         {

@@ -1152,6 +1152,7 @@ em {
 
 .address-list li {
     position: relative;
+    margin-bottom:10px;
 }
 .address-info {
     padding-left:20px;

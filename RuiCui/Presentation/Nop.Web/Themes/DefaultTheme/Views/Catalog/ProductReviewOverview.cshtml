@@ -20,24 +20,28 @@
 
         @if (Model.TotalReviews > 0)
         {
-            <div class="product-review-links product-info">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评论:
-                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })" class="product-info-content">
-                    <b class="basecolor">@Model.TotalReviews</b>
-                </a>
+            <dl class="product-info clearfix">
+                <dt>评论：</dt>
+                <dd>
+                    <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })" class="product-info-content">
+                        <b class="basecolor">@Model.TotalReviews</b>
+                    </a>
+                </dd>
                 @*<span class="separator">|</span>
                     <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId }) class=" font12"">添加评论</a>*@
-            </div>
-            @*hidden microdata info*@
+            </dl>
+                            @*hidden microdata info*@
             decimal ratingValue = ratingPercent / (decimal)20;
-            <span itemprop="ratingValue" style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
-            <span itemprop="reviewCount" style="display: none;">@Model.TotalReviews</span>
+                <span itemprop="ratingValue" style="display: none;">@ratingValue.ToString("0.0", new CultureInfo("en-US"))</span>
+                <span itemprop="reviewCount" style="display: none;">@Model.TotalReviews</span>
         }
         else
         {
-            <div class="product-no-reviews">
-                <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@T("Reviews.Overview.First")</a>
-            </div>
+            <dl class="product-info clearfix">
+                <dd>
+                    <a href="@Url.RouteUrl("ProductReviews", new { productId = Model.ProductId })">@T("Reviews.Overview.First")</a>
+                </dd>
+            </dl>
         }
     </div>
 }
