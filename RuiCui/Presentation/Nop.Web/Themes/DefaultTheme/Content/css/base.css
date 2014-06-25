@@ -134,6 +134,12 @@ body {
 .font12 {
     font-size:12px;
 }
+.font16 {
+    font-size:16px;
+}
+.font18 {
+    font-size:18px;
+}
 .basecolor {
     color:#F68B1F;
 }
@@ -142,6 +148,12 @@ body {
 }
 .hcolor {
     color:#8c8c8c;
+}
+.float-left {
+    float:left;
+}
+.float-right {
+    float:right;
 }
 .left-list-w {
     width:204px;
@@ -378,7 +390,7 @@ a:hover, a:focus {
 .btn-small {
     height: 28px;
     line-height: 28px;
-    width: 118px;
+    width: 100px;
     font-size: 12px;
 }
 
@@ -2767,3 +2779,5 @@ a:hover, a:focus {
 .admin-header-links {
     display:none;
 }
+
+

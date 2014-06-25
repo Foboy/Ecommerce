@@ -47,6 +47,10 @@
                 @Html.Raw(Model.ShortDescription)
             </div>
         }*@
+        <dl class="product-info">
+            <dt>商品评分：</dt>
+            <dd><i class="icon-stat icon-stat-5 "></i></dd>
+        </dl>
         @Html.Widget("productdetails_overview_top")
         <!--product SKU, manufacturer part number, stock info-->
         @Html.Partial("_SKU_Man_Stock", Model)

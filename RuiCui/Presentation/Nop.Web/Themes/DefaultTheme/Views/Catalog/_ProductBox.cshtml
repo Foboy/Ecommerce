@@ -48,7 +48,7 @@
         <div class="item-price">
             @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))
             {
-                <span class="price old-price">@Model.ProductPrice.OldPrice</span>
+                <del class="price old-price">@Model.ProductPrice.OldPrice</del>
             }
             <span class="price actual-price">@Model.ProductPrice.Price</span>
         </div>
