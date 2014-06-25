@@ -134,7 +134,7 @@ namespace Nop.Web.Framework.UI.Paging
                     //previous page
                     if (model.PageIndex > 0)
                     {
-                        links.Append(CreatePageLink(model.PageIndex, localizationService.GetResource("Pager.Previous"), "previous-page"));
+                        links.Append(CreatePageLink(model.PageIndex, localizationService.GetResource("Pager.Previous"), "numbers first iconfont"));
                     }
                 }
                 if (showIndividualPages)
@@ -146,11 +146,11 @@ namespace Nop.Web.Framework.UI.Paging
                     {
                         if (model.PageIndex == i)
                         {
-                            links.AppendFormat("<li class=\"current-page\"><span>{0}</span></li>", (i + 1));
+                            links.AppendFormat("<li class=\"numbers current\"><span>{0}</span></li>", (i + 1));
                         }
                         else
                         {
-                            links.Append(CreatePageLink(i + 1, (i + 1).ToString(), "individual-page"));
+                            links.Append(CreatePageLink(i + 1, (i + 1).ToString(), "numbers"));
                         }
                     }
                 }
@@ -159,7 +159,7 @@ namespace Nop.Web.Framework.UI.Paging
                     //next page
                     if ((model.PageIndex + 1) < model.TotalPages)
                     {
-                        links.Append(CreatePageLink(model.PageIndex + 2, localizationService.GetResource("Pager.Next"), "next-page"));
+                        links.Append(CreatePageLink(model.PageIndex + 2, localizationService.GetResource("Pager.Next"), "numbers last iconfont"));
                     }
                 }
                 if (showLast)

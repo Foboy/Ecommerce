@@ -266,6 +266,8 @@
     <Compile Include="Models\Boards\SearchModel.cs" />
     <Compile Include="Models\Boards\TopicMoveModel.cs" />
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
+    <Compile Include="Models\Catalog\ProductPagingFilteringModel.cs" />
+    <Compile Include="Models\Catalog\ProductSModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
@@ -3409,12 +3411,12 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.woff" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexLastProducts.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexTuiJin.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexJingPing.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexVip.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexNoProblem.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Home\IndexSold.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexJingPing.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexLastProducts.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexNoProblem.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexSold.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexTuiJin.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexVip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

@@ -2534,18 +2534,27 @@ namespace Nop.Web.Controllers
         /// 查询最新商品
         /// </summary>
         /// <returns></returns>
-        [ChildActionOnly]
-        public ActionResult SearchLastestProduct()
+        public ActionResult SearchLastestProduct( ProductPagingFilteringModel command)
         {
-            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
-                return Content("");
+           
+                //customer is not allowed to select a page size
+                command.PageSize = 10;
+                if (command.PageNumber <= 0) command.PageNumber = 1;
+                ProductSModel model = new ProductSModel();
 
-            //load products
-            var products = _productService.SearchProducts().OrderByDescending(o => o.UpdatedOnUtc).TakeWhile(o => o.UpdatedOnUtc >= DateTime.Now && o.UpdatedOnUtc < DateTime.Now.AddDays(7));
-            //prepare model
-            var model = PrepareProductOverviewModels(products, true, true, null)
-                .ToList();
-            return PartialView(model);
+            //products
+            //var products = _productService.SearchProducts(
+            //    orderBy: ProductSortingEnum.CreatedOn,
+            //    pageIndex: command.PageNumber - 1,
+            //    pageSize: command.PageSize);
+            var products = _productService.SearchProducts(
+             orderBy: ProductSortingEnum.CreatedOn,
+             pageIndex: command.PageNumber - 1,
+             pageSize: command.PageSize);
+            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return PartialView("IndexLastProducts",model);
         }
 
         #endregion
