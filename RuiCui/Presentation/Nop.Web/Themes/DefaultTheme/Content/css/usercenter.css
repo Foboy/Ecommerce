@@ -2292,3 +2292,49 @@ a {
 .ul-order-bottom {
     margin-bottom:20px;
 }
+.current-balance {
+    height:200px;
+    line-height:200px;
+    padding:20px 50px;
+}
+.current-balance h3{
+    display:inline-block;
+    color:#f68b1f;
+    font-size:48px;
+    line-height:100px;
+    height:100px;
+    margin-right:50px;
+    padding-right:50px;
+}
+.current-balance-border {
+    border-right:1px solid #f3f3f3;
+}
+.userhader-img {
+    margin-top:30px;
+    padding:0;
+}
+.tx-div {
+    margin:0 auto;
+    padding:0;
+    height:152px;
+    width:152px;
+    border:1px solid #dfdfdf;
+}
+.tx-div img{
+    height:150px;
+    width:150px;
+    margin:1px;
+}
+.upload-div {
+    height: 30px;
+    margin: 30px auto 0;
+    padding: 0;
+    width: 130px;
+}
+.upload-btn {
+    height: 40px;
+    margin: 0 auto ;
+    padding: 0;
+    width: 130px;
+}
+
