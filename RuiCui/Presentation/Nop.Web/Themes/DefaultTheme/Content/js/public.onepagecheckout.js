@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** nopCommerce one page checkout
 */
 
@@ -37,6 +37,13 @@ var Checkout = {
 
     setLoadWaiting: function (step, keepDisabled) {
         if (step) {
+            
+            $("#checkoutToPay").val("正在加载").attr("disabled", true);
+        }
+        else {
+            $("#checkoutToPay").val("立即下单").attr("disabled", false);
+        }
+        if (step) {
             if (this.loadWaiting) {
                 this.setLoadWaiting(false);
             }
@@ -72,6 +79,16 @@ var Checkout = {
     },
 
     setStepResponse: function (response) {
+
+        if (response.update_sections && response.updates.length)
+        {
+            for (var i = 0; i < response.updates.length; i++)
+            {
+                var update_item = response.updates[i];
+                $('#checkout-' + update_item.name + '-load').html(update_item.html);
+            }
+        }
+
         if (response.update_section) {
             $('#checkout-' + response.update_section.name + '-load').html(response.update_section.html);
         }
@@ -83,23 +100,6 @@ var Checkout = {
         if ($("#shipping-address-select").length > 0) {
             Shipping.newAddress(!$('#shipping-address-select').val());
         }
-        /*
-        setTimeout(function () {
-            switch (response.update_section.name) {
-                case "shipping":
-                    Shipping.save();
-                    break;
-                case "shipping-method":
-                    ShippingMethod.save();
-                    break;
-                case "payment-method":
-                    PaymentMethod.save();
-                    break;
-                case "payment-info":
-                    PaymentInfo.save();
-                    break;
-            }
-        }, 1);*/
 
         if (response.goto_section) {
             Checkout.gotoSection(response.goto_section);
@@ -199,6 +199,9 @@ var Billing = {
 var Shipping = {
     form: false,
     saveUrl: false,
+    newBtns: '#shipping-buttons-container',
+    newBtn: '#shipping-new-address-btn',
+    selectIput: '#shipping-address-select',
 
     init: function (form, saveUrl) {
         this.form = form;
@@ -208,17 +211,39 @@ var Shipping = {
     newAddress: function (isNew) {
         if (isNew) {
             this.resetSelectedAddress();
+            $(this.newBtn).hide();
+            $(this.newBtns).show();
             $('#shipping-new-address-form').show();
         } else {
+            $(this.newBtn).show();
+            $(this.newBtns).hide();
             $('#shipping-new-address-form').hide();
         }
     },
 
     resetSelectedAddress: function () {
-        var selectElement = $('#shipping-address-select');
+        var selectElement = $(this.selectIput);
         if (selectElement) {
             selectElement.val('');
         }
+    },
+    selectAddress: function (addressContainer) {
+        var li = $(addressContainer);
+        if (li.hasClass("selected"))
+        {
+            return;
+        }
+        li.siblings('li').removeClass("selected");
+        li.addClass("selected");
+        li.find("input").attr("checked", "checked");
+        $(this.selectIput).val(li.attr("data-addid"));
+        this.save();
+    },
+
+    cancel: function () {
+        $(this.newBtn).show();
+        $(this.newBtns).hide();
+        $('#shipping-new-address-form').hide();
     },
 
     save: function () {
@@ -261,6 +286,7 @@ var Shipping = {
 var ShippingMethod = {
     form: false,
     saveUrl: false,
+    optionInput:"#shippingoption_id",
 
     init: function (form, saveUrl) {
         this.form = form;
@@ -268,19 +294,15 @@ var ShippingMethod = {
     },
 
     validate: function() {
-        var methods = document.getElementsByName('shippingoption');
-        if (methods.length==0) {
-            alert('Your order cannot be completed at this time as there is no shipping methods available for it. Please make necessary changes in your shipping address.');
-            return false;
+        if ($(this.optionInput).val().length>0) {
+            return true;
         }
-
-        for (var i = 0; i< methods.length; i++) {
-            if (methods[i].checked) {
-                return true;
-            }
-        }
-        alert('Please specify shipping method.');
+        alert('必须选择配送方式');
         return false;
+    },
+    selectMethod: function (item) {
+        $(this.optionInput).val($(item).val());
+        this.save();
     },
     
     save: function () {
@@ -325,6 +347,7 @@ var ShippingMethod = {
 var PaymentMethod = {
     form: false,
     saveUrl: false,
+    optionInput: "#paymentmethod_id",
 
     init: function (form, saveUrl) {
         this.form = form;
@@ -332,19 +355,15 @@ var PaymentMethod = {
     },
 
     validate: function () {
-        var methods = document.getElementsByName('paymentmethod');
-        if (methods.length == 0) {
-            alert('Your order cannot be completed at this time as there is no payment methods available for it.');
-            return false;
+        if ($(this.optionInput).val().length > 0) {
+            return true;
         }
-        
-        for (var i = 0; i < methods.length; i++) {
-            if (methods[i].checked) {
-                return true;
-            }
-        }
-        alert('Please specify payment method.');
+        alert('必须选择支付方式');
         return false;
+    },
+    selectMethod: function (item) {
+        $(this.optionInput).val($(item).val());
+        this.save();
     },
     
     save: function () {

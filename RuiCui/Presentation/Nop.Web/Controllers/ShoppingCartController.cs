@@ -1669,6 +1669,21 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        [ChildActionOnly]
+        public ActionResult CheckoutOrderSummary(bool? prepareAndDisplayOrderReviewData)
+        {
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
+                .ToList();
+            var model = new ShoppingCartModel();
+            PrepareShoppingCartModel(model, cart,
+                isEditable: false,
+                prepareEstimateShippingIfEnabled: false,
+                prepareAndDisplayOrderReviewData: prepareAndDisplayOrderReviewData.HasValue ? prepareAndDisplayOrderReviewData.Value : false);
+            return PartialView(model);
+        }
+
         //update all shopping cart items on the page
         [ValidateInput(false)]
         [HttpPost, ActionName("Cart")]

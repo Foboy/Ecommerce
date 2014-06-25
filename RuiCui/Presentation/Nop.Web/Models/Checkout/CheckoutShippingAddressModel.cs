@@ -14,6 +14,8 @@ namespace Nop.Web.Models.Checkout
 
         public IList<AddressModel> ExistingAddresses { get; set; }
 
+        public int UsallyId { get; set; }
+
         public AddressModel NewAddress { get; set; }
 
         public bool NewAddressPreselected { get; set; }
