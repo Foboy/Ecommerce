@@ -59,9 +59,13 @@
         <div class="item-actions">
             @if (!Model.ProductPrice.DisableBuyButton)
             {
-                <a class="btn btn-small btn-primary J_addCart" href="javascript: void(0);" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;"><i class="iconfont font12 wcolor">&#xf0148;</i>购物车</a>
-    <a class="btn btn-dake btn-small J_addFav" href="javascript: void(0);" data-productid="@Model.Id"
-       onclick="AjaxCart.addproducttocart_catalog('@addtowishlink');return false;"><i class="iconfont font12 wcolor">&#xf0145;</i>收藏</a>
+                <a class="btn btn-small btn-primary J_addCart" href="javascript: void(0);" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">
+                    <i class="iconfont font12 wcolor">&#xf0148;</i>购物车
+                </a>
+                <a class="btn btn-dake btn-small J_addFav" href="javascript: void(0);" data-productid="@Model.Id"
+                    onclick="AjaxCart.addproducttocart_catalog('@addtowishlink');return false;">
+                    <i class="iconfont font12 wcolor">&#xe60e;</i>收藏
+                </a>
             }
         </div>
         <div class="item-flag">
