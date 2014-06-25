@@ -1387,9 +1387,9 @@ a:hover, a:focus {
 
                 .site-header .header-info .mini-cart-list li .price {
                     float: left;
-                    width: 70px;
+                    width: 100px;
                     height: 36px;
-                    padding: 15px 0;
+                    padding: 5px 0;
                     text-align: right;
                 }
 

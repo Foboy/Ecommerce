@@ -3408,6 +3408,7 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.woff" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\ShoppingCart\CheckoutOrderSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

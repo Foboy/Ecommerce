@@ -2,6 +2,7 @@
 @using Nop.Web.Models.Checkout;
 <div class="checkout-data">
     @Html.Widget("op_checkout_payment_method_top")
+    <input type="text" name="paymentmethod" id="paymentmethod_id" value="" style="display:none;" />
     <div class="section payment-method">
         @if (Model.DisplayRewardPoints && Model.PaymentMethods.Count > 0)
         {
@@ -30,7 +31,7 @@
                                 </div>
                             }
                             <div class="payment-details">
-                                <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" />
+                                <input id="paymentmethod_@(i)" type="radio" onchange="PaymentMethod.selectMethod(this)" name="paymentmethod_radio" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" />
                                 <label for="paymentmethod_@(i)">@paymentMethodName</label>
                             </div>
                         </div>
