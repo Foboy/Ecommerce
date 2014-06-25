@@ -398,6 +398,11 @@ namespace Nop.Web.Infrastructure
                             new { controller = "Customer", action = "AddressEdit" },
                             new { addressId = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("CustomerAddressListEdit",
+                            "customer/addresses/{addressId}",
+                            new { controller = "Customer", action = "Addresses" },
+                            new { addressId = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("CustomerAddressAdd",
                             "customer/addressadd",
                             new { controller = "Customer", action = "AddressAdd" },

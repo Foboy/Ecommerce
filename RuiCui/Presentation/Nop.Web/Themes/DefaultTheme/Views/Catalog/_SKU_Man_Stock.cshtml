@@ -3,24 +3,24 @@
 @*SKU*@
 @if (!String.IsNullOrWhiteSpace(Model.Sku) && Model.ShowSku)
 {
-    <div class="sku">
-        <span class="label">@T("Products.Sku"): </span>
-        <span class="product-info-content" itemprop="sku" id="sku-@Model.Id">@Model.Sku</span>
-    </div>
+    <dl class="product-info clearfix">
+        <dt>@T("Products.Sku")：</dt>
+        <dd itemprop="sku" id="sku-@Model.Id">@Model.Sku</dd>
+    </dl>
 }
 @*Manufacturer part number*@
 @if (!String.IsNullOrWhiteSpace(Model.ManufacturerPartNumber) && Model.ShowManufacturerPartNumber)
 {
-    <div class="manufacturer-part-number">
-        <span class="label">@T("Products.ManufacturerPartNumber"): </span>
+    <div class="product-info clearfix">
+        <span class="label">@T("Products.ManufacturerPartNumber")： </span>
         <span class="product-info-content" id="mpn-@Model.Id">@Model.ManufacturerPartNumber</span>
     </div>
 }
 @*GTIN*@
 @if (!String.IsNullOrWhiteSpace(Model.Gtin) && Model.ShowGtin)
 {
-    <div class="gtin">
-        <span class="label">@T("Products.GTIN"): </span>
+    <div class="product-info clearfix">
+        <span class="label">@T("Products.GTIN")：</span>
         <span class="product-info-content" id="gtin-@Model.Id">@Model.Gtin</span>
     </div>
 }
@@ -28,7 +28,7 @@
 @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
 {
     <div class="stock product-info">
-        <span class="label">@T("Products.Availability"): </span>
+        <span class="label">@T("Products.Availability")：</span>
         <span class="product-info-content">@Model.StockAvailability</span>
     </div>
 }
@@ -40,17 +40,17 @@
 @*Delivery date*@
 @if (!String.IsNullOrWhiteSpace(Model.DeliveryDate))
 {
-    <div class="delivery-date product-info">
-        <span class="label">发货时间: </span>
-        <span class="product-info-content">@Model.DeliveryDate</span>
-    </div>
+    <dl class="product-info clearfix">
+        <dt>发货时间： </dt>
+        <dd>@Model.DeliveryDate</dd>
+    </dl>
 }
 @*Vendor*@
 @if (Model.ShowVendor)
 {
-    <div class="product-vendor">
-        <span class="label">@T("Products.Vendor"): </span>
-        <span class="product-info-content"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
-    </div>
+    <dl class="product-info clearfix">
+        <dt>@T("Products.Vendor")： </dt>
+        <dd><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></dd>
+    </dl>
 }
 
