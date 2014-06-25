@@ -21,7 +21,11 @@ namespace Nop.Web.Models.Common
         public string FirstName { get; set; }
         [NopResourceDisplayName("Address.Fields.LastName")]
         [AllowHtml]
-        public string LastName { get; set; }
+        public string LastName
+        {
+            get { return string.Empty; }
+            set { }
+        }
         [NopResourceDisplayName("Address.Fields.Email")]
         [AllowHtml]
         public string Email { get; set; }

@@ -309,6 +309,30 @@ namespace Nop.Web.Controllers
 
             return result;
         }
+
+        Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
+        private int ParseScore(Product product)
+        {
+            //score
+            if (string.IsNullOrWhiteSpace(product.AdminComment))
+            {
+                return 100;
+            }
+            else
+            {
+                string adminComment = product.AdminComment.Trim();
+
+                var result = scoreReg.Match(adminComment).Groups;
+                if (result.Count > 1)
+                {
+                    return Convert.ToInt32(result[1].Value);
+                }
+                else
+                {
+                    return 100;
+                }
+            }
+        }
         
         [NonAction]
         protected IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(IEnumerable<Product> products, 
@@ -320,7 +344,7 @@ namespace Nop.Web.Controllers
                 throw new ArgumentNullException("products");
 
             var models = new List<ProductOverviewModel>();
-            Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
+            
             foreach (var product in products)
             {
                 var model = new ProductOverviewModel()
@@ -330,27 +354,10 @@ namespace Nop.Web.Controllers
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
+                    Score = ParseScore(product)
                 };
                 
-                //score
-                if (string.IsNullOrWhiteSpace(product.AdminComment))
-                {
-                    model.Score = 100;
-                }
-                else
-                {
-                    string adminComment = product.AdminComment.Trim();
 
-                    var result = scoreReg.Match(adminComment).Groups;
-                    if (result.Count > 1)
-                    {
-                        model.Score = Convert.ToInt32(result[1].Value);
-                    }
-                    else
-                    {
-                        model.Score = 100;
-                    }
-                }
                 //price
                 if (preparePriceModel)
                 {
@@ -811,6 +818,8 @@ namespace Nop.Web.Controllers
             model.AddToCart.ProductId = product.Id;
             model.AddToCart.UpdatedShoppingCartItemId = updatecartitem != null ? updatecartitem.Id : 0;
 
+            model.AddToCart.StockQuantity = product.StockQuantity;
+
             //quantity
             model.AddToCart.EnteredQuantity = updatecartitem != null ? updatecartitem.Quantity : product.OrderMinimumQuantity;
 
@@ -1032,6 +1041,8 @@ namespace Nop.Web.Controllers
             }
 
             #endregion
+
+            model.Score = ParseScore(product);
 
             return model;
         }
