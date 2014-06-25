@@ -74,7 +74,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   height:150px;
   text-align: center;
 }
-.icon_lists .iconfont{
+.icon_lists .icon{
   font-size: 42px;
   line-height: 100px;
   margin: 10px 0;
@@ -84,6 +84,6 @@ table { border-collapse: collapse; border-spacing: 0; }
   transition: font-size 0.25s ease-out 0s;
 
 }
-.icon_lists .iconfont:hover{
+.icon_lists .icon:hover{
   font-size: 100px;
 }

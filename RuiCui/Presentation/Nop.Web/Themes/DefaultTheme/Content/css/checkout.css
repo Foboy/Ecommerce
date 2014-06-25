@@ -34,6 +34,7 @@ em {
     }
 
     .checkout-box .xm-box {
+        clear:both;
         border: none;
         margin-bottom: 20px;
     }
@@ -1167,3 +1168,290 @@ em {
     margin-right:40px;
     font-size:16px;
 }
+
+
+.shop-cart-box {
+    margin: 15px 0 10px;
+}
+
+.shop-cart-box-hd {
+    height: 55px;
+    line-height: 55px;
+}
+
+    .shop-cart-box-hd .title {
+        float: left;
+        font-size: 24px;
+        color: #333;
+    }
+
+    .shop-cart-box-hd .tip {
+        float: left;
+        margin: 20px 0 0 10px;
+        line-height: 1.2;
+        font-size: 14px;
+        color: #8c8c8c;
+    }
+
+.shop-cart-goods .col {
+    text-align: center;
+}
+
+.shop-cart-goods .col-1 {
+    text-align: left;
+}
+
+.shop-cart-goods .col-2 {
+    width: 97px;
+    text-align: center;
+}
+
+.shop-cart-goods .col-3 {
+    width: 200px;
+    text-align: center;
+}
+
+.shop-cart-goods .col-4 {
+    width: 94px;
+}
+
+.shop-cart-goods .col-5 {
+    width: 50px;
+}
+
+.shop-cart-goods dt {
+    height: 14px;
+    line-height: 14px;
+    padding: 8px 0;
+    background: #fafafa;
+    color: #8c8c8c;
+    font-size: 12px;
+}
+
+    .shop-cart-goods dt .col {
+        float: left;
+        border-left: 1px solid #dfdfdf;
+        margin-left: -1px;
+        _margin-left: -2px;
+    }
+
+    .shop-cart-goods dt .col-1 {
+        border-left: none;
+        margin-left: 0;
+        width: 704px;
+        padding-left: 30px;
+    }
+
+.shop-cart-goods .item {
+    display: table;
+    border-collapse: collapse;
+    border-spacing: 0;
+    *border-bottom: 1px solid #dfdfdf;
+}
+
+    .shop-cart-goods .item .item-row {
+        display: table-row;
+    }
+
+    .shop-cart-goods .item .del {
+        display: inline-block;
+        line-height: 15px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+        .shop-cart-goods .item .del:hover {
+            background: #8c8c8c;
+            color: #fff;
+        }
+
+    .shop-cart-goods .item .col {
+        display: table-cell;
+        vertical-align: middle;
+        color: #333;
+        padding: 10px 0;
+        border-bottom: 1px solid #dfdfdf;
+        *float: left;
+        *margin-top: 10px;
+        *border-bottom: none;
+    }
+
+    .shop-cart-goods .item .col-1 {
+        width: 798px;
+        overflow: hidden;
+    }
+
+    .shop-cart-goods .item .col-4 {
+        color: #ff4a00;
+    }
+
+    .shop-cart-goods .item .g-pic {
+        display: table-cell;
+        width: 120px;
+        vertical-align: middle;
+        *float: left;
+        padding-right: 15px;
+        padding-left: 30px;
+    }
+
+    .shop-cart-goods .item .g-info {
+        *float: left;
+        display: table-cell;
+        vertical-align: middle;
+        font-size: 12px;
+        color: #818181;
+    }
+
+        .shop-cart-goods .item .g-info .g-name {
+            font-size: 18px;
+        }
+
+            .shop-cart-goods .item .g-info .g-name a {
+                color: #333;
+            }
+
+        .shop-cart-goods .item .g-info .g-other-info {
+            color: #f32f39;
+        }
+
+            .shop-cart-goods .item .g-info .g-other-info span {
+                color: #ff4a00;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+        .shop-cart-goods .item .g-info .g-detail {
+            margin-top: 8px;
+            margin-left: 5px;
+        }
+
+    .shop-cart-goods .item .change-goods-num {
+        width: 132px;
+        height: 28px;
+        margin: 0 auto;
+        border: 1px solid #dfdfdf;
+    }
+
+        .shop-cart-goods .item .change-goods-num a {
+            display: inline-block;
+            float: left;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            color: #6d6d6d;
+            background: #fafafa;
+        }
+
+        .shop-cart-goods .item .change-goods-num .goods-num {
+            float: left;
+            width: 74px;
+            height: 28px;
+            line-height: 28px;
+            padding: 0;
+            border: none;
+            border-left: 1px solid #dfdfdf;
+            border-right: 1px solid #dfdfdf;
+            text-align: center;
+            color: #333;
+        }
+
+            .shop-cart-goods .item .change-goods-num .goods-num:focus {
+                outline: none;
+            }
+
+    .shop-cart-goods .item .g-sub-item {
+        clear: both;
+        display: table-row;
+        display: none;
+    }
+
+        .shop-cart-goods .item .g-sub-item .col {
+            border-top: 1px solid #dfdfdf;
+        }
+
+        .shop-cart-goods .item .g-sub-item .col-1 {
+            width: 597px;
+        }
+
+            .shop-cart-goods .item .g-sub-item .col-1 .col-blank {
+                display: table-cell;
+                width: 165px;
+                border-top: 1px solid #fff;
+                position: relative;
+                top: -11px;
+                _float: left;
+            }
+
+            .shop-cart-goods .item .g-sub-item .col-1 .g-pic {
+                width: 50px;
+                padding-left: 0;
+                padding-right: 8px;
+            }
+
+
+.shop-cart-box-ft {
+    padding: 40px 0 0;
+    position: relative;
+}
+
+    .shop-cart-box-ft .xm-add-buy {
+        float: left;
+        margin: 0 0 30px;
+    }
+
+    .shop-cart-box-ft .shop-cart-total {
+        float: right;
+        margin: 0 30px 30px;
+        color: #6d6d6d;
+        _display: inline;
+    }
+
+        .shop-cart-box-ft .shop-cart-total span {
+            display: inline-block;
+            min-width: 200px;
+            _width: 200px;
+            text-align: right;
+            line-height:30px;
+            color: #ff4a00;
+            white-space: nowrap;
+        }
+
+        .shop-cart-box-ft .shop-cart-total .total-price {
+            margin: 30px 0;
+        }
+
+            .shop-cart-box-ft .shop-cart-total .total-price strong {
+                margin-right: 5px;
+                font-size: 30px;
+            }
+
+        .shop-cart-box-ft .shop-cart-total li {
+            margin-bottom: 10px;
+        }
+
+    .shop-cart-box-ft .shop-cart-action {
+        clear: both;
+        padding: 20px 30px;
+        background: #fafafa;
+    }
+
+        .shop-cart-box-ft .shop-cart-action .btn {
+            float: right;
+            margin-left: 10px;
+        }
+
+        .shop-cart-box-ft .shop-cart-action .btn-back {
+            border-color: #dfdfdf;
+        }
+
+        .shop-cart-box-ft .shop-cart-action .tips {
+            float: left;
+            margin-right: 10px;
+            line-height: 40px;
+            text-align: right;
+        }
+
+        .shop-cart-box-ft .shop-cart-action .tips-more {
+            line-height: 20px;
+        }
+
