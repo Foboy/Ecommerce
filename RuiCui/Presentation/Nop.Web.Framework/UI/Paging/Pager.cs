@@ -146,7 +146,7 @@ namespace Nop.Web.Framework.UI.Paging
                     {
                         if (model.PageIndex == i)
                         {
-                            links.AppendFormat("<li class=\"numbers current\"><span>{0}</span></li>", (i + 1));
+                            links.AppendFormat("<span class=\"numbers current\">{0}</span>", (i + 1));
                         }
                         else
                         {
@@ -175,7 +175,7 @@ namespace Nop.Web.Framework.UI.Paging
             var result = links.ToString();
             if (!String.IsNullOrEmpty(result))
             {
-                result = "<ul>" + result + "</ul>";
+                result = "" + result + "";
             }
             return result;
 		}
@@ -214,17 +214,28 @@ namespace Nop.Web.Framework.UI.Paging
         }
 		protected virtual string CreatePageLink(int pageNumber, string text, string cssClass)
 		{
-            var liBuilder = new TagBuilder("li");
-            if (!String.IsNullOrWhiteSpace(cssClass))
-                liBuilder.AddCssClass(cssClass);
+            //var liBuilder = new TagBuilder("li");
+            //if (!String.IsNullOrWhiteSpace(cssClass))
+            //    liBuilder.AddCssClass(cssClass);
 
-			var aBuilder = new TagBuilder("a");
+            //var aBuilder = new TagBuilder("a");
+            //aBuilder.SetInnerText(text);
+            //aBuilder.MergeAttribute("href", urlBuilder(pageNumber));
+
+            //liBuilder.InnerHtml += aBuilder;
+
+            //return liBuilder.ToString(TagRenderMode.Normal);
+
+    
+
+            var aBuilder = new TagBuilder("a");
+            if (!String.IsNullOrWhiteSpace(cssClass))
+                aBuilder.AddCssClass(cssClass);
             aBuilder.SetInnerText(text);
             aBuilder.MergeAttribute("href", urlBuilder(pageNumber));
 
-            liBuilder.InnerHtml += aBuilder;
 
-            return liBuilder.ToString(TagRenderMode.Normal);
+            return aBuilder.ToString(TagRenderMode.Normal);
 		}
 
         protected virtual string CreateDefaultUrl(int pageNumber)

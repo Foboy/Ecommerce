@@ -2538,7 +2538,7 @@ namespace Nop.Web.Controllers
         {
            
                 //customer is not allowed to select a page size
-                command.PageSize = 10;
+                command.PageSize = 3;
                 if (command.PageNumber <= 0) command.PageNumber = 1;
                 ProductSModel model = new ProductSModel();
 
