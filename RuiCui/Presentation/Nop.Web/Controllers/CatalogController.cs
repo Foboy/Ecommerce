@@ -2530,6 +2530,24 @@ namespace Nop.Web.Controllers
             }
         }
 
+        /// <summary>
+        /// 查询最新商品
+        /// </summary>
+        /// <returns></returns>
+      //  [ChildActionOnly]
+        //public ActionResult SearchLastestProduct()
+        //{
+        //    if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
+        //        return Content("");
+
+        //    //load products
+        //    var products = _productService.SearchProducts().OrderByDescending(o=>o.UpdatedOnUtc).TakeWhile(o=>o.UpdatedOnUtc);
+        //    //prepare model
+        //    var model = PrepareProductOverviewModels(products, true, true, null)
+        //        .ToList();
+        //    return PartialView(model);
+        //}
+
         #endregion
 
         #region Product tags
