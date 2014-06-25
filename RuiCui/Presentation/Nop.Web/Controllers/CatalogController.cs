@@ -2534,19 +2534,19 @@ namespace Nop.Web.Controllers
         /// 查询最新商品
         /// </summary>
         /// <returns></returns>
-      //  [ChildActionOnly]
-        //public ActionResult SearchLastestProduct()
-        //{
-        //    if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
-        //        return Content("");
+        [ChildActionOnly]
+        public ActionResult SearchLastestProduct()
+        {
+            if (!_catalogSettings.ShowBestsellersOnHomepage || _catalogSettings.NumberOfBestsellersOnHomepage == 0)
+                return Content("");
 
-        //    //load products
-        //    var products = _productService.SearchProducts().OrderByDescending(o=>o.UpdatedOnUtc).TakeWhile(o=>o.UpdatedOnUtc);
-        //    //prepare model
-        //    var model = PrepareProductOverviewModels(products, true, true, null)
-        //        .ToList();
-        //    return PartialView(model);
-        //}
+            //load products
+            var products = _productService.SearchProducts().OrderByDescending(o => o.UpdatedOnUtc).TakeWhile(o => o.UpdatedOnUtc >= DateTime.Now && o.UpdatedOnUtc < DateTime.Now.AddDays(7));
+            //prepare model
+            var model = PrepareProductOverviewModels(products, true, true, null)
+                .ToList();
+            return PartialView(model);
+        }
 
         #endregion
 
