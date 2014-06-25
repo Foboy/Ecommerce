@@ -1315,7 +1315,7 @@ namespace Nop.Web.Controllers
         #region Addresses
 
         [NopHttpsRequirement(SslRequirement.Yes)]
-        public ActionResult Addresses()
+        public ActionResult Addresses(int? addressId)
         {
             if (!IsCurrentUserRegistered())
                 return new HttpUnauthorizedResult();
@@ -1336,6 +1336,18 @@ namespace Nop.Web.Controllers
                     _stateProvinceService, () => _countryService.GetAllCountries());
                 model.Addresses.Add(addressModel);
             }
+
+            if (addressId > 0)
+            {
+                model.EditAddress = model.Addresses.ToList().Find(a => a.Id == addressId);
+            }
+            if (model.EditAddress == null)
+            {
+                model.EditAddress = new AddressModel();
+                model.EditAddress.PrepareModel(null, false, _addressSettings, _localizationService,
+            _stateProvinceService, () => _countryService.GetAllCountries());
+            }
+                
             return View(model);
         }
 
@@ -1397,8 +1409,11 @@ namespace Nop.Web.Controllers
                     address.StateProvinceId = null;
                 customer.Addresses.Add(address);
                 _customerService.UpdateCustomer(customer);
-
-                return RedirectToRoute("CustomerAddresses");
+                return Json(new
+                {
+                    success = 1
+                });
+                //return RedirectToRoute("CustomerAddresses");
             }
 
             //If we got this far, something failed, redisplay form
@@ -1406,8 +1421,11 @@ namespace Nop.Web.Controllers
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Addresses;
             model.Address.PrepareModel(null, true, _addressSettings, _localizationService,
                     _stateProvinceService, () => _countryService.GetAllCountries());
-
-            return View(model);
+            return Json(new
+            {
+                html = this.RenderPartialViewToString("_CustomerAddress", model.Address)
+            });
+            //return View(model);
         }
 
         [NopHttpsRequirement(SslRequirement.Yes)]
@@ -1449,8 +1467,11 @@ namespace Nop.Web.Controllers
             {
                 address = model.Address.ToEntity(address);
                 _addressService.UpdateAddress(address);
-
-                return RedirectToRoute("CustomerAddresses");
+                return Json(new
+                {
+                    success = 1
+                });
+                //return RedirectToRoute("CustomerAddresses");
             }
 
             //If we got this far, something failed, redisplay form
@@ -1458,7 +1479,11 @@ namespace Nop.Web.Controllers
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Addresses;
             model.Address.PrepareModel(address, true, _addressSettings, _localizationService,
                     _stateProvinceService, () => _countryService.GetAllCountries());
-            return View(model);
+            return Json(new
+            {
+                html = this.RenderPartialViewToString("_CustomerAddress", model.Address)
+            });
+            //return View(model);
         }
 
         #endregion
