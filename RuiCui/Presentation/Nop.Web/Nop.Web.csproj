@@ -2182,6 +2182,7 @@
     <Content Include="Themes\DefaultTheme\Content\js\index.js" />
     <Content Include="Themes\DefaultTheme\Content\js\jquery.js" />
     <Content Include="Themes\DefaultTheme\Content\js\public.onepagecheckout.js" />
+    <Content Include="Themes\DefaultTheme\Content\js\public.usercenter.js" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -3415,6 +3416,9 @@
     <Content Include="Themes\DefaultTheme\Views\Home\IndexVip.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Home\IndexNoProblem.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Home\IndexSold.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\ShoppingCart\CheckoutOrderSummary.cshtml" />
+    <Content Include="Themes\DefaultTheme\Content\js\public.usercenter" />
+    <Content Include="Themes\DefaultTheme\Views\Customer\_CustomerAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

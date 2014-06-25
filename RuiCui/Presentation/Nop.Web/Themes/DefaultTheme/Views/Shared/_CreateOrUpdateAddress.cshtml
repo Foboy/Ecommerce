@@ -32,34 +32,34 @@
     </script>
 }
 @Html.HiddenFor(model => model.Id)
-<div class="edit-address">
-    <div class="inputs">
+<div class="form-fields">
+    <div class="address_input_info input_info">
         @Html.LabelFor(model => model.FirstName, new { }, ":")
-            @Html.EditorFor(model => model.FirstName)
+        @Html.EditorFor(model => model.FirstName)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.FirstName)
     </div>
-    <div class="inputs" style="display:none;">
+    <div class="address_input_info input_info" style="display:none;">
         @{
             Model.LastName = "先生/小姐";
         }
         @Html.LabelFor(model => model.LastName, new { }, ":")
-            @Html.EditorFor(model => model.LastName)
+        @Html.EditorFor(model => model.LastName)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.LastName)
 
     </div>
-    <div class="inputs">
+    <div class="address_input_info input_info">
         @Html.LabelFor(model => model.Email, new { }, ":")
-            @Html.EditorFor(model => model.Email)
+        @Html.EditorFor(model => model.Email)
         @Html.RequiredHint()
         @Html.ValidationMessageFor(model => model.Email)
     </div>
     @if (Model.CompanyEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.Company, new { }, ":")
-                @Html.EditorFor(model => model.Company)
+            @Html.EditorFor(model => model.Company)
             @if (Model.CompanyRequired)
             {
                 @Html.RequiredHint()
@@ -69,9 +69,9 @@
     }
     @if (Model.CountryEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.CountryId, new { }, ":")
-                @Html.DropDownListFor(model => model.CountryId, Model.AvailableCountries)
+            @Html.DropDownListFor(model => model.CountryId, Model.AvailableCountries)
             @Html.RequiredHint()
             @Html.ValidationMessageFor(model => model.CountryId)
         </div>
@@ -79,18 +79,18 @@
 
     @if (Model.CountryEnabled && Model.StateProvinceEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.StateProvinceId, new { }, ":")
-                @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
+            @Html.DropDownListFor(model => model.StateProvinceId, Model.AvailableStates)
             <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait...")</span>
             @Html.ValidationMessageFor(model => model.StateProvinceId)
         </div>
     }
     @if (Model.CityEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.City, new { }, ":")
-                @Html.EditorFor(model => model.City)
+            @Html.EditorFor(model => model.City)
 
             @if (Model.CityRequired)
             {
@@ -101,9 +101,9 @@
     }
     @if (Model.StreetAddressEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.Address1, new { }, ":")
-                @Html.EditorFor(model => model.Address1)
+            @Html.EditorFor(model => model.Address1)
             @if (Model.StreetAddressRequired)
             {
                 @Html.RequiredHint()
@@ -113,9 +113,9 @@
     }
     @if (Model.StreetAddress2Enabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.Address2, new { }, ":")
-                @Html.EditorFor(model => model.Address2)
+            @Html.EditorFor(model => model.Address2)
             @if (Model.StreetAddress2Required)
             {
                 @Html.RequiredHint()
@@ -125,9 +125,9 @@
     }
     @if (Model.ZipPostalCodeEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.ZipPostalCode, new { }, ":")
-                @Html.EditorFor(model => model.ZipPostalCode)
+            @Html.EditorFor(model => model.ZipPostalCode)
             @if (Model.ZipPostalCodeRequired)
             {
                 @Html.RequiredHint()
@@ -137,9 +137,9 @@
     }
     @if (Model.PhoneEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.PhoneNumber, new { }, ":")
-                @Html.EditorFor(model => model.PhoneNumber)
+            @Html.EditorFor(model => model.PhoneNumber)
             @if (Model.PhoneRequired)
             {
                 @Html.RequiredHint()
@@ -149,9 +149,9 @@
     }
     @if (Model.FaxEnabled)
     {
-        <div class="inputs">
+        <div class="address_input_info input_info">
             @Html.LabelFor(model => model.FaxNumber, new { }, ":")
-                @Html.EditorFor(model => model.FaxNumber)
+            @Html.EditorFor(model => model.FaxNumber)
             @if (Model.FaxRequired)
             {
                 @Html.RequiredHint()
