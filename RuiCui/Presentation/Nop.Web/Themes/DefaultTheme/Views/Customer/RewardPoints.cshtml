@@ -18,71 +18,14 @@
         <div class="compensate-content">
             <div class="current-balance">
                 当前积分：
-                <h3 class="current-balance-border">567分</h3>
+                <h3 class="current-balance-border">@(Model.RewardPointsBalance)分</h3>
                 可兑换：
-                <h3>567元</h3>
-                @*@T("RewardPoints.CurrentBalance", Model.RewardPointsBalance, Model.RewardPointsAmount)*@
+                <h3>@(Model.RewardPointsAmount)</h3>
             </div>
             @if (Model.MinimumRewardPointsBalance > 0)
             {
                 <div class="min-balance">@T("RewardPoints.MinimumBalance", Model.MinimumRewardPointsBalance, Model.MinimumRewardPointsAmount)</div>
             }
-            @*<div class="reward-points-history">
-                <div class="title">
-                    <strong>@T("RewardPoints.History")</strong>
-                </div>
-                @if (Model.RewardPoints.Count > 0)
-                {
-                    <table class="data-table">
-                        <colgroup>
-                            <col width="25%" />
-                            <col width="15%" />
-                            <col width="15%" />
-                            <col />
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th class="a-center date">
-                                    @T("RewardPoints.Fields.Date")
-                                </th>
-                                <th class="a-center points">
-                                    @T("RewardPoints.Fields.Points")
-                                </th>
-                                <th class="a-center points-balance">
-                                    @T("RewardPoints.Fields.PointsBalance")
-                                </th>
-                                <th class="a-center message">
-                                    @T("RewardPoints.Fields.Message")
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.RewardPoints.Count; i++)
-                            {
-                                var item = Model.RewardPoints[i];
-                                <tr @(i % 2 == 0 ? Html.Raw(" class=\"odd\"") : Html.Raw(" class=\"even\""))>
-                                    <td class="a-center date">
-                                        @item.CreatedOn
-                                    </td>
-                                    <td class="a-center points">
-                                        @item.Points
-                                    </td>
-                                    <td class="a-center points-balance">
-                                        @item.PointsBalance
-                                    </td>
-                                    <td class="a-left message">
-                                        @item.Message
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    @T("RewardPoints.NoHistory")
-                }
-            </div>*@
         </div>
     </div>
 </div>

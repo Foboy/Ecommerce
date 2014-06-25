@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
+using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Customer
 {
@@ -21,12 +22,46 @@ namespace Nop.Web.Models.Customer
 
 
         #region Nested classes
+
+        public partial class OrderItemModel : BaseNopEntityModel
+        {
+            public OrderItemModel()
+            {
+                Picture = new PictureModel();
+            }
+
+            public PictureModel Picture {get;set;}
+
+            public int ProductId { get; set; }
+
+            public string ProductName { get; set; }
+
+            public string ProductSeName { get; set; }
+
+            public string UnitPrice { get; set; }
+
+            public string SubTotal { get; set; }
+
+            public string Discount { get; set; }
+
+            public int Quantity { get; set; }
+            
+            public string AttributeInfo { get; set; }
+
+        }
+
         public partial class OrderDetailsModel : BaseNopEntityModel
         {
+            public OrderDetailsModel()
+            {
+                this.Items = new List<OrderItemModel>();
+            }
             public string OrderTotal { get; set; }
             public bool IsReturnRequestAllowed { get; set; }
             public string OrderStatus { get; set; }
             public DateTime CreatedOn { get; set; }
+
+            public IList<OrderItemModel> Items { get; set; }
         }
         public partial class RecurringOrderModel : BaseNopEntityModel
         {

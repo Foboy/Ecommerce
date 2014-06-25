@@ -154,7 +154,7 @@
                                             <div class="column-content">
                                                 @order.CreatedOn.ToString()
                                                 <span class="sep">|</span>
-                                                订单号：<a href="">@order.Id</a>
+                                                订单号：<a href="">@(order.CreatedOn.Ticks.ToString() + order.Id.ToString())</a>
                                                 <span class="order-status float-right">@order.OrderStatus</span>
                                             </div>
                                         </th>
@@ -164,27 +164,30 @@
                                     <tr>
                                         <td class="column-detail column-l">
                                             <ul class="order-goods-list">
-                                                <li class="first">
-                                                    <a href="" target="_blank">
-                                                        <img class="goods-thumb" alt="" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T11axTB_hT1RXrhCrK.jpg?width=120&height=120 2x" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T11axTB_hT1RXrhCrK.jpg?width=120&height=120">
-                                                    </a>
-                                                    <a class="goods-name" href="" target="_blank">QCY派Q8蓝牙耳机 黑色</a>
-                                                    <span class="goods-price">59.9元</span>
-                                                    <span class="goods-link"> </span>
-                                                </li>
-                                                <li>
-                                                    <a href="" target="_blank">
-                                                        <img class="goods-thumb" alt="" srcset="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1baJTBjKv1RXrhCrK.jpg?width=120&height=120 2x" src="http://img08.mifile.cn/v1/MI_18455B3E4DA706226CF7535A58E875F0267/T1baJTBjKv1RXrhCrK.jpg?width=120&height=120">
-                                                    </a>
-                                                    <a class="goods-name" href="" target="_blank">简约旅行双肩包 黑色</a>
-                                                    <span class="goods-price">99元</span>
-                                                    <span class="goods-link"> </span>
-                                                </li>
+@foreach (var item in order.Items)
+{
+    <li class="first">
+        <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">
+            <img class="goods-thumb" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title">
+        </a>
+        <a class="goods-name" href="" target="_blank">@item.ProductName</a>
+        <p>
+            @if (!String.IsNullOrEmpty(item.AttributeInfo))
+            {
+                <span>
+                    @Html.Raw(item.AttributeInfo)
+                </span>
+            }
+        </p>
+        <span class="goods-price">@item.UnitPrice x @item.Quantity</span>
+        <span class="goods-link"> </span>
+    </li>
+}
                                             </ul>
                                         </td>
                                         <td class="column-price">
                                             <div class="order-info order-price">
-                                                158.90元
+                                                @order.OrderTotal
                                                 <br>
                                                 在线支付
                                             </div>
