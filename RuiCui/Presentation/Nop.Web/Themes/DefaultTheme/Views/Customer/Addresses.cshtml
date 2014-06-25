@@ -59,9 +59,9 @@
                                 {
                                     var address = Model.Addresses[i];
 
-                                    <tr>
+                                    <tr class="address-table-text">
                                         <td>@address.FirstName</td>
-                                        <td>@(address.CountryName+"省"+address.StateProvinceName)</td>
+                                        <td>@(address.CountryName + "省" + address.StateProvinceName)</td>
                                         <td>@address.Address1</td>
                                         <td>@address.ZipPostalCode</td>
                                         <td>@address.PhoneNumber</td>
