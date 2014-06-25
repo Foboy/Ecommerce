@@ -34,7 +34,7 @@
                 @Html.TextBoxFor(model => model.EnteredQuantity, new { @class = "addnum-input" })
                 <a href="javascript:void(0);" id="num_plus"><i class="iconfont addnum-btn">&#xf0175;</i></a>
             </dd>
-            <dd class="font12">(库存：30)</dd>
+            <dd class="font12">(库存：@Model.StockQuantity)</dd>
             //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
             if (!Model.DisableBuyButton)
             {

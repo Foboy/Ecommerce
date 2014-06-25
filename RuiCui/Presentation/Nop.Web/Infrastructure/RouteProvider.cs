@@ -16,7 +16,7 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("LastProduct",
                     "每日新品",
-                    new { controller = "Home", action = "LastProduct" },
+                    new { controller = "Catalog", action = "SearchLastestProduct" },
                     new[] { "Nop.Web.Controllers" });
             //install
             routes.MapRoute("Installation",
