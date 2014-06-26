@@ -147,9 +147,6 @@ namespace Nop.Admin.Controllers
             var categories = _categoryService.GetAllCategoriesByParentCategoryId(0,showHidden: true);
             foreach (var c in categories)
                 model.AvailableCategories.Add(new SelectListItem() { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
-            model.AvailableCategories.Remove(model.AvailableCategories.First(c => c.Text == "所有"));
-
-       
             //locales
             AddLocales(_languageService, model.Locales);
             return View(model);
