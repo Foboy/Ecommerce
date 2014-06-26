@@ -1168,6 +1168,7 @@ em {
     float:left;
     margin-right:40px;
     font-size:16px;
+    line-height:30px;
 }
 
 
@@ -1203,17 +1204,17 @@ em {
 }
 
 .shop-cart-goods .col-2 {
-    width: 97px;
+    width: 120px;
     text-align: center;
 }
 
 .shop-cart-goods .col-3 {
-    width: 200px;
+    width: 120px;
     text-align: center;
 }
 
 .shop-cart-goods .col-4 {
-    width: 94px;
+    width: 120px;
 }
 
 .shop-cart-goods .col-5 {
@@ -1239,7 +1240,7 @@ em {
     .shop-cart-goods dt .col-1 {
         border-left: none;
         margin-left: 0;
-        width: 704px;
+        width: 780px;
         padding-left: 30px;
     }
 
@@ -1278,7 +1279,7 @@ em {
     }
 
     .shop-cart-goods .item .col-1 {
-        width: 798px;
+        width: 810px;
         overflow: hidden;
     }
 
@@ -1436,23 +1437,26 @@ em {
         background: #fafafa;
     }
 
-        .shop-cart-box-ft .shop-cart-action .btn {
-            float: right;
-            margin-left: 10px;
-        }
+.shop-cart-box-ft .shop-cart-action .btn {
+    float: right;
+    margin-left: 10px;
+}
 
-        .shop-cart-box-ft .shop-cart-action .btn-back {
-            border-color: #dfdfdf;
-        }
+.shop-cart-box-ft .shop-cart-action .btn-back {
+    border-color: #dfdfdf;
+}
 
-        .shop-cart-box-ft .shop-cart-action .tips {
-            float: left;
-            margin-right: 10px;
-            line-height: 40px;
-            text-align: right;
-        }
+.shop-cart-box-ft .shop-cart-action .tips {
+    float: left;
+    margin-right: 10px;
+    line-height: 40px;
+    text-align: right;
+}
 
-        .shop-cart-box-ft .shop-cart-action .tips-more {
-            line-height: 20px;
-        }
+.shop-cart-box-ft .shop-cart-action .tips-more {
+    line-height: 20px;
+}
+.checkout-data {
+    position:relative;
+}
 
