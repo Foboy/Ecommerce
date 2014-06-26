@@ -97,8 +97,6 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
 
         private readonly ICustomerService _customerService;
-
-        private readonly ICategorySpecificationAtrributeService _categorySpecificationService;
         
         #endregion
 
@@ -147,8 +145,7 @@ namespace Nop.Web.Controllers
             LocalizationSettings localizationSettings, 
             CustomerSettings customerSettings, 
             CaptchaSettings captchaSettings,
-            ICacheManager cacheManager,
-            ICategorySpecificationAtrributeService categorySpecificationService)
+            ICacheManager cacheManager)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -197,8 +194,6 @@ namespace Nop.Web.Controllers
             this._captchaSettings = captchaSettings;
 
             this._cacheManager = cacheManager;
-
-            this._categorySpecificationService = categorySpecificationService;
         }
 
         #endregion
@@ -274,8 +269,7 @@ namespace Nop.Web.Controllers
                 {
                     Id = category.Id,
                     Name = category.GetLocalized(x => x.Name),
-                    SeName = category.GetSeName(),
-                    PriceRanges = category.PriceRanges
+                    SeName = category.GetSeName()
                 };
 
                 //product number for each category
@@ -1494,37 +1488,6 @@ namespace Nop.Web.Controllers
             };
             return PartialView(model);
         }
-
-        [ChildActionOnly]
-        public ActionResult TopSpecsMenu()
-        {
-            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
-                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
-            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
-                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
-            var cachedModel = _cacheManager.Get(cacheKey, () =>
-            {
-                return PrepareCategorySimpleModels(0, null, 0, _catalogSettings.TopCategoryMenuSubcategoryLevelsToDisplay, true).ToList();
-            });
-
-            var model = new TopSpecsMenuModel()
-            {
-                Categories = cachedModel.Select(c=>new CategorySpecsModel(c)).ToList(),
-                RecentlyAddedProductsEnabled = _catalogSettings.RecentlyAddedProductsEnabled,
-                BlogEnabled = _blogSettings.Enabled,
-                ForumEnabled = _forumSettings.ForumsEnabled
-
-            };
-
-            var specs = this._categorySpecificationService.LoadAllCategorySpecificationAtrribute();
-            foreach(var cat in model.Categories)
-            {
-                var catSpecs = specs.Where(s => s.CategoryId == cat.Id && s.AllowFiltering).ToList();
-                cat.PriceRangeFilter.LoadPriceRangeFilters(cat.PriceRanges, _webHelper, _priceFormatter);
-                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.HttpRouteUrl("Category", new { SeName = cat.SeName }));
-            }
-            return PartialView(model);
-        }
         
         [ChildActionOnly]
         public ActionResult HomepageCategories()
@@ -2617,7 +2580,7 @@ namespace Nop.Web.Controllers
             //if (!_aclService.Authorize(category))
             //    return InvokeHttp404();
 
-            var currentCustomerRoles =  _workContext.CurrentCustomer.CustomerRoles;
+            var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
             bool checkVip = false;
             foreach (var role in currentCustomerRoles)
             {
@@ -2658,43 +2621,24 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult SearchSoldProduct(ProductPagingFilteringModel command)
         {
-            //ACL (access control list)
-            //if (!_aclService.Authorize(category))
-            //    return InvokeHttp404();
-
-            var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles;
-            bool checkVip = false;
-            foreach (var role in currentCustomerRoles)
-            {
-                if (role.Name == "已注册客户")
-                    checkVip = true;
-            }
-            if (!checkVip)
-                return InvokeHttp404();
-
             //customer is not allowed to select a page size
             command.PageSize = 10;
             if (command.PageNumber <= 0) command.PageNumber = 1;
             ProductSModel model = new ProductSModel();
 
-            var productss = _productService.SearchProducts();
-            List<Product> plist = new List<Product>();
-            foreach (var product in productss)
-            {
-                var existingAclRecords = _aclService.GetAclRecords(product);
-                foreach (var acl in existingAclRecords)
-                {
-                    if (acl.CustomerRole.Name == "已注册客户")
-                        plist.Add(product);
-                }
-            }
-
-
-            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
+            //products
+            //var products = _productService.SearchProducts(
+            //    orderBy: ProductSortingEnum.CreatedOn,
+            //    pageIndex: command.PageNumber - 1,
+            //    pageSize: command.PageSize);
+            var products = _productService.SearchProducts(
+             orderBy: ProductSortingEnum.CreatedOn,
+             pageIndex: command.PageNumber - 1,
+             pageSize: command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
-            return PartialView("IndexVip", model);
+            return PartialView("IndexSold", model);
         }
 
         #endregion
