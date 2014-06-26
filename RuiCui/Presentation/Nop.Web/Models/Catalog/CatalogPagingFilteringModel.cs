@@ -168,9 +168,18 @@ namespace Nop.Web.Models.Catalog
                         //from&to
                         var item = new PriceRangeFilterItem();
                         if (x.From.HasValue)
+                        {
                             item.From = priceFormatter.FormatPrice(x.From.Value, true, false);
+                            item.FromDecimal = x.From.Value;
+                        }
+                            
+                    
                         if (x.To.HasValue)
+                        {
                             item.To = priceFormatter.FormatPrice(x.To.Value, true, false);
+                            item.ToDecimal = x.To.Value;
+                        }
+                            
                         string fromQuery = string.Empty;
                         if (x.From.HasValue)
                             fromQuery = x.From.Value.ToString(new CultureInfo("en-US"));
@@ -221,8 +230,13 @@ namespace Nop.Web.Models.Catalog
         {
             public string From { get; set; }
             public string To { get; set; }
+
+            public decimal FromDecimal { get; set; }
+            public decimal ToDecimal { get; set; }
+
             public string FilterUrl { get; set; }
             public bool Selected { get; set; }
+
         }
 
         public partial class SpecificationFilterModel : BaseNopModel
@@ -299,29 +313,30 @@ namespace Nop.Web.Models.Catalog
             }
 
             public virtual void PrepareSpecsFilters(IList<int> alreadyFilteredSpecOptionIds,
-                IList<int> filterableSpecificationAttributeOptionIds,
+                IList<CategorySpecificationAtrribute> filterableSpecificationAttributes,
                 ISpecificationAttributeService specificationAttributeService, 
                 IWebHelper webHelper,
                 IWorkContext workContext)
             {
                 var allFilters = new List<SpecificationAttributeOptionFilter>();
-                var specificationAttributeOptions = specificationAttributeService
-                    .GetSpecificationAttributeOptionsByIds(filterableSpecificationAttributeOptionIds != null ?
-                    filterableSpecificationAttributeOptionIds.ToArray() : null);
-                foreach (var sao in specificationAttributeOptions)
+                foreach (var attr in filterableSpecificationAttributes)
                 {
-                    var sa = sao.SpecificationAttribute;
-                    if (sa != null)
+                    var specificationAttributeOptions = specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(attr.SpecificationAttributeId);
+                    foreach (var sao in specificationAttributeOptions)
                     {
-                        allFilters.Add(new SpecificationAttributeOptionFilter
+                        var sa = sao.SpecificationAttribute;
+                        if (sa != null)
                         {
-                            SpecificationAttributeId = sa.Id,
-                            SpecificationAttributeName = sa.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
-                            SpecificationAttributeDisplayOrder = sa.DisplayOrder,
-                            SpecificationAttributeOptionId = sao.Id,
-                            SpecificationAttributeOptionName = sao.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
-                            SpecificationAttributeOptionDisplayOrder = sao.DisplayOrder
-                        });
+                            allFilters.Add(new SpecificationAttributeOptionFilter
+                            {
+                                SpecificationAttributeId = sa.Id,
+                                SpecificationAttributeName = sa.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeDisplayOrder = sa.DisplayOrder,
+                                SpecificationAttributeOptionId = sao.Id,
+                                SpecificationAttributeOptionName = sao.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeOptionDisplayOrder = sao.DisplayOrder
+                            });
+                        }
                     }
                 }
 
@@ -403,6 +418,70 @@ namespace Nop.Web.Models.Catalog
                 }
             }
 
+            public virtual void PrepareSpecsFilters(IList<CategorySpecificationAtrribute> filterableSpecificationAttributes,
+    ISpecificationAttributeService specificationAttributeService,
+    IWebHelper webHelper,
+    IWorkContext workContext,string baseUrl)
+            {
+                var allFilters = new List<SpecificationAttributeOptionFilter>();
+                foreach (var attr in filterableSpecificationAttributes)
+                {
+                    var specificationAttributeOptions = specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(attr.SpecificationAttributeId);
+                    foreach (var sao in specificationAttributeOptions)
+                    {
+                        var sa = sao.SpecificationAttribute;
+                        if (sa != null)
+                        {
+                            allFilters.Add(new SpecificationAttributeOptionFilter
+                            {
+                                SpecificationAttributeId = sa.Id,
+                                SpecificationAttributeName = sa.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeDisplayOrder = sa.DisplayOrder,
+                                SpecificationAttributeOptionId = sao.Id,
+                                SpecificationAttributeOptionName = sao.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeOptionDisplayOrder = sao.DisplayOrder
+                            });
+                        }
+                    }
+                }
+
+
+                //sort loaded options
+                allFilters = allFilters.OrderBy(saof => saof.SpecificationAttributeDisplayOrder)
+                    .ThenBy(saof => saof.SpecificationAttributeName)
+                    .ThenBy(saof => saof.SpecificationAttributeOptionDisplayOrder)
+                    .ThenBy(saof => saof.SpecificationAttributeOptionName).ToList();
+
+
+                //get not filtered specification options
+                var notFilteredOptions = new List<SpecificationAttributeOptionFilter>();
+                foreach (var saof in allFilters)
+                {
+
+                    //else add it
+                    notFilteredOptions.Add(saof);
+                }
+
+                this.NotFilteredItems = notFilteredOptions.ToList().Select(x =>
+                {
+                    var item = new SpecificationFilterItem();
+                    item.SpecificationAttributeName = x.SpecificationAttributeName;
+                    item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
+
+                    //filter URL
+                    var alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
+                    if (!alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
+                        alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
+                    string newQueryParam = GenerateFilteredSpecQueryParam(alreadyFilteredOptionIds);
+
+                    string filterUrl = webHelper.ModifyQueryString(baseUrl, QUERYSTRINGPARAM + "=" + newQueryParam, null);
+                    filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
+                    item.FilterUrl = filterUrl;
+
+                    return item;
+                }).ToList();
+                
+            }
             #endregion
 
             #region Properties

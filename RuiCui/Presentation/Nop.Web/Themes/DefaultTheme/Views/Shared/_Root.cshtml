@@ -34,7 +34,7 @@
             <a class="btn-category-list" href="@Url.RouteUrl("HomePage")">全部商品分类</a>
             <div class="nav-category-section" style="display: none;">
                 <ul class="nav-category-list">
-                    @Html.Action("TopMenu", "Catalog")
+                    @Html.Action("TopSpecsMenu", "Catalog")
                 </ul>
             </div>
         </div>
@@ -53,13 +53,13 @@
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
                 <li id="nav_vip" class="nav-main-item">
-                    <a href="@Url.RouteUrl("VipProduct")"><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("VipProduct")" target="_blank"><span class="text">VIP专区</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">购物无忧</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="#"><span class="text">已售欣赏</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("SoldProduct")"><span class="text">已售欣赏</span><span class="arrow"></span></a>
                 </li>
             </ul>
         </div>

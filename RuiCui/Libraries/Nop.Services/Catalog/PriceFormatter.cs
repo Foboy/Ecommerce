@@ -67,11 +67,11 @@ namespace Nop.Services.Catalog
             {
                 if (!String.IsNullOrEmpty(targetCurrency.DisplayLocale))
                 {
-                    result = amount.ToString("C", new CultureInfo(targetCurrency.DisplayLocale));
+                    result = amount.ToString("C0",new CultureInfo(targetCurrency.DisplayLocale));
                 }
                 else
                 {
-                    result = String.Format("{0} ({1})", amount.ToString("N"), targetCurrency.CurrencyCode);
+                    result = String.Format("{0} ({1})", amount.ToString(), targetCurrency.CurrencyCode);
                     return result;
                 }
             }
@@ -189,7 +189,7 @@ namespace Nop.Services.Catalog
             Currency targetCurrency, Language language, bool priceIncludesTax, bool showTax)
         {
             //round before rendering
-            price = Math.Round(price, 2);
+            price = Math.Round(price, 0);
             
             string currencyString = GetCurrencyString(price, showCurrency, targetCurrency);
             if (showTax)

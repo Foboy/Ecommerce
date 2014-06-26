@@ -267,9 +267,11 @@
     <Compile Include="Models\Boards\TopicMoveModel.cs" />
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
+    <Compile Include="Models\Catalog\CategorySpecsModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\ProductPagingFilteringModel.cs" />
     <Compile Include="Models\Catalog\ProductSModel.cs" />
+    <Compile Include="Models\Catalog\TopSpecsMenuModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -1570,6 +1572,7 @@
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unordered.gif" />
     <Content Include="Themes\DefaultTheme\Content\css\base.css" />
     <Content Include="Themes\DefaultTheme\Content\css\checkout.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\goods-category.min.css" />
     <Content Include="Themes\DefaultTheme\Content\css\goods-detail.css" />
     <Content Include="Themes\DefaultTheme\Content\css\goods-list.css" />
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\demo.css" />
@@ -1581,6 +1584,8 @@
     <Content Include="Themes\DefaultTheme\Content\css\news.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\usercenter.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\vip.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-x.png" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-y.png" />
@@ -3421,6 +3426,7 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexSold.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexTuiJin.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexVip.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\TopSpecsMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />
