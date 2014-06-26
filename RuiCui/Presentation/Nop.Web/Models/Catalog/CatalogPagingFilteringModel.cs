@@ -313,29 +313,30 @@ namespace Nop.Web.Models.Catalog
             }
 
             public virtual void PrepareSpecsFilters(IList<int> alreadyFilteredSpecOptionIds,
-                IList<int> filterableSpecificationAttributeOptionIds,
+                IList<CategorySpecificationAtrribute> filterableSpecificationAttributes,
                 ISpecificationAttributeService specificationAttributeService, 
                 IWebHelper webHelper,
                 IWorkContext workContext)
             {
                 var allFilters = new List<SpecificationAttributeOptionFilter>();
-                var specificationAttributeOptions = specificationAttributeService
-                    .GetSpecificationAttributeOptionsByIds(filterableSpecificationAttributeOptionIds != null ?
-                    filterableSpecificationAttributeOptionIds.ToArray() : null);
-                foreach (var sao in specificationAttributeOptions)
+                foreach (var attr in filterableSpecificationAttributes)
                 {
-                    var sa = sao.SpecificationAttribute;
-                    if (sa != null)
+                    var specificationAttributeOptions = specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(attr.SpecificationAttributeId);
+                    foreach (var sao in specificationAttributeOptions)
                     {
-                        allFilters.Add(new SpecificationAttributeOptionFilter
+                        var sa = sao.SpecificationAttribute;
+                        if (sa != null)
                         {
-                            SpecificationAttributeId = sa.Id,
-                            SpecificationAttributeName = sa.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
-                            SpecificationAttributeDisplayOrder = sa.DisplayOrder,
-                            SpecificationAttributeOptionId = sao.Id,
-                            SpecificationAttributeOptionName = sao.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
-                            SpecificationAttributeOptionDisplayOrder = sao.DisplayOrder
-                        });
+                            allFilters.Add(new SpecificationAttributeOptionFilter
+                            {
+                                SpecificationAttributeId = sa.Id,
+                                SpecificationAttributeName = sa.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeDisplayOrder = sa.DisplayOrder,
+                                SpecificationAttributeOptionId = sao.Id,
+                                SpecificationAttributeOptionName = sao.GetLocalized(x => x.Name, workContext.WorkingLanguage.Id),
+                                SpecificationAttributeOptionDisplayOrder = sao.DisplayOrder
+                            });
+                        }
                     }
                 }
 

@@ -1415,8 +1415,9 @@ namespace Nop.Web.Controllers
             model.PagingFilteringContext.ViewMode = viewMode;
 
             //specs
+            var specs = this._categorySpecificationService.LoadCategorySpecificationAtrributeById(category.ParentCategoryId > 0 ? category.ParentCategoryId : category.Id);
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
-                filterableSpecificationAttributeOptionIds, 
+                specs, 
                 _specificationAttributeService, _webHelper, _workContext);
             
 
@@ -1517,6 +1518,7 @@ namespace Nop.Web.Controllers
             };
 
             var specs = this._categorySpecificationService.LoadAllCategorySpecificationAtrribute();
+            
             foreach(var cat in model.Categories)
             {
                 var catSpecs = specs.Where(s => s.CategoryId == cat.Id && s.AllowFiltering).ToList();
@@ -2663,15 +2665,18 @@ namespace Nop.Web.Controllers
             if (command.PageNumber <= 0) command.PageNumber = 1;
             ProductSModel model = new ProductSModel();
 
-            //products
-            //var products = _productService.SearchProducts(
-            //    orderBy: ProductSortingEnum.CreatedOn,
-            //    pageIndex: command.PageNumber - 1,
-            //    pageSize: command.PageSize);
-            var products = _productService.SearchProducts(
-             orderBy: ProductSortingEnum.CreatedOn,
-             pageIndex: command.PageNumber - 1,
-             pageSize: command.PageSize);
+            var productss = _productService.SearchProducts();
+            List<Product> plist = new List<Product>();
+            foreach (var product in productss)
+            {
+                if (product.StockQuantity == 0)
+                {
+                    plist.Add(product);
+                }
+            }
+
+
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
