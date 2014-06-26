@@ -43,15 +43,27 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseseven">
+                    产品分类
+                </a>
+            </h4>
+        </div>
+        <div id="collapseseven" class="panel-collapse collapse ">
+            <div class="panel-body">
+                @TabCategories()
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
                 <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                    规格参数分类
+                    规格参数
                 </a>
             </h4>
         </div>
         <div id="collapseThree" class="panel-collapse collapse ">
             <div class="panel-body">
-                @TabCategories()
-                <hr />
                 @TabSpecificationAttributes()
                 <hr />
                 @TabProductAttributes()
