@@ -2783,4 +2783,30 @@ a:hover, a:focus {
     display:none;
 }
 
+/*ÃÌº”µÿ÷∑*/
+.form-fields {
+    padding:0 20px;
+    font-size:14px;
+}
+.address_input_info {
+    padding-top:15px;
+}
+.input_info label {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: right;
+    width: 120px;
+}
+.input_info input[type="text"], input[type="password"] {
+    height: 20px;
+    padding: 8px;
+    width: 200px;
+}
+.input_info select {
+    height: 28px;
+    margin-right: 8px;
+    padding: 4px;
+    width: 80px;
+}
+
 
