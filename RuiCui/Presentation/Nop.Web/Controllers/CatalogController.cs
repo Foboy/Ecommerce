@@ -2600,10 +2600,60 @@ namespace Nop.Web.Controllers
             foreach (var product in productss)
             {
                 var existingAclRecords = _aclService.GetAclRecords(product);
+                foreach (var acl in existingAclRecords)
+                {
+                    if (acl.CustomerRole.Name == "已注册客户")
+                        plist.Add(product);
+                }
             }
 
 
-             var products = new PagedList<Product>(productss, command.PageNumber - 1, command.PageSize);
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
+            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return PartialView("IndexVip", model);
+        }
+
+        /// <summary>
+        /// 查询售罄商品
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchSoldProduct(ProductPagingFilteringModel command)
+        {
+            //ACL (access control list)
+            //if (!_aclService.Authorize(category))
+            //    return InvokeHttp404();
+
+            var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles;
+            bool checkVip = false;
+            foreach (var role in currentCustomerRoles)
+            {
+                if (role.Name == "已注册客户")
+                    checkVip = true;
+            }
+            if (!checkVip)
+                return InvokeHttp404();
+
+            //customer is not allowed to select a page size
+            command.PageSize = 10;
+            if (command.PageNumber <= 0) command.PageNumber = 1;
+            ProductSModel model = new ProductSModel();
+
+            var productss = _productService.SearchProducts();
+            List<Product> plist = new List<Product>();
+            foreach (var product in productss)
+            {
+                var existingAclRecords = _aclService.GetAclRecords(product);
+                foreach (var acl in existingAclRecords)
+                {
+                    if (acl.CustomerRole.Name == "已注册客户")
+                        plist.Add(product);
+                }
+            }
+
+
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
