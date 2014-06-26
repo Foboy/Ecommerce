@@ -95,6 +95,8 @@ namespace Nop.Web.Controllers
         private readonly CustomerSettings _customerSettings;
         private readonly ICacheManager _cacheManager;
         private readonly CaptchaSettings _captchaSettings;
+
+        private readonly ICustomerService _customerService;
         
         #endregion
 
@@ -2538,7 +2540,7 @@ namespace Nop.Web.Controllers
         {
            
                 //customer is not allowed to select a page size
-                command.PageSize = 3;
+                command.PageSize = 10;
                 if (command.PageNumber <= 0) command.PageNumber = 1;
                 ProductSModel model = new ProductSModel();
 
@@ -2548,6 +2550,7 @@ namespace Nop.Web.Controllers
             //    pageIndex: command.PageNumber - 1,
             //    pageSize: command.PageSize);
             var products = _productService.SearchProducts(
+                    visibleIndividuallyOnly: true,
              orderBy: ProductSortingEnum.CreatedOn,
              pageIndex: command.PageNumber - 1,
              pageSize: command.PageSize);
@@ -2555,6 +2558,33 @@ namespace Nop.Web.Controllers
             model.PagingFilteringContext.LoadPagedList(products);
 
             return PartialView("IndexLastProducts",model);
+        }
+        /// <summary>
+        /// 查询最新商品
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchVipProduct(ProductPagingFilteringModel command)
+        {
+
+            //customer is not allowed to select a page size
+            command.PageSize = 10;
+            if (command.PageNumber <= 0) command.PageNumber = 1;
+            ProductSModel model = new ProductSModel();
+
+            //products
+            //var products = _productService.SearchProducts(
+            //    orderBy: ProductSortingEnum.CreatedOn,
+            //    pageIndex: command.PageNumber - 1,
+            //    pageSize: command.PageSize);
+            var products = _productService.SearchProducts(
+                    visibleIndividuallyOnly: true,
+             orderBy: ProductSortingEnum.CreatedOn,
+             pageIndex: command.PageNumber - 1,
+             pageSize: command.PageSize);
+            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return PartialView("IndexLastProducts", model);
         }
 
         #endregion
