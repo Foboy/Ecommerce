@@ -1570,6 +1570,7 @@
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unordered.gif" />
     <Content Include="Themes\DefaultTheme\Content\css\base.css" />
     <Content Include="Themes\DefaultTheme\Content\css\checkout.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\goods-category.min.css" />
     <Content Include="Themes\DefaultTheme\Content\css\goods-detail.css" />
     <Content Include="Themes\DefaultTheme\Content\css\goods-list.css" />
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\demo.css" />
@@ -1581,6 +1582,8 @@
     <Content Include="Themes\DefaultTheme\Content\css\news.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\usercenter.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\vip.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-x.png" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\fancybox-y.png" />
