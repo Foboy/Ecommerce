@@ -30,6 +30,10 @@ namespace Nop.Web.Infrastructure
              "VIP专区",
              new { controller = "Catalog", action = "SearchVipProduct" },
              new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("SoldProduct",
+       "已售欣赏",
+       new { controller = "Catalog", action = "SearchSoldProduct" },
+       new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("RecentlyViewedProducts",
                             "recentlyviewedproducts/",
                             new { controller = "Catalog", action = "RecentlyViewedProducts" },

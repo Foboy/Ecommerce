@@ -31,10 +31,10 @@
         var specModel = category.SpecificationFilter;
         var priceModel = category.PriceRangeFilter;
         var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
-        <li class="nav-category-item">
+        <li class="nav-category-item nav-category-item-first ">
             @*顶部翡翠-水墨玉*@
             <div class="nav-category-content">
-                <a class="title" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                <a class="categoryone" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
                     @category.Name
                 </a>
                 <div class="links">
@@ -48,15 +48,15 @@
 
             </div>
         </li>
-    @*题材，颜色之类*@
-            if (specModel.NotFilteredItems.Count > 0)
+    @*类*@
+                    if (specModel.NotFilteredItems.Count > 0)
             {
                 foreach (var group in notFilteredItemsGroups)
                 {
                     var groupList = group.ToList();
                     <li class="nav-category-item">
                         <div class="nav-category-content">
-                            <a>@groupList[0].SpecificationAttributeName ：</a>
+                            <a class="basecolor">@groupList[0].SpecificationAttributeName</a>
                             <div class="links">
                                     @for (int i = 0; i < groupList.Count && i<3;i++ )
                                     {
@@ -88,7 +88,7 @@
             @*价格区间*@
                 <li class="nav-category-item">
                     <div class="nav-category-content">
-                        <a>价格区间 ：</a>
+                        <a class="basecolor">价格区间</a>
                         <div class="links">
                             @for (int i = 0; i < priceModel.Items.Count && i < 3; i++)
                             {
