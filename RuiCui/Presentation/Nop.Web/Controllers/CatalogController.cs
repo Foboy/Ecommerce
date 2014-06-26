@@ -97,6 +97,8 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
 
         private readonly ICustomerService _customerService;
+
+        private readonly ICategorySpecificationAtrributeService _categorySpecificationService;
         
         #endregion
 
@@ -145,7 +147,8 @@ namespace Nop.Web.Controllers
             LocalizationSettings localizationSettings, 
             CustomerSettings customerSettings, 
             CaptchaSettings captchaSettings,
-            ICacheManager cacheManager)
+            ICacheManager cacheManager,
+            ICategorySpecificationAtrributeService categorySpecificationService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -194,6 +197,8 @@ namespace Nop.Web.Controllers
             this._captchaSettings = captchaSettings;
 
             this._cacheManager = cacheManager;
+
+            this._categorySpecificationService = categorySpecificationService;
         }
 
         #endregion
@@ -269,7 +274,8 @@ namespace Nop.Web.Controllers
                 {
                     Id = category.Id,
                     Name = category.GetLocalized(x => x.Name),
-                    SeName = category.GetSeName()
+                    SeName = category.GetSeName(),
+                    PriceRanges = category.PriceRanges
                 };
 
                 //product number for each category
@@ -1486,6 +1492,37 @@ namespace Nop.Web.Controllers
                 BlogEnabled = _blogSettings.Enabled,
                 ForumEnabled = _forumSettings.ForumsEnabled
             };
+            return PartialView(model);
+        }
+
+        [ChildActionOnly]
+        public ActionResult TopSpecsMenu()
+        {
+            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+            string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_MENU_MODEL_KEY, _workContext.WorkingLanguage.Id,
+                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            var cachedModel = _cacheManager.Get(cacheKey, () =>
+            {
+                return PrepareCategorySimpleModels(0, null, 0, _catalogSettings.TopCategoryMenuSubcategoryLevelsToDisplay, true).ToList();
+            });
+
+            var model = new TopSpecsMenuModel()
+            {
+                Categories = cachedModel.Select(c=>new CategorySpecsModel(c)).ToList(),
+                RecentlyAddedProductsEnabled = _catalogSettings.RecentlyAddedProductsEnabled,
+                BlogEnabled = _blogSettings.Enabled,
+                ForumEnabled = _forumSettings.ForumsEnabled
+
+            };
+
+            var specs = this._categorySpecificationService.LoadAllCategorySpecificationAtrribute();
+            foreach(var cat in model.Categories)
+            {
+                var catSpecs = specs.Where(s => s.CategoryId == cat.Id && s.AllowFiltering).ToList();
+                cat.PriceRangeFilter.LoadPriceRangeFilters(cat.PriceRanges, _webHelper, _priceFormatter);
+                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.HttpRouteUrl("Category", new { SeName = cat.SeName }));
+            }
             return PartialView(model);
         }
         
