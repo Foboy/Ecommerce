@@ -37,6 +37,9 @@ using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
 using Webdiyer.WebControls.Mvc;
 using QConnectSDK;
+using Nop.Web.Models.Media;
+using Nop.Web.Infrastructure.Cache;
+using Nop.Core.Caching;
 
 namespace Nop.Web.Controllers
 {
@@ -86,6 +89,9 @@ namespace Nop.Web.Controllers
         private readonly LocalizationSettings _localizationSettings;
         private readonly CaptchaSettings _captchaSettings;
         private readonly ExternalAuthenticationSettings _externalAuthenticationSettings;
+        private readonly IProductAttributeFormatter _productAttributeFormatter;
+        private readonly ICacheManager _cacheManager;
+        private readonly IProductAttributeParser _productAttributeParser;
 
         #endregion
 
@@ -118,7 +124,10 @@ namespace Nop.Web.Controllers
             IDownloadService downloadService, IWebHelper webHelper,
             ICustomerActivityService customerActivityService, MediaSettings mediaSettings,
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
-            CaptchaSettings captchaSettings, ExternalAuthenticationSettings externalAuthenticationSettings)
+            CaptchaSettings captchaSettings, ExternalAuthenticationSettings externalAuthenticationSettings,
+            IProductAttributeFormatter productAttributeFormatter,
+            ICacheManager cacheManager,
+            IProductAttributeParser productAttributeParser)
         {
             this._authorizer = authorizer;
             this._authenticationService = authenticationService;
@@ -163,6 +172,9 @@ namespace Nop.Web.Controllers
             this._localizationSettings = localizationSettings;
             this._captchaSettings = captchaSettings;
             this._externalAuthenticationSettings = externalAuthenticationSettings;
+            this._productAttributeFormatter = productAttributeFormatter;
+            this._cacheManager = cacheManager;
+            this._productAttributeParser = productAttributeParser;
         }
 
         #endregion
@@ -520,6 +532,76 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
+        protected PictureModel PrepareCartItemPictureModel(OrderItem sci,
+            int pictureSize, bool showDefaultPicture, string productName)
+        {
+            var pictureCacheKey = string.Format(ModelCacheEventConsumer.CART_PICTURE_MODEL_KEY, sci.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+            var model = _cacheManager.Get(pictureCacheKey,
+                //as we cache per user (shopping cart item identifier)
+                //let's cache just for 3 minutes
+                3, () =>
+                {
+                    //shopping cart item picture
+                    Picture sciPicture = null;
+
+                    //first, let's see whether a shopping cart item has some attribute values with custom pictures
+                    var pvaValues = _productAttributeParser.ParseProductVariantAttributeValues(sci.AttributesXml);
+                    foreach (var pvaValue in pvaValues)
+                    {
+                        var pvavPicture = _pictureService.GetPictureById(pvaValue.PictureId);
+                        if (pvavPicture != null)
+                        {
+                            sciPicture = pvavPicture;
+                            break;
+                        }
+                    }
+
+                    //now let's load the default product picture
+                    var product = sci.Product;
+                    if (sciPicture == null)
+                    {
+                        sciPicture = _pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
+                    }
+
+                    //let's check whether this product has some parent "grouped" product
+                    if (sciPicture == null && !product.VisibleIndividually && product.ParentGroupedProductId > 0)
+                    {
+                        sciPicture = _pictureService.GetPicturesByProductId(product.ParentGroupedProductId, 1).FirstOrDefault();
+                    }
+                    return new PictureModel()
+                    {
+                        ImageUrl = _pictureService.GetPictureUrl(sciPicture, pictureSize, showDefaultPicture),
+                        Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), productName),
+                        AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), productName),
+                    };
+                });
+            return model;
+        }
+
+        protected void PrepareOrderItemsModel(Order order, CustomerOrderListModel.OrderDetailsModel model)
+        {
+            foreach (var sci in order.OrderItems)
+            {
+                var cartItemModel = new CustomerOrderListModel.OrderItemModel()
+                {
+                    Id = sci.Id,
+                    ProductId = sci.Product.Id,
+                    ProductName = sci.Product.GetLocalized(x => x.Name),
+                    ProductSeName = sci.Product.GetSeName(),
+                    Quantity = sci.Quantity,
+                    AttributeInfo = _productAttributeFormatter.FormatAttributes(sci.Product, sci.AttributesXml),
+                    UnitPrice = _priceFormatter.FormatPrice(sci.UnitPriceInclTax, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage)
+                };
+
+
+                cartItemModel.Picture = PrepareCartItemPictureModel(sci,
+                        _mediaSettings.CartThumbPictureSize, true, cartItemModel.ProductName);
+
+                model.Items.Add(cartItemModel);
+            }
+        }
+
+        [NonAction]
         protected CustomerOrderListModel PrepareCustomerOrderListModel(Customer customer)
         {
             if (customer == null)
@@ -539,8 +621,11 @@ namespace Nop.Web.Controllers
                     OrderStatus = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
                     IsReturnRequestAllowed = _orderProcessingService.IsReturnRequestAllowed(order)
                 };
+
                 var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
                 orderModel.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
+
+                PrepareOrderItemsModel(order, orderModel);
 
                 model.Orders.Add(orderModel);
             }

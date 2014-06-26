@@ -44,7 +44,12 @@
                     <a href="@Url.RouteUrl("CustomerRewardPoints")">@T("Account.RewardPoints")</a>
                 </li>
             }
-            
+            <li class="@if (Model.SelectedTab == CustomerNavigationEnum.WishList)
+                                                                           {<text>current</text>}
+                                                                           else
+                                                                           {<text></text>}">
+                <a href="@Url.RouteUrl("Wishlist")">收藏夹</a>
+            </li>
                  @if (!Model.HideBackInStockSubscriptions)
             {
                 <li class="@if (Model.SelectedTab == CustomerNavigationEnum.BackInStockSubscriptions)

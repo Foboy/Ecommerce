@@ -36,6 +36,8 @@ namespace Nop.Web.Models.Catalog
         public string MetaTitle { get; set; }
         public string SeName { get; set; }
 
+        public int Score { get; set; }
+
         public bool ShowSku { get; set; }
         public string Sku { get; set; }
 
@@ -114,6 +116,8 @@ namespace Nop.Web.Models.Catalog
 
             //updating existing shopping cart item?
             public int UpdatedShoppingCartItemId { get; set; }
+
+            public int StockQuantity { get; set; }
         }
 
         public partial class ProductPriceModel : BaseNopModel
