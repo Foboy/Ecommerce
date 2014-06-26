@@ -10,6 +10,8 @@ using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace Nop.Admin.Controllers
 {
@@ -18,6 +20,8 @@ namespace Nop.Admin.Controllers
         #region Fields
 
         private readonly ISpecificationAttributeService _specificationAttributeService;
+        private readonly ICategorySpecificationAtrributeService _categorySpecificationAtrributeService;
+        private readonly ICategoryService _categoryService;
         private readonly ILanguageService _languageService;
         private readonly ILocalizedEntityService _localizedEntityService;
         private readonly ILocalizationService _localizationService;
@@ -30,13 +34,17 @@ namespace Nop.Admin.Controllers
         #region Constructors
 
         public SpecificationAttributeController(ISpecificationAttributeService specificationAttributeService,
-            ILanguageService languageService, 
+            ICategorySpecificationAtrributeService categorySpecificationAtrributeService,
+            ICategoryService categoryService,
+            ILanguageService languageService,
             ILocalizedEntityService localizedEntityService,
-            ILocalizationService localizationService, 
+            ILocalizationService localizationService,
             ICustomerActivityService customerActivityService,
             IPermissionService permissionService, IProductService productService)
         {
             this._specificationAttributeService = specificationAttributeService;
+            this._categorySpecificationAtrributeService = categorySpecificationAtrributeService;
+            this._categoryService = categoryService;
             this._languageService = languageService;
             this._localizedEntityService = localizedEntityService;
             this._localizationService = localizationService;
@@ -46,7 +54,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Utilities
 
         [NonAction]
@@ -74,7 +82,7 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
-        
+
         #region Specification attributes
 
         //list
@@ -104,10 +112,29 @@ namespace Nop.Admin.Controllers
                 Data = specificationAttributes.Select(x => x.ToModel()),
                 Total = specificationAttributes.TotalCount
             };
+            var AllCategorySpecificationAtrributes = _categorySpecificationAtrributeService.LoadAllCategorySpecificationAtrribute();
+            List<SpecificationAttributeModel> collection = new List<SpecificationAttributeModel>();
+            foreach (SpecificationAttributeModel item in gridModel.Data)
+            {
+                var e = AllCategorySpecificationAtrributes.ToList().Find(s => s.SpecificationAttributeId == item.Id);
+                if (e != null)
+                {
+                    item.SearchCategoryId = e.CategoryId;
+                    item.AllowFiltering = e.AllowFiltering;
+                    var categories = _categoryService.GetCategoryById(e.CategoryId);
+                    item.CategoryName = categories.Name;
+                }
+                collection.Add(item);
+            }
+            gridModel.Data = collection;
+            //
+            //foreach (var c in categories)
+            //    model.AvailableCategories.Add(new SelectListItem() { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
+
 
             return Json(gridModel);
         }
-        
+
         //create
         public ActionResult Create()
         {
@@ -115,6 +142,12 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var model = new SpecificationAttributeModel();
+            //categories
+            model.AvailableCategories.Add(new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
+            var categories = _categoryService.GetAllCategories(showHidden: true);
+            foreach (var c in categories)
+                model.AvailableCategories.Add(new SelectListItem() { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
+            model.AvailableCategories.Remove(model.AvailableCategories.First(c => c.Text == "所有"));
             //locales
             AddLocales(_languageService, model.Locales);
             return View(model);
@@ -134,6 +167,7 @@ namespace Nop.Admin.Controllers
 
                 //activity log
                 _customerActivityService.InsertActivity("AddNewSpecAttribute", _localizationService.GetResource("ActivityLog.AddNewSpecAttribute"), specificationAttribute.Name);
+                _categorySpecificationAtrributeService.InsertCategorySpecificationAtrribute(new CategorySpecificationAtrribute { AllowFiltering = model.AllowFiltering, CategoryId = model.SearchCategoryId, Deleted = false, SpecificationAttributeId = specificationAttribute.Id });
 
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Attributes.SpecificationAttributes.Added"));
                 return continueEditing ? RedirectToAction("Edit", new { id = specificationAttribute.Id }) : RedirectToAction("List");
@@ -150,10 +184,10 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var specificationAttribute = _specificationAttributeService.GetSpecificationAttributeById(id);
+
             if (specificationAttribute == null)
                 //No specification attribute found with the specified id
                 return RedirectToAction("List");
-
             var model = specificationAttribute.ToModel();
             //locales
             AddLocales(_languageService, model.Locales, (locale, languageId) =>
@@ -161,6 +195,14 @@ namespace Nop.Admin.Controllers
                 locale.Name = specificationAttribute.GetLocalized(x => x.Name, languageId, false, false);
             });
 
+            var e = _categorySpecificationAtrributeService.GetCategorySpecificationAtrributeBySid(specificationAttribute.Id);
+            if (e != null) { 
+            model.AllowFiltering = e.AllowFiltering;
+            model.SearchCategoryId = e.CategoryId;
+            }
+            var categories = _categoryService.GetAllCategoriesByParentCategoryId(0,showHidden: true);
+            foreach (var c in categories)
+                model.AvailableCategories.Add(new SelectListItem() { Text = c.GetFormattedBreadCrumb(categories), Value = c.Id.ToString() });
             return View(model);
         }
 
@@ -184,7 +226,7 @@ namespace Nop.Admin.Controllers
 
                 //activity log
                 _customerActivityService.InsertActivity("EditSpecAttribute", _localizationService.GetResource("ActivityLog.EditSpecAttribute"), specificationAttribute.Name);
-
+                _categorySpecificationAtrributeService.UpdateCategorySpecificationAtrribute(new CategorySpecificationAtrribute { AllowFiltering = model.AllowFiltering, CategoryId = model.SearchCategoryId, Deleted = false, SpecificationAttributeId = specificationAttribute.Id });
                 SuccessNotification(_localizationService.GetResource("Admin.Catalog.Attributes.SpecificationAttributes.Updated"));
 
                 if (continueEditing)
@@ -239,7 +281,7 @@ namespace Nop.Admin.Controllers
             var options = _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(specificationAttributeId);
             var gridModel = new DataSourceResult
             {
-                Data = options.Select(x => 
+                Data = options.Select(x =>
                     {
                         var model = x.ToModel();
                         //in order to save performance to do not check whether a product isn't deleted
@@ -381,6 +423,28 @@ namespace Nop.Admin.Controllers
             var result = (from o in options
                           select new { id = o.Id, name = o.Name }).ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        //ajax
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult GetSpecificationAttributesByCategoryId(string categoryId)
+        {
+           
+            // This action method gets called via an ajax request
+            if (String.IsNullOrEmpty(categoryId))
+                throw new ArgumentNullException("categoryId");
+
+            var options = _categorySpecificationAtrributeService.LoadCategorySpecificationAtrributeById(Convert.ToInt32(categoryId));
+            var result = (from o in options
+                          select new { id = o.SpecificationAttributeId }).ToList();
+            ArrayList list = new ArrayList();
+            foreach (var item in result)
+            {
+               var cat=  _specificationAttributeService.GetSpecificationAttributeById(item.id);
+               var e = new { id = item.id, name = cat.Name };
+               list.Add(e);
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

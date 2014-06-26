@@ -128,6 +128,7 @@ namespace Nop.Web.Framework
             //services
             builder.RegisterType<BackInStockSubscriptionService>().As<IBackInStockSubscriptionService>().InstancePerHttpRequest();
             builder.RegisterType<CategoryService>().As<ICategoryService>().InstancePerHttpRequest();
+            builder.RegisterType<CategorySpecificationAtrributeService>().As<ICategorySpecificationAtrributeService>().InstancePerHttpRequest();
             builder.RegisterType<CompareProductsService>().As<ICompareProductsService>().InstancePerHttpRequest();
             builder.RegisterType<RecentlyViewedProductsService>().As<IRecentlyViewedProductsService>().InstancePerHttpRequest();
             builder.RegisterType<ManufacturerService>().As<IManufacturerService>().InstancePerHttpRequest();

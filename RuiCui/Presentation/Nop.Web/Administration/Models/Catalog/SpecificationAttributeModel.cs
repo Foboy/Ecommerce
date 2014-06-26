@@ -14,6 +14,7 @@ namespace Nop.Admin.Models.Catalog
         public SpecificationAttributeModel()
         {
             Locales = new List<SpecificationAttributeLocalizedModel>();
+            AvailableCategories = new List<SelectListItem>();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name")]
@@ -25,6 +26,20 @@ namespace Nop.Admin.Models.Catalog
 
 
         public IList<SpecificationAttributeLocalizedModel> Locales { get; set; }
+
+        //zheng
+
+        public IList<SelectListItem> AvailableCategories { get; set; }
+
+        //zheng
+
+        public int SearchCategoryId { get; set; }
+
+        //zheng
+        public bool AllowFiltering { get; set; }
+
+        //zheng
+        public string CategoryName { get; set; }
 
     }
 

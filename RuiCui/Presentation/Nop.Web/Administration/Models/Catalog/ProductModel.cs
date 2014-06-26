@@ -381,6 +381,7 @@ namespace Nop.Admin.Models.Catalog
             {
                 AvailableAttributes = new List<SelectListItem>();
                 AvailableOptions = new List<SelectListItem>();
+                AvailableCategories = new List<SelectListItem>();
             }
             
             [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.SpecificationAttribute")]
@@ -401,8 +402,17 @@ namespace Nop.Admin.Models.Catalog
             [NopResourceDisplayName("Admin.Catalog.Products.SpecificationAttributes.Fields.DisplayOrder")]
             public int DisplayOrder { get; set; }
 
+            [NopResourceDisplayName("Admin.Catalog.Products.List.SearchCategory")]
+            public int Category { get; set; }
+
             public IList<SelectListItem> AvailableAttributes { get; set; }
             public IList<SelectListItem> AvailableOptions { get; set; }
+
+            public IList<SelectListItem> AvailableCategories { get; set; }
+
+            public string AvailableAttributesJsonStr { get; set; }
+
+            public string AvailableCategorySpecificationAttributesJsonStr { get; set; }
         }
         
         public partial class ProductPictureModel : BaseNopEntityModel
