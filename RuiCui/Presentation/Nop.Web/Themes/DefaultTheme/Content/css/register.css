@@ -1,4 +1,8 @@
 ﻿@charset"utf-8";
+html, body, ul, li, p, h1, div, a, img {
+    margin: 0;
+    padding: 0;
+}
 body,h1,h2,h3,h4,h5,h6,blockquote,p,pre,dl,dd,ol,ul,caption,th,td,form,fieldset,legend,input,button,textarea,address{margin:0;padding:0}
 h1,h2,h3,h4,h5,h6{font-size:100%}
 ol,ul{list-style:none}
@@ -27,11 +31,12 @@ input:-moz-placeholder {color: #ccc; }
 html,body{width:100%; height:100%;}
 body{background:#f2f2f2;}
 .wrap{word-wrap:break-word;}
-.top{padding-top:25px; height:75px; background:#ececec; border-bottom:1px solid #d9d9d9;}
-.logo, .content, .footer{width:900px; margin:0 auto; padding:0 30px;}
+.top{ height:75px; margin: 20px auto 0 auto;}
+.logo {height:70px; margin:0 auto; padding:0; text-align:center; }
+.content, .footer{width:900px; margin:0 auto; padding:0 30px;}
 .content{padding-top:80px; height:500px; position:relative;}
 .loadimg{background:url(/static/img/passport/welcome3.jpg) 0 80px no-repeat;}
-.suc_content{padding-top:80px; height:630px; width:903px; margin:0 auto;}
+.suc_content{padding-top:50px; height:630px; width:903px; margin:0 auto;}
 .suc_kuang{background:#f9f9f9; }
 .suc_botm{background:url(/static/img/passport/bom_cor.png) left bottom no-repeat; height:62px;}
 .links{display:inline-block;*display:inline;zoom:1;}
@@ -88,7 +93,7 @@ i.val_m{font-style:normal; font-size:14px;}
 .p_cor_hui{color:#999; margin:4px 0 0 260px}
 .aln_r{width:80px; text-align:right; font-size:14px; font-weight:bold; color:#000; line-height:38px;}
 .juli{margin-right:50px;}
-.hei_513{height:auto;  border:1px solid #dadada; border-bottom:none;}
+.hei_513{height:auto; border-bottom:none;}
 .error_icontwo{width:16px; height:16px; vertical-align:middle; display:inline-block; background:url(/static/img/passport/icos.png) 0 -85px no-repeat; margin-right:6px;}
 .error_icon, .ok_icon{width:16px; height:16px; vertical-align:middle; display:inline-block; background:url(/static/img/passport/icos.png) 0 -32px no-repeat; margin:0 6px;}
 .ok_icon{background:url(/static/img/passport/icos.png) 0 -16px no-repeat;}
