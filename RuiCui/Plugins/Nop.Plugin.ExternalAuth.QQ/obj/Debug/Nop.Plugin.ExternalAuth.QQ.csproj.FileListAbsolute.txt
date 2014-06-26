@@ -25,3 +25,12 @@ C:\myProject\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Nop.P
 C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.csprojResolveAssemblyReference.cache
 C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.dll
 C:\myProject\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Description.txt
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Content\images\Connect_logo_4.png
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Content\qqstyles.css
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\logo.jpg
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Nop.Plugin.ExternalAuth.QQ.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.QQ\Nop.Plugin.ExternalAuth.QQ.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.csprojResolveAssemblyReference.cache
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.QQ\obj\Debug\Nop.Plugin.ExternalAuth.QQ.pdb

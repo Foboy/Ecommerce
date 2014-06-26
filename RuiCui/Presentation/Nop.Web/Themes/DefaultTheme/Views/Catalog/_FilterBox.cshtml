@@ -9,17 +9,39 @@
 @helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
 {
     string rangeText = "";
-    if (String.IsNullOrWhiteSpace(filterItem.From))
+    Func<decimal, string> parseDecimal = (price) =>
     {
-        rangeText = string.Format(T("Filtering.PriceRangeFilter.Under").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.To));
+        if (price >= 10000)
+        {
+            var shortPrice = price / (decimal)10000;
+            if (Math.Floor(shortPrice) * 10 < shortPrice * 10)
+            {
+                return shortPrice.ToString("N1") + "万";
+            }
+            else
+            {
+                return shortPrice.ToString("N0") + "万";
+            }
+        }
+        else
+        {
+            return Math.Round(price).ToString("N0");
+        }
+    };
+    string from = parseDecimal(filterItem.FromDecimal);
+    string to = parseDecimal(filterItem.ToDecimal);
+
+    if (String.IsNullOrWhiteSpace(filterItem.From) || Math.Round(filterItem.FromDecimal) <= 0)
+    {
+        rangeText = string.Format("<span class=\"PriceRange\">{0}以内</span>", to);
     }
-    else if (String.IsNullOrWhiteSpace(filterItem.To))
+    else if (String.IsNullOrWhiteSpace(filterItem.To) || Math.Round(filterItem.ToDecimal) <= 0)
     {
-        rangeText = string.Format(T("Filtering.PriceRangeFilter.Over").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.From));
+        rangeText = string.Format("<span class=\"PriceRange\">{0}以上</span>", from);
     }
     else
     {
-        rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", filterItem.From, filterItem.To);
+        rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", from, to);
     }
     <text>@Html.Raw(rangeText)</text>
 }
