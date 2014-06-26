@@ -134,14 +134,29 @@ body {
 .font12 {
     font-size:12px;
 }
+.font16 {
+    font-size:16px;
+}
+.font18 {
+    font-size:18px;
+}
 .basecolor {
     color:#F68B1F;
 }
 .wcolor {
     color:#fff;
 }
+.rcolor {
+    color:#ff4a00;
+}
 .hcolor {
     color:#8c8c8c;
+}
+.float-left {
+    float:left;
+}
+.float-right {
+    float:right;
 }
 .left-list-w {
     width:204px;
@@ -266,6 +281,27 @@ a:hover, a:focus {
     box-sizing: content-box;
 }
 
+.btn-block {
+    display: block;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.btn-brown {
+    background-color: #826f5e;
+    border-color: #826f5e;
+    color: #fff;
+    display:inline-block;
+}
+.btn-brown:hover, .btn-brown:focus, .btn-brown.active, btn-brown:active {
+    color: #fff;
+    border-color: #6E584D;
+    background-color: #6E584D;
+}
 .btn-primary {
     background-color: #F68B1F;
     border-color: #F68B1F;
@@ -273,11 +309,11 @@ a:hover, a:focus {
     display:inline-block;
 }
 
-    .btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active {
-        color: #fff;
-        border-color: #FF9D3A;
-        background-color: #FF9D3A;
-    }
+.btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active {
+    color: #fff;
+    border-color: #FF9D3A;
+    background-color: #FF9D3A;
+}
 
 .btn-yellow {
     background-color: #ffdb3d;
@@ -357,7 +393,7 @@ a:hover, a:focus {
 .btn-small {
     height: 28px;
     line-height: 28px;
-    width: 118px;
+    width: 100px;
     font-size: 12px;
 }
 
@@ -1387,9 +1423,9 @@ a:hover, a:focus {
 
                 .site-header .header-info .mini-cart-list li .price {
                     float: left;
-                    width: 70px;
+                    width: 100px;
                     height: 36px;
-                    padding: 15px 0;
+                    padding: 5px 0;
                     text-align: right;
                 }
 
@@ -2746,3 +2782,31 @@ a:hover, a:focus {
 .admin-header-links {
     display:none;
 }
+
+/*ÃÌº”µÿ÷∑*/
+.form-fields {
+    padding:0 20px;
+    font-size:14px;
+}
+.address_input_info {
+    padding-top:15px;
+}
+.input_info label {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: right;
+    width: 120px;
+}
+.input_info input[type="text"], input[type="password"] {
+    height: 20px;
+    padding: 8px;
+    width: 200px;
+}
+.input_info select {
+    height: 28px;
+    margin-right: 8px;
+    padding: 4px;
+    width: 80px;
+}
+
+

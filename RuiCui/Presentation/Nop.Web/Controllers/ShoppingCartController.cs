@@ -41,6 +41,8 @@ using Nop.Web.Framework.UI.Captcha;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Media;
 using Nop.Web.Models.ShoppingCart;
+using Nop.Web.Models.Customer;
+using Nop.Core.Domain.Forums;
 
 namespace Nop.Web.Controllers
 {
@@ -89,6 +91,10 @@ namespace Nop.Web.Controllers
         private readonly TaxSettings _taxSettings;
         private readonly CaptchaSettings _captchaSettings;
         private readonly AddressSettings _addressSettings;
+        private readonly CustomerSettings _customerSettings;
+        private readonly RewardPointsSettings _rewardPointsSettings;
+        private readonly ForumSettings _forumSettings;
+        private readonly IOrderService _orderService;
 
         #endregion
 
@@ -132,7 +138,11 @@ namespace Nop.Web.Controllers
             ShippingSettings shippingSettings, 
             TaxSettings taxSettings,
             CaptchaSettings captchaSettings, 
-            AddressSettings addressSettings)
+            AddressSettings addressSettings,
+            CustomerSettings customerSettings,
+            RewardPointsSettings rewardPointsSettings,
+            ForumSettings forumSettings,
+            IOrderService orderService)
         {
             this._productService = productService;
             this._workContext = workContext;
@@ -175,6 +185,11 @@ namespace Nop.Web.Controllers
             this._taxSettings = taxSettings;
             this._captchaSettings = captchaSettings;
             this._addressSettings = addressSettings;
+            this._customerSettings = customerSettings;
+            this._rewardPointsSettings = rewardPointsSettings;
+            this._forumSettings = forumSettings;
+            this._orderService = orderService;
+
         }
 
         #endregion
@@ -1669,6 +1684,21 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        [ChildActionOnly]
+        public ActionResult CheckoutOrderSummary(bool? prepareAndDisplayOrderReviewData)
+        {
+            var cart = _workContext.CurrentCustomer.ShoppingCartItems
+                .Where(sci => sci.ShoppingCartType == ShoppingCartType.ShoppingCart)
+                .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
+                .ToList();
+            var model = new ShoppingCartModel();
+            PrepareShoppingCartModel(model, cart,
+                isEditable: false,
+                prepareEstimateShippingIfEnabled: false,
+                prepareAndDisplayOrderReviewData: prepareAndDisplayOrderReviewData.HasValue ? prepareAndDisplayOrderReviewData.Value : false);
+            return PartialView(model);
+        }
+
         //update all shopping cart items on the page
         [ValidateInput(false)]
         [HttpPost, ActionName("Cart")]
@@ -2259,6 +2289,20 @@ namespace Nop.Web.Controllers
 
         #region Wishlist
 
+        [NonAction]
+        protected CustomerNavigationModel GetCustomerNavigationModel(Customer customer)
+        {
+            var model = new CustomerNavigationModel();
+            model.HideAvatar = !_customerSettings.AllowCustomersToUploadAvatars;
+            model.HideRewardPoints = !_rewardPointsSettings.Enabled;
+            model.HideForumSubscriptions = !_forumSettings.ForumsEnabled || !_forumSettings.AllowCustomersToManageSubscriptions;
+            model.HideReturnRequests = !_orderSettings.ReturnRequestsEnabled ||
+                _orderService.SearchReturnRequests(_storeContext.CurrentStore.Id, customer.Id, 0, null, 0, 1).Count == 0;
+            model.HideDownloadableProducts = _customerSettings.HideDownloadableProductsTab;
+            model.HideBackInStockSubscriptions = _customerSettings.HideBackInStockSubscriptionsTab;
+            return model;
+        }
+
         [NopHttpsRequirement(SslRequirement.Yes)]
         public ActionResult Wishlist(Guid? customerGuid)
         {
@@ -2275,6 +2319,8 @@ namespace Nop.Web.Controllers
                 .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
                 .ToList();
             var model = new WishlistModel();
+            model.NavigationModel = GetCustomerNavigationModel(customer);
+            model.NavigationModel.SelectedTab = CustomerNavigationEnum.WishList;
             PrepareWishlistModel(model, cart, !customerGuid.HasValue);
             return View(model);
         }

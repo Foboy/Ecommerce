@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Payments;
 
 namespace Nop.Web.Models.Checkout
 {
@@ -26,6 +27,8 @@ namespace Nop.Web.Models.Checkout
             public string Fee { get; set; }
             public bool Selected { get; set; }
             public string LogoUrl { get; set; }
+
+            public IPaymentMethod PaymentMethod { get; set; }
         }
         #endregion
     }

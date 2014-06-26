@@ -14,6 +14,7 @@ namespace Nop.Web.Infrastructure
                             "",
                             new { controller = "Home", action = "Index"},
                             new[] { "Nop.Web.Controllers" });
+     
             //install
             routes.MapRoute("Installation",
                             "install",
@@ -21,6 +22,14 @@ namespace Nop.Web.Infrastructure
                             new[] { "Nop.Web.Controllers" });
 
             //products
+            routes.MapLocalizedRoute("LastProduct",
+             "每日新品",
+             new { controller = "Catalog", action = "SearchLastestProduct" },
+             new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("VipProduct",
+             "VIP专区",
+             new { controller = "Catalog", action = "SearchVipProduct" },
+             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("RecentlyViewedProducts",
                             "recentlyviewedproducts/",
                             new { controller = "Catalog", action = "RecentlyViewedProducts" },
@@ -392,6 +401,11 @@ namespace Nop.Web.Infrastructure
             routes.MapLocalizedRoute("CustomerAddressEdit",
                             "customer/addressedit/{addressId}",
                             new { controller = "Customer", action = "AddressEdit" },
+                            new { addressId = @"\d+" },
+                            new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("CustomerAddressListEdit",
+                            "customer/addresses/{addressId}",
+                            new { controller = "Customer", action = "Addresses" },
                             new { addressId = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("CustomerAddressAdd",

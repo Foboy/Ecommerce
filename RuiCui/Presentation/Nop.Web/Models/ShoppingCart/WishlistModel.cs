@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using Nop.Web.Models.Customer;
 
 namespace Nop.Web.Models.ShoppingCart
 {
@@ -30,6 +31,8 @@ namespace Nop.Web.Models.ShoppingCart
         public IList<ShoppingCartItemModel> Items { get; set; }
 
         public IList<string> Warnings { get; set; }
+
+        public CustomerNavigationModel NavigationModel { get; set; }
         
 		#region Nested Classes
 

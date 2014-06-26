@@ -22,7 +22,12 @@ namespace Nop.Admin.Models.Common
 
         [NopResourceDisplayName("Admin.Address.Fields.LastName")]
         [AllowHtml]
-        public string LastName { get; set; }
+        public string LastName { 
+            get{
+                return string.Empty;
+            }
+            set { }
+        }
 
         [NopResourceDisplayName("Admin.Address.Fields.Email")]
         [AllowHtml]

@@ -95,6 +95,8 @@ namespace Nop.Web.Controllers
         private readonly CustomerSettings _customerSettings;
         private readonly ICacheManager _cacheManager;
         private readonly CaptchaSettings _captchaSettings;
+
+        private readonly ICustomerService _customerService;
         
         #endregion
 
@@ -309,6 +311,30 @@ namespace Nop.Web.Controllers
 
             return result;
         }
+
+        Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
+        private int ParseScore(Product product)
+        {
+            //score
+            if (string.IsNullOrWhiteSpace(product.AdminComment))
+            {
+                return 100;
+            }
+            else
+            {
+                string adminComment = product.AdminComment.Trim();
+
+                var result = scoreReg.Match(adminComment).Groups;
+                if (result.Count > 1)
+                {
+                    return Convert.ToInt32(result[1].Value);
+                }
+                else
+                {
+                    return 100;
+                }
+            }
+        }
         
         [NonAction]
         protected IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(IEnumerable<Product> products, 
@@ -320,7 +346,7 @@ namespace Nop.Web.Controllers
                 throw new ArgumentNullException("products");
 
             var models = new List<ProductOverviewModel>();
-            Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
+            
             foreach (var product in products)
             {
                 var model = new ProductOverviewModel()
@@ -330,27 +356,10 @@ namespace Nop.Web.Controllers
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
+                    Score = ParseScore(product)
                 };
                 
-                //score
-                if (string.IsNullOrWhiteSpace(product.AdminComment))
-                {
-                    model.Score = 100;
-                }
-                else
-                {
-                    string adminComment = product.AdminComment.Trim();
 
-                    var result = scoreReg.Match(adminComment).Groups;
-                    if (result.Count > 1)
-                    {
-                        model.Score = Convert.ToInt32(result[1].Value);
-                    }
-                    else
-                    {
-                        model.Score = 100;
-                    }
-                }
                 //price
                 if (preparePriceModel)
                 {
@@ -811,6 +820,8 @@ namespace Nop.Web.Controllers
             model.AddToCart.ProductId = product.Id;
             model.AddToCart.UpdatedShoppingCartItemId = updatecartitem != null ? updatecartitem.Id : 0;
 
+            model.AddToCart.StockQuantity = product.StockQuantity;
+
             //quantity
             model.AddToCart.EnteredQuantity = updatecartitem != null ? updatecartitem.Quantity : product.OrderMinimumQuantity;
 
@@ -1032,6 +1043,8 @@ namespace Nop.Web.Controllers
             }
 
             #endregion
+
+            model.Score = ParseScore(product);
 
             return model;
         }
@@ -2528,6 +2541,57 @@ namespace Nop.Web.Controllers
             {
                 return Content(_localizationService.GetResource("BackInStockSubscriptions.NotAllowed"));
             }
+        }
+
+        /// <summary>
+        /// 查询最新商品
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchLastestProduct( ProductPagingFilteringModel command)
+        {
+           
+                //customer is not allowed to select a page size
+                command.PageSize = 10;
+                if (command.PageNumber <= 0) command.PageNumber = 1;
+                ProductSModel model = new ProductSModel();
+
+            //products
+            //var products = _productService.SearchProducts(
+            //    orderBy: ProductSortingEnum.CreatedOn,
+            //    pageIndex: command.PageNumber - 1,
+            //    pageSize: command.PageSize);
+            var products = _productService.SearchProducts(
+                    visibleIndividuallyOnly: true,
+             orderBy: ProductSortingEnum.CreatedOn,
+             pageIndex: command.PageNumber - 1,
+             pageSize: command.PageSize);
+            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return PartialView("IndexLastProducts",model);
+        }
+        /// <summary>
+        /// 查询最新商品
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchVipProduct(ProductPagingFilteringModel command)
+        {
+            //ACL (access control list)
+            //if (!_aclService.Authorize(category))
+            //    return InvokeHttp404();
+
+            var currentCustomerRoles =  _workContext.CurrentCustomer.CustomerRoles;
+
+            //customer is not allowed to select a page size
+            command.PageSize = 10;
+            if (command.PageNumber <= 0) command.PageNumber = 1;
+            ProductSModel model = new ProductSModel();
+
+            var products = _productService.SearchProducts();
+            model.Products = PrepareProductOverviewModels(products).ToList();
+            model.PagingFilteringContext.LoadPagedList(products);
+
+            return PartialView("IndexVip", model);
         }
 
         #endregion

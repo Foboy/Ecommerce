@@ -268,6 +268,8 @@
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
+    <Compile Include="Models\Catalog\ProductPagingFilteringModel.cs" />
+    <Compile Include="Models\Catalog\ProductSModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -1576,6 +1578,7 @@
     <Content Include="Themes\DefaultTheme\Content\css\index.css" />
     <Content Include="Themes\DefaultTheme\Content\css\login.css" />
     <Content Include="Themes\DefaultTheme\Content\css\main.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\news.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
@@ -2181,6 +2184,7 @@
     <Content Include="Themes\DefaultTheme\Content\js\index.js" />
     <Content Include="Themes\DefaultTheme\Content\js\jquery.js" />
     <Content Include="Themes\DefaultTheme\Content\js\public.onepagecheckout.js" />
+    <Content Include="Themes\DefaultTheme\Content\js\public.usercenter.js" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\editor.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\imagebrowser.png" />
     <Content Include="Themes\DefaultTheme\Content\kendo\2014.1.318\Black\indeterminate.gif" />
@@ -3408,6 +3412,15 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.woff" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Customer\ThirdAccountRegister.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\ShoppingCart\CheckoutOrderSummary.cshtml" />
+    <Content Include="Themes\DefaultTheme\Content\js\public.usercenter" />
+    <Content Include="Themes\DefaultTheme\Views\Customer\_CustomerAddress.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexJingPing.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexLastProducts.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexNoProblem.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexSold.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexTuiJin.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\IndexVip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

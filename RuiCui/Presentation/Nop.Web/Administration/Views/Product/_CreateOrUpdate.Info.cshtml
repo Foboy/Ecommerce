@@ -853,7 +853,7 @@
             @Html.ValidationMessageFor(model => model.DeliveryDateId)
         </td>
     </tr>
-    <tr id="pnlWarehouse">
+    @*<tr style="display:none;" id="pnlWarehouse">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.WarehouseId):
         </td>
@@ -861,7 +861,7 @@
             @Html.DropDownListFor(model => model.WarehouseId, Model.AvailableWarehouses)
             @Html.ValidationMessageFor(model => model.WarehouseId)
         </td>
-    </tr>
+    </tr>*@
 </table>
 @*<table class="adminContent" id="group-tax">
         <tr class="adminSeparator">

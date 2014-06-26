@@ -10,5 +10,9 @@ namespace Nop.Web.Controllers
         {
             return View();
         }
+        public ActionResult LastProduct()
+        {
+            return View("IndexLastProducts");
+        }
     }
 }
