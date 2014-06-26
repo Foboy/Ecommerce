@@ -19,56 +19,75 @@
             <div id="specificationattributes-grid"></div>
 
             <script>
-                $(document).ready(function () {
-                    $("#specificationattributes-grid").kendoGrid({
-                        dataSource: {
-                            type: "json",
-                            transport: {
-                                read: {
-                                    url: "@Html.Raw(Url.Action("List", "SpecificationAttribute"))",
-                                    type: "POST",
-                                    dataType: "json"
-                                }
-                            },
-                            schema: {
-                                data: "Data",
-                                total: "Total",
-                                errors: "Errors"
-                            },
-                            error: function(e) {
-                                display_kendoui_grid_error(e);
-                                // Cancel the changes
-                                this.cancelChanges();
-                            },
-                            pageSize: @(gridPageSize),
-                            serverPaging: true,
-                            serverFiltering: true,
-                            serverSorting: true
+    $(document).ready(function () {
+        $("#specificationattributes-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("List", "SpecificationAttribute"))",
+                        type: "POST",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors",
+                    model: {
+                        id: "Id",
+                        fields: {
+                            AllowFiltering: { editable: false, type: "boolean" }
+                        }
+                    }
+                },
+                error: function(e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                pageSize: @(gridPageSize),
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true
+            },
+            editable: {
+                confirmation: false,
+                mode: "inline"
+            },
+            scrollable: false,
+            columns: [{
+                field: "Name",
+                title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name")",
+                            width: 150
+                        },{
+                            field: "CategoryName",
+                            title: "分类名称",
+                            width: 100
                         },
-                        pageable: {
-                            refresh: true
-                        },
-                        editable: {
-                            confirmation: false,
-                            mode: "inline"
-                        },
-                        scrollable: false,
-                        columns: [{
-                            field: "Name",
-                            title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name")",
-                            width: 300
-                        }, {
+                        {
+                            field: "AllowFiltering",
+                            title: "是否允许过滤",
+                            headerAttributes: { style: "text-align:center" },
+                            attributes: { style: "text-align:center" },
+                            template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=AllowFiltering#.gif" />',
+                            width: 50
+                        }
+                        , {
                             field: "DisplayOrder",
                             title: "@T("Admin.Catalog.Attributes.SpecificationAttributes.Fields.DisplayOrder")",
-                            width: 100
-                        }, {
-                            field: "Id",
-                            title: "@T("Admin.Common.Edit")",
-                            width: 100,
-                            template: '<a href="Edit/#=Id#">@T("Admin.Common.Edit")</a>'
-                        }]
-                    });
-                });
+                width: 100
+            }, {
+                field: "Id",
+                title: "@T("Admin.Common.Edit")",
+                width: 100,
+                template: '<a href="Edit/#=Id#">@T("Admin.Common.Edit")</a>'
+            }]
+    });
+    });
             </script>
         </td>
     </tr>
