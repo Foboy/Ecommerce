@@ -42,7 +42,7 @@
                                         SpecificationAttributeName: { editable: false, type: "string" },
                                         SpecificationAttributeOptionName: { editable: false, type: "string" },
                                         CustomValue: { editable: true, type: "string" },
-                                        AllowFiltering: { editable: true, type: "boolean" },
+                                        //AllowFiltering: { editable: false, type: "boolean" },
                                         ShowOnProductPage: { editable: true, type: "boolean" },
                                         DisplayOrder: { editable: true, type: "number" },
                                         Id: { editable: false, type: "number" }
@@ -86,14 +86,14 @@
                             field: "CustomValue",
                             title: "@T("Admin.Catalog.Products.SpecificationAttributes.Fields.CustomValue")",
                             width: 200
-                        }, {
+                        }, @*{
                             field: "AllowFiltering",
                             title: "@T("Admin.Catalog.Products.SpecificationAttributes.Fields.AllowFiltering")",
                             width: 150,
                             headerAttributes: { style: "text-align:center" },
                             attributes: { style: "text-align:center" },
                             template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=AllowFiltering#.gif" />'
-                        }, {
+                        }*@ {
                             field: "ShowOnProductPage",
                             title: "@T("Admin.Catalog.Products.SpecificationAttributes.Fields.ShowOnProductPage")",
                             width: 150,
@@ -136,8 +136,6 @@
                     ddlSpecOptions.html('');
                     var jsonObject=$.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableAttributesJsonStr)');
                     var cjsonObject=$.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableCategorySpecificationAttributesJsonStr)');
-                    console.log('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableAttributesJsonStr)');
-                    console.log('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableCategorySpecificationAttributesJsonStr)');
                     if(selectedItem==0){
                         for (var i = 0; i < jsonObject.length;i++) {
                             ddlSpecOptions.append($('<option></option>').val(jsonObject[i].Value).html(jsonObject[i].Text));
@@ -153,11 +151,13 @@
                         for (var i = 0; i <collection.length; i++) {
                             for(var j=0;j<jsonObject.length;j++) {
                                 if(collection[i].SpecificationAttributeId==jsonObject[j].Value){
-                                
+                                    jsonObject[j].AllowFiltering=collection[i].AllowFiltering;
+                                    ddlSpecOptions.append($('<option></option>').val(jsonObject[j].Value).html(jsonObject[j].Text));
                                 }
                             }
                         }
                     }
+                    $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").trigger("change");
                 });
                 $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").change(function() {
                     var selectedItem = $(this).val();
@@ -174,7 +174,7 @@
                             });
                         },
                         error:function (xhr, ajaxOptions, thrownError){
-                            alert('Failed to retrieve specification options.');
+                            
                         }
                     });
                 });
@@ -184,7 +184,7 @@
                 $('#addProductSpec').click(function () {
                     var specificationAttributeOptionId = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId)").val();
                     var customValue = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.CustomValue)").val();
-                    var allowFiltering = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.AllowFiltering)").is(':checked');
+                    var specificationAttributeId = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").val();
                     var showOnProductPage = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.ShowOnProductPage)").is(':checked');
                     var displayOrder = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.DisplayOrder)").val();
 
@@ -196,14 +196,14 @@
                             cache:false,
                             type: "POST",
                             url: "@(Url.Action("ProductSpecificationAttributeAdd", "Product"))",
-                            data: { "specificationAttributeOptionId": specificationAttributeOptionId, "customValue": customValue, "allowFiltering": allowFiltering, "showOnProductPage": showOnProductPage, "displayOrder": displayOrder, "productId": @(Model.Id) },
+                            data: { "specificationAttributeOptionId": specificationAttributeOptionId, "customValue": customValue, "specificationAttributeId": specificationAttributeId, "showOnProductPage": showOnProductPage, "displayOrder": displayOrder, "productId": @(Model.Id) },
                             success: function (data) {
                                 var grid = $("#specificationattributes-grid").data('kendoGrid');
                                 grid.dataSource.read();
                                 $('#addProductSpec').attr('disabled', false);
                             },
                             error:function (xhr, ajaxOptions, thrownError){
-                                alert('Failed to add specification attribute.');
+                                alert('添加失败');
                                 $('#addProductSpec').attr('disabled', false);
                             }
                         });
@@ -248,7 +248,7 @@
                     @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.CustomValue)
                 </td>
             </tr>
-            <tr>
+            @*<tr>
                 <td class="adminTitle">
                     @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.AllowFiltering):
                 </td>
@@ -256,7 +256,7 @@
                     @Html.EditorFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
                     @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
                 </td>
-            </tr>
+            </tr>*@
             <tr>
                 <td class="adminTitle">
                     @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.ShowOnProductPage):
