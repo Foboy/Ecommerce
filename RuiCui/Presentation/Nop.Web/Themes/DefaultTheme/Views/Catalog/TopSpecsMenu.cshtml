@@ -1,0 +1,121 @@
+﻿@model TopSpecsMenuModel
+@using Nop.Core.Domain
+@using Nop.Core.Infrastructure
+@using Nop.Web.Models.Catalog;
+@{
+    var isRtl = this.ShouldUseRtlTheme();
+    var supportResponsive = EngineContext.Current.Resolve<StoreInformationSettings>().ResponsiveDesignSupported;
+    
+}
+@helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
+{
+    string rangeText = "";
+    if (String.IsNullOrWhiteSpace(filterItem.From))
+    {
+        rangeText = string.Format(T("Filtering.PriceRangeFilter.Under").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.To));
+    }
+    else if (String.IsNullOrWhiteSpace(filterItem.To))
+    {
+        rangeText = string.Format(T("Filtering.PriceRangeFilter.Over").Text, string.Format("<span class=\"PriceRange\">{0}</span>", filterItem.From));
+    }
+    else
+    {
+        rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", filterItem.From, filterItem.To);
+    }
+    <text>@Html.Raw(rangeText)</text>
+}
+@if (Model.Categories.Count > 0)
+{
+    foreach (var category in Model.Categories)
+    {
+        var specModel = category.SpecificationFilter;
+        var priceModel = category.PriceRangeFilter;
+        var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
+        <li class="nav-category-item">
+            @*顶部翡翠-水墨玉*@
+            <div class="nav-category-content">
+                <a class="title" href="@Url.RouteUrl("Category", new { SeName = category.SeName })">
+                    @category.Name
+                </a>
+                <div class="links">
+                    @foreach (var sub in category.SubCategories)
+                    {
+                        <a class="title" href="@Url.RouteUrl("Category", new { SeName = sub.SeName })">
+                            @sub.Name
+                        </a>
+                    }
+                </div>
+
+            </div>
+        </li>
+    @*题材，颜色之类*@
+            if (specModel.NotFilteredItems.Count > 0)
+            {
+                foreach (var group in notFilteredItemsGroups)
+                {
+                    var groupList = group.ToList();
+                    <li class="nav-category-item">
+                        <div class="nav-category-content">
+                            <a>@groupList[0].SpecificationAttributeName ：</a>
+                            <div class="links">
+                                    @for (int i = 0; i < groupList.Count && i<3;i++ )
+                                    {
+                                        var spec = groupList[i];
+                                        <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
+                                    }
+                            </div>
+                        </div>
+                        @if (groupList.Count > 3)
+                        {
+                            <div class="nav-category-children">
+                                <ul class="children-list">
+                                    @for (int i = 3; i < groupList.Count; i++)
+                                    {
+                                        var spec = groupList[i];
+                                        <li>
+                                            <a href="@spec.FilterUrl">
+                                                <span class="text">@spec.SpecificationAttributeOptionName</span>
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </div>
+                        }
+                    </li>
+                }
+            }
+            @*价格区间*@
+                <li class="nav-category-item">
+                    <div class="nav-category-content">
+                        <a>价格区间 ：</a>
+                        <div class="links">
+                            @for (int i = 0; i < priceModel.Items.Count && i < 3; i++)
+                            {
+                                var item = priceModel.Items[i];
+                                <a href="@item.FilterUrl">@FormatPriceRangeText(item)</a>
+                            }
+                        </div>
+                    </div>
+                    @if (priceModel.Items.Count > 3)
+                    {
+                        <div class="nav-category-children">
+                            <ul class="children-list">
+                                @for (int i = 3; i < priceModel.Items.Count; i++)
+                                {
+                                    var item = priceModel.Items[i];
+                                    <li>
+                                        <a href="@item.FilterUrl">
+                                            <span class="text">@FormatPriceRangeText(item)</span>
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    }
+                </li>
+    }
+}
+
+

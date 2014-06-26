@@ -206,6 +206,12 @@ var Shipping = {
     init: function (form, saveUrl) {
         this.form = form;
         this.saveUrl = saveUrl;
+        $(form).find("label").each(function () {
+            var me = $(this);
+            if ((me.attr("for")+"").indexOf("Address_FirstName")>=0) {
+                me.text("收货人" + me.text());
+            }
+        });
     },
 
     newAddress: function (isNew) {
