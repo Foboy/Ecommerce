@@ -2571,7 +2571,7 @@ namespace Nop.Web.Controllers
             return PartialView("IndexLastProducts",model);
         }
         /// <summary>
-        /// 查询最新商品
+        /// 查询Vip商品
         /// </summary>
         /// <returns></returns>
         public ActionResult SearchVipProduct(ProductPagingFilteringModel command)
@@ -2581,13 +2581,29 @@ namespace Nop.Web.Controllers
             //    return InvokeHttp404();
 
             var currentCustomerRoles =  _workContext.CurrentCustomer.CustomerRoles;
+            bool checkVip = false;
+            foreach (var role in currentCustomerRoles)
+            {
+                if (role.Name == "已注册客户")
+                    checkVip = true;
+            }
+            if(!checkVip)
+                return InvokeHttp404();
 
             //customer is not allowed to select a page size
             command.PageSize = 10;
             if (command.PageNumber <= 0) command.PageNumber = 1;
             ProductSModel model = new ProductSModel();
 
-            var products = _productService.SearchProducts();
+            var productss = _productService.SearchProducts();
+            List<Product> plist = new List<Product>();
+            foreach (var product in productss)
+            {
+                var existingAclRecords = _aclService.GetAclRecords(product);
+            }
+
+
+             var products = new PagedList<Product>(productss, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
