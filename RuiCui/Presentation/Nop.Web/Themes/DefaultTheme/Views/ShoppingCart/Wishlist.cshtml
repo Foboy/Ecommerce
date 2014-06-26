@@ -13,10 +13,9 @@
     @Html.Partial("../Customer/MyAccountNavigation", Model.NavigationModel, new ViewDataDictionary())
 }
 <div id="shopCartBox">
-    <div class="shop-cart-box">
-        <div class="shop-cart-box-hd">
-            <h2 class="title">我的收藏夹</h2>
-            <p class="tip"></p>
+    <div class="xm-line-box uc-box">
+        <div class="box-hd">
+            <h3 class="title">我的收藏夹</h3>
         </div>
         @if (Model.Items.Count > 0)
         {
@@ -34,7 +33,102 @@
             using (Html.BeginRouteForm("Wishlist", FormMethod.Post))
             {
                 <input type="submit" id="updatecartSubmit" name="updatecart" value="@T("Wishlist.UpdateCart")" style="display:none;" />
-                <div class="shop-cart-box-bd">
+                <ul class="xm-goods-list clearfix">
+                    <li class="item-box">
+                        <div class="xm-goods-item" >
+                            <div class="item-thumb">
+                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
+                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                <h3 class="item-title">
+                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
+                                </h3>
+                                <div class="item-price">
+                                    <del class="price old-price">¥4,600.00</del>
+                                    <span class="price actual-price">¥4,589.00</span>
+                                </div>
+                                <div class="item-star">
+                                    <a title="80分">
+                                        <span class="icon-stat icon-stat-4 "></span>
+                                    </a>
+                                    <span class="item-comments" style="display:none;">0 人评价</span>
+                                </div>
+                                <div class="item-actions">
+                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
+                                        <i class="iconfont font12 wcolor">&#xe620;</i>
+                                        购物车
+                                    </a>
+                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-box">
+                        <div class="xm-goods-item">
+                            <div class="item-thumb">
+                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
+                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                <h3 class="item-title">
+                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
+                                </h3>
+                                <div class="item-price">
+                                    <del class="price old-price">¥4,600.00</del>
+                                    <span class="price actual-price">¥4,589.00</span>
+                                </div>
+                                <div class="item-star">
+                                    <a title="80分">
+                                        <span class="icon-stat icon-stat-4 "></span>
+                                    </a>
+                                    <span class="item-comments" style="display:none;">0 人评价</span>
+                                </div>
+                                <div class="item-actions">
+                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
+                                        <i class="iconfont font12 wcolor">&#xe620;</i>
+                                        购物车
+                                    </a>
+                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-box">
+                        <div class="xm-goods-item">
+                            <div class="item-thumb">
+                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
+                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
+                                </a>
+                            </div>
+                            <div class="item-info">
+                                <h3 class="item-title">
+                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
+                                </h3>
+                                <div class="item-price">
+                                    <del class="price old-price">¥4,600.00</del>
+                                    <span class="price actual-price">¥4,589.00</span>
+                                </div>
+                                <div class="item-star">
+                                    <a title="80分">
+                                        <span class="icon-stat icon-stat-4 "></span>
+                                    </a>
+                                    <span class="item-comments" style="display:none;">0 人评价</span>
+                                </div>
+                                <div class="item-actions">
+                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
+                                        <i class="iconfont font12 wcolor">&#xe620;</i>
+                                        购物车
+                                    </a>
+                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            @*<div class="shop-cart-box-bd">
                     <!--  购物车商品列表 -->
                     <dl class="shop-cart-goods">
                         <dt class="clearfix">
@@ -165,12 +259,14 @@
                         });
                     </script>
 
-                </div>
+                </div>*@
             }
-        }
-        else
-        {
-            @T("Wishlist.CartIsEmpty")
-        }
-    </div>
+            }
+            else
+            {
+            @*@T("Wishlist.CartIsEmpty")*@
+                <div class="uc-tip-section">
+                    <p>您暂未收藏任何商品。</p>
+                </div>
+            }</div>
 </div>
