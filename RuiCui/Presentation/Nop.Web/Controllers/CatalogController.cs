@@ -2576,26 +2576,22 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult SearchVipProduct(ProductPagingFilteringModel command)
         {
+            //ACL (access control list)
+            //if (!_aclService.Authorize(category))
+            //    return InvokeHttp404();
+
+            var currentCustomerRoles =  _workContext.CurrentCustomer.CustomerRoles;
 
             //customer is not allowed to select a page size
             command.PageSize = 10;
             if (command.PageNumber <= 0) command.PageNumber = 1;
             ProductSModel model = new ProductSModel();
 
-            //products
-            //var products = _productService.SearchProducts(
-            //    orderBy: ProductSortingEnum.CreatedOn,
-            //    pageIndex: command.PageNumber - 1,
-            //    pageSize: command.PageSize);
-            var products = _productService.SearchProducts(
-                    visibleIndividuallyOnly: true,
-             orderBy: ProductSortingEnum.CreatedOn,
-             pageIndex: command.PageNumber - 1,
-             pageSize: command.PageSize);
+            var products = _productService.SearchProducts();
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
-            return PartialView("IndexLastProducts", model);
+            return PartialView("IndexVip", model);
         }
 
         #endregion

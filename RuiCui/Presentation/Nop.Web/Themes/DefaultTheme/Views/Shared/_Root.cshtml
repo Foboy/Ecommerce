@@ -43,7 +43,7 @@
                 <li class="nav-main-item current">
                     <a href="@Url.RouteUrl("HomePage")"><span class="text">首页</span></a>
                 </li>
-                <li class="nav-main-item">
+                <li id="nav_lastproduct" class="nav-main-item">
                     <a href="@Url.RouteUrl("LastProduct")"><span class="text">每日新品</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
@@ -52,8 +52,8 @@
                 <li class="nav-main-item">
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
-                <li class="nav-main-item">
-                    <a href="#"><span class="text">VIP专区</span><span class="arrow"></span></a>
+                <li id="nav_vip" class="nav-main-item">
+                    <a href="@Url.RouteUrl("VipProduct")"><span class="text">VIP专区</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">购物无忧</span><span class="arrow"></span></a>
