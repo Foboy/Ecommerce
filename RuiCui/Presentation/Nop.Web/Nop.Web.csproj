@@ -267,9 +267,11 @@
     <Compile Include="Models\Boards\TopicMoveModel.cs" />
     <Compile Include="Models\Catalog\BackInStockSubscribeModel.cs" />
     <Compile Include="Models\Catalog\CategorySimpleModel.cs" />
+    <Compile Include="Models\Catalog\CategorySpecsModel.cs" />
     <Compile Include="Models\Catalog\CompareProductsModel.cs" />
     <Compile Include="Models\Catalog\ProductPagingFilteringModel.cs" />
     <Compile Include="Models\Catalog\ProductSModel.cs" />
+    <Compile Include="Models\Catalog\TopSpecsMenuModel.cs" />
     <Compile Include="Models\Catalog\VendorModel.cs" />
     <Compile Include="Models\Catalog\VendorNavigationModel.cs" />
     <Compile Include="Models\Catalog\ProductOverviewModel.cs" />
@@ -3421,6 +3423,7 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexSold.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexTuiJin.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexVip.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\TopSpecsMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

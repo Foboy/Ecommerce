@@ -70,6 +70,14 @@ var Address = {
         this.form = form;
         this.saveUrl = saveUrl;
         this.addresUrl = addressUrl;
+
+        $(form).find("label").each(function () {
+            var me = $(this);
+            if (me.attr("for") == "Address_FirstName")
+            {
+                me.text("收货人" + me.text());
+            }
+        });
     },
 
     save: function () {

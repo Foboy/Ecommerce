@@ -16,6 +16,8 @@ namespace Nop.Web.Models.Catalog
 
         public int? NumberOfProducts { get; set; }
 
+        public string PriceRanges { get; set; }
+
         public List<CategorySimpleModel> SubCategories { get; set; }
     }
 }
