@@ -2058,7 +2058,7 @@ namespace Nop.Admin.Controllers
 
         [ValidateInput(false)]
         public ActionResult ProductSpecificationAttributeAdd(int specificationAttributeOptionId,
-            string customValue, bool allowFiltering, bool showOnProductPage,
+            string customValue, int specificationAttributeId, bool showOnProductPage,
             int displayOrder, int productId)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
@@ -2073,13 +2073,13 @@ namespace Nop.Admin.Controllers
                     return RedirectToAction("List");
                 }
             }
-
+           
             var psa = new ProductSpecificationAttribute()
             {
                 SpecificationAttributeOptionId = specificationAttributeOptionId,
                 ProductId = productId,
                 CustomValue = customValue,
-                AllowFiltering = allowFiltering,
+                AllowFiltering =  _categorySpecificationAtrributeService.GetCategorySpecificationAtrributeBySid(specificationAttributeId).AllowFiltering,
                 ShowOnProductPage = showOnProductPage,
                 DisplayOrder = displayOrder,
             };
@@ -2155,7 +2155,6 @@ namespace Nop.Admin.Controllers
             }
 
             psa.CustomValue = model.CustomValue;
-            psa.AllowFiltering = model.AllowFiltering;
             psa.ShowOnProductPage = model.ShowOnProductPage;
             psa.DisplayOrder = model.DisplayOrder;
             _specificationAttributeService.UpdateProductSpecificationAttribute(psa);
