@@ -28,9 +28,11 @@ body{
 }
 .vip-nav-ul li{
     float: left;
-    margin-left: 60px;
     font-size: 20px;
     cursor: pointer;
+    width:100px;
+    text-align:center;
+    position:relative;
 }
 
 .vip-nav-ul li a{
@@ -41,6 +43,23 @@ body{
 }
 .vip-nav-ul li.current a {
     color: #ff5842;
+}
+.vip-nav-children {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #dfdfdf;
+    display:block;
+    position: absolute;
+    top:35px;
+    width: 250px;
+    z-index: 12;
+    left:-95px;
+    padding:20px;
+}
+
+.vip-nav-children a {
+    color:#010101;
+    font-size:14px;
+    margin-right:30px;
 }
 .vip-margin{
     margin-top: 20px;
