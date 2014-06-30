@@ -473,7 +473,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-           商品特价:
+            商品特价:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.SpecialPrice) [@Model.PrimaryStoreCurrencyCode]
@@ -482,7 +482,7 @@
     </tr>
     <tr>
         <td class="adminTitle">
-           特价开始时间:
+            特价开始时间:
         </td>
         <td class="adminData">
             @Html.EditorFor(model => model.SpecialPriceStartDateTimeUtc)
@@ -854,14 +854,14 @@
         </td>
     </tr>
     @*<tr style="display:none;" id="pnlWarehouse">
-        <td class="adminTitle">
-            @Html.NopLabelFor(model => model.WarehouseId):
-        </td>
-        <td class="adminData">
-            @Html.DropDownListFor(model => model.WarehouseId, Model.AvailableWarehouses)
-            @Html.ValidationMessageFor(model => model.WarehouseId)
-        </td>
-    </tr>*@
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.WarehouseId):
+            </td>
+            <td class="adminData">
+                @Html.DropDownListFor(model => model.WarehouseId, Model.AvailableWarehouses)
+                @Html.ValidationMessageFor(model => model.WarehouseId)
+            </td>
+        </tr>*@
 </table>
 @*<table class="adminContent" id="group-tax">
         <tr class="adminSeparator">
@@ -1111,4 +1111,9 @@
             </td>
         </tr>
     }
+    <tr>
+        <td class="adminData">
+            <input type="submit" name="save-continue" class="btn btn-sm btn-primary btn-flat " value="保存并进行一步" />
+        </td>
+    </tr>
 </table>

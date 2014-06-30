@@ -4,7 +4,7 @@
 
 
 <div class="options">
-    <input type="submit" value="@T("Admin.Common.Preview")" onclick="javascript:OpenWindow('@Url.RouteUrl("Product", new { SeName = Model.SeName })', 800, 600, true); return false;" class="btn btn-sm btn-primary btn-flat " />
+    <input type="submit" value="@T("Admin.Common.Preview")" onclick="javascript:OpenWindow('@Url.RouteUrl("Product", new { SeName = Model.SeName })', 1200, 600, true); return false;" class="btn btn-sm btn-primary btn-flat " />
     <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
     <input type="submit" name="save-continue" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.SaveContinue")" />
     <input type="submit" id="copyproduct" name="copyproduct" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Catalog.Products.Copy")" />
@@ -16,11 +16,11 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
                     基本信息</a>
             </h4>
         </div>
-        <div id="collapseOne" class="panel-collapse collapse ">
+        <div id="collapse1" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabInfo()
             </div>
@@ -29,26 +29,26 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
                     商品图片
                 </a>
             </h4>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse ">
+        <div id="collapse2" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabPictures()
-             </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseseven">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse3">
                     产品分类
                 </a>
             </h4>
         </div>
-        <div id="collapseseven" class="panel-collapse collapse ">
+        <div id="collapse3" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabCategories()
             </div>
@@ -57,12 +57,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse4">
                     规格参数
                 </a>
             </h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse ">
+        <div id="collapse4" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabSpecificationAttributes()
                 <hr />
@@ -73,30 +73,30 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse5">
                     关联商品
                 </a>
             </h4>
         </div>
-        <div id="collapseFour" class="panel-collapse collapse ">
+        <div id="collapse5" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabRelatedProducts()
                 @*<hr/>
                 @TabCrossSells()
                 <hr />
                 @TabAssociatedProducts()*@
-             </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse6">
                     权限控制
                 </a>
             </h4>
         </div>
-        <div id="collapseFive" class="panel-collapse collapse ">
+        <div id="collapse6" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabAcl()
                 <hr />
@@ -107,12 +107,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse7">
                     折扣价格
                 </a>
             </h4>
         </div>
-        <div id="collapseSix" class="panel-collapse collapse ">
+        <div id="collapse7" class="panel-collapse collapse ">
             <div class="panel-body">
                 @TabTierPrices()
                 <hr />
@@ -125,12 +125,12 @@
         <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseorder">
+                <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapse8">
                     已购买订单
                 </a>
             </h4>
         </div>
-            <div id="collapseorder" class="panel-collapse collapse ">
+            <div id="collapse8" class="panel-collapse collapse ">
                 <div class="panel-body">
                     @TabPurchasedWithOrders()
                 </div>
@@ -144,7 +144,33 @@
 
 <script>
     $(document).ready(function () {
-        $($("#currentoption").val()).attr("class", "panel-collapse collapse in");
+        var lastoption=$("#currentoption").val();
+        switch (lastoption) {
+            case "#collapse1":
+                $("#collapse2").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse2":
+                $("#collapse3").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse3":
+                $("#collapse4").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse4":
+                $("#collapse5").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse5":
+                $("#collapse6").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse6":
+                $("#collapse7").attr("class", "panel-collapse collapse in");
+                break;
+            case "#collapse7":
+                $("#collapse8").attr("class", "panel-collapse collapse in");
+                break;
+            default:
+                break;
+        
+        }
         $('.commonalink').bind('click', function () {
             $("#currentoption").val($(this).attr('href'));
         })
