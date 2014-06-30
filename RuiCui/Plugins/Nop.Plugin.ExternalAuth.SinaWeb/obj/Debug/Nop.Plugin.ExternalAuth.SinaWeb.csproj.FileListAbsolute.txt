@@ -1,0 +1,7 @@
+D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Description.txt
+D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\logo.jpg
+D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.dll
+D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.pdb
+D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.csprojResolveAssemblyReference.cache
+D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.dll
+D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.pdb

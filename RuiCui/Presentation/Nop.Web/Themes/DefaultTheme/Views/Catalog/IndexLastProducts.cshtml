@@ -31,13 +31,13 @@
             <li class="item-box product-width">
                 <div class="xm-goods-item product-width" data-productid="64">
                     <div class="item-thumb">
-                        <a title="@product.Name " href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
+                        <a title="@product.Name " target="_blank" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
                             <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText ">
                         </a>
                     </div>
                     <div class="item-info">
                         <h3 class="item-title">
-                            <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name </a>
+                            <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name </a>
                         </h3>
                         <div class="item-price">
                             <del class="price old-price">@product.ProductPrice.OldPrice</del>
