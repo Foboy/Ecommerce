@@ -4,7 +4,6 @@ DiscountRequirement.HasOneProduct
 DiscountRequirement.MustBeAssignedToCustomerRole
 CurrencyExchange.MoneyConverter
 ExternalAuth.OpenId
-ExternalAuth.Facebook
 Misc.FacebookShop
 Misc.WebServices
 Payments.CashOnDelivery
@@ -29,3 +28,6 @@ Widgets.NivoSlider
 FoxNetSoft.Plugin.Misc.ModularProducts
 Payments.AliPay
 ExternalAuth.QQ
+ExternalAuth.SinaWeb
+QQ外部认证
+新浪微博外部认证
