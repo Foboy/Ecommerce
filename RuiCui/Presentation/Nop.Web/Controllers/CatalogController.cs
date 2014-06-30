@@ -2626,19 +2626,16 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult SearchVipProduct(ProductPagingFilteringModel command)
         {
-            //ACL (access control list)
-            //if (!_aclService.Authorize(category))
-            //    return InvokeHttp404();
 
-            var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
-            bool checkVip = false;
-            foreach (var role in currentCustomerRoles)
-            {
-                if (role.Name == "已注册客户")
-                    checkVip = true;
-            }
-            if(!checkVip)
-                return InvokeHttp404();
+            //var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
+            //bool checkVip = false;
+            //foreach (var role in currentCustomerRoles)
+            //{
+            //    if (role.Name == "已注册客户")
+            //        checkVip = true;
+            //}
+            //if(!checkVip)
+            //    return InvokeHttp404();
 
             //customer is not allowed to select a page size
             command.PageSize = 10;

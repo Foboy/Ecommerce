@@ -1,9 +1,21 @@
 ﻿@{
     Layout = "~/Views/Shared/_Root.Head.cshtml";
+    var _workContext = EngineContext.Current.Resolve<Nop.Core.IWorkContext>();
+    var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
+    bool check = false;
+    foreach (var role in currentCustomerRoles)
+    {
+        if (role.Name == "已注册客户")
+        {
+            check = true;
+        }
+    }
 }
 @Html.Widget("body_start_html_tag_after")
 @Html.Partial("_Notifications")
 @Html.Action("AdminHeaderLinks", "Common")
+@using Nop.Core.Infrastructure;
+
 
 <div class="site-topbar">
     <div class="container">
@@ -53,7 +65,16 @@
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
                 <li id="nav_vip" class="nav-main-item">
+                    @if(check)
+                    { 
                     <a href="@Url.RouteUrl("VipProduct")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    }
+                    else
+                    {
+                        <a href="#not_vip_msg" target="_blank" class="poplink"><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    }
+
+
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">购物无忧</span><span class="arrow"></span></a>
