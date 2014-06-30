@@ -2596,8 +2596,23 @@ namespace Nop.Web.Controllers
                 ProductSModel model = new ProductSModel();
 
             //products
-                var plist = _productService.SearchProducts().OrderByDescending(o => o.UpdatedOnUtc).ToList<Product>();
-            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
+                var productss = _productService.SearchProducts();
+                List<Product> plist = new List<Product>();
+            //排除VIP
+                foreach (var product in productss)
+                {
+                    var existingAclRecords = _aclService.GetAclRecords(product);
+                    bool check = true;
+                    foreach (var acl in existingAclRecords)
+                    {
+                        if (acl.CustomerRole.Name == "已注册客户")
+                            check = false;
+                    }
+                    if (check)
+                    { plist.Add(product); }
+                }
+
+            var products = new PagedList<Product>(plist.OrderByDescending(o => o.UpdatedOnUtc).ToList<Product>(), command.PageNumber - 1, command.PageSize);
             model.dateList = products.Select(o => o.UpdatedOnUtc.ToString("D")).Distinct();
 
             model.Products = PrepareProductOverviewModels(products).ToList();
