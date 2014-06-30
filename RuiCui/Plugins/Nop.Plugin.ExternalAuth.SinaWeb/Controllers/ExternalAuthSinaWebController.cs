@@ -151,14 +151,15 @@ namespace Nop.Plugin.ExternalAuth.SinaWeb.Controllers
         {
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
             var sinaExternalAuthSettings = _settingService.LoadSetting<SinaWebExternalAuthSettings>(storeScope);
-             Client SinaClient=null;
+            Client SinaClient = null;
             string authenticationUrl = string.Empty;
-            if (Session["SinaWebOauth"] != null) {
-                SinaClient= Session["SinaWebOauth"] as Client;
+            if (Session["SinaWebOauth"] != null)
+            {
+                SinaClient = Session["SinaWebOauth"] as Client;
                 authenticationUrl = SinaClient.OAuth.GetAuthorizeURL();
             }
             else
-            { 
+            {
                 var oAuth = new OAuth(sinaExternalAuthSettings.AppKey, sinaExternalAuthSettings.AppSecret, sinaExternalAuthSettings.CallBackURI);
                 authenticationUrl = oAuth.GetAuthorizeURL();
             }
