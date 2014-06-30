@@ -22,6 +22,8 @@ namespace Nop.Web.Models.Catalog
 
         public int Score { get; set; }
 
+        public DateTime UpdatedOnUtc { get; set; }
+
         //price
         public ProductPriceModel ProductPrice { get; set; }
         //picture

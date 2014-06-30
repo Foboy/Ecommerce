@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using System;
 
 namespace Nop.Web.Models.Catalog
 {
@@ -20,6 +21,8 @@ namespace Nop.Web.Models.Catalog
         public string MetaDescription { get; set; }
         public string MetaTitle { get; set; }
         public string SeName { get; set; }
+
+        public IEnumerable<string> dateList { get; set; }
         
         public PictureModel PictureModel { get; set; }
 

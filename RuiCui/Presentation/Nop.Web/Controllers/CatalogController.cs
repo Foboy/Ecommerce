@@ -362,7 +362,8 @@ namespace Nop.Web.Controllers
                     ShortDescription = product.GetLocalized(x => x.ShortDescription),
                     FullDescription = product.GetLocalized(x => x.FullDescription),
                     SeName = product.GetSeName(),
-                    Score = ParseScore(product)
+                    Score = ParseScore(product),
+                   UpdatedOnUtc =  product.UpdatedOnUtc
                 };
                 
 
@@ -2595,15 +2596,10 @@ namespace Nop.Web.Controllers
                 ProductSModel model = new ProductSModel();
 
             //products
-            //var products = _productService.SearchProducts(
-            //    orderBy: ProductSortingEnum.CreatedOn,
-            //    pageIndex: command.PageNumber - 1,
-            //    pageSize: command.PageSize);
-            var products = _productService.SearchProducts(
-                    visibleIndividuallyOnly: true,
-             orderBy: ProductSortingEnum.CreatedOn,
-             pageIndex: command.PageNumber - 1,
-             pageSize: command.PageSize);
+                var plist = _productService.SearchProducts().OrderByDescending(o => o.UpdatedOnUtc).ToList<Product>();
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
+            model.dateList = products.Select(o => o.UpdatedOnUtc.ToString("D")).Distinct();
+
             model.Products = PrepareProductOverviewModels(products).ToList();
             model.PagingFilteringContext.LoadPagedList(products);
 
