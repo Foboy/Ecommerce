@@ -138,7 +138,7 @@ namespace Nop.Plugin.ExternalAuth.QQ.Controllers
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
-            var processor = _openAuthenticationService.LoadExternalAuthenticationMethodBySystemName("ExternalAuth.QQ");
+            var processor = _openAuthenticationService.LoadExternalAuthenticationMethodBySystemName("QQ外部认证");
             if (processor == null ||
                 !processor.IsMethodActive(_externalAuthenticationSettings) ||
                 !processor.PluginDescriptor.Installed ||
