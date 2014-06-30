@@ -1825,7 +1825,6 @@ a:hover, a:focus {
                         display: none;
                         position: absolute;
                         left: 50%;
-                        bottom: -3px;
                         _bottom: -1px;
                         z-index: 12;
                         width: 0;
