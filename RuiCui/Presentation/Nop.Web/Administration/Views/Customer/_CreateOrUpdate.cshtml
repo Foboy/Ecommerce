@@ -266,7 +266,7 @@
                 <em>@T("Admin.Customers.Customers.VendorShouldBeInVendorsRole")</em>
             </td>
         </tr>
-        @if (Model.GenderEnabled)
+        @if (Model.GenderEnabled && false)
         {
             <tr>
                 <td class="adminTitle">
@@ -286,7 +286,7 @@
         }
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.FirstName):
+                <label for="FirstName" title="名称/姓名">名称/姓名</label>:
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.FirstName)
@@ -302,7 +302,7 @@
                 @Html.ValidationMessageFor(model => model.LastName)
             </td>
         </tr>*@
-        @if (Model.DateOfBirthEnabled)
+        @if (Model.DateOfBirthEnabled && false)
         {
             <tr>
                 <td class="adminTitle">

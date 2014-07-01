@@ -2,6 +2,7 @@
 @{               
     //page title
     ViewBag.Title = T("Admin.Configuration.ACL").Text;
+    var allowed_permisions = ",AccessAdminPanel,AllowCustomerImpersonation,ManageACL,ManageActivityLog,ManageAffiliates,ManageAttributes,ManageCampaigns,ManageCategories,ManageCountries,ManageCurrencies,ManageCurrentCarts,ManageCustomers,ManageDiscounts,ManageEmailAccounts,ManageExternalAuthenticationMethods,ManageGiftCards,ManageMeasures,ManageMessageQueue,ManageMessageTemplates,ManageNews,ManageOrders,ManagePaymentMethods,ManageProductReviews,ManageProductTags,ManageProducts,ManageRecurringPayments,ManageReturnRequests,ManageSettings,ManageShippingSettings,ManageSystemLog,ManageVendors,PublicStoreAllowNavigation,DisplayPrices,EnableShoppingCart,EnableWishlist,";
 }
 @using (Html.BeginForm())
 {
@@ -28,6 +29,10 @@
                 }
                 else
                 {
+
+
+                    
+                    
                     <script type="text/javascript">
                         $(document).ready(function () {            
                             @foreach (var cr in Model.AvailableCustomerRoles)
@@ -61,6 +66,10 @@
                             }
                             @foreach (var pr in Model.AvailablePermissions)
                             {
+                                if (!allowed_permisions.Contains("," + pr.SystemName + ","))
+                                {
+                                    continue;
+                                }
                                 altRow = !altRow;
                                 <tr class="@(altRow ? "altrowstyle" : "rowstyle")">
                                     <td>
