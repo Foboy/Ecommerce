@@ -99,8 +99,8 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageCustomers))
                 return AccessDeniedView();
-            
-            var customerRoles = _customerService.GetAllCustomerRoles(true);
+
+            var customerRoles = _customerService.GetAllCustomerRoles(true).Where(o => o.SystemName != "ForumModerators");
             var gridModel = new DataSourceResult
 			{
                 Data = customerRoles.Select(PrepareCustomerRoleModel),
