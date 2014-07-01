@@ -2817,4 +2817,17 @@ a:hover, a:focus {
     color:#6d6d6d;
 }
 
+/*µ¯³ö¿ò*/
+.msg-header {
+    color: #333;
+    font-size: 18px;
+    line-height: 38px;
+    margin: 0;
+    border-bottom: 1px solid #ddd;
+    font-weight: normal;
+}
+.msg-body {
+    padding-top:16px;
+}
+
 
