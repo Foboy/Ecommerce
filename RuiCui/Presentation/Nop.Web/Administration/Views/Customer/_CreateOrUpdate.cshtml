@@ -256,7 +256,7 @@
                 </td>
             </tr>
         }
-        <tr style="display:none;">
+        <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.VendorId):
             </td>
@@ -554,6 +554,10 @@
     <input type="checkbox" name="SelectedCustomerRoleIds" value="@customerRole.Id"
                 @if (Model.SelectedCustomerRoleIds != null && Model.SelectedCustomerRoleIds.Contains(customerRole.Id))
                 {
+                    <text> checked="checked"</text>
+                }
+                else if ((Model.SelectedCustomerRoleIds == null || Model.SelectedCustomerRoleIds.Length == 0) && customerRole.SystemName == "Registered")
+                { 
                     <text> checked="checked"</text>
                 }
                 />@customerRole.Name

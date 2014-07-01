@@ -114,7 +114,8 @@ namespace Nop.Admin.Controllers
                 {
 
                     bool allow = permissionRecordSystemNamesToRestrict.Contains(pr.SystemName);
-                    if (allow)
+                    //4个开放权限应该赋给每个角色
+                    if (allow || "PublicStoreAllowNavigation,DisplayPrices,EnableShoppingCart,EnableWishlist".Contains(pr.SystemName))
                     {
                         if (pr.CustomerRoles.FirstOrDefault(x => x.Id == cr.Id) == null)
                         {
