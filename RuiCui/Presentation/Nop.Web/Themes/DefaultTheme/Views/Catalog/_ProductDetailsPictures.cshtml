@@ -10,7 +10,7 @@
 }
 <div class="goods-big-pic">
     <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" class="pictures_popup_link">
-        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
+        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
     </a>
     @for (int i = 0; i < Model.PictureModels.Count; i++)
     {
@@ -41,15 +41,17 @@
         @for (int i = 0; i < Model.PictureModels.Count; i++)
         {
             var picture = Model.PictureModels[i];
-            <a class="thumb-popup-link" href="javascript:void(0);" data-src="@picture.FullSizeImageUrl" title="@Model.Name">
+            <a class='thumb-popup-link @(picture.FullSizeImageUrl.Equals(Model.DefaultPictureModel.FullSizeImageUrl)?"popup-selected":"")' href="javascript:void(0);" data-src="@picture.FullSizeImageUrl" title="@Model.Name">
                 <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
             </a>
-          
+
         }
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".thumb-popup-link").click(function () {
+            $(".thumb-popup-link").mouseenter(function () {
+                $(".thumb-popup-link").removeClass("popup-selected");
+                $(this).addClass("popup-selected");
                 $("#main-product-img").attr("src", $(this).attr("data-src"));
             });
                
