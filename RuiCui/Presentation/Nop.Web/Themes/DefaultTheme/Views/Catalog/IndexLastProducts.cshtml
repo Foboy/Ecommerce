@@ -57,7 +57,7 @@
     </div>
     <div class="xm-goods-list-wrap">
         <ul class="xm-goods-list clearfix">
-        @foreach (var product in Model.Products.Where(o=>o.UpdatedOnUtc>=Convert.ToDateTime(datetime) && o.UpdatedOnUtc<Convert.ToDateTime(datetime).AddDays(1)))
+        @foreach (var product in Model.Products.Where(o=>o.CreatedOnUtc>=Convert.ToDateTime(datetime) && o.CreatedOnUtc<Convert.ToDateTime(datetime).AddDays(1)))
         {
             <li class="item-box product-width">
                 <div class="xm-goods-item product-width" data-productid="64">

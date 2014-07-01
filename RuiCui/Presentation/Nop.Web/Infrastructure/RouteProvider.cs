@@ -26,14 +26,22 @@ namespace Nop.Web.Infrastructure
              "每日新品",
              new { controller = "Catalog", action = "SearchLastestProduct" },
              new[] { "Nop.Web.Controllers" });
+
             routes.MapLocalizedRoute("VipProduct",
              "VIP专区",
              new { controller = "Catalog", action = "SearchVipProduct" },
              new[] { "Nop.Web.Controllers" });
+
             routes.MapLocalizedRoute("SoldProduct",
-       "已售欣赏",
-       new { controller = "Catalog", action = "SearchSoldProduct" },
-       new[] { "Nop.Web.Controllers" });
+                               "已售欣赏",
+                               new { controller = "Catalog", action = "SearchSoldProduct" },
+                               new[] { "Nop.Web.Controllers" });
+
+            routes.MapLocalizedRoute("TuiJianProduct",
+                            "超值推荐",
+                            new { controller = "Catalog", action = "SearchTuiJianProduct" },
+                            new[] { "Nop.Web.Controllers" });
+
             routes.MapLocalizedRoute("RecentlyViewedProducts",
                             "recentlyviewedproducts/",
                             new { controller = "Catalog", action = "RecentlyViewedProducts" },

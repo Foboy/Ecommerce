@@ -37,13 +37,13 @@
 }
 <div class="xm-goods-item" data-productid="@Model.Id">
     <div class="item-thumb">
-        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" target="_blank">
             <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" srcset="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
         </a>
     </div>
     <div class="item-info">
         <h3 class="item-title">
-            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })">@Model.Name</a>
+            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" target="_blank">@Model.Name</a>
         </h3>
         <div class="item-price">
             @if (!String.IsNullOrEmpty(Model.ProductPrice.OldPrice))

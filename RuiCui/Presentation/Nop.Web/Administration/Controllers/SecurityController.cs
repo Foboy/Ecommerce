@@ -65,7 +65,7 @@ namespace Nop.Admin.Controllers
             var model = new PermissionMappingModel();
 
             var permissionRecords = _permissionService.GetAllPermissionRecords();
-            var customerRoles = _customerService.GetAllCustomerRoles(true);
+            var customerRoles = _customerService.GetAllCustomerRoles(true).Where(o => o.SystemName != "ForumModerators" && o.SystemName != "Guests");
             foreach (var pr in permissionRecords)
             {
                 model.AvailablePermissions.Add(new PermissionRecordModel()
@@ -114,7 +114,8 @@ namespace Nop.Admin.Controllers
                 {
 
                     bool allow = permissionRecordSystemNamesToRestrict.Contains(pr.SystemName);
-                    if (allow)
+                    //4个开放权限应该赋给每个角色
+                    if (allow || "PublicStoreAllowNavigation,DisplayPrices,EnableShoppingCart,EnableWishlist".Contains(pr.SystemName))
                     {
                         if (pr.CustomerRoles.FirstOrDefault(x => x.Id == cr.Id) == null)
                         {

@@ -2,6 +2,7 @@
 @{               
     //page title
     ViewBag.Title = T("Admin.Configuration.ACL").Text;
+    var allowed_permisions = ",AccessAdminPanel,ManageActivityLog,ManageAffiliates,ManageAttributes,ManageCampaigns,ManageCategories,ManageCountries,ManageCustomers,ManageDiscounts,ManageEmailAccounts,ManageExternalAuthenticationMethods,ManageGiftCards,ManageMeasures,ManageNews,ManageOrders,ManagePaymentMethods,ManageProductReviews,ManageProductTags,ManageProducts,ManageRecurringPayments,ManageReturnRequests,ManageShippingSettings,ManageSystemLog,ManageVendors,";
 }
 @using (Html.BeginForm())
 {
@@ -28,6 +29,10 @@
                 }
                 else
                 {
+
+
+                    
+                    
                     <script type="text/javascript">
                         $(document).ready(function () {            
                             @foreach (var cr in Model.AvailableCustomerRoles)
@@ -62,7 +67,7 @@
                             @foreach (var pr in Model.AvailablePermissions)
                             {
                                 altRow = !altRow;
-                                <tr class="@(altRow ? "altrowstyle" : "rowstyle")">
+                                <tr class="@(altRow ? "altrowstyle" : "rowstyle")" style='@(allowed_permisions.Contains("," + pr.SystemName + ",") ? null : "display:none;")'>
                                     <td>
                                         <span>@pr.Name</span>
                                     </td>

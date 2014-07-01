@@ -72,9 +72,15 @@
     @*类*@
                     if (specModel.NotFilteredItems.Count > 0)
             {
+                        var displayCount = 5;
                 foreach (var group in notFilteredItemsGroups)
                 {
+                    displayCount--;
                     var groupList = group.ToList();
+                    if (displayCount < 0)
+                    {
+                        break;
+                    } 
                     <li class="nav-category-item">
                         <div class="nav-category-content">
                             <a class="basecolor">@groupList[0].SpecificationAttributeName</a>
@@ -136,6 +142,7 @@
                         </div>
                     }
                 </li>
+        break;
     }
 }
 

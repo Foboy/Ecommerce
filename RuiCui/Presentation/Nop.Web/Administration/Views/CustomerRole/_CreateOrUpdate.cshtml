@@ -45,7 +45,7 @@
             @Html.ValidationMessageFor(model => model.FreeShipping)
         </td>
     </tr>
-    <tr>
+    <tr style="display:none;">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.TaxExempt):
         </td>
@@ -73,7 +73,7 @@
             @Html.ValidationMessageFor(model => model.IsSystemRole)
         </td>
     </tr>
-    <tr>
+    <tr style="display:none;">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.PurchasedWithProductId):
         </td>

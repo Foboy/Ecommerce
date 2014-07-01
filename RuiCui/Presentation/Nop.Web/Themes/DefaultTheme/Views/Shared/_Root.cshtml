@@ -45,7 +45,7 @@
         <div id="J_categoryContainer" class="nav-category">
             <a class="btn-category-list" href="@Url.RouteUrl("HomePage")">全部商品分类</a>
             <div class="nav-category-section" style="display: none;">
-                <ul class="nav-category-list">
+                <ul class="nav-category-list clearfix">
                     @Html.Action("TopSpecsMenu", "Catalog")
                 </ul>
             </div>
@@ -59,7 +59,7 @@
                     <a href="@Url.RouteUrl("LastProduct")" target="_blank"><span class="text">每日新品</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="#" target="_blank"><span class="text">超值推荐</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("TuiJianProduct")" target="_blank"><span class="text">超值推荐</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
@@ -160,13 +160,16 @@
 @Html.Action("EuCookieLaw", "Common")
 @Html.Widget("body_end_html_tag_before")
 
-
-    <div id='not_vip_msg' style='padding:10px; background:#fff;'>
-        对不起，您还不是VIP哦！
+<div style="display:none;">
+    <div id='not_vip_msg' style='padding:30px;  background:#fff;'>
+        <h3 class="msg-header">温馨提示</h3>
+        <div class="msg-body">VIP专区目前只对VIP用户开放。你可以在线咨询客服，了解VIP申请方式</div>
     </div>
+</div>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $(".poplink").colorbox({ inline: true, width: "50%" });
+        $(".poplink").colorbox({ inline: true, width: "50%", opacity: 0.2, close: "<i class='iconfont font12 wcolor'>&#xf00b3;</i>" });
     });
 </script>

@@ -27,15 +27,17 @@
 @*Stock availability*@
 @if (!String.IsNullOrWhiteSpace(Model.StockAvailability))
 {
-    <div class="stock product-info">
-        <span class="label">@T("Products.Availability")：</span>
-        <span class="product-info-content">@Model.StockAvailability</span>
-    </div>
+    <dl class="product-info">
+        <dt>@T("Products.Availability")：</dt>
+        <dd>@Model.StockAvailability</dd>
+    </dl>
 }
 @*Delivery date*@
 @if (Model.FreeShippingNotificationEnabled && Model.IsFreeShipping)
 {
-    <div class="free-shipping">@T("Products.FreeShipping")</div>
+    <dl class="product-info">
+        <dt class="free-shipping">@T("Products.FreeShipping")</dt>
+    </dl>
 }
 @*Delivery date*@
 @if (!String.IsNullOrWhiteSpace(Model.DeliveryDate))

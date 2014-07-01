@@ -37,9 +37,7 @@
 @Html.Action("ProductBreadcrumb", "Catalog", new { productId = Model.Id })
 <div class="goods-detail-info row clearfix">
     <div class="col col10">
-        <div class="goods-pic-box  ">
-            @Html.Partial("_ProductDetailsPictures", Model)
-        </div>
+         @Html.Partial("_ProductDetailsPictures", Model)
     </div>
     <div class="col col10 goods-info-rightbox">
 @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))

@@ -28,7 +28,7 @@
             @*<li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.ActivityLog")
             </li>*@
-            <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
+            <li style="display:none;" @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.Impersonate")
             </li>
         }
@@ -266,7 +266,7 @@
                 <em>@T("Admin.Customers.Customers.VendorShouldBeInVendorsRole")</em>
             </td>
         </tr>
-        @if (Model.GenderEnabled)
+        @if (Model.GenderEnabled && false)
         {
             <tr>
                 <td class="adminTitle">
@@ -286,7 +286,7 @@
         }
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.FirstName):
+                <label for="FirstName" title="名称/姓名">名称/姓名</label>:
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.FirstName)
@@ -302,7 +302,7 @@
                 @Html.ValidationMessageFor(model => model.LastName)
             </td>
         </tr>*@
-        @if (Model.DateOfBirthEnabled)
+        @if (Model.DateOfBirthEnabled && false)
         {
             <tr>
                 <td class="adminTitle">
@@ -542,6 +542,11 @@
         {
             foreach (var customerRole in Model.AvailableCustomerRoles)
             {
+                if (customerRole.SystemName == "ForumModerators")
+                { 
+                    continue;
+                    }
+                
                 if (customerRole.Id == 1)
                 {
                     continue; 
@@ -549,6 +554,10 @@
     <input type="checkbox" name="SelectedCustomerRoleIds" value="@customerRole.Id"
                 @if (Model.SelectedCustomerRoleIds != null && Model.SelectedCustomerRoleIds.Contains(customerRole.Id))
                 {
+                    <text> checked="checked"</text>
+                }
+                else if ((Model.SelectedCustomerRoleIds == null || Model.SelectedCustomerRoleIds.Length == 0) && customerRole.SystemName == "Registered")
+                { 
                     <text> checked="checked"</text>
                 }
                 />@customerRole.Name
