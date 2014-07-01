@@ -66,12 +66,8 @@
                             }
                             @foreach (var pr in Model.AvailablePermissions)
                             {
-                                if (!allowed_permisions.Contains("," + pr.SystemName + ","))
-                                {
-                                    continue;
-                                }
                                 altRow = !altRow;
-                                <tr class="@(altRow ? "altrowstyle" : "rowstyle")">
+                                <tr class="@(altRow ? "altrowstyle" : "rowstyle")" style='@(allowed_permisions.Contains("," + pr.SystemName + ",") ? null : "display:none;")'>
                                     <td>
                                         <span>@pr.Name</span>
                                     </td>
