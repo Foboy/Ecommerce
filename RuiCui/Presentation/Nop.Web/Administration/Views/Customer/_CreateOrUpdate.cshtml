@@ -542,6 +542,11 @@
         {
             foreach (var customerRole in Model.AvailableCustomerRoles)
             {
+                if (customerRole.SystemName == "ForumModerators")
+                { 
+                    continue;
+                    }
+                
                 if (customerRole.Id == 1)
                 {
                     continue; 
