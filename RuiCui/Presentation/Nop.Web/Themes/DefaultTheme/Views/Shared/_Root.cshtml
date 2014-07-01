@@ -161,12 +161,13 @@
 @Html.Widget("body_end_html_tag_before")
 
 
-    <div id='not_vip_msg' style='padding:10px; background:#fff;'>
-        对不起，您还不是VIP哦！
+    <div id='not_vip_msg' style='padding:30px;  background:#fff;'>
+        <h3 class="msg-header">温馨提示</h3>
+        <div class="msg-body">VIP专区目前只对VIP用户开放。你可以在线咨询客服，了解VIP申请方式</div>
     </div>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $(".poplink").colorbox({ inline: true, width: "50%" });
+        $(".poplink").colorbox({ inline: true, width: "50%", opacity: 0.2, close: "<i class='iconfont font12 wcolor'>&#xf00b3;</i>" });
     });
 </script>
