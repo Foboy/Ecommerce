@@ -65,7 +65,7 @@ namespace Nop.Admin.Controllers
             var model = new PermissionMappingModel();
 
             var permissionRecords = _permissionService.GetAllPermissionRecords();
-            var customerRoles = _customerService.GetAllCustomerRoles(true).Where(o => o.SystemName != "ForumModerators");
+            var customerRoles = _customerService.GetAllCustomerRoles(true).Where(o => o.SystemName != "ForumModerators" && o.SystemName != "Guests");
             foreach (var pr in permissionRecords)
             {
                 model.AvailablePermissions.Add(new PermissionRecordModel()
