@@ -2593,9 +2593,13 @@ namespace Nop.Web.Controllers
                 command.PageSize = 10;
                 if (command.PageNumber <= 0) command.PageNumber = 1;
                 ProductSModel model = new ProductSModel();
-
+                var categorys = _categoryService.GetAllCategories();
+                int categoryId = categorys[0].Id;
+                var categoryIds = new List<int>();
+                categoryIds.Add(categoryId);
             //products
-                var productss = _productService.SearchProducts();
+                var productss = _productService.SearchProducts(visibleIndividuallyOnly: true, 
+                    storeId: _storeContext.CurrentStore.Id,  categoryIds: categoryIds);
                 List<Product> plist = new List<Product>();
             //排除VIP
                 foreach (var product in productss)
@@ -2940,17 +2944,41 @@ namespace Nop.Web.Controllers
             //products
             IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredSpecOptionIds(_webHelper);
             IList<int> filterableSpecificationAttributeOptionIds = null;
-            var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
-                categoryIds: categoryIds,
-                storeId: _storeContext.CurrentStore.Id,
-                visibleIndividuallyOnly: true,
-                featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
-                priceMin: minPriceConverted, priceMax: maxPriceConverted,
-                filteredSpecs: alreadyFilteredSpecOptionIds,
-                orderBy: (ProductSortingEnum)command.OrderBy,
-                pageIndex: command.PageNumber - 1,
-                pageSize: command.PageSize);
+            //var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+            //    categoryIds: categoryIds,
+            //    storeId: _storeContext.CurrentStore.Id,
+            //    visibleIndividuallyOnly: true,
+            //    featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+            //    priceMin: minPriceConverted, priceMax: maxPriceConverted,
+            //    filteredSpecs: alreadyFilteredSpecOptionIds,
+            //    orderBy: (ProductSortingEnum)command.OrderBy,
+            //    pageIndex: command.PageNumber - 1,
+            //    pageSize: command.PageSize);
+            var productss = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+               categoryIds: categoryIds,
+               storeId: _storeContext.CurrentStore.Id,
+               visibleIndividuallyOnly: true,
+               featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+               priceMin: minPriceConverted, priceMax: maxPriceConverted,
+               filteredSpecs: alreadyFilteredSpecOptionIds,
+               orderBy: (ProductSortingEnum)command.OrderBy);
 
+            List<Product> plist = new List<Product>();
+            //只查VIP
+            foreach (var product in productss)
+            {
+                var existingAclRecords = _aclService.GetAclRecords(product);
+                bool check = false;
+                foreach (var acl in existingAclRecords)
+                {
+                    if (acl.CustomerRole.Name == "已注册客户")
+                        check = true;
+                }
+                if (check)
+                { plist.Add(product); }
+            }
+
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);

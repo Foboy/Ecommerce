@@ -8,32 +8,32 @@
     
 }
 
-
-@if (Model.Categories.Count > 0)
-{
-    foreach (var category in Model.Categories)
+<ul id="J_vip_nav" class="vip-nav-ul">
+    @if (Model.Categories.Count > 0)
     {
-        var specModel = category.SpecificationFilter;
-        var priceModel = category.PriceRangeFilter;
-        var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
-        <li class="current">
-            @*顶部翡翠-水墨玉*@
-            <a href="@Url.RouteUrl("VipProduct", new { SeName = category.SeName })">
-                @category.Name
-            </a>
-              
-        </li>
-     @*类*@
-              if (specModel.NotFilteredItems.Count > 0)
+        foreach (var category in Model.Categories)
+        {
+            var specModel = category.SpecificationFilter;
+            var priceModel = category.PriceRangeFilter;
+            var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
+            <li class="current">
+                @*顶部翡翠-水墨玉*@
+                <a href="@Url.RouteUrl("VipProduct", new { SeName = category.SeName })">
+                    @category.Name
+                </a>
+
+            </li>
+            @*类*@
+            if (specModel.NotFilteredItems.Count > 0)
             {
                 foreach (var group in notFilteredItemsGroups)
                 {
                     int j = 0;
                     var groupList = group.ToList();
                     <li>
-                       
-                        <a data-toggle="tooltip@(j)" data-placement="bottom">@groupList[0].SpecificationAttributeName</a>
-                        <div class="vip-nav-children" role="tooltip@(j)">
+
+                        <a >@groupList[0].SpecificationAttributeName</a>
+                        <div class="vip-nav-children">
                             @for (int i = 0; i < groupList.Count; i++)
                             {
                                 var spec = groupList[i];
@@ -41,30 +41,59 @@
                             }
                         </div>
 
-                       
-                      
+
+
                     </li>
-                    j++;
+                            j++;
                 }
             }
 
+        }
     }
-}
-@*<li class="current"><a>广场</a></li>
-<li>
-    <a>款式</a>
-    <div class="vip-nav-children">
-        <a>把件</a>
-        <a>吊坠</a>
-        <a>戒面</a>
-        <a>戒指</a>
-    </div>
-</li>
-<li>
-    <a>题材</a>
-</li>
-<li><a>种</a></li>
-<li><a>色</a></li>
-<li><a>尺寸</a></li>
-<li><a>价格</a></li>
-<li><a>水磨玉</a></li>*@
+</ul>
+    @*<li class="current"><a>广场</a></li>
+        <li>
+            <a>款式</a>
+            <div class="vip-nav-children">
+                <a>把件</a>
+                <a>吊坠</a>
+                <a>戒面</a>
+                <a>戒指</a>
+            </div>
+        </li>
+        <li>
+            <a>题材</a>
+        </li>
+        <li><a>种</a></li>
+        <li><a>色</a></li>
+        <li><a>尺寸</a></li>
+        <li><a>价格</a></li>
+        <li><a>水磨玉</a></li>*@
+    <script type="text/javascript">
+        var $vipcategoryContainer = $("#J_vip_nav"),
+    $vipcategoryList = $vipcategoryContainer.children("li");
+        var viptimeoutChildrenList;
+        $vipcategoryList.on({
+            mouseenter: function () {
+                var $this = $(this);
+                window.clearTimeout(viptimeoutChildrenList),
+                $this.hasClass("current") || (viptimeoutChildrenList = window.setTimeout(function () {
+                    $this.addClass("current").siblings("li").removeClass("current");
+                    $this.addClass("current").siblings("li").find("div").hide();
+                    var $children = $this.find(".vip-nav-children");
+                    $children.show();
+                },
+                100))
+            },
+            mouseleave: function () {
+                var $this = $(this);
+                window.clearTimeout(viptimeoutChildrenList),
+                $this.hasClass("current") && (viptimeoutChildrenList = window.setTimeout(function () {
+                    $this.removeClass("current");
+                    var $children = $this.find(".vip-nav-children");
+                    $children.hide();
+                },
+                100))
+            }
+        })
+    </script>

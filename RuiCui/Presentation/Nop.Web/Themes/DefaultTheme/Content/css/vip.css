@@ -47,7 +47,7 @@ body{
 .vip-nav-children {
     background: none repeat scroll 0 0 #fff;
     border: 1px solid #dfdfdf;
-    display:block;
+    display:none;
     position: absolute;
     top:35px;
     width: 250px;
