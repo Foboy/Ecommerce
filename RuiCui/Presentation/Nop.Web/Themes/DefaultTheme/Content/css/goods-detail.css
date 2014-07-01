@@ -1667,6 +1667,9 @@ dl.goods-info-box {
 .thumb-popup-link:hover {
     border:1px solid #f8bf6c;
 }
+.popup-selected {
+    border:1px solid #f8bf6c;
+}
 .thumb-popup-link img {
     max-width:66px;
     max-height:66px;
