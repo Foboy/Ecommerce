@@ -18,9 +18,9 @@
         var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
         <li class="current">
             @*顶部翡翠-水墨玉*@
-                <a  href="@Url.Action("SearchVipProduct", "Category", new { SeName = category.SeName })">
-                    @category.Name
-                </a>
+            <a href="@Url.RouteUrl("VipProduct", new { SeName = category.SeName })">
+                @category.Name
+            </a>
               
         </li>
      @*类*@
