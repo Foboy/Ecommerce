@@ -28,11 +28,12 @@
             {
                 foreach (var group in notFilteredItemsGroups)
                 {
+                    int j = 0;
                     var groupList = group.ToList();
                     <li>
                        
-                            <a >@groupList[0].SpecificationAttributeName</a>
-                        <div class="vip-nav-children">
+                        <a data-toggle="tooltip@(j)" data-placement="bottom">@groupList[0].SpecificationAttributeName</a>
+                        <div class="vip-nav-children" role="tooltip@(j)">
                             @for (int i = 0; i < groupList.Count; i++)
                             {
                                 var spec = groupList[i];
@@ -43,6 +44,7 @@
                        
                       
                     </li>
+                    j++;
                 }
             }
 
