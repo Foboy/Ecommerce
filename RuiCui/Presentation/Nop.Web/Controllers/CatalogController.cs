@@ -2629,38 +2629,6 @@ namespace Nop.Web.Controllers
         /// <returns></returns>
         public ActionResult SearchVipProduct(CatalogPagingFilteringModel command)
         {
-         
-            //var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
-            //bool checkVip = false;
-            //foreach (var role in currentCustomerRoles)
-            //{
-            //    if (role.Name == "已注册客户")
-            //        checkVip = true;
-            //}
-            //if(!checkVip)
-            //    return InvokeHttp404();
-
-            //customer is not allowed to select a page size
-            //command.PageSize = 10;
-            //if (command.PageNumber <= 0) command.PageNumber = 1;
-            //ProductSModel model = new ProductSModel();
-
-            //var productss = _productService.SearchProducts();
-            //List<Product> plist = new List<Product>();
-            //foreach (var product in productss)
-            //{
-            //    var existingAclRecords = _aclService.GetAclRecords(product);
-            //    foreach (var acl in existingAclRecords)
-            //    {
-            //        if (acl.CustomerRole.Name == "已注册客户")
-            //            plist.Add(product);
-            //    }
-            //}
-
-
-            //var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
-            //model.Products = PrepareProductOverviewModels(products).ToList();
-            //model.PagingFilteringContext.LoadPagedList(products);
            var categorys = _categoryService.GetAllCategories();
            int categoryId = categorys[0].Id;
            var category = _categoryService.GetCategoryById(categoryId);
@@ -3070,6 +3038,327 @@ namespace Nop.Web.Controllers
             model.PagingFilteringContext.LoadPagedList(products);
 
             return PartialView("IndexSold", model);
+        }
+        /// <summary>
+        /// 查询Vip商品
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SearchTuiJianProduct(CatalogPagingFilteringModel command)
+        {
+            var categorys = _categoryService.GetAllCategories();
+            int categoryId = categorys[0].Id;
+            var category = _categoryService.GetCategoryById(categoryId);
+            if (category == null || category.Deleted)
+                return InvokeHttp404();
+
+            //Check whether the current user has a "Manage catalog" permission
+            //It allows him to preview a category before publishing
+            if (!category.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageCategories))
+                return InvokeHttp404();
+
+            //ACL (access control list)
+            if (!_aclService.Authorize(category))
+                return InvokeHttp404();
+
+            //Store mapping
+            if (!_storeMappingService.Authorize(category))
+                return InvokeHttp404();
+
+            //'Continue shopping' URL
+            _genericAttributeService.SaveAttribute(_workContext.CurrentCustomer,
+                SystemCustomerAttributeNames.LastContinueShoppingPage,
+                _webHelper.GetThisPageUrl(false),
+                _storeContext.CurrentStore.Id);
+
+            if (command.PageNumber <= 0) command.PageNumber = 1;
+
+            var model = category.ToModel();
+
+
+
+
+            //sorting
+            model.PagingFilteringContext.AllowProductSorting = _catalogSettings.AllowProductSorting;
+            if (model.PagingFilteringContext.AllowProductSorting)
+            {
+                foreach (ProductSortingEnum enumValue in Enum.GetValues(typeof(ProductSortingEnum)))
+                {
+                    var currentPageUrl = _webHelper.GetThisPageUrl(true);
+                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "orderby=" + ((int)enumValue).ToString(), null);
+
+                    var sortValue = enumValue.GetLocalizedEnum(_localizationService, _workContext);
+                    model.PagingFilteringContext.AvailableSortOptions.Add(new SelectListItem()
+                    {
+                        Text = sortValue,
+                        Value = sortUrl,
+                        Selected = enumValue == (ProductSortingEnum)command.OrderBy
+                    });
+                }
+            }
+
+
+
+            //view mode
+            model.PagingFilteringContext.AllowProductViewModeChanging = _catalogSettings.AllowProductViewModeChanging;
+            var viewMode = !string.IsNullOrEmpty(command.ViewMode)
+                ? command.ViewMode
+                : _catalogSettings.DefaultViewMode;
+            if (model.PagingFilteringContext.AllowProductViewModeChanging)
+            {
+                var currentPageUrl = _webHelper.GetThisPageUrl(true);
+                //grid
+                model.PagingFilteringContext.AvailableViewModes.Add(new SelectListItem()
+                {
+                    Text = _localizationService.GetResource("Categories.ViewMode.Grid"),
+                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=grid", null),
+                    Selected = viewMode == "grid"
+                });
+                //list
+                model.PagingFilteringContext.AvailableViewModes.Add(new SelectListItem()
+                {
+                    Text = _localizationService.GetResource("Categories.ViewMode.List"),
+                    Value = _webHelper.ModifyQueryString(currentPageUrl, "viewmode=list", null),
+                    Selected = viewMode == "list"
+                });
+            }
+
+            //page size
+            model.PagingFilteringContext.AllowCustomersToSelectPageSize = false;
+            if (category.AllowCustomersToSelectPageSize && category.PageSizeOptions != null)
+            {
+                var pageSizes = category.PageSizeOptions.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (pageSizes.Any())
+                {
+                    // get the first page size entry to use as the default (category page load) or if customer enters invalid value via query string
+                    if (command.PageSize <= 0 || !pageSizes.Contains(command.PageSize.ToString()))
+                    {
+                        int temp = 0;
+
+                        if (int.TryParse(pageSizes.FirstOrDefault(), out temp))
+                        {
+                            if (temp > 0)
+                            {
+                                command.PageSize = temp;
+                            }
+                        }
+                    }
+
+                    var currentPageUrl = _webHelper.GetThisPageUrl(true);
+                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "pagesize={0}", null);
+                    sortUrl = _webHelper.RemoveQueryString(sortUrl, "pagenumber");
+
+                    foreach (var pageSize in pageSizes)
+                    {
+                        int temp = 0;
+                        if (!int.TryParse(pageSize, out temp))
+                        {
+                            continue;
+                        }
+                        if (temp <= 0)
+                        {
+                            continue;
+                        }
+
+                        model.PagingFilteringContext.PageSizeOptions.Add(new SelectListItem()
+                        {
+                            Text = pageSize,
+                            Value = String.Format(sortUrl, pageSize),
+                            Selected = pageSize.Equals(command.PageSize.ToString(), StringComparison.InvariantCultureIgnoreCase)
+                        });
+                    }
+
+                    if (model.PagingFilteringContext.PageSizeOptions.Any())
+                    {
+                        model.PagingFilteringContext.PageSizeOptions = model.PagingFilteringContext.PageSizeOptions.OrderBy(x => int.Parse(x.Text)).ToList();
+                        model.PagingFilteringContext.AllowCustomersToSelectPageSize = true;
+
+                        if (command.PageSize <= 0)
+                        {
+                            command.PageSize = int.Parse(model.PagingFilteringContext.PageSizeOptions.FirstOrDefault().Text);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //customer is not allowed to select a page size
+                command.PageSize = category.PageSize;
+            }
+
+            if (command.PageSize <= 0) command.PageSize = category.PageSize;
+
+
+            //price ranges
+            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(category.PriceRanges, _webHelper, _priceFormatter);
+            var selectedPriceRange = model.PagingFilteringContext.PriceRangeFilter.GetSelectedPriceRange(_webHelper, category.PriceRanges);
+            decimal? minPriceConverted = null;
+            decimal? maxPriceConverted = null;
+            if (selectedPriceRange != null)
+            {
+                if (selectedPriceRange.From.HasValue)
+                    minPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(selectedPriceRange.From.Value, _workContext.WorkingCurrency);
+
+                if (selectedPriceRange.To.HasValue)
+                    maxPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(selectedPriceRange.To.Value, _workContext.WorkingCurrency);
+            }
+
+
+
+
+
+            //category breadcrumb
+            model.DisplayCategoryBreadcrumb = _catalogSettings.CategoryBreadcrumbEnabled;
+            if (model.DisplayCategoryBreadcrumb)
+            {
+                foreach (var catBr in category.GetCategoryBreadCrumb(_categoryService, _aclService, _storeMappingService))
+                {
+                    model.CategoryBreadcrumb.Add(new CategoryModel()
+                    {
+                        Id = catBr.Id,
+                        Name = catBr.GetLocalized(x => x.Name),
+                        SeName = catBr.GetSeName()
+                    });
+                }
+            }
+
+
+
+            var customerRolesIds = _workContext.CurrentCustomer.CustomerRoles
+                .Where(cr => cr.Active).Select(cr => cr.Id).ToList();
+
+
+
+            //subcategories
+            //We cache whether we have subcategories
+            IList<Category> subcategories = null;
+            int rootid = categoryId;
+            if (category.ParentCategoryId > 0)
+                rootid = category.ParentCategoryId;
+            string hasSubcategoriesCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_SUBCATEGORIES_KEY, rootid,
+                string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+            var hasSubcategoriesCache = _cacheManager.Get<bool?>(hasSubcategoriesCacheKey);
+            if (!hasSubcategoriesCache.HasValue)
+            {
+                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(rootid);
+                hasSubcategoriesCache = subcategories.Count > 0;
+                _cacheManager.Set(hasSubcategoriesCacheKey, hasSubcategoriesCache, 60);
+            }
+            if (hasSubcategoriesCache.Value && subcategories == null)
+            {
+                subcategories = _categoryService.GetAllCategoriesByParentCategoryId(rootid);
+            }
+            if (subcategories != null)
+            {
+                model.SubCategories = subcategories
+                .Select(x =>
+                {
+                    var subCatName = x.GetLocalized(y => y.Name);
+                    var subCatModel = new CategoryModel.SubCategoryModel()
+                    {
+                        Id = x.Id,
+                        Name = subCatName,
+                        SeName = x.GetSeName(),
+                        IsCurrent = categoryId == x.Id
+                    };
+
+                    //prepare picture model
+                    int pictureSize = _mediaSettings.CategoryThumbPictureSize;
+                    var categoryPictureCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_PICTURE_MODEL_KEY, x.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+                    subCatModel.PictureModel = _cacheManager.Get(categoryPictureCacheKey, () =>
+                    {
+                        var picture = _pictureService.GetPictureById(x.PictureId);
+                        var pictureModel = new PictureModel()
+                        {
+                            FullSizeImageUrl = _pictureService.GetPictureUrl(picture),
+                            ImageUrl = _pictureService.GetPictureUrl(picture, pictureSize),
+                            Title = string.Format(_localizationService.GetResource("Media.Category.ImageLinkTitleFormat"), subCatName),
+                            AlternateText = string.Format(_localizationService.GetResource("Media.Category.ImageAlternateTextFormat"), subCatName)
+                        };
+                        return pictureModel;
+                    });
+
+                    return subCatModel;
+                })
+                .ToList();
+            }
+
+
+
+            //featured products
+            if (!_catalogSettings.IgnoreFeaturedProducts)
+            {
+                //We cache whether we have featured products
+                IPagedList<Product> featuredProducts = null;
+                string cacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_HAS_FEATURED_PRODUCTS_KEY, categoryId,
+                    string.Join(",", customerRolesIds), _storeContext.CurrentStore.Id);
+                var hasFeaturedProductsCache = _cacheManager.Get<bool?>(cacheKey);
+                if (!hasFeaturedProductsCache.HasValue)
+                {
+                    featuredProducts = _productService.SearchProducts(
+                       categoryIds: new List<int>() { category.Id },
+                       storeId: _storeContext.CurrentStore.Id,
+                       visibleIndividuallyOnly: true,
+                       featuredProducts: true);
+                    hasFeaturedProductsCache = featuredProducts.TotalCount > 0;
+                    _cacheManager.Set(cacheKey, hasFeaturedProductsCache, 60);
+                }
+                if (hasFeaturedProductsCache.Value && featuredProducts == null)
+                {
+                    featuredProducts = _productService.SearchProducts(
+                       categoryIds: new List<int>() { category.Id },
+                       storeId: _storeContext.CurrentStore.Id,
+                       visibleIndividuallyOnly: true,
+                       featuredProducts: true);
+                }
+                if (featuredProducts != null)
+                {
+                    model.FeaturedProducts = PrepareProductOverviewModels(featuredProducts).ToList();
+                }
+            }
+
+
+            var categoryIds = new List<int>();
+            categoryIds.Add(category.Id);
+            if (_catalogSettings.ShowProductsFromSubcategories)
+            {
+                //include subcategories
+                categoryIds.AddRange(GetChildCategoryIds(category.Id));
+            }
+            //products
+            IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredSpecOptionIds(_webHelper);
+            IList<int> filterableSpecificationAttributeOptionIds = null;
+        
+            var productss = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
+               categoryIds: categoryIds,
+               storeId: _storeContext.CurrentStore.Id,
+               visibleIndividuallyOnly: true,
+               featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+               priceMin: minPriceConverted, priceMax: maxPriceConverted,
+               filteredSpecs: alreadyFilteredSpecOptionIds,
+               orderBy: (ProductSortingEnum)command.OrderBy);
+
+            var products = new PagedList<Product>(productss.OrderByDescending(o =>ParseScore(o)).ToList<Product>(), command.PageNumber - 1, command.PageSize);
+            model.Products = PrepareProductOverviewModels(products).ToList();
+
+            model.PagingFilteringContext.LoadPagedList(products);
+            model.PagingFilteringContext.ViewMode = viewMode;
+
+            //specs
+            var specs = this._categorySpecificationService.LoadCategorySpecificationAtrributeById(category.ParentCategoryId > 0 ? category.ParentCategoryId : category.Id);
+            model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
+                specs,
+                _specificationAttributeService, _webHelper, _workContext);
+
+
+        
+
+            //activity log
+            _customerActivityService.InsertActivity("PublicStore.ViewCategory", _localizationService.GetResource("ActivityLog.PublicStore.ViewCategory"), category.Name);
+
+            //return View(templateViewPath, model);
+
+            return PartialView("IndexTuiJin", model);
         }
 
         #endregion
