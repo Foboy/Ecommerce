@@ -45,10 +45,10 @@
         {
                     <li>
                         <div class="vip-item-wrap">
-                            <a class="img-wrap">
+                            <a class="img-wrap" href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">
                                 <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText " />
                             </a>
-                            <p class="item-title"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</a></p>
+                            <p class="item-title"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name</a></p>
                             <div class="vip-item-price">
                                 @product.ProductPrice.Price
                                 <del>@product.ProductPrice.OldPrice</del>

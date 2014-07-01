@@ -3009,7 +3009,7 @@ namespace Nop.Web.Controllers
             {
                 var catSpecs = specs.Where(s => s.CategoryId == cat.Id && s.AllowFiltering).ToList();
                 cat.PriceRangeFilter.LoadPriceRangeFilters(cat.PriceRanges, _webHelper, _priceFormatter);
-                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.HttpRouteUrl("Category", new { SeName = cat.SeName }));
+                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.HttpRouteUrl("VipProduct", new { SeName = cat.SeName }));
             }
             return PartialView(model);
         }
