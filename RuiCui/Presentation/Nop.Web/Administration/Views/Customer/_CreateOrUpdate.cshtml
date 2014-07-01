@@ -28,7 +28,7 @@
             @*<li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.ActivityLog")
             </li>*@
-            <li @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
+            <li style="display:none;" @Html.RenderSelectedTabIndex(6, GetSelectedTabIndex())>
                 @T("Admin.Customers.Customers.Impersonate")
             </li>
         }
@@ -256,7 +256,7 @@
                 </td>
             </tr>
         }
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.VendorId):
             </td>
