@@ -1,9 +1,21 @@
 ﻿@{
     Layout = "~/Views/Shared/_Root.Head.cshtml";
+    var _workContext = EngineContext.Current.Resolve<Nop.Core.IWorkContext>();
+    var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
+    bool check = false;
+    foreach (var role in currentCustomerRoles)
+    {
+        if (role.Name == "已注册客户")
+        {
+            check = true;
+        }
+    }
 }
 @Html.Widget("body_start_html_tag_after")
 @Html.Partial("_Notifications")
 @Html.Action("AdminHeaderLinks", "Common")
+@using Nop.Core.Infrastructure;
+
 
 <div class="site-topbar">
     <div class="container">
@@ -44,22 +56,31 @@
                     <a href="@Url.RouteUrl("HomePage")"><span class="text">首页</span></a>
                 </li>
                 <li id="nav_lastproduct" class="nav-main-item">
-                    <a href="@Url.RouteUrl("LastProduct")"><span class="text">每日新品</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("LastProduct")" target="_blank"><span class="text">每日新品</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="#"><span class="text">超值推荐</span><span class="arrow"></span></a>
+                    <a href="#" target="_blank"><span class="text">超值推荐</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
                 <li id="nav_vip" class="nav-main-item">
-                    <a href="#not_vip_msg" target="_blank" class="poplink"><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    @if(check)
+                    { 
+                    <a href="@Url.RouteUrl("VipProduct")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    }
+                    else
+                    {
+                        <a href="#not_vip_msg" target="_blank" class="poplink"><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    }
+
+
                 </li>
                 <li class="nav-main-item">
-                    <a href="#"><span class="text">购物无忧</span><span class="arrow"></span></a>
+                    <a href="#" target="_blank"><span class="text">购物无忧</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="@Url.RouteUrl("SoldProduct")"><span class="text">已售欣赏</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("SoldProduct")" target="_blank"><span class="text">已售欣赏</span><span class="arrow"></span></a>
                 </li>
             </ul>
         </div>
@@ -139,7 +160,7 @@
 @Html.Action("EuCookieLaw", "Common")
 @Html.Widget("body_end_html_tag_before")
 
-<div>
+
     <div id='not_vip_msg' style='padding:10px; background:#fff;'>
         对不起，您还不是VIP哦！
     </div>

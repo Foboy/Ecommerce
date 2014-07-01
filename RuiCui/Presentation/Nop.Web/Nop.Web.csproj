@@ -3427,6 +3427,7 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexTuiJin.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\IndexVip.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\TopSpecsMenu.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\VipTopSpecsMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

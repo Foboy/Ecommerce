@@ -18,26 +18,57 @@
     }
     <text>@Html.Raw(css)</text>
 }
+@helper  ChangWeek(int num)
+    {
+         string week = "";
+        switch (num)
+        {
+            case 1:
+                week = "一";
+                break;
+            case 2:
+                week = "二";
+                break;
+            case 3:
+                week = "三";
+                break;
+            case 4:
+                week = "四";
+                break;
+            case 5:
+                week = "五";
+                break;
+            case 6:
+                week = "六";
+                break;
+            case 7:
+                week = "日";
+                break;
+        }
+         <text>@week</text>
+    }
+@foreach(var datetime in Model.dateList)
+{ 
     <div class="product-date">
         <h4 class="product-time">
             <i class="iconfont font18">&#xe60b;</i>
-            06/30 &nbsp; &nbsp; 星期二
+            @datetime &nbsp; &nbsp; 星期 @ChangWeek(((((int)(Convert.ToDateTime(datetime).DayOfWeek)) + 6) % 7 + 1)) 
         </h4>
     </div>
     <div class="xm-goods-list-wrap">
         <ul class="xm-goods-list clearfix">
-        @foreach (var product in Model.Products)
+        @foreach (var product in Model.Products.Where(o=>o.UpdatedOnUtc>=Convert.ToDateTime(datetime) && o.UpdatedOnUtc<Convert.ToDateTime(datetime).AddDays(1)))
         {
             <li class="item-box product-width">
                 <div class="xm-goods-item product-width" data-productid="64">
                     <div class="item-thumb">
-                        <a title="@product.Name " href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
+                        <a title="@product.Name " target="_blank" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
                             <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText ">
                         </a>
                     </div>
                     <div class="item-info">
                         <h3 class="item-title">
-                            <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name </a>
+                            <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name </a>
                         </h3>
                         <div class="item-price">
                             <del class="price old-price">@product.ProductPrice.OldPrice</del>
@@ -81,6 +112,7 @@
         }
         </ul>
     </div>
+}
     <div class="xm-pagenavi">
         @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
     </div>
