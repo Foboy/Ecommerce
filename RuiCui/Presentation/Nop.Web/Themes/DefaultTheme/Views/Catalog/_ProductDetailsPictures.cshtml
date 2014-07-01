@@ -8,63 +8,51 @@
 
     int productPerRow = EngineContext.Current.Resolve<MediaSettings>().ProductThumbPerRowOnProductDetailsPage;
 }
-<div class="gallery">
-    <div class="goods-big-pic">
-            <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" class="pictures_popup_link">
-                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
-            </a>
-@for (int i = 0; i < Model.PictureModels.Count; i++)
-{
-    var picture = Model.PictureModels[i];
-    if (picture.FullSizeImageUrl.Equals(@Model.DefaultPictureModel.FullSizeImageUrl))
-    {
-        continue;
-    }
-    <a href="@picture.FullSizeImageUrl" class="pictures_popup_link">
+<div class="goods-big-pic">
+    <a href="@Model.DefaultPictureModel.FullSizeImageUrl" title="@Model.Name" class="pictures_popup_link">
+        <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" itemprop="image" id="main-product-img" />
     </a>
-}
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('.pictures_popup_link').magnificPopup(
-                    {
-                        type: 'image',
-                        removalDelay: 300,
-                        gallery: {
-                            enabled: true
-                        }
-                    });
-                });
-            </script>
-    </div>
-    @if (Model.PictureModels.Count > 1)
+    @for (int i = 0; i < Model.PictureModels.Count; i++)
     {
-        <div class="picture-thumbs">
-            @for (int i = 0; i < Model.PictureModels.Count; i++)
-            {
-                var picture = Model.PictureModels[i];
-
-                if (i % productPerRow == 0)
-                {
-                @Html.Raw("<div>")
-                }
-                <a class="thumb-popup-link" href="javascript:void(0);" data-src="@picture.FullSizeImageUrl" title="@Model.Name">
-                    <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
-                </a>
-                if ((i % productPerRow == (productPerRow - 1)) ||
-                    //last image
-                    (i == (Model.PictureModels.Count - 1)))
-                {
-                @Html.Raw("</div>")
-                }
-            }
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $(".thumb-popup-link").click(function () {
-                    $("#main-product-img").attr("src", $(this).attr("data-src"));
-                });
-               
-            });
-        </script>
+        var picture = Model.PictureModels[i];
+        if (picture.FullSizeImageUrl.Equals(@Model.DefaultPictureModel.FullSizeImageUrl))
+        {
+            continue;
+        }
+        <a href="@picture.FullSizeImageUrl" class="pictures_popup_link">
+        </a>
     }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.pictures_popup_link').magnificPopup(
+            {
+                type: 'image',
+                removalDelay: 300,
+                gallery: {
+                    enabled: true
+                }
+            });
+        });
+    </script>
 </div>
+@if (Model.PictureModels.Count > 1)
+{
+    <div class="picture-thumbs">
+        @for (int i = 0; i < Model.PictureModels.Count; i++)
+        {
+            var picture = Model.PictureModels[i];
+            <a class="thumb-popup-link" href="javascript:void(0);" data-src="@picture.FullSizeImageUrl" title="@Model.Name">
+                <img src="@picture.ImageUrl" alt="@picture.AlternateText" title="@picture.Title" />
+            </a>
+          
+        }
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".thumb-popup-link").click(function () {
+                $("#main-product-img").attr("src", $(this).attr("data-src"));
+            });
+               
+        });
+    </script>
+}

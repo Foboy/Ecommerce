@@ -65,13 +65,20 @@ em {
 .goods-big-pic {
     height: 430px;
     padding: 20px 0 10px;
+    position: relative;
+    text-align: center;
 }
 
-    .goods-big-pic img {
-        width: 430px;
-        height: 430px;
-        cursor: pointer;
-    }
+.goods-big-pic img {
+    width: 430px;
+    height: 430px;
+    cursor: pointer;
+}
+.picture-thumbs {
+    position: relative;
+    text-align: center;
+    height:70px;
+}
 .product-name {
     margin-bottom:10px;
 }
@@ -1645,5 +1652,23 @@ dl.goods-info-box {
     .goods-sub-bar .fr .item-action-state {
         width: 137px;
     }
+}
+.thumb-popup-link {
+    border:1px solid #f3f3f3;
+    height: 70px;
+    line-height:70px;
+    position: relative;
+    width: 70px;
+    text-align: center;
+    vertical-align: middle;
+    margin-right:5px;
+    display:inline-block;
+}
+.thumb-popup-link:hover {
+    border:1px solid #f8bf6c;
+}
+.thumb-popup-link img {
+    max-width:66px;
+    max-height:66px;
 }
 
