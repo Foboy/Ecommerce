@@ -6,13 +6,6 @@ CurrencyExchange.MoneyConverter
 ExternalAuth.OpenId
 Misc.FacebookShop
 Misc.WebServices
-Payments.CashOnDelivery
-Payments.CheckMoneyOrder
-Payments.AuthorizeNet
-Payments.Manual
-Payments.PayPalDirect
-Payments.PayPalStandard
-Payments.PurchaseOrder
 PromotionFeed.Froogle
 Shipping.AustraliaPost
 Shipping.CanadaPost
