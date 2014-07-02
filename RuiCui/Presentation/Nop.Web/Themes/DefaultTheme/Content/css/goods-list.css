@@ -232,20 +232,19 @@
                 margin-left: -155px;
             }
 
-    .product-intro {
-        margin: 0;
-    }
-
-    .accessories-list-box .accessories-home-list {
-        width: 930px;
-    }
-
-        .accessories-list-box .accessories-home-list .acc-list {
-            width: 180px;
-            margin: 0 16px;
-        }
+.product-intro {
+    margin: 0;
 }
 
+.accessories-list-box .accessories-home-list {
+    width: 930px;
+}
+
+.accessories-list-box .accessories-home-list .acc-list {
+    width: 180px;
+    margin: 0 16px;
+}
+}
 
 .goods-detail-desc .xm-goods-side-list {
     border: none;
@@ -254,46 +253,56 @@
     _width: 310px;
 }
 
-    .goods-detail-desc .xm-goods-side-list .box-hd .title {
-        margin: 0px;
-        line-height: 55px;
-    }
+.goods-detail-desc .xm-goods-side-list .box-hd .title {
+    margin: 0px;
+    line-height: 55px;
+}
 
-    .goods-detail-desc .xm-goods-side-list .box-bd {
-        padding-top: 10px;
-    }
+.goods-detail-desc .xm-goods-side-list .box-bd {
+    padding-top: 10px;
+}
 
-        .goods-detail-desc .xm-goods-side-list .box-bd ul li h2 {
-            font-size: 14px;
-            color: #6d6d6d;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            font-weight: normal;
-        }
+.goods-detail-desc .xm-goods-side-list .box-bd ul li h2 {
+    font-size: 14px;
+    color: #6d6d6d;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-weight: normal;
+}
 
-        .goods-detail-desc .xm-goods-side-list .box-bd ul li .star {
-            margin-top: 3px;
-        }
+.goods-detail-desc .xm-goods-side-list .box-bd ul li .star {
+    margin-top: 3px;
+}
 
-        .goods-detail-desc .xm-goods-side-list .box-bd ul li img {
-            width: 80px;
-            height: 80px;
-            position: absolute;
-            top: 15px;
-            left: 0px;
-        }
+.goods-detail-desc .xm-goods-side-list .box-bd ul li img {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 15px;
+    left: 0px;
+}
 
-        .goods-detail-desc .xm-goods-side-list .box-bd ul li a {
-            display: block;
-            padding-top: 20px;
-            padding-left: 90px;
-            padding-bottom: 15px;
-            position: relative;
-            _zoom: 1;
-        }
+.goods-detail-desc .xm-goods-side-list .box-bd ul li a {
+    display: block;
+    padding-top: 20px;
+    padding-left: 90px;
+    padding-bottom: 15px;
+    position: relative;
+    _zoom: 1;
+}
 
-            .goods-detail-desc .xm-goods-side-list .box-bd ul li a:hover h2 {
-                color: #ff4a00;
-            }
+.goods-detail-desc .xm-goods-side-list .box-bd ul li a:hover h2 {
+    color: #ff4a00;
+}
 
+/*商品列表页广告位*/
+.goodlist-showcase {
+    width:204px;
+    height:204px;
+    line-height:204px;
+    overflow:hidden;
+    background-color:#fafafa;
+    margin-top:10px;
+    padding-left:14px;
+}
