@@ -74,6 +74,8 @@ namespace Nop.Web.Models.Catalog
         //a list of associated products. For example, "Grouped" products could have several child "simple" products
         public IList<ProductDetailsModel> AssociatedProducts { get; set; }
 
+        public IList<ProductQuestionModel> ProductQuestions { get; set; }
+
 		#region Nested Classes
 
         public partial class ProductBreadcrumbModel : BaseNopModel
@@ -244,6 +246,25 @@ namespace Nop.Web.Models.Catalog
             public int PictureId { get; set; }
             public string PictureUrl { get; set; }
             public string FullSizePictureUrl { get; set; }
+        }
+
+        public partial class ProductQuestionModel : BaseNopEntityModel
+        {
+
+            /// <summary>
+            /// Gets or sets the title
+            /// </summary>
+            public string Title { get; set; }
+
+            /// <summary>
+            /// Gets or sets the question text
+            /// </summary>
+            public string QuestionText { get; set; }
+
+            /// <summary>
+            /// OrderNum顺序
+            /// </summary>
+            public int OrderNum { get; set; }
         }
 
 		#endregion

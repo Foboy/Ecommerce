@@ -8,6 +8,16 @@
     @RenderSection("CategorySelector")
 </div>
 <div class="row">
+    <div class="col col17">
+        <div class="xm-line-box goods-list-box">
+            <div class="goods-list-section ">
+                @Html.Widget("main_column_before")
+                @RenderBody()
+                @Html.Widget("main_column_after")
+            </div>
+        </div>
+    </div>
+
     <div class="col col4">
         <div class="goods-detail-desc">
             <div class="left-list-w xm-box goods-alsobuy xm-goods-side-list">
@@ -26,14 +36,8 @@
                     @Html.Widget("left_side_column_after")
                 }
             </div>
-        </div>
-    </div>
-    <div class="col col17">
-        <div class="xm-line-box goods-list-box">
-            <div class="goods-list-section ">
-                @Html.Widget("main_column_before")
-                @RenderBody()
-                @Html.Widget("main_column_after")
+            <div class="goodlist-showcase ">
+
             </div>
         </div>
     </div>

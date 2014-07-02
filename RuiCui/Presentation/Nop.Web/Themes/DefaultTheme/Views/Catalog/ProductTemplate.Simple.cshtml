@@ -129,7 +129,7 @@
                         <a href="#goodsComment">评价晒单</a>
                     </li>-->
                     <li>
-                        <a href="#goodsFaq">商品提问</a>
+                        <a href="#goodsFaq">常见问题</a>
                     </li>
 
                     <li>
@@ -189,6 +189,13 @@
             </div>
             <div class="question-bd">
                 <ul class="content">
+                    @foreach(var question in Model.ProductQuestions)
+                    {
+                         <li>
+                        <h3>@question.Title</h3>
+                        <p>@question.QuestionText</p>
+                    </li>
+                    }
                     @*<li>
                         <h3>如何挑选商品？</h3>
                         <p>点击页面上方“加入购物车”按钮或页面下拉时顶部导航上的“加入购物车”按钮将商品加入购物车，再点击页面右上角的“购物车”前往购物车页面进行结算。</p>

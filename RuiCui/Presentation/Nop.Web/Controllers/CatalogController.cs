@@ -1050,6 +1050,22 @@ namespace Nop.Web.Controllers
 
             #endregion
 
+            #region productQuestion
+           var questions =  _productService.GetAllProductQuestion().OrderByDescending(o=>o.OrderNum);
+           var qlist = new List<ProductDetailsModel.ProductQuestionModel>();
+           foreach (var question in questions)
+           {
+               qlist.Add(new ProductDetailsModel.ProductQuestionModel()
+                   {
+                       Title=question.Title,
+                       QuestionText=question.QuestionText,
+                       Id=question.Id,
+                       OrderNum=question.OrderNum
+                   });
+           }
+           model.ProductQuestions = qlist;
+            #endregion productQuestion
+
             model.Score = ParseScore(product);
 
             return model;
