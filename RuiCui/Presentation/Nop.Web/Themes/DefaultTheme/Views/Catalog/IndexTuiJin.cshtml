@@ -50,10 +50,10 @@
 }
 
 
-    <div class="box-hd">
+    @*<div class="box-hd">
         <h3 class="title">商品筛选</h3>
-    </div>
-    <div class="box-bd">
+    </div>*@
+    @*<div class="box-bd">
         <div class="filter-lists">
             @if (Model.SubCategories.Count > 0)
             {
@@ -69,7 +69,6 @@
                     </dd>
                 </dl>
             }
-            @*filtering*@
             @{
                 ViewDataDictionary filters = new ViewDataDictionary();
               //  filters.Add("SpecFilter", Model.PagingFilteringContext.SpecificationFilter);
@@ -77,13 +76,13 @@
                 @Html.Partial("_FilterTuiJianBox", null, filters)
             }
         </div>
-    </div>
+    </div>*@
 
 <div class="product-sorting" style="display:none;">
     @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
 </div>
 <div class="box-hd">
-    <div class="filter-lists">
+    <div class="tj-sort">
         <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
             <dd>
                 <ul id="typeOrder" class="clearfix">
@@ -143,11 +142,11 @@
 
     <ul class="xm-goods-list clearfix">
         @foreach (var product in Model.Products)
-        {
-            <li class="item-box">
-                @Html.Partial("_ProductTuiJianBox", product)
-            </li>
-        }
+    {
+        <li class="item-box" style="width:254px;">
+            @Html.Partial("_ProductBox", product)
+        </li>
+    }
     </ul>
 </div>
 <div class="xm-pagenavi">
