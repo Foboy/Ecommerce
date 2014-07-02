@@ -72,6 +72,7 @@
     <script type="text/javascript">
         var $vipcategoryContainer = $("#J_vip_nav"),
     $vipcategoryList = $vipcategoryContainer.children("li");
+        $categoryList = $vipcategoryContainer;
         var viptimeoutChildrenList;
         $vipcategoryList.on({
             mouseenter: function () {
@@ -81,6 +82,12 @@
                     $this.addClass("current").siblings("li").removeClass("current");
                     $this.addClass("current").siblings("li").find("div").hide();
                     var $children = $this.find(".vip-nav-children");
+                    if ($children.length && $this[0] == $vipcategoryList.last()[0]) {
+                        $children.css({
+                            left: "auto",
+                            right: "0"
+                        })
+                    }
                     $children.show();
                 },
                 100))

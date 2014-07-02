@@ -71,7 +71,9 @@
         <!--product manufacturers-->
         @Html.Action("ProductManufacturers", "Catalog", new { productId = Model.Id })
         <!--product reviews-->
-        @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
+        @*
+    @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
+        *@
         <!--sample download-->
         @Html.Partial("_DownloadSample", Model)
         <!--attributes-->
@@ -122,9 +124,9 @@
                     <li>
                         <a href="#goodsParam">规格参数</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="#goodsComment">评价晒单</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="#goodsFaq">商品提问</a>
                     </li>
@@ -151,7 +153,7 @@
             @Html.Action("ProductSpecifications", "Catalog", new { productId = Model.Id })
         </div>
         <!--E 规格-->
-        <!--S 商品评论 -->
+        <!--S 商品评论 
         <div class="xm-box goods-detail-comment " id="goodsComment">
             <div class="box-hd">
                 <div class="title">
@@ -166,7 +168,7 @@
             <div class="box-bd" id="J_goods_detail_comment">
 
             </div>
-        </div>
+        </div>-->
         <!--E 商品评论 -->
         <!-- FAQ  -->
         @*<div class="xm-box goods-detail-faq" id="goodsFaq">
