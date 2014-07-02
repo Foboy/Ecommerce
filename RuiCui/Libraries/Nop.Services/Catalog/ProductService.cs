@@ -622,7 +622,7 @@ namespace Nop.Services.Catalog
                     pShowHidden,
                     pLoadFilterableSpecificationAttributeOptionIds,
                     pFilterableSpecificationAttributeOptionIds,
-                    pTotalRecords).OrderByDescending(x=>x.CreatedOnUtc);
+                    pTotalRecords);
                 //get filterable specification attribute option identifier
                 string filterableSpecificationAttributeOptionIdsStr = (pFilterableSpecificationAttributeOptionIds.Value != DBNull.Value) ? (string)pFilterableSpecificationAttributeOptionIds.Value : "";
                 if (loadFilterableSpecificationAttributeOptionIds &&

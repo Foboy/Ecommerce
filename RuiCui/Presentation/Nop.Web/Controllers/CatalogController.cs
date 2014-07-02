@@ -2940,9 +2940,9 @@ namespace Nop.Web.Controllers
             //    pageSize: command.PageSize);
             var productss = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
                categoryIds: categoryIds,
-               storeId: _storeContext.CurrentStore.Id,
-               visibleIndividuallyOnly: true,
-               featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+              // storeId: _storeContext.CurrentStore.Id,
+              // visibleIndividuallyOnly: true,
+              // featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
                priceMin: minPriceConverted, priceMax: maxPriceConverted,
                filteredSpecs: alreadyFilteredSpecOptionIds,
                orderBy: (ProductSortingEnum)command.OrderBy);
@@ -3347,9 +3347,9 @@ namespace Nop.Web.Controllers
         
             var productss = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
                categoryIds: categoryIds,
-               storeId: _storeContext.CurrentStore.Id,
-               visibleIndividuallyOnly: true,
-               featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
+               //storeId: _storeContext.CurrentStore.Id,
+              // visibleIndividuallyOnly: true,
+               //featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
                priceMin: minPriceConverted, priceMax: maxPriceConverted,
                filteredSpecs: alreadyFilteredSpecOptionIds,
                orderBy: (ProductSortingEnum)command.OrderBy);
