@@ -42,7 +42,40 @@
                 <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
                     <dd class="float-left">
                         <ul id="typeOrder" class="clearfix">
-                            <li class="current first">
+@if (Model.PagingFilteringContext.AvailableSortOptions.Count > 0)
+{
+    var first = 0;
+    var firstCss = " first";
+    foreach (var item in Model.PagingFilteringContext.AvailableSortOptions)
+    {
+        if (first++ > 0)
+        {
+            firstCss = "";
+        }
+
+        if (item.Value.Contains("orderby=15"))
+        {
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">最新</a>
+            </li>
+        }
+        else if (item.Value.Contains("orderby=11"))
+        {
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">价格从高到低</a>
+            </li>
+        }
+        else if (item.Value.Contains("orderby=10"))
+        {
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">价格从低到高</a>
+            </li>
+        }
+
+
+    }
+}
+                            @*<li class="current first">
                                 <a rel="nofollow" href="http://localhost:15536/翡翠?orderby=0">最新</a>
                             </li>
                             <li class="">
@@ -50,7 +83,7 @@
                             </li>
                             <li class="">
                                 <a rel="nofollow" href="http://localhost:15536/翡翠?orderby=11">价格从高到低</a>
-                            </li>
+                            </li>*@
                         </ul>
                     </dd>
                     <dd class="float-left">

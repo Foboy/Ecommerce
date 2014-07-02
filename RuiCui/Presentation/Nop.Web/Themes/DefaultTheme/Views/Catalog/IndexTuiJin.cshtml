@@ -1,6 +1,6 @@
 ﻿@model CategoryModel
 @{
-    Layout = "~/Views/Shared/_ColumnsList.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts(!String.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
     Html.AddMetaDescriptionParts(Model.MetaDescription);
     Html.AddMetaKeywordParts(Model.MetaKeywords);
@@ -49,8 +49,7 @@
     @Html.Widget("categorydetails_after_breadcrumb")
 }
 
-@section CategorySelector
-{
+
     <div class="box-hd">
         <h3 class="title">商品筛选</h3>
     </div>
@@ -79,7 +78,7 @@
             }
         </div>
     </div>
-}
+
 <div class="product-sorting" style="display:none;">
     @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
 </div>
