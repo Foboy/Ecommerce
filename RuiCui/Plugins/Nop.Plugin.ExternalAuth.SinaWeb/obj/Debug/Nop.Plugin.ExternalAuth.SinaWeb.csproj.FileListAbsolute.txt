@@ -5,3 +5,10 @@ D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.csprojResolveAssemblyReference.cache
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.dll
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Description.txt
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\logo.jpg
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.pdb
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.csprojResolveAssemblyReference.cache
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.dll
+E:\Work\ruicui\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.pdb
