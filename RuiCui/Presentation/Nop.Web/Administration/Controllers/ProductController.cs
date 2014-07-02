@@ -582,13 +582,27 @@ namespace Nop.Admin.Controllers
             var specificationAttributes = _specificationAttributeService.GetSpecificationAttributes();
             for (int i = 0; i < specificationAttributes.Count; i++)
             {
+                
                 var sa = specificationAttributes[i];
+                if (i == 0) {
+                    model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString(),Selected=true });
+                }else
+                { 
                 model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString() });
+                }
                 if (i == 0)
                 {
                     //attribute options
-                    foreach (var sao in _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sa.Id))
+                    var specificationAttributeOptions=_specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sa.Id);
+                    for (int j = 0; j < specificationAttributeOptions.Count; j++)
+                    {
+                        var sao = specificationAttributeOptions[j];
+                        if (j == 0)
+                        {
+                            model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem() { Text = sao.Name, Value = sao.Id.ToString(),Selected=true });
+                        }
                         model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem() { Text = sao.Name, Value = sao.Id.ToString() });
+                    }
                 }
             }
            

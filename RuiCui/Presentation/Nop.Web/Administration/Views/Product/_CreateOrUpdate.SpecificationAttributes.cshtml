@@ -10,7 +10,7 @@
             <div id="specificationattributes-grid"></div>
 
             <script>
-                $(document).ready(function() {
+                $(document).ready(function () {
                     $("#specificationattributes-grid").kendoGrid({
                         dataSource: {
                             type: "json",
@@ -49,12 +49,12 @@
                                     }
                                 }
                             },
-                            requestEnd: function(e) {
+                            requestEnd: function (e) {
                                 if (e.type == "update") {
                                     this.read();
                                 }
                             },
-                            error: function(e) {
+                            error: function (e) {
                                 display_kendoui_grid_error(e);
                                 // Cancel the changes
                                 this.cancelChanges();
@@ -128,66 +128,140 @@
             <strong>添加商品的规格参数</strong>
         </p>
         <script type="text/javascript">
-            $(function() {
-                $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.Category)").change(function() {
-                    var collection=[];
-                    var selectedItem = $(this).val();
-                    var ddlSpecOptions = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)");
-                    ddlSpecOptions.html('');
-                    var jsonObject=$.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableAttributesJsonStr)');
-                    var cjsonObject=$.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableCategorySpecificationAttributesJsonStr)');
-                    if(selectedItem==0){
-                        for (var i = 0; i < jsonObject.length;i++) {
-                            ddlSpecOptions.append($('<option></option>').val(jsonObject[i].Value).html(jsonObject[i].Text));
-                        }
-                    }else
-                    {
-                        collection=[];
-                        for (var i = 0; i < cjsonObject.length; i++) {
-                            if(cjsonObject[i].CategoryId==selectedItem){
-                                collection.push(cjsonObject[i]);
-                            }
-                        }
-                        for (var i = 0; i <collection.length; i++) {
-                            for(var j=0;j<jsonObject.length;j++) {
-                                if(collection[i].SpecificationAttributeId==jsonObject[j].Value){
-                                    jsonObject[j].AllowFiltering=collection[i].AllowFiltering;
-                                    ddlSpecOptions.append($('<option></option>').val(jsonObject[j].Value).html(jsonObject[j].Text));
-                                }
-                            }
-                        }
-                    }
-                    $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").trigger("change");
-                });
-                $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").change(function() {
-                    var selectedItem = $(this).val();
-                    var ddlSpecOptions = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId)")
+            $(function () {
+                function BindDefaultSpecificationAttributeOptions(selectedItem) {
+                    var ddlSpecOptions = $("#SpecificationAttributeOptions");
                     $.ajax({
-                        cache:false,
+                        cache: false,
                         type: "GET",
                         url: "@(Url.Action("GetOptionsByAttributeId", "SpecificationAttribute"))",
                         data: { "attributeId": selectedItem },
                         success: function (data) {
                             ddlSpecOptions.html('');
-                            $.each(data, function(id, option) {
-                                ddlSpecOptions.append($('<option></option>').val(option.id).html(option.name));
+                            $.each(data, function (id, option) {
+                                var str = "<li class='pull-left'>" +
+                                    "<input data-val='true' data-val-number='The field 属性值 must be a number.' id='SpecificationAttributeOptionId_" + option.id + "' name='AddSpecificationAttributeModel.SpecificationAttributeOptionId' type='radio' value='" + option.id + "' style='position: absolute; opacity: 0;'>" +
+                                "<label for='SpecificationAttributeOptionId_" + option.id + "' class=''>" + '' + option.name + '' +
+                                "</label></li>";
+                                if (id == 0) {
+                                    str = "<li class='pull-left'>" + "<input data-val='true' data-val-number='The field 属性值 must be a number.' checked id='SpecificationAttributeOptionId_" + option.id + "'  name='AddSpecificationAttributeModel.SpecificationAttributeOptionId' type='radio' value='" + option.id + "' style='position:absolute; opacity: 0;'>" +
+                                    "<label for='SpecificationAttributeOptionId_" + option.id + "' class=''>" + '' + option.name + '' +
+                                    "</label></li>";
+                                }
+                                ddlSpecOptions.append(str);
+                                $("input[id='SpecificationAttributeOptionId_" + option.id + "']").iCheck({
+                                    radioClass: 'iradio_minimal'
+                                });
                             });
                         },
-                        error:function (xhr, ajaxOptions, thrownError){
-                            
+                        error: function (xhr, ajaxOptions, thrownError) {
+
                         }
                     });
+                }
+                function LoadSpecificationAttributeOptions() {
+                    $("input[name='AddSpecificationAttributeModel.SpecificationAttributeId']").on('ifChecked', function (event) {
+                        var selectedItem = $(this).val();
+                        var ddlSpecOptions = $("#SpecificationAttributeOptions");
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("GetOptionsByAttributeId", "SpecificationAttribute"))",
+                            data: { "attributeId": selectedItem },
+                            success: function (data) {
+                                ddlSpecOptions.html('');
+                                $.each(data, function (id, option) {
+                                    var str = "<li class='pull-left'>" +
+                                        "<input data-val='true' data-val-number='The field 属性值 must be a number.' id='SpecificationAttributeOptionId_" + option.id + "' name='AddSpecificationAttributeModel.SpecificationAttributeOptionId' type='radio' value='" + option.id + "' style='position: absolute; opacity: 0;'>" +
+                                    "<label for='SpecificationAttributeOptionId_" + option.id + "' class=''>" + '' + option.name + '' +
+                                    "</label></li>";
+                                    if (id == 0) {
+                                        str = "<li class='pull-left'>" + "<input data-val='true' data-val-number='The field 属性值 must be a number.' checked id='SpecificationAttributeOptionId_" + option.id + "'  name='AddSpecificationAttributeModel.SpecificationAttributeOptionId' type='radio' value='" + option.id + "' style='position:absolute; opacity: 0;'>" +
+                                        "<label for='SpecificationAttributeOptionId_" + option.id + "' class=''>" + '' + option.name + '' +
+                                        "</label></li>";
+                                    }
+                                    ddlSpecOptions.append(str);
+                                    $("input[id='SpecificationAttributeOptionId_" + option.id + "']").iCheck({
+                                        radioClass: 'iradio_minimal'
+                                    });
+                                });
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+
+                            }
+                        });
+                    });
+                }
+
+                $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.Category)").change(function () {
+                    var collection = [];
+                    var selectedItem = $(this).val();
+                    var defaultsid = 0;
+                    var radiogroups = $("#SpecificationAttributes");
+                    radiogroups.html('');
+                    var jsonObject = $.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableAttributesJsonStr)');
+                    var cjsonObject = $.parseJSON('@Html.Raw(@Model.AddSpecificationAttributeModel.AvailableCategorySpecificationAttributesJsonStr)');
+                    if (selectedItem == 0) {
+                        for (var i = 0; i < jsonObject.length; i++) {
+                            var str = "<li class='pull-left'>" +
+                                         "<input data-val='true' data-val-number='The field 属性规格 must be a number.' id='SpecificationAttributeId_" + jsonObject[i].Value + "' name='AddSpecificationAttributeModel.SpecificationAttributeId' type='radio' value='" + jsonObject[i].Value + "' style='position: absolute; opacity: 0;'>" +
+                                         "<label for='SpecificationAttributeId_" + jsonObject[i].Value + "' class=''>" + '' + jsonObject[i].Text + '' +
+                                         "</label></li>";
+                            if (i == 0) {
+                                defaultsid = jsonObject[i].Value;
+                                str = "<li class='pull-left'>" +
+                                         "<input data-val='true' data-val-number='The field 属性规格 must be a number.' checked id='SpecificationAttributeId_" + jsonObject[i].Value + "' name='AddSpecificationAttributeModel.SpecificationAttributeId' type='radio' value='" + jsonObject[i].Value + "' style='position: absolute; opacity: 0;'>" +
+                                         "<label for='SpecificationAttributeId_" + jsonObject[i].Value + "' class=''>" + '' + jsonObject[i].Text + '' +
+                                         "</label></li>";
+                            }
+                            radiogroups.append(str);
+                            $("input[id='SpecificationAttributeId_" + jsonObject[i].Value + "']").iCheck({
+                                radioClass: 'iradio_minimal'
+                            });
+                        }
+                    } else {
+                        collection = [];
+                        for (var i = 0; i < cjsonObject.length; i++) {
+                            if (cjsonObject[i].CategoryId == selectedItem) {
+                                collection.push(cjsonObject[i]);
+                            }
+                        }
+                        for (var i = 0; i < collection.length; i++) {
+                            for (var j = 0; j < jsonObject.length; j++) {
+                                if (collection[i].SpecificationAttributeId == jsonObject[j].Value) {
+                                    jsonObject[j].AllowFiltering = collection[i].AllowFiltering;
+                                    var str = "<li class='pull-left'>" +
+                                          "<input data-val='true' data-val-number='The field 属性规格 must be a number.' id='SpecificationAttributeId_" + jsonObject[i].Value + "' name='AddSpecificationAttributeModel.SpecificationAttributeId' type='radio' value='" + jsonObject[i].Value + "' style='position: absolute; opacity: 0;'>" +
+                                          "<label for='SpecificationAttributeId_" + jsonObject[j].Value + "' class=''>" + '' + jsonObject[j].Text + '' +
+                                          "</label></li>";
+                                    if (i == 0) {
+                                        defaultsid = jsonObject[j].Value;
+                                        str = "<li class='pull-left'>" +
+                                                 "<input data-val='true' data-val-number='The field 属性规格 must be a number.' checked id='SpecificationAttributeId_" + jsonObject[i].Value + "' name='AddSpecificationAttributeModel.SpecificationAttributeId' type='radio' value='" + jsonObject[i].Value + "' style='position: absolute; opacity: 0;'>" +
+                                                 "<label for='SpecificationAttributeId_" + jsonObject[j].Value + "' class=''>" + '' + jsonObject[j].Text + '' +
+                                                 "</label></li>";
+                                    }
+                                    radiogroups.append(str);
+                                    $("input[id='SpecificationAttributeId_" + jsonObject[i].Value + "']").iCheck({
+                                        radioClass: 'iradio_minimal'
+                                    });
+                                }
+                            }
+                        }
+                    }
+                    LoadSpecificationAttributeOptions();
+                    BindDefaultSpecificationAttributeOptions(defaultsid);
                 });
+                LoadSpecificationAttributeOptions();
             });
 
             $(document).ready(function () {
                 $('#addProductSpec').click(function () {
-                    var specificationAttributeOptionId = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId)").val();
+                    var specificationAttributeOptionId = $("#SpecificationAttributeOptions").children().find("div[class='iradio_minimal checked']").find("input").val();
                     var customValue = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.CustomValue)").val();
-                    var specificationAttributeId = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)").val();
+                    var specificationAttributeId = $("#SpecificationAttributes").children().find("div[class='iradio_minimal checked']").find("input").val();
                     var showOnProductPage = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.ShowOnProductPage)").is(':checked');
                     var displayOrder = $("#@Html.FieldIdFor(model => model.AddSpecificationAttributeModel.DisplayOrder)").val();
-
                     if (specificationAttributeOptionId === null) {
                         alert('Select attribute option');
                     } else {
@@ -226,7 +300,9 @@
                     @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId):
                 </td>
                 <td class="adminData">
-                    @Html.DropDownListFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId, Model.AddSpecificationAttributeModel.AvailableAttributes)
+                    <ul class="rc_ul" id="SpecificationAttributes">
+                        @Html.RadioButtonForSelectList(model => model.AddSpecificationAttributeModel.SpecificationAttributeId, Model.AddSpecificationAttributeModel.AvailableAttributes)
+                    </ul>
                     @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeId)
                 </td>
             </tr>
@@ -235,7 +311,9 @@
                     @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId):
                 </td>
                 <td class="adminData">
-                    @Html.DropDownListFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId, Model.AddSpecificationAttributeModel.AvailableOptions)
+                    <ul class="rc_ul" id="SpecificationAttributeOptions">
+                        @Html.RadioButtonForSelectList(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId, Model.AddSpecificationAttributeModel.AvailableOptions)
+                    </ul>
                     @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.SpecificationAttributeOptionId)
                 </td>
             </tr>
@@ -249,14 +327,14 @@
                 </td>
             </tr>
             @*<tr>
-                <td class="adminTitle">
-                    @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.AllowFiltering):
-                </td>
-                <td class="adminData">
-                    @Html.EditorFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
-                    @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
-                </td>
-            </tr>*@
+                    <td class="adminTitle">
+                        @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.AllowFiltering):
+                    </td>
+                    <td class="adminData">
+                        @Html.EditorFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
+                        @Html.ValidationMessageFor(model => model.AddSpecificationAttributeModel.AllowFiltering)
+                    </td>
+                </tr>*@
             <tr>
                 <td class="adminTitle">
                     @Html.NopLabelFor(model => model.AddSpecificationAttributeModel.ShowOnProductPage):

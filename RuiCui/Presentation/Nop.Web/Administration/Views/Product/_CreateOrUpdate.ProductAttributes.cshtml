@@ -84,15 +84,15 @@ else
                             fields: {
                                 ProductAttribute: { editable: true, type: "string" },
                                 ProductAttributeId: { editable: true, type: "number" },
-                                TextPrompt: { editable: true, type: "string" },
+                                //TextPrompt: { editable: true, type: "string" },
                                 IsRequired: { editable: true, type: "boolean" },
-                                AttributeControlType: { editable: true, type: "string" },
-                                AttributeControlTypeId: { editable: true, type: "number" },
+                                //AttributeControlType: { editable: true, type: "string" },
+                                //AttributeControlTypeId: { editable: true, type: "number" },
                                 //ProductId: { editable: false, type: "number" },
-                                DisplayOrder1: { editable: true, type: "number" },
+                                //DisplayOrder1: { editable: true, type: "number" },
                                 ViewEditValuesUrl: { editable: false, type: "string" },
                                 ViewEditValuesText: { editable: false, type: "string" },
-                                ValidationRulesAllowed: { editable: false, type: "boolean" },
+                                //ValidationRulesAllowed: { editable: false, type: "boolean" },
                                 Id: { editable: false, type: "number" }
                             }
                         }
@@ -144,43 +144,43 @@ else
                         width: 250,
                         editor: productAttributeDropDownEditor,
                         template: "#:ProductAttribute#"
-                    }, {
+                    }@*, {
                         field: "TextPrompt",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.Fields.TextPrompt")",
                         width: 150
-                    }, {
+                    }*@, {
                         field: "IsRequired",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.Fields.IsRequired")",
                         width: 150,
                         headerAttributes: { style: "text-align:center" },
                         attributes: { style: "text-align:center" },
                         template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsRequired#.gif" />'
-                    },
+                    }@*,
                     {
                         field: "AttributeControlTypeId",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.Fields.AttributeControlType")",
                         width: 250,
                         editor: attributeControlTypeDropDownEditor,
                         template: "#:AttributeControlType#"
-                    },
-                    {
+                    }*@,
+                    @*{
                         field: "DisplayOrder1",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.Fields.DisplayOrder")",
                         width: 150,
                         //integer format
                         format: "{0:0}"
-                    }, {
+                    },*@ {
                         field: "ViewEditValuesUrl",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.Values")",
                         width: 150,
                         template: "# if(ViewEditValuesUrl !== null) {# <a href='#=ViewEditValuesUrl#\'>#:ViewEditValuesText#</a> #}  #"
                     },
-                    {
+                    @*{
                         field: "ValidationRulesAllowed",
                         title: "@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.ValidationRules")",
                         width: 150,
                         template: "# if(ValidationRulesAllowed) {# <a href='javascript:OpenWindow(\"@Url.Content("~/Admin/Product/ProductAttributeValidationRulesPopup/")#=Id#?btnId=btnRefreshProductAttributes&formId=product-form\", 800, 300, true);'>@T("Admin.Catalog.Products.ProductVariantAttributes.Attributes.ValidationRules.ViewLink")</a> #}  #"
-                    },
+                    },*@
                     {
                         command: [
                             {

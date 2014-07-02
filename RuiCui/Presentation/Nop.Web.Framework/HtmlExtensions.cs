@@ -13,12 +13,44 @@ using Nop.Core.Infrastructure;
 using Nop.Services.Localization;
 using Nop.Web.Framework.Localization;
 using Nop.Web.Framework.Mvc;
+using System.Collections.ObjectModel;
+using System.Web.UI.WebControls;
 
 namespace Nop.Web.Framework
 {
     public static class HtmlExtensions
     {
         #region Admin area extensions
+
+        public static MvcHtmlString RadioButtonForSelectList<TModel, TProperty>(
+            this HtmlHelper<TModel> htmlHelper,
+            Expression<Func<TModel, TProperty>> expression,
+            IEnumerable<SelectListItem> listOfValues)
+        {
+            var metaData = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+            var sb = new StringBuilder();
+            if (listOfValues != null)
+            {
+                // Create a radio button for each item in the list 
+                foreach (SelectListItem item in listOfValues)
+                {
+                    // Generate an id to be given to the radio button field 
+                    var id = string.Format("{0}_{1}", metaData.PropertyName, item.Value);
+                    // Create and populate a radio button using the existing html helpers 
+                    var label = htmlHelper.Label(id, HttpUtility.HtmlEncode(item.Text));
+                    var radio = item.Selected ? htmlHelper.RadioButtonFor(expression, item.Value, new { id = id, @checked ="" }).ToHtmlString() : htmlHelper.RadioButtonFor(expression, item.Value, new { id = id }).ToHtmlString();
+                
+
+                    // Create the html string that will be returned to the client 
+                    // e.g. <input data-val="true" data-val-required=
+                    //   "You must select an option" id="TestRadio_1" 
+                    //   name="TestRadio" type="radio" 
+                    //   value="1" /><label for="TestRadio_1">Line1</label> 
+                    sb.AppendFormat("<li class=\"pull-left\">{0}{1}</li>", radio, label);
+                }
+            }
+            return MvcHtmlString.Create(sb.ToString());
+        }
 
         public static MvcHtmlString Hint(this HtmlHelper helper, string value)
         {
@@ -118,7 +150,7 @@ namespace Nop.Web.Framework
             if (String.IsNullOrEmpty(actionName))
                 actionName = "Delete";
 
-            var modalId =  MvcHtmlString.Create(helper.ViewData.ModelMetadata.ModelType.Name.ToLower() + "-delete-confirmation")
+            var modalId = MvcHtmlString.Create(helper.ViewData.ModelMetadata.ModelType.Name.ToLower() + "-delete-confirmation")
                 .ToHtmlString();
 
             var deleteConfirmationModel = new DeleteConfirmationModel
@@ -266,11 +298,11 @@ namespace Nop.Web.Framework
             //ensure it's not negative
             if (indexToSelect < 0)
                 indexToSelect = 0;
-            
+
             //required validation
             if (indexToSelect == currentIndex)
             {
-            return new MvcHtmlString(" class='k-state-active'");
+                return new MvcHtmlString(" class='k-state-active'");
             }
 
             return new MvcHtmlString("");
@@ -362,7 +394,7 @@ namespace Nop.Web.Framework
             for (int i = 1; i <= 12; i++)
             {
                 months.AppendFormat("<option value='{0}'{1}>{2}</option>",
-                                    i, 
+                                    i,
                                     (selectedMonth.HasValue && selectedMonth.Value == i) ? " selected=\"selected\"" : null,
                                     CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(i));
             }

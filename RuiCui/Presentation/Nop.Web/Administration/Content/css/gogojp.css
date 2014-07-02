@@ -190,3 +190,11 @@ a {
 .mobile_footer{
 	margin-top: 32px;
 }
+.rc_ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+.rc_ul li {
+    margin-right:10px;
+}

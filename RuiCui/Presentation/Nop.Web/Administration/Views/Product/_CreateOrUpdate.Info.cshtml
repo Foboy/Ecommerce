@@ -389,7 +389,8 @@
                 @Html.ValidationMessageFor(model => model.ShowOnHomePage)
             </td>
         </tr>*@
-    <tr>
+    <!--zheng-->
+    <tr style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.AllowCustomerReviews):
         </td>
@@ -1093,10 +1094,10 @@
     {
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.CreatedOn):
+                创建商品时间:
             </td>
             <td class="adminData">
-                @Model.CreatedOn.Value.ToString("F")
+                @Model.CreatedOn.Value.ToString("yyyy-MM-dd HH:mm")
             </td>
         </tr>
     }
@@ -1104,10 +1105,10 @@
     {
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.UpdatedOn):
+                最近更新商品时间:
             </td>
             <td class="adminData">
-                @Model.UpdatedOn.Value.ToString("F")
+                @Model.UpdatedOn.Value.ToString("yyyy-MM-dd HH:mm")
             </td>
         </tr>
     }
