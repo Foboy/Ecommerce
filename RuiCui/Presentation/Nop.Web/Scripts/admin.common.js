@@ -82,7 +82,7 @@ function display_kendoui_grid_error(e) {
             alert(message);
         }
     } else {
-        alert('Error happened');
+       // alert('Error happened');
     }
 }
 
