@@ -138,6 +138,7 @@
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\JbimagesController.cs" />
+    <Compile Include="Controllers\ProductQuestionController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Models\Catalog\ProductReviewListModel.cs" />
     <Compile Include="Models\Catalog\ManufacturerModel.cs" />
     <Compile Include="Models\Catalog\CopyProductModel.cs" />
+    <Compile Include="Models\Catalog\ProductQuestionModel.cs" />
     <Compile Include="Models\Cms\RenderWidgetModel.cs" />
     <Compile Include="Models\Common\LanguageSelectorModel.cs" />
     <Compile Include="Models\Common\SearchTermReportLineModel.cs" />
@@ -2371,6 +2373,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\nopadmin.pubxml" />
+    <Content Include="Views\ProductQuestion\_CreateOrUpdate.cshtml" />
+    <Content Include="Views\ProductQuestion\Edit.cshtml" />
+    <Content Include="Views\ProductQuestion\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
