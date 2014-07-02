@@ -737,7 +737,8 @@ namespace Nop.Admin.Controllers
                 keywords: model.SearchProductName,
                 pageIndex: command.Page - 1,
                 pageSize: command.PageSize,
-                showHidden: true
+                showHidden: true,
+                orderBy:ProductSortingEnum.CreatedOn 
             );
             var gridModel = new DataSourceResult();
             gridModel.Data = products.Select(x =>
