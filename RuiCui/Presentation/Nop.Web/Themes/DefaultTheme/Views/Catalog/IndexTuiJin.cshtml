@@ -51,10 +51,10 @@
 
 @section CategorySelector
 {
-    <div class="box-hd">
+    @*<div class="box-hd">
         <h3 class="title">商品筛选</h3>
-    </div>
-    <div class="box-bd">
+    </div>*@
+    @*<div class="box-bd">
         <div class="filter-lists">
             @if (Model.SubCategories.Count > 0)
             {
@@ -70,7 +70,6 @@
                     </dd>
                 </dl>
             }
-            @*filtering*@
             @{
                 ViewDataDictionary filters = new ViewDataDictionary();
               //  filters.Add("SpecFilter", Model.PagingFilteringContext.SpecificationFilter);
@@ -78,7 +77,7 @@
                 @Html.Partial("_FilterTuiJianBox", null, filters)
             }
         </div>
-    </div>
+    </div>*@
 }
 <div class="product-sorting" style="display:none;">
     @Html.DropDownList("products-orderby", Model.PagingFilteringContext.AvailableSortOptions, new { onchange = "setLocation(this.value);" })
