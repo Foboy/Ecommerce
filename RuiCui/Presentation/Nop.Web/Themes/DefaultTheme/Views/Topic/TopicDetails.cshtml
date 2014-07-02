@@ -3,6 +3,7 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Topics;
 @{
+    var groupDictionary = new Dictionary<string, string>();
     var isPopup = ViewBag.IsPopup;
     if (isPopup == null || isPopup == false)
     {
