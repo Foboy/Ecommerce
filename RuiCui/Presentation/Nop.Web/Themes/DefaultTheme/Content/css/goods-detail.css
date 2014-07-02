@@ -38,8 +38,8 @@ em {
 .option-list li {
     float:left;
     margin-right:10px;
-    height:35px;
-    line-height:35px;
+    height:40px;
+    line-height:40px;
 }
 
 .goods-pic-box {
@@ -230,8 +230,8 @@ dl.goods-info-box {
 .product-info {
     font-size:14px;
     color:#333;
-    height:35px;
-    line-height:35px;
+    height:40px;
+    line-height:40px;
     margin-bottom:1px;
     margin-top:1px;
 }
@@ -1673,5 +1673,10 @@ dl.goods-info-box {
 .thumb-popup-link img {
     max-width:66px;
     max-height:66px;
+}
+
+/*…Ã∆∑ Ù–‘*/
+.goods-att-info {
+    position:relative;
 }
 
