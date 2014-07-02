@@ -2439,7 +2439,6 @@ a:hover, a:focus {
 .xm-filter-list dd {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     _zoom: 1;
 }
 
@@ -2828,6 +2827,89 @@ a:hover, a:focus {
 }
 .msg-body {
     padding-top:16px;
+}
+
+/*价格区间*/
+.fPrice {
+    margin-left:20px;
+    position: relative;
+    margin-top:-5px;
+}
+.fPb-item {
+    display: block;
+    position: relative;
+}
+.fPrice 
+.fPb-item i {
+    height: 22px;
+    left: 4px;
+    line-height: 22px;
+    top: 2px;
+    width: 12px;
+    display: inline-block;
+    overflow: hidden;
+    position: absolute;
+}
+.ui-price-plain {
+    color: #666;
+    font-family: arial,verdana,sans-serif !important;
+    font-size: 12px;
+    font-weight:normal;
+}
+
+.fPb-split {
+    display: block;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    position: static;
+    width: 8px;
+    text-align:center;
+}
+.fPrice input {
+    border: 1px solid #ccc;
+    cursor: text;
+    display: block;
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 12px;
+    width: 53px;
+}
+.fPrice-btn {
+    font-size: 12px;
+    font-weight:normal;
+    height: 20px;
+    line-height: 20px;
+    cursor:pointer;
+    background-color: #f68b1f;
+    display:inline-block;
+    color:#fff;
+    width:40px;
+    text-align:center;
+}
+.fPrice-btn:hover {
+    color:#fff;
+}
+.fPrice-empty {
+    font-size: 12px;
+    font-weight:normal;
+    height: 20px;
+    line-height: 20px;
+    cursor:pointer;
+    background-color:#dfdfdf;
+    display:inline-block;
+    color:#6d6d6d;
+    width:40px;
+    text-align:center;
+    margin-right:5px;
+}
+.fPrice-empty:hover {
+    color:#6d6d6d;
+}
+.fPrice-btn-margin {
+    margin-left:8px;
+    margin-top:3px;
 }
 
 

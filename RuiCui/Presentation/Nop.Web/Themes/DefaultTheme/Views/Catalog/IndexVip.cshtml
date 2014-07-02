@@ -38,54 +38,88 @@
 
     <div class="container">
         <div class="row vip-margin">
+            <div class="box-hd">
+                <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
+                    <dd class="float-left">
+                        <ul id="typeOrder" class="clearfix">
+                            <li class="current first">
+                                <a rel="nofollow" href="http://localhost:15536/翡翠?orderby=0">最新</a>
+                            </li>
+                            <li class="">
+                                <a rel="nofollow" href="http://localhost:15536/翡翠?orderby=10">价格从低到高</a>
+                            </li>
+                            <li class="">
+                                <a rel="nofollow" href="http://localhost:15536/翡翠?orderby=11">价格从高到低</a>
+                            </li>
+                        </ul>
+                    </dd>
+                    <dd class="float-left">
+                        <div class="fPrice">
+                            <b class="fPb-item float-left">
+                                <i class="ui-price-plain">¥</i>
+                                <input class="j_FPInput" type="text" value="" maxlength="6" autocomplete="off" name="start_price">
+                            </b>
+                            <i class="fPb-split">-</i>
+                            <b class="fPb-item float-left">
+                                <i class="ui-price-plain">¥</i>
+                                <input class="j_FPInput" type="text" maxlength="6" value="" autocomplete="off" name="end_price">
+                            </b>
+                            <b class="fPb-item float-left fPrice-btn-margin ">
+                                <a class="fPrice-btn">确定</a>
+                                <a class="fPrice-empty">清空</a>
+                            </b>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
             <!--商品列表-->
             <div class="col col21">
                 <ul class="vip-item-list clearfix">
-@foreach (var product in Model.Products)
-        {
-                    <li>
-                        <div class="vip-item-wrap">
-                            <a class="img-wrap" href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">
-                                <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText " />
-                            </a>
-                            <p class="item-title"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name</a></p>
-                            <div class="vip-item-price">
-                                @product.ProductPrice.Price
-                                <del>@product.ProductPrice.OldPrice</del>
-                            </div>
-                            @{
-            //prepare "Add to cart" AJAX link
-            string addtocartlink = "", addtowishlink = "";
-            var shoppingCartTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.ShoppingCart;
-            var shoppingWishTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.Wishlist;
-            var quantity = 1;
-            if (product.ProductPrice.ForceRedirectionAfterAddingToCart)
-            {
-                addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
-                addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
-            }
-            else
-            {
-                addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, });
-                addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
-            }
-                            }
-                            @if (!product.ProductPrice.DisableBuyButton)
-{
-    <a class="buy-btn" href="javascript: void(0);" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">立即购买</a>
+                    @foreach (var product in Model.Products)
+                    {
+                        <li>
+                            <div class="vip-item-wrap">
+                                <a class="img-wrap" href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">
+                                    <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText " />
+                                </a>
+                                <p class="item-title"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name</a></p>
+                                <div class="vip-item-price">
+                                    @product.ProductPrice.Price
+                                    <del>@product.ProductPrice.OldPrice</del>
+                                </div>
+                                @{
+                        //prepare "Add to cart" AJAX link
+                        string addtocartlink = "", addtowishlink = "";
+                        var shoppingCartTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.ShoppingCart;
+                        var shoppingWishTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.Wishlist;
+                        var quantity = 1;
+                        if (product.ProductPrice.ForceRedirectionAfterAddingToCart)
+                        {
+                            addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
+                            addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
+                        }
+                        else
+                        {
+                            addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, });
+                            addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
+                        }
+                                }
+                                @if (!product.ProductPrice.DisableBuyButton)
+                                {
+                                    <a class="buy-btn" href="javascript: void(0);" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">立即购买</a>
 
-}
-                        </div>
-                    </li>
-}
+                                }
+                            </div>
+                        </li>
+                    }
                 </ul>
                 <div class="xm-pagenavi">
                     @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
                 </div>
             </div>
             <!--商品列表 END-->
-        
-        </div>
+
+            </div>
   
     </div>
 

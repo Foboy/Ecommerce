@@ -1,5 +1,5 @@
 ﻿Group: Discount requirements
-FriendlyName: Must be assigned to customer role
+FriendlyName: 设置会员价格
 SystemName: DiscountRequirement.MustBeAssignedToCustomerRole
 Version: 1.08
 SupportedVersions: 3.30
