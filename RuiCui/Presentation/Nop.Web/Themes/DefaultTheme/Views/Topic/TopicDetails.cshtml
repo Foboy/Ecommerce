@@ -3,11 +3,34 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Topics;
 @{
-    var groupDictionary = new Dictionary<string, string>();
+    var groupDictionary = new Dictionary<string, string[]>();
+    groupDictionary.Add("帮助中心", new[] { "购物指南", "常见问题", "用户协议" });
+    groupDictionary.Add("售后服务", new[] { "正品承诺", "售后咨询", "退货政策" });
+    groupDictionary.Add("配送方式", new[] { "配送说明", "运费说明", "验货签收" });
+    groupDictionary.Add("关于瑞翠", new[] { "了解瑞翠", "联系我们", "关注我们" });
     var isPopup = ViewBag.IsPopup;
+    KeyValuePair<string, string[]> group = new KeyValuePair<string,string[]>();
+    var isGroup = false;
+    foreach (var item in groupDictionary)
+    {
+        if (item.Value.Contains(Model.SystemName))
+        {
+            isGroup = true;
+            group = item;
+            break;
+        }
+    }
     if (isPopup == null || isPopup == false)
     {
-        Layout = "~/Views/Shared/_ColumnsThree.cshtml";
+        if (isGroup)
+        {
+            Layout = "~/Views/Shared/_ColumnsTopicGroup.cshtml";
+            Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/about.css");
+        }
+        else
+        {
+            Layout = "~/Views/Shared/_ColumnsThree.cshtml"; 
+        }
     }
     else
     {
@@ -92,14 +115,41 @@
         }
     </div>
 }
-<div class="page topic-page" id="ph-topic">
-    <div id="ph-title">
-        <div class="page-title">
-            <h1>
-                @Model.Title</h1>
+
+@if (isGroup)
+{
+    @section left
+{
+        <div class="rc-about-sidebar">
+            <div class="hd"><h3 class="title">@group.Key</h3></div>
+            <ul class="about-nav-list">
+                @foreach(var sy in group.Value)
+                {
+                    <li class="@(sy.Equals(Model.SystemName)?"current":"")"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName(sy) })">@sy</a></li>
+                }
+            </ul>
+        </div>
+
+    }
+}
+<div class="about-box">
+    <div class="section">
+        <div class="page topic-page" id="ph-topic">
+            @if(!isGroup)
+            { 
+            <div id="ph-title">
+                <div class="page-title">
+                    <h1>
+                        @Model.Title
+                    </h1>
+                </div>
+            </div>
+            }
+            <div class="page-body">
+                @Html.Raw(Model.Body)
+            </div>
         </div>
     </div>
-    <div class="page-body">
-        @Html.Raw(Model.Body)
-    </div>
 </div>
+
+

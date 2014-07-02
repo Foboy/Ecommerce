@@ -1570,6 +1570,7 @@
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\underline.gif" />
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unlink.gif" />
     <Content Include="Themes\DefaultTheme\Content\BBEditor\images\unordered.gif" />
+    <Content Include="Themes\DefaultTheme\Content\css\about.css" />
     <Content Include="Themes\DefaultTheme\Content\css\base.css" />
     <Content Include="Themes\DefaultTheme\Content\css\checkout.css" />
     <Content Include="Themes\DefaultTheme\Content\css\goods-category.min.css" />
@@ -3429,6 +3430,7 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\TopSpecsMenu.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\VipTopSpecsMenu.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterTuiJianBox.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Shared\_ColumnsTopicGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />
