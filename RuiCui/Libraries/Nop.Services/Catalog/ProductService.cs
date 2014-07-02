@@ -63,6 +63,8 @@ namespace Nop.Services.Catalog
         private readonly CatalogSettings _catalogSettings;
         private readonly IEventPublisher _eventPublisher;
 
+        private readonly IRepository<ProductQuestion> _productquestionRepository;
+
         #endregion
 
         #region Ctor
@@ -115,7 +117,7 @@ namespace Nop.Services.Catalog
             LocalizationSettings localizationSettings, 
             CommonSettings commonSettings,
             CatalogSettings catalogSettings,
-            IEventPublisher eventPublisher)
+            IEventPublisher eventPublisher, IRepository<ProductQuestion> productquestionRepository)
         {
             this._cacheManager = cacheManager;
             this._productRepository = productRepository;
@@ -140,6 +142,7 @@ namespace Nop.Services.Catalog
             this._commonSettings = commonSettings;
             this._catalogSettings = catalogSettings;
             this._eventPublisher = eventPublisher;
+            this._productquestionRepository = productquestionRepository;
         }
 
         #endregion
@@ -1546,6 +1549,47 @@ namespace Nop.Services.Catalog
         }
 
         #endregion
+
+        #region productquestion
+
+        public virtual IList<ProductQuestion> GetAllProductQuestion()
+        {
+            var query = _productquestionRepository.Table;
+           
+            var content = query.ToList();
+            return content;
+        }
+        public virtual ProductQuestion GetProductQuestionById(int productQuestionId)
+        {
+            if (productQuestionId == 0)
+                return null;
+
+            return _productquestionRepository.GetById(productQuestionId);
+        }
+        public virtual void AddProductQuestion(ProductQuestion productQuestion)
+        {
+            if (productQuestion == null)
+                throw new ArgumentNullException("productQuestion");
+
+            _productquestionRepository.Insert(productQuestion);
+        }
+        public virtual void UpdateProductQuestion(ProductQuestion productQuestion)
+        {
+            if (productQuestion == null)
+                throw new ArgumentNullException("productQuestion");
+
+            _productquestionRepository.Update(productQuestion);
+        }
+        public virtual void DeleteProductQuestion(ProductQuestion productQuestion)
+        {
+            if (productQuestion == null)
+                throw new ArgumentNullException("productQuestion");
+
+            _productquestionRepository.Delete(productQuestion);
+        }
+
+
+        #endregion productquestion
 
         #endregion
     }

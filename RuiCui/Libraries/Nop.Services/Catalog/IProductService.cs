@@ -379,5 +379,17 @@ namespace Nop.Services.Catalog
         void DeleteProductReview(ProductReview productReview);
 
         #endregion
+
+        #region productquestion
+
+        IList<ProductQuestion> GetAllProductQuestion();
+
+        void AddProductQuestion(ProductQuestion productQuestion);
+
+        ProductQuestion GetProductQuestionById(int productQuestionId);
+        void UpdateProductQuestion(ProductQuestion productQuestion);
+        void DeleteProductQuestion(ProductQuestion productQuestion);
+
+        #endregion productquestion
     }
 }

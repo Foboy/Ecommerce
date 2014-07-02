@@ -65,15 +65,16 @@
         </dl>
         @Html.Widget("productdetails_overview_top")
         <!--product SKU, manufacturer part number, stock info-->
+@*
         @Html.Partial("_SKU_Man_Stock", Model)
         <!--Back in stock subscription-->
         @Html.Partial("_BackInStockSubscription", Model)
         <!--product manufacturers-->
         @Html.Action("ProductManufacturers", "Catalog", new { productId = Model.Id })
         <!--product reviews-->
-        @*
+
     @Html.Action("ProductReviewOverview", "Catalog", new { productId = Model.Id })
-        *@
+*@
         <!--sample download-->
         @Html.Partial("_DownloadSample", Model)
         <!--attributes-->
