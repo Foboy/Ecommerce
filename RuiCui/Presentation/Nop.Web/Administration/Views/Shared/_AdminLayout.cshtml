@@ -316,7 +316,38 @@
     <script >
         kendo.culture("zh-CHS");
     </script>
+    <script type="text/javascript">
 
+        $(document).ready(function () {
+            $("input[type=text]").on("focus", function () {
+                var $this =$(this);
+                if (parseFloat($this.val()) != 0) {
+                    return true;
+                }
+                else {
+                    $this.attr("oritend-value", $this.val());
+                    $this.val("");
+                }
+            });
+            $("input[type=text]").on("blur", function () {
+                var $this = $(this);
+                if ($.trim($this.val())) {
+                    return true;
+                }
+                else if (parseFloat($this.attr("oritend-value")) == 0) {
+                    $this.val($this.attr("oritend-value"));
+                    var kendo = $this.data("kendoNumericTextBox");
+                    if (kendo)
+                    {
+                        kendo.value($this.attr("oritend-value"));
+                    }
+                }
+                else {
+                    return true;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
 
