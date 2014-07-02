@@ -2912,5 +2912,8 @@ a:hover, a:focus {
     margin-left:8px;
     margin-top:3px;
 }
+.inputcheckbox {
+    vertical-align: middle;
+}
 
 
