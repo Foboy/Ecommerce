@@ -1,5 +1,5 @@
 ﻿Group: Discount requirements
-FriendlyName: Customer had spent x.xx amount
+FriendlyName: 用户一次性消费
 SystemName: DiscountRequirement.HadSpentAmount
 Version: 1.10
 SupportedVersions: 3.30

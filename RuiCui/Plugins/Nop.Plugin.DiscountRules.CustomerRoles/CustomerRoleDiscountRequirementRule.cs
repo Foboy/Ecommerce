@@ -28,7 +28,7 @@ namespace Nop.Plugin.DiscountRules.CustomerRoles
                 throw new ArgumentNullException("request");
 
             if (request.DiscountRequirement == null)
-                throw new NopException("Discount requirement is not set");
+                throw new NopException("折扣未设置");
 
             if (request.Customer == null)
                 return false;
@@ -64,7 +64,7 @@ namespace Nop.Plugin.DiscountRules.CustomerRoles
         public override void Install()
         {
             //locales
-            this.AddOrUpdatePluginLocaleResource("Plugins.DiscountRules.CustomerRoles.Fields.CustomerRole", "Required customer role");
+            this.AddOrUpdatePluginLocaleResource("Plugins.DiscountRules.CustomerRoles.Fields.CustomerRole", "选择会员角色");
             this.AddOrUpdatePluginLocaleResource("Plugins.DiscountRules.CustomerRoles.Fields.CustomerRole.Hint", "Discount will be applied if customer is in the selected customer role.");
             base.Install();
         }
