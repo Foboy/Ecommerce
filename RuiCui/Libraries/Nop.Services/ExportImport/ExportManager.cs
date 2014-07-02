@@ -1029,7 +1029,7 @@ namespace Nop.Services.ExportImport
                 var properties = new string[]
                     {
                         //order properties
-                        "OrderId",
+                        "订单ID",
                         "StoreId",
                         "OrderGuid",
                         "CustomerId",
