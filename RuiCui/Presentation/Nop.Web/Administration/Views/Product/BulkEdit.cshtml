@@ -34,7 +34,8 @@
                 @Html.DropDownList("SearchCategoryId", Model.AvailableCategories)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchManufacturerId):
             </td>
@@ -42,7 +43,8 @@
                 @Html.DropDownList("SearchManufacturerId", Model.AvailableManufacturers)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchProductTypeId):
             </td>
