@@ -34,10 +34,10 @@
     <table class="adminContent">
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.SpentAmount):
+                消费满:
             </td>
             <td class="adminData">
-                <div>@Html.EditorFor(model => model.SpentAmount) <input type="button" id="savehadspentamountrequirement@(Model.RequirementId)" class="k-button" value="@T("Admin.Common.Save")" /></div>
+                <div>@Html.EditorFor(model => model.SpentAmount)元<input type="button" id="savehadspentamountrequirement@(Model.RequirementId)" class="k-button" value="@T("Admin.Common.Save")" /></div>
                 <div id="pnl-save-requirement-result@(Model.RequirementId)" style="display:none;">@T("Admin.Promotions.Discounts.Requirements.Saved")</div>
             </td>
         </tr>
