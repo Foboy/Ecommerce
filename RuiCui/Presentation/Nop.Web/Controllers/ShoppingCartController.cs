@@ -662,9 +662,12 @@ namespace Nop.Web.Controllers
                     ProductName = sci.Product.GetLocalized(x => x.Name),
                     ProductSeName = sci.Product.GetSeName(),
                     Quantity = sci.Quantity,
+                    Score = ParseScore(sci.Product),
+                    Price = _priceFormatter.FormatPrice(sci.Product.Price),
+                    OldPrice = _priceFormatter.FormatPrice(sci.Product.OldPrice),
                     AttributeInfo = _productAttributeFormatter.FormatAttributes(sci.Product, sci.AttributesXml),
                 };
-
+                
                 //allowed quantities
                 var allowedQuantities = sci.Product.ParseAllowedQuatities();
                 foreach (var qty in allowedQuantities)
@@ -2374,7 +2377,8 @@ namespace Nop.Web.Controllers
                         }
                 }
             }
-
+            //刷新
+            return RedirectToRoute("Wishlist");
             //updated wishlist
             cart = _workContext.CurrentCustomer.ShoppingCartItems
                 .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)

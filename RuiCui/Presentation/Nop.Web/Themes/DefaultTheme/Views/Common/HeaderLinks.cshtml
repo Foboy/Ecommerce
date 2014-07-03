@@ -4,18 +4,20 @@
 @if (Model.IsAuthenticated)
 {
     @*<a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a>*@
-    <span>欢迎您</span><span class="bcolor"> @Model.CustomerEmailUsername</span>
-    <span class="arrow"></span>
-    <div class="user-info-menu">
-        <ul>
-            <li>
-                <a href="@Url.RouteUrl("CustomerInfo")">个人中心</a>
-            </li>
-            <li>
-                <a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
-            </li>
-        </ul>
-     </div>
+    <span id="top_links_user_center_container">
+        <span>欢迎您 </span><span class="bcolor top_links_user_center"> @Model.CustomerEmailUsername</span>
+        <span class="arrow top_links_user_center"></span>
+        <div class="user-info-menu" id="top_links_user_center_block" style="display:none;">
+            <ul>
+                <li>
+                    <a href="@Url.RouteUrl("CustomerInfo")">个人中心</a>
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
+                </li>
+            </ul>
+        </div>
+    </span>
     @*<a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>*@
 }
 else
@@ -45,3 +47,40 @@ else
     </a>
 }
 @Html.Widget("header_links_after")
+<script type="text/javascript">
+    $(document).ready(function () {
+        var usercentertimeout,display = false;
+        $(".top_links_user_center").on({
+            click: function () {
+                window.clearTimeout(usercentertimeout),
+                usercentertimeout = window.setTimeout(function () {
+                    display = true;
+                    $("#top_links_user_center_block").show();
+                },
+                100);
+            }
+        });
+        $("#top_links_user_center_container").on({
+            mouseenter: function () {
+                if (display)
+                {
+                    window.clearTimeout(usercentertimeout),
+                    usercentertimeout = window.setTimeout(function () {
+                        display = true;
+                        $("#top_links_user_center_block").show();
+                    },
+                    100);
+                }
+            },
+            mouseleave: function () {
+                window.clearTimeout(usercentertimeout),
+                usercentertimeout = window.setTimeout(function () {
+                    display = false;
+                    $("#top_links_user_center_block").hide();
+                },
+                100);
+            }
+        });
+    });
+
+</script>

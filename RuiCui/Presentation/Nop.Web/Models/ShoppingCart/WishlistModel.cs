@@ -69,6 +69,12 @@ namespace Nop.Web.Models.ShoppingCart
 
             public IList<string> Warnings { get; set; }
 
+            public int Score { get; set; }
+
+            public string OldPrice { get; set; }
+
+            public string Price { get; set; }
+
         }
 
 		#endregion

@@ -21,20 +21,6 @@
         addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
     }    
 }
-@helper ScoreToStar(int score)
-{
-        string css = "icon-stat-";
-        int star = score / 20;
-        if (star > 0)
-        {
-            css += star.ToString();
-        }
-        if (star * 20 + 10 < score)
-        {
-            css += "half";
-        }  
-        <text>@Html.Raw(css)</text>
-}
 <div class="xm-goods-item" data-productid="@Model.Id">
     <div class="item-thumb">
         <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" target="_blank">
@@ -53,7 +39,7 @@
             <span class="price actual-price">@Model.ProductPrice.Price</span>
         </div>
         <div class="item-star">
-            <a title="@(Model.Score)分"><span class="icon-stat @ScoreToStar(Model.Score)"></span></a>
+            <a title="@(Model.Score)分"><span class="icon-stat @Html.ScoreToStar(Model.Score)"></span></a>
             <span class="item-comments" style="display:none;">0 人评价</span>
         </div>
         <div class="item-actions">

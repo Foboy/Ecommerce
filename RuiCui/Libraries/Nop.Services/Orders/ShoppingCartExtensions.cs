@@ -40,6 +40,16 @@ namespace Nop.Services.Orders
             return result;
         }
 
+        public static int GetTotalProductsCount(this IList<ShoppingCartItem> shoppingCart)
+        {
+            int result = 0;
+            foreach (ShoppingCartItem sci in shoppingCart)
+            {
+                result += 1;
+            }
+            return result;
+        }
+
         /// <summary>
         /// Gets a value indicating whether shopping cart is recurring
         /// </summary>

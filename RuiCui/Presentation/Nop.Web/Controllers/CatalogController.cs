@@ -317,29 +317,8 @@ namespace Nop.Web.Controllers
             return result;
         }
 
-        Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
-        private int ParseScore(Product product)
-        {
-            //score
-            if (string.IsNullOrWhiteSpace(product.AdminComment))
-            {
-                return 100;
-            }
-            else
-            {
-                string adminComment = product.AdminComment.Trim();
+        
 
-                var result = scoreReg.Match(adminComment).Groups;
-                if (result.Count > 1)
-                {
-                    return Convert.ToInt32(result[1].Value);
-                }
-                else
-                {
-                    return 100;
-                }
-            }
-        }
         
         [NonAction]
         protected IEnumerable<ProductOverviewModel> PrepareProductOverviewModels(IEnumerable<Product> products, 

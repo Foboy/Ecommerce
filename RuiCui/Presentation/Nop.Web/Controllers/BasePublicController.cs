@@ -9,6 +9,8 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Security;
 using Nop.Web.Framework.Seo;
+using Nop.Core.Domain.Catalog;
+using System.Text.RegularExpressions;
 
 namespace Nop.Web.Controllers
 {
@@ -32,6 +34,30 @@ namespace Nop.Web.Controllers
             errorController.Execute(new RequestContext(this.HttpContext, routeData));
 
             return new EmptyResult();
+        }
+
+        private static Regex scoreReg = new Regex(@"[\D]*?(\d+)[\D]*");
+        protected int ParseScore(Product product)
+        {
+            //score
+            if (string.IsNullOrWhiteSpace(product.AdminComment))
+            {
+                return 100;
+            }
+            else
+            {
+                string adminComment = product.AdminComment.Trim();
+
+                var result = scoreReg.Match(adminComment).Groups;
+                if (result.Count > 1)
+                {
+                    return Convert.ToInt32(result[1].Value);
+                }
+                else
+                {
+                    return 100;
+                }
+            }
         }
 
     }

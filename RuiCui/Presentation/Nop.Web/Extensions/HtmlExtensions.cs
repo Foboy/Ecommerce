@@ -263,6 +263,26 @@ namespace Nop.Web.Extensions
             return cachedSeName;
         }
 
+
+        public static string ScoreToStar<T>(this HtmlHelper<T> html, int score) 
+        {
+            string css = "icon-stat-";
+            int star = score / 20;
+            if (star > 0)
+            {
+                css += (star * 20 + 10 < score ? star + 1 : star).ToString();
+            }
+            if (score > star * 20 && score <= star * 20 + 10)
+            {
+                css += "half";
+            }
+            else if (score == 0)
+            {
+                css += "0";
+            }
+            return css;
+        }
+
     }
 }
 
