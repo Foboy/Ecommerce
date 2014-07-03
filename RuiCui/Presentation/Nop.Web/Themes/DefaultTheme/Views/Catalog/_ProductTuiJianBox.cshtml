@@ -35,7 +35,7 @@
         }  
         <text>@Html.Raw(css)</text>
 }
-<div class="xm-goods-item" data-productid="@Model.Id">
+<div class="xm-goods-item" style="width:250px;" data-productid="@Model.Id">
     <div class="item-thumb">
         <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" target="_blank">
             <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" srcset="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />

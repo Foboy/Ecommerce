@@ -2916,4 +2916,14 @@ a:hover, a:focus {
     vertical-align: middle;
 }
 
+/*³¬ÖµÍÆ¼ö*/
+.tj-sort {
+    margin-top:20px;
+    background: none repeat scroll 0 0 #fafafa;
+    border-bottom: 0 none;
+}
+.tj-li {
+    width:254px;
+}
+
 
