@@ -121,13 +121,17 @@
     @section left
 {
         <div class="rc-about-sidebar">
-            <div class="hd"><h3 class="title">@group.Key</h3></div>
-            <ul class="about-nav-list">
-                @foreach(var sy in group.Value)
-                {
-                    <li class="@(sy.Equals(Model.SystemName)?"current":"")"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName(sy) })">@sy</a></li>
-                }
-            </ul>
+            @foreach (var g in groupDictionary)
+            {
+                <div class="hd"><h3 class="title">@g.Key</h3></div>
+                <ul class="about-nav-list">
+                    @foreach (var sy in g.Value)
+                    {
+                        <li class="@(sy.Equals(Model.SystemName)?"current":"")"><a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName(sy) })">@sy</a></li>
+                    }
+                </ul>
+            }
+
         </div>
 
     }
