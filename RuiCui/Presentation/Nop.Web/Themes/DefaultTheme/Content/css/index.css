@@ -215,6 +215,7 @@
     color: #000;
     -webkit-transition: border-color .5s;
     transition: border-color .5s;
+    position:relative;
 }
 
 .xm-star-goods-list-wrap .xm-star-goods-item .item-content:hover {
@@ -990,5 +991,15 @@
     position:absolute;
     right:0;
     top:10px;
+}
+.hot-img {
+     background-image: url("../Images/iconTag.png");
+    background-position: -192px 2px;
+    background-repeat: no-repeat;
+    height: 66px;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    width: 62px;
 }
 

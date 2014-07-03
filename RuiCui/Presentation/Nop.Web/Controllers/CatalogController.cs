@@ -2597,7 +2597,99 @@ namespace Nop.Web.Controllers
                 return Content(_localizationService.GetResource("BackInStockSubscriptions.NotAllowed"));
             }
         }
+        #region ruicui产品筛选
+        enum FilterProductType
+        {
+            None=0,
+            onlyVip = 1,
+            NotVip = 2,
+            StockEmpty = 4
+        }
+        /// <summary>
+        /// 筛选商品 "type"1：只查VIP 2：排除VIP 3：库存为0
+        /// </summary>
+        /// <param name="plist">结果集,可自我筛选</param>
+        /// <param name="productss">筛选源，为空时，Plist作为筛选源</param>
+        /// <param name="type">1：只查VIP 2：排除VIP 3: 查询库存为0</param>
+        private void FilterProduct(ref List<Product> plist, IPagedList<Product> productss, FilterProductType type)
+        {
+            if (plist == null)
+                plist = new List<Product>();
 
+            //筛选源
+            List<Product> fplist = new List<Product>();
+            //筛选结果集
+            List<Product> rplist = new List<Product>();
+            if (productss != null)
+            {
+                foreach (var product in productss)
+                {
+                    fplist.Add(product);
+                }
+            }
+            else
+            {
+                foreach (var product in plist)
+                {
+                    fplist.Add(product);
+                }
+            }
+
+            switch (type)
+            {
+                case FilterProductType.onlyVip:
+                    #region 只查VIP
+                    foreach (var product in fplist)
+                    {
+                        var existingAclRecords = _aclService.GetAclRecords(product);
+                        bool check = false;
+                        foreach (var acl in existingAclRecords)
+                        {
+                            if (acl.CustomerRole.Name == "已注册客户")
+                                check = true;
+                        }
+                        if (check)
+                        { rplist.Add(product); }
+                    }
+                    fplist = rplist;
+                    #endregion
+                    break;
+                case FilterProductType.NotVip:
+                    #region 排除VIP
+                    foreach (var product in fplist)
+                    {
+                        var existingAclRecords = _aclService.GetAclRecords(product);
+                        bool check = true;
+                        foreach (var acl in existingAclRecords)
+                        {
+                            if (acl.CustomerRole.Name == "已注册客户")
+                                check = false;
+                        }
+                        if (check)
+                        { rplist.Add(product); }
+                    }
+                    fplist = rplist;
+                    #endregion
+                    break;
+                case FilterProductType.StockEmpty:
+                    foreach (var product in fplist)
+                    {
+                        if (product.StockQuantity == 0)
+                        {
+                            rplist.Add(product);
+                        }
+                    }
+                    fplist = rplist;
+                    break;
+                default:
+                    foreach (var product in fplist)
+                    {
+                        rplist.Add(product);
+                    }
+                    break;
+            }
+            plist = rplist;
+        }
         /// <summary>
         /// 查询最新商品
         /// </summary>
@@ -2614,22 +2706,10 @@ namespace Nop.Web.Controllers
                 var categoryIds = new List<int>();
                 categoryIds.Add(categoryId);
             //products
-                var productss = _productService.SearchProducts(visibleIndividuallyOnly: true, 
-                    storeId: _storeContext.CurrentStore.Id,  categoryIds: categoryIds);
+                var productss = _productService.SearchProducts(categoryIds: categoryIds);
                 List<Product> plist = new List<Product>();
             //排除VIP
-                foreach (var product in productss)
-                {
-                    var existingAclRecords = _aclService.GetAclRecords(product);
-                    bool check = true;
-                    foreach (var acl in existingAclRecords)
-                    {
-                        if (acl.CustomerRole.Name == "已注册客户")
-                            check = false;
-                    }
-                    if (check)
-                    { plist.Add(product); }
-                }
+                FilterProduct(ref plist, productss, FilterProductType.NotVip);
 
                 var products = new PagedList<Product>(plist.OrderByDescending(o => o.CreatedOnUtc).ToList<Product>(), command.PageNumber - 1, command.PageSize);
                 model.dateList = products.Select(o => o.CreatedOnUtc.ToString("D")).Distinct();
@@ -2949,18 +3029,7 @@ namespace Nop.Web.Controllers
 
             List<Product> plist = new List<Product>();
             //只查VIP
-            foreach (var product in productss)
-            {
-                var existingAclRecords = _aclService.GetAclRecords(product);
-                bool check = false;
-                foreach (var acl in existingAclRecords)
-                {
-                    if (acl.CustomerRole.Name == "已注册客户")
-                        check = true;
-                }
-                if (check)
-                { plist.Add(product); }
-            }
+            FilterProduct(ref plist, productss, FilterProductType.onlyVip);
 
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
@@ -3040,13 +3109,9 @@ namespace Nop.Web.Controllers
 
             var productss = _productService.SearchProducts();
             List<Product> plist = new List<Product>();
-            foreach (var product in productss)
-            {
-                if (product.StockQuantity == 0)
-                {
-                    plist.Add(product);
-                }
-            }
+
+            //查询库存为0
+            FilterProduct(ref plist, productss, FilterProductType.NotVip | FilterProductType.StockEmpty);
 
 
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
@@ -3353,8 +3418,16 @@ namespace Nop.Web.Controllers
                priceMin: minPriceConverted, priceMax: maxPriceConverted,
                filteredSpecs: alreadyFilteredSpecOptionIds,
                orderBy: (ProductSortingEnum)command.OrderBy);
+            List<Product> plist = new List<Product>();
+            //排除VIP
+            FilterProduct(ref plist, productss, FilterProductType.NotVip);
+            if (command.OrderBy == 0)
+            {
+                plist = plist.OrderByDescending(o => ParseScore(o)).ToList<Product>();
+            }
+          
 
-            var products = new PagedList<Product>(productss.OrderByDescending(o =>ParseScore(o)).ToList<Product>(), command.PageNumber - 1, command.PageSize);
+            var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
             model.PagingFilteringContext.LoadPagedList(products);
@@ -3377,10 +3450,12 @@ namespace Nop.Web.Controllers
             return PartialView("IndexTuiJin", model);
         }
 
+        #endregion ruicui
+
         #endregion
 
         #region Product tags
-        
+
         //Product tags
         [ChildActionOnly]
         public ActionResult ProductTags(int productId)

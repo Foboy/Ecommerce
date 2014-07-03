@@ -43,7 +43,7 @@
 <!-- 导航面包削 END -->
 <div class="container breadcrumbs">
     <a href='@Url.RouteUrl("HomePage")'>首页</a><span class="sep">/</span>
-    <a href="javascript:void(0);">新闻列表</a><span class="sep">/</span>
+    <a href="@Url.RouteUrl("NewsArchive")">新闻列表</a><span class="sep">/</span>
 </div>
 <!-- 导航面包削 END -->
 <div class="container">
@@ -71,10 +71,13 @@
             <div class="right-sidebar">
                 <div class="siderbar-title">新闻归档</div>
                 <ul class="date-list">
-                    <li><a href="">2014年六月</a></li>
-                    <li><a href="">2014年六月</a></li>
-                    <li><a href="">2014年六月</a></li>
-                    <li><a href="">2014年六月</a></li>
+@foreach (var item in Model.NewsDateTimes)
+            {
+    NewsPagingFilteringModel nf=new NewsPagingFilteringModel();
+    nf.FilterDateTime=item;
+                    <li><a href="@Url.Action("List", "News", nf)">@item</a></li>
+}
+             
                 </ul>
             </div>
         </div>

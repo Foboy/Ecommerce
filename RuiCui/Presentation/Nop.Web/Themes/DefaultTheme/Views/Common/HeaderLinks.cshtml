@@ -3,8 +3,20 @@
 @Html.Widget("header_links_before")
 @if (Model.IsAuthenticated)
 {
-    <a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a><span class="sep">|</span>
-    <a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
+    @*<a href="@Url.RouteUrl("CustomerInfo")" class="account">@Model.CustomerEmailUsername</a>*@
+    <span>欢迎您</span><span class="bcolor"> @Model.CustomerEmailUsername</span>
+    <span class="arrow"></span>
+    <div class="user-info-menu">
+        <ul>
+            <li>
+                <a href="@Url.RouteUrl("CustomerInfo")">个人中心</a>
+            </li>
+            <li>
+                <a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>
+            </li>
+        </ul>
+     </div>
+    @*<a href="@Url.RouteUrl("Logout")">@T("Account.Logout")</a>*@
 }
 else
 {
@@ -28,7 +40,7 @@ else
 @if (Model.WishlistEnabled)
 {
     <span class="sep">|</span><a href="@Url.RouteUrl("Wishlist")">
-        <span>收藏夹</span>
+        <span>我的收藏</span>
         <span id="wishlist-qty">@T("Wishlist.HeaderQuantity", Model.WishlistItems)</span>
     </a>
 }
