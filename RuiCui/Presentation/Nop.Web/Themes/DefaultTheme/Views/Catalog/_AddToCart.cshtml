@@ -87,7 +87,7 @@
 
         @if (!Model.DisableWishlistButton && Model.UpdatedShoppingCartItemId == 0)
         {
-            <a id="add-to-wishlist-button-@Model.ProductId" href="javascript:void(0);" class="btn-yellow wishbtn" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist })', '#product-details-form');return false;">
+            <a id="add-to-wishlist-button-@Model.ProductId" href="javascript:void(0);" class="btn-yellow wishbtn" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_catalog('@Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = 1 })');return false;">
                 <i class="iconfont icon-margin">&#xf0144;</i>收藏
             </a>
         }

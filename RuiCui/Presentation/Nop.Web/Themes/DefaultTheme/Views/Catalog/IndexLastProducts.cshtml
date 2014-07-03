@@ -4,20 +4,6 @@
         Layout = "~/Views/Shared/_ColumnsOne.cshtml";
    
     }
-@helper ScoreToStar(int score)
-{
-    string css = "icon-stat-";
-    int star = score / 20;
-    if (star > 0)
-    {
-        css += star.ToString();
-    }
-    if (star * 20 + 10 < score)
-    {
-        css += "half";
-    }
-    <text>@Html.Raw(css)</text>
-}
 @helper  ChangWeek(int num)
     {
          string week = "";
@@ -59,7 +45,7 @@
         <ul class="xm-goods-list clearfix">
         @foreach (var product in Model.Products.Where(o=>o.CreatedOnUtc>=Convert.ToDateTime(datetime) && o.CreatedOnUtc<Convert.ToDateTime(datetime).AddDays(1)))
         {
-            <li class="item-box product-width">
+            <li class="item-box product-width" style="width: 254px;">
                 <div class="xm-goods-item product-width" data-productid="64">
                     <div class="item-thumb">
                         <a title="@product.Name " target="_blank" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
@@ -76,7 +62,7 @@
                         </div>
                         <div class="item-star">
                             <a title="@(product.Score)分">
-                                <span class="icon-stat @ScoreToStar(product.Score) "></span>
+                                <span class="icon-stat @Html.ScoreToStar(product.Score) "></span>
                             </a>
                             <span class="item-comments" style="display:none;">0 人评价</span>
                         </div>

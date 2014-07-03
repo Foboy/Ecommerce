@@ -152,6 +152,9 @@ body {
 .hcolor {
     color:#8c8c8c;
 }
+.bcolor {
+    color:#333;
+}
 .float-left {
     float:left;
 }
@@ -988,12 +991,11 @@ a:hover, a:focus {
 }
 
 .site-topbar .topbar-info .user-info-menu {
-    display: none;
     position: absolute;
-    right: 136px;
+    right: 106px;
     top: 36px;
     z-index: 30;
-    width: 136px;
+    width: 126px;
     padding: 9px 0 10px;
     border: 1px solid #dfdfdf;
     font-size: 12px;

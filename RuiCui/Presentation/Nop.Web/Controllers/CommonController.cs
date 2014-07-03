@@ -408,7 +408,7 @@ namespace Nop.Web.Controllers
                     .Where(sci => sci.ShoppingCartType == ShoppingCartType.Wishlist)
                     .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
                     .ToList()
-                    .GetTotalProducts(),
+                    .GetTotalProductsCount(),
                 AllowPrivateMessages = customer.IsRegistered() && _forumSettings.AllowPrivateMessages,
                 UnreadPrivateMessages = unreadMessage,
                 AlertMessage = alertMessage,

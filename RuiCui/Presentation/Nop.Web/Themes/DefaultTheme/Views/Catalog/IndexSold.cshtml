@@ -4,20 +4,7 @@
     Layout = "~/Views/Shared/_ColumnsOne.cshtml";
 
 }
-@helper ScoreToStar(int score)
-{
-    string css = "icon-stat-";
-    int star = score / 20;
-    if (star > 0)
-    {
-        css += star.ToString();
-    }
-    if (star * 20 + 10 < score)
-    {
-        css += "half";
-    }
-    <text>@Html.Raw(css)</text>
-}
+
 <div class="product-date">
     <h4 class="product-time">
         
@@ -44,7 +31,7 @@
                         </div>
                         <div class="item-star">
                             <a title="@(product.Score)分">
-                                <span class="icon-stat @ScoreToStar(product.Score) "></span>
+                                <span class="icon-stat @Html.ScoreToStar(product.Score) "></span>
                             </a>
                             <span class="item-comments" style="display:none;">0 人评价</span>
                         </div>

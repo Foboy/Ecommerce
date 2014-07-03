@@ -34,100 +34,50 @@
             {
                 <input type="submit" id="updatecartSubmit" name="updatecart" value="@T("Wishlist.UpdateCart")" style="display:none;" />
                 <ul class="xm-goods-list clearfix">
-                    <li class="item-box">
+@foreach (var item in Model.Items)
+                        {
+                    <li class="item-box" style="width:270px;">
+                        <input type="checkbox" id="removeCheckbox@(item.Id)" name="removefromcart" value="@(item.Id)" style="display:none;" />
                         <div class="xm-goods-item" >
                             <div class="item-thumb">
-                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
-                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
+                                <a title="" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">
+                                    <img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title" />
                                 </a>
                             </div>
                             <div class="item-info">
                                 <h3 class="item-title">
-                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
+                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
                                 </h3>
                                 <div class="item-price">
-                                    <del class="price old-price">¥4,600.00</del>
-                                    <span class="price actual-price">¥4,589.00</span>
+                                    <del class="price old-price">@item.OldPrice</del>
+                                    <span class="price actual-price">@item.Price</span>
                                 </div>
                                 <div class="item-star">
-                                    <a title="80分">
-                                        <span class="icon-stat icon-stat-4 "></span>
+                                    <a title="@(item.Score)分">
+                                        <span class="icon-stat @Html.ScoreToStar(item.Score)"></span>
                                     </a>
-                                    <span class="item-comments" style="display:none;">0 人评价</span>
+                                    <span class="item-comments" style="display:none;"></span>
                                 </div>
                                 <div class="item-actions">
-                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
+                                    <a class="btn btn-small btn-primary J_addCart" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">
                                         <i class="iconfont font12 wcolor">&#xe620;</i>
-                                        购物车
+                                        立即购买
                                     </a>
-                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
+                                    <a class="btn btn-dake btn-small J_addFav del_goods_from_wishlist" href="javascript:void(0)" data-pid="@(item.Id)">取消</a>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li class="item-box">
-                        <div class="xm-goods-item">
-                            <div class="item-thumb">
-                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
-                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <h3 class="item-title">
-                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
-                                </h3>
-                                <div class="item-price">
-                                    <del class="price old-price">¥4,600.00</del>
-                                    <span class="price actual-price">¥4,589.00</span>
-                                </div>
-                                <div class="item-star">
-                                    <a title="80分">
-                                        <span class="icon-stat icon-stat-4 "></span>
-                                    </a>
-                                    <span class="item-comments" style="display:none;">0 人评价</span>
-                                </div>
-                                <div class="item-actions">
-                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
-                                        <i class="iconfont font12 wcolor">&#xe620;</i>
-                                        购物车
-                                    </a>
-                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="item-box">
-                        <div class="xm-goods-item">
-                            <div class="item-thumb">
-                                <a title="" href="/%E5%8F%8B%E5%A5%BD">
-                                    <img title=" " srcset="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" src="http://localhost:15536/content/images/thumbs/0000210_-a_125.png" alt="图片 璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 ">
-                                </a>
-                            </div>
-                            <div class="item-info">
-                                <h3 class="item-title">
-                                    <a href="/%E5%8F%8B%E5%A5%BD">璧美人 老坑冰种翡翠手镯阳绿飘花缅甸天然a货玉镯宽版女款带证书 </a>
-                                </h3>
-                                <div class="item-price">
-                                    <del class="price old-price">¥4,600.00</del>
-                                    <span class="price actual-price">¥4,589.00</span>
-                                </div>
-                                <div class="item-star">
-                                    <a title="80分">
-                                        <span class="icon-stat icon-stat-4 "></span>
-                                    </a>
-                                    <span class="item-comments" style="display:none;">0 人评价</span>
-                                </div>
-                                <div class="item-actions">
-                                    <a class="btn btn-small btn-primary J_addCart" onclick="AjaxCart.addproducttocart_catalog('/addproducttocart/catalog/64/1/1');return false;" href="javascript: void(0);">
-                                        <i class="iconfont font12 wcolor">&#xe620;</i>
-                                        购物车
-                                    </a>
-                                    <a class="btn btn-dake btn-small J_addFav">取消</a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+}
                 </ul>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('.del_goods_from_wishlist').click(function () {
+            $('#removeCheckbox' + $(this).attr('data-pid')).attr("checked", true);
+            $('#updatecartSubmit').click();
+        });
+    });
+    </script>
             @*<div class="shop-cart-box-bd">
                     <!--  购物车商品列表 -->
                     <dl class="shop-cart-goods">
