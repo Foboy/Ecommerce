@@ -680,7 +680,7 @@ namespace Nop.Services.Orders
                 warnings.AddRange(GetStandardWarnings(customer, shoppingCartType, product, selectedAttributes, customerEnteredPrice, quantity));
 
             //selected attributes
-            if (getAttributesWarnings)
+            if (getAttributesWarnings && shoppingCartType!= ShoppingCartType.Wishlist)
                 warnings.AddRange(GetShoppingCartItemAttributeWarnings(customer, shoppingCartType, product, quantity, selectedAttributes));
 
             //gift cards

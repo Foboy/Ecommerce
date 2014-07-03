@@ -1105,7 +1105,7 @@ namespace Nop.Web.Controllers
                 return Json(new
                 {
                     success = false,
-                    message = "No product found with the specified ID"
+                    message = "产品不存在！"
                 });
 
             //we can add only simple products
@@ -1143,6 +1143,16 @@ namespace Nop.Web.Controllers
                 .Where(sci => sci.StoreId == _storeContext.CurrentStore.Id)
                 .ToList();
             var shoppingCartItem = _shoppingCartService.FindShoppingCartItemInTheCart(cart, cartType, product);
+
+            if (cartType == ShoppingCartType.Wishlist && shoppingCartItem != null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "该商品已收藏！"
+                });
+            }
+
             //if we already have the same product in the cart, then use the total quantity to validate
             var quantityToValidate = shoppingCartItem != null ? shoppingCartItem.Quantity + quantity : quantity;
             var addToCartWarnings = _shoppingCartService
