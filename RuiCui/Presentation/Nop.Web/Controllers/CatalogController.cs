@@ -2611,7 +2611,7 @@ namespace Nop.Web.Controllers
         /// <param name="plist">结果集,可自我筛选</param>
         /// <param name="productss">筛选源，为空时，Plist作为筛选源</param>
         /// <param name="type">1：只查VIP 2：排除VIP 3: 查询库存为0</param>
-        private void FilterProduct(ref List<Product> plist, IPagedList<Product>? productss, FilterProductType type)
+        private void FilterProduct(ref List<Product> plist, IPagedList<Product> productss, FilterProductType type)
         {
             if (plist == null)
                 plist = new List<Product>();
