@@ -185,8 +185,24 @@ namespace Nop.Web.Controllers
             if (command.PageSize <= 0) command.PageSize = _newsSettings.NewsArchivePageSize;
             if (command.PageNumber <= 0) command.PageNumber = 1;
 
-            var newsItems = _newsService.GetAllNews(_workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id,
-                command.PageNumber - 1, command.PageSize);
+            var newsList = _newsService.GetAllNews(_workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id,
+               0, int.MaxValue);
+            List<NewsItem> nlist = new List<NewsItem>();
+            if (!string.IsNullOrEmpty(command.FilterDateTime))
+            {
+                nlist = newsList.Where(o => o.CreatedOnUtc >= Convert.ToDateTime(command.FilterDateTime) && o.CreatedOnUtc < Convert.ToDateTime(command.FilterDateTime).AddDays(1)).ToList<NewsItem>();
+            }
+            else
+            {
+                foreach (var news in newsList)
+                {
+                    nlist.Add(news);
+                }
+            }
+            model.NewsDateTimes = newsList.OrderByDescending(o => o.CreatedOnUtc).Select(o => o.CreatedOnUtc.ToString("D")).Distinct().ToList<string>();
+            var newsItems = new PagedList<NewsItem>(nlist, command.PageNumber - 1, command.PageSize);
+           
+
             model.PagingFilteringContext.LoadPagedList(newsItems);
 
             model.NewsItems = newsItems
