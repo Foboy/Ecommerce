@@ -84,7 +84,7 @@
 <div class="box-hd">
     <div class="tj-sort">
         <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
-            <dd>
+            <dd class="float-left">
                 <ul id="typeOrder" class="clearfix">
                     @if (Model.PagingFilteringContext.AvailableSortOptions.Count > 0)
                     {
@@ -103,29 +103,45 @@
                                     <a href="@item.Value" rel="nofollow">默认</a>
                                 </li>
                             }
-                            else if (item.Value.Contains("orderby=15"))
-                            {
-                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
-                                    <a href="@item.Value" rel="nofollow">最新</a>
-                                </li>
-                            }
-                            else if (item.Value.Contains("orderby=11"))
-                            {
-                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
-                                    <a href="@item.Value" rel="nofollow">价格从高到低</a>
-                                </li>
-                            }
-                            else if (item.Value.Contains("orderby=10"))
-                            {
-                                <li class='@((item.Selected ? "current" : "") + firstCss)'>
-                                    <a href="@item.Value" rel="nofollow">价格从低到高</a>
-                                </li>
-                            }
-
+                            @*else if (item.Value.Contains("orderby=15"))
+                        {
+                            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                <a href="@item.Value" rel="nofollow">最新</a>
+                            </li>
+                        }
+                        else if (item.Value.Contains("orderby=11"))
+                        {
+                            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                <a href="@item.Value" rel="nofollow">价格从高到低</a>
+                            </li>
+                        }
+                        else if (item.Value.Contains("orderby=10"))
+                        {
+                            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                                <a href="@item.Value" rel="nofollow">价格从低到高</a>
+                            </li>
+                        }*@
 
                         }
                     }
                 </ul>
+            </dd>
+
+            <dd class="float-left">
+                <div class="fPrice">
+                    <b class="float-left tj-search-title ">商品分值：</b>
+                    <b class="fPb-item float-left">
+                        <input class="j_FPInput" type="text" name="start_price" autocomplete="off" maxlength="6" value="">
+                    </b>
+                    <i class="fPb-split">-</i>
+                    <b class="fPb-item float-left">
+                        <input class="j_FPInput" type="text" name="end_price" autocomplete="off" value="" maxlength="6">
+                    </b>
+                    <b class="fPb-item float-left fPrice-btn-margin ">
+                        <a class="fPrice-btn">确定</a>
+                        <a class="fPrice-empty">清空</a>
+                    </b>
+                </div>
             </dd>
         </dl>
 
