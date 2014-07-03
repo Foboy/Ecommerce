@@ -62,42 +62,42 @@
     
     
     
-    <script type="text/javascript">
-        $(function () {
-            $('#button-password').click(function () {
-                var topicId = $("#@Html.FieldIdFor(model => model.Id)").val();
-                var password = $('#password').val();
-                $.ajax({
-                    cache: false,
-                    type: 'POST',
-                    url: '@Url.RouteUrl("TopicAuthenticate")',
-                    data: { "id": topicId, "password": password },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Authenticated) {
-                            $('#ph-title .page-title h1').html(data.Title);
-                            if ($('#ph-title .page-title h1').text().length == 0) {
-                                $('#ph-title').hide();
-                            }
-                            $('#ph-topic .page-body').html(data.Body);
-                            $('#ph-password').hide();
-                            $('#ph-topic').show();
+<script type="text/javascript">
+    $(function () {
+        $('#button-password').click(function () {
+            var topicId = $("#@Html.FieldIdFor(model => model.Id)").val();
+            var password = $('#password').val();
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: '@Url.RouteUrl("TopicAuthenticate")',
+                data: { "id": topicId, "password": password },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Authenticated) {
+                        $('#ph-title .page-title h1').html(data.Title);
+                        if ($('#ph-title .page-title h1').text().length == 0) {
+                            $('#ph-title').hide();
                         }
-                        else {
-                            $('#password-error').text(data.Error);
-                            $('#ph-password #password').select().focus();
-                        }
+                        $('#ph-topic .page-body').html(data.Body);
+                        $('#ph-password').hide();
+                        $('#ph-topic').show();
                     }
-                });
-                return false;
+                    else {
+                        $('#password-error').text(data.Error);
+                        $('#ph-password #password').select().focus();
+                    }
+                }
             });
+            return false;
         });
+    });
 
-        $(document).ready(function () {
-            $('#ph-topic').hide();
-            $('#ph-password #password').select().focus();
-        });
-    </script>
+    $(document).ready(function () {
+        $('#ph-topic').hide();
+        $('#ph-password #password').select().focus();
+    });
+</script>
     <div class="topic-password" id="ph-password">
         @using (Html.BeginRouteForm("TopicAuthenticate"))
         {
@@ -120,7 +120,7 @@
 {
     @section left
 {
-        <div class="rc-about-sidebar">
+        <div class="rc-about-sidebar rc-about">
             @foreach (var g in groupDictionary)
             {
                 <div class="hd"><h3 class="title">@g.Key</h3></div>
@@ -132,22 +132,24 @@
                 </ul>
             }
 
-        </div>
+</div>
+
+
 
     }
 }
-<div class="about-box">
+<div class="about-box rc-about">
     <div class="section">
         <div class="page topic-page" id="ph-topic">
-            @if(!isGroup)
-            { 
-            <div id="ph-title">
-                <div class="page-title">
-                    <h1>
-                        @Model.Title
-                    </h1>
+            @if (!isGroup)
+            {
+                <div id="ph-title">
+                    <div class="page-title">
+                        <h1>
+                            @Model.Title
+                        </h1>
+                    </div>
                 </div>
-            </div>
             }
             <div class="page-body">
                 @Html.Raw(Model.Body)

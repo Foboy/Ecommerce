@@ -59,7 +59,7 @@
         <ul class="xm-goods-list clearfix">
         @foreach (var product in Model.Products.Where(o=>o.CreatedOnUtc>=Convert.ToDateTime(datetime) && o.CreatedOnUtc<Convert.ToDateTime(datetime).AddDays(1)))
         {
-            <li class="item-box product-width">
+            <li class="item-box product-width" style="width: 254px;">
                 <div class="xm-goods-item product-width" data-productid="64">
                     <div class="item-thumb">
                         <a title="@product.Name " target="_blank" href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
