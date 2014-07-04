@@ -61,8 +61,9 @@ namespace Nop.Web.Models.Catalog
         /// </summary>
         [NopResourceDisplayName("Categories.ViewMode")]
         public string ViewMode { get; set; }
-        
 
+        public int MinScore { get; set; }
+        public int MaxScore { get; set; } 
         #endregion
 
         #region Nested classes

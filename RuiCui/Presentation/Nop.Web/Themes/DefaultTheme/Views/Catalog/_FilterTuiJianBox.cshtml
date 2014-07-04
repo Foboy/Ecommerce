@@ -1,98 +1,24 @@
 ﻿@using Nop.Web.Models.Catalog;
-@{
- CatalogPagingFilteringModel.PriceRangeFilterModel priceModel =ViewData["PriceFilter"] as CatalogPagingFilteringModel.PriceRangeFilterModel;
-  var selectedItem = priceModel.Items.FirstOrDefault(x => x.Selected);
+@model CatalogPagingFilteringModel
 
-}
-@helper FormatPriceRangeText(CatalogPagingFilteringModel.PriceRangeFilterItem filterItem)
-{
-    string rangeText = "";
-    Func<decimal, string> parseDecimal = (price) =>
-    {
-        if (price >= 10000)
-        {
-            var shortPrice = price / (decimal)10000;
-            if (Math.Floor(shortPrice) * 10 < shortPrice * 10)
-            {
-                return shortPrice.ToString("N1") + "万";
-            }
-            else
-            {
-                return shortPrice.ToString("N0") + "万";
-            }
-        }
-        else
-        {
-            return Math.Round(price).ToString("N0");
-        }
-    };
-    string from = parseDecimal(filterItem.FromDecimal);
-    string to = parseDecimal(filterItem.ToDecimal);
 
-    if (String.IsNullOrWhiteSpace(filterItem.From) || Math.Round(filterItem.FromDecimal) <= 0)
-    {
-        rangeText = string.Format("<span class=\"PriceRange\">{0}以内</span>", to);
-    }
-    else if (String.IsNullOrWhiteSpace(filterItem.To) || Math.Round(filterItem.ToDecimal) <= 0)
-    {
-        rangeText = string.Format("<span class=\"PriceRange\">{0}以上</span>", from);
-    }
-    else
-    {
-        rangeText = string.Format("<span class=\"PriceRange\">{0}</span> - <span class=\"PriceRange\">{1}</span>", from, to);
-    }
-    <text>@Html.Raw(rangeText)</text>
-}
-@helper RemoveSpecFilter() { 
+@using (Html.BeginForm("SearchTuiJianProduct", "Catalog"))
+ {
+<b class="float-left tj-search-title ">商品分值：</b>
+<b class="fPb-item float-left">
+    @Html.TextBoxFor(m => m.MinScore,new { @class = "j_FPInput", name = "start_price", autofocus = "autofocus", autocomplete = "off", maxlength = "6" })
+  
+</b>
+<i class="fPb-split">-</i>
+<b class="fPb-item float-left">
+    @Html.TextBoxFor(m => m.MaxScore, new { @class = "j_FPInput", name = "end_price", autofocus = "autofocus", autocomplete = "off", maxlength = "6" })
+   
+</b>
+<b class="fPb-item float-left fPrice-btn-margin ">
 
-    
-}
-
-@if (priceModel.Enabled)
-{
-    if (selectedItem == null)
-    {
-        <dl class="xm-filter-list  category-filter-list clearfix">
-            <dt>价格区间 ：</dt>
-            <dd>
-                <ul id="typeAdapt" class="clearfix">
-                    @{
-                        var firstSpec = 0;
-                    }
-                    @foreach (var item in priceModel.Items)
-                    {
-                        <li class="@if (firstSpec++==0){<text>first</text>}
-                                                                     else
-                                                                     {<text></text>}"><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
-                    }
-
-                </ul>
-            </dd>
-        </dl>
-    }
-}
-@if (priceModel.Enabled)
-{
-    if ( selectedItem != null)
-    {
-        <dl class="xm-filter-list  category-filter-list clearfix">
-            <dt class="condition-title">已选条件：</dt>
-            <dd>
-                <ul class="clearfix">
-                    @if (selectedItem != null)
-                    { 
-                    <li class="condition">
-                        @FormatPriceRangeText(selectedItem)
-                        <a href="@priceModel.RemoveFilterUrl"><i class="iconfont">&#xf00b3;</i></a>
-                    </li>
-                        
-                    }
-                   
-                    <li class="condition">
-                        <a href="?specs=&price=">全部移除</a>
-                    </li>
-                </ul>
-            </dd>
-        </dl>
-    }
+    <button class="fPrice-btn" type="submit" >确定</button>
+    @*<input class="fPrice-btn" type="submit" value="确定" />*@
+    @*<a class="fPrice-btn" href="@Url.Action("SearchTuiJianProduct", "Catalog")" >确定</a>*@
+    <a class="fPrice-empty" href="@Url.Action("SearchTuiJianProduct", "Catalog")">清空</a>
+</b>
 }

@@ -21,6 +21,20 @@
         addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
     }    
 }
+@helper ScoreToStar(int score)
+{
+    string css = "icon-stat-";
+    int star = score / 20;
+    if (star > 0)
+    {
+        css += star.ToString();
+    }
+    if (star * 20 + 10 < score)
+    {
+        css += "half";
+    }
+    <text>@Html.Raw(css)</text>
+}
 <div class="xm-goods-item" data-productid="@Model.Id">
     <div class="item-thumb">
         <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title" target="_blank">

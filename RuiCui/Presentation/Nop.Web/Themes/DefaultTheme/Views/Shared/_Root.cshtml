@@ -3,11 +3,16 @@
     var _workContext = EngineContext.Current.Resolve<Nop.Core.IWorkContext>();
     var currentCustomerRoles = _workContext.CurrentCustomer.CustomerRoles.Where(cr => cr.Active);
     bool check = false;
+    bool IsLogin = false;
     foreach (var role in currentCustomerRoles)
     {
-        if (role.Name == "已注册客户")
+        if (role.Name == "VIP")
         {
             check = true;
+        }
+        if (role.Name == "已注册客户")
+        {
+            IsLogin = true;
         }
     }
 }
@@ -65,8 +70,13 @@
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
                 <li id="nav_vip" class="nav-main-item">
-                    @if(check)
-                    { 
+                    @if (!IsLogin)
+{
+    <a href="@Url.RouteUrl("Login")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
+
+}
+else if (check)
+{
                     <a href="@Url.RouteUrl("VipProduct")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
                     }
                     else

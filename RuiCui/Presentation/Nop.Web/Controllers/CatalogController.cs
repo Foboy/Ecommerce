@@ -2624,7 +2624,7 @@ namespace Nop.Web.Controllers
                         bool check = false;
                         foreach (var acl in existingAclRecords)
                         {
-                            if (acl.CustomerRole.Name == "已注册客户")
+                            if (acl.CustomerRole.Name == "VIP")
                                 check = true;
                         }
                         if (check)
@@ -2641,7 +2641,7 @@ namespace Nop.Web.Controllers
                         bool check = true;
                         foreach (var acl in existingAclRecords)
                         {
-                            if (acl.CustomerRole.Name == "已注册客户")
+                            if (acl.CustomerRole.Name == "VIP")
                                 check = false;
                         }
                         if (check)
@@ -2702,6 +2702,7 @@ namespace Nop.Web.Controllers
         /// 查询Vip商品
         /// </summary>
         /// <returns></returns>
+     
         public ActionResult SearchVipProduct(CatalogPagingFilteringModel command)
         {
            var categorys = _categoryService.GetAllCategories();
@@ -3103,6 +3104,7 @@ namespace Nop.Web.Controllers
         /// 查询Vip商品
         /// </summary>
         /// <returns></returns>
+       
         public ActionResult SearchTuiJianProduct(CatalogPagingFilteringModel command)
         {
             var categorys = _categoryService.GetAllCategories();
@@ -3404,8 +3406,10 @@ namespace Nop.Web.Controllers
             {
                 plist = plist.OrderByDescending(o => ParseScore(o)).ToList<Product>();
             }
-          
-
+            if (command.MinScore != 0 || command.MaxScore != 0)
+            {
+                plist = plist.Where(o => Convert.ToInt32(o.AdminComment) >= command.MinScore && Convert.ToInt32(o.AdminComment) <= command.MaxScore).ToList<Product>();
+            }
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
 

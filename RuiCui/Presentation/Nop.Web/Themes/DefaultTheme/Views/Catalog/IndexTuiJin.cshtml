@@ -129,18 +129,13 @@
 
             <dd class="float-left">
                 <div class="fPrice">
-                    <b class="float-left tj-search-title ">商品分值：</b>
-                    <b class="fPb-item float-left">
-                        <input class="j_FPInput" type="text" name="start_price" autocomplete="off" maxlength="6" value="">
-                    </b>
-                    <i class="fPb-split">-</i>
-                    <b class="fPb-item float-left">
-                        <input class="j_FPInput" type="text" name="end_price" autocomplete="off" value="" maxlength="6">
-                    </b>
-                    <b class="fPb-item float-left fPrice-btn-margin ">
-                        <a class="fPrice-btn">确定</a>
-                        <a class="fPrice-empty">清空</a>
-                    </b>
+                    @{
+                        ViewDataDictionary filters = new ViewDataDictionary();
+                        //  filters.Add("SpecFilter", Model.PagingFilteringContext.SpecificationFilter);
+                       // filters.Add("PagingFilter", Model.PagingFilteringContext);
+                        @Html.Partial("_FilterTuiJianBox", Model.PagingFilteringContext)
+                    }
+      
                 </div>
             </dd>
         </dl>
@@ -169,3 +164,11 @@
     @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
 </div>
 
+<script type="text/javascript">
+    function getPriceRange()
+    {
+        alert($("#start_price").val());
+        $.cookie('tuijian_start_price', $("#start_price").val());
+        $.cookie('tuijian_end_price', $("#end_price").val());
+    }
+</script>
