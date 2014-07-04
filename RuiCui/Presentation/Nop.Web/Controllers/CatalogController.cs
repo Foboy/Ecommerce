@@ -2988,21 +2988,9 @@ namespace Nop.Web.Controllers
             //products
             IList<int> alreadyFilteredSpecOptionIds = model.PagingFilteringContext.SpecificationFilter.GetAlreadyFilteredSpecOptionIds(_webHelper);
             IList<int> filterableSpecificationAttributeOptionIds = null;
-            //var products = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
-            //    categoryIds: categoryIds,
-            //    storeId: _storeContext.CurrentStore.Id,
-            //    visibleIndividuallyOnly: true,
-            //    featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
-            //    priceMin: minPriceConverted, priceMax: maxPriceConverted,
-            //    filteredSpecs: alreadyFilteredSpecOptionIds,
-            //    orderBy: (ProductSortingEnum)command.OrderBy,
-            //    pageIndex: command.PageNumber - 1,
-            //    pageSize: command.PageSize);
+    
             var productss = _productService.SearchProducts(out filterableSpecificationAttributeOptionIds, true,
                categoryIds: categoryIds,
-              // storeId: _storeContext.CurrentStore.Id,
-              // visibleIndividuallyOnly: true,
-              // featuredProducts: _catalogSettings.IncludeFeaturedProductsInNormalLists ? null : (bool?)false,
                priceMin: minPriceConverted, priceMax: maxPriceConverted,
                filteredSpecs: alreadyFilteredSpecOptionIds,
                orderBy: (ProductSortingEnum)command.OrderBy);
@@ -3011,9 +2999,10 @@ namespace Nop.Web.Controllers
             //只查VIP
             FilterProduct(ref plist, productss, FilterProductType.onlyVip);
 
+            //借用MINSCORE字段标示价格区间
             if (command.MinScore != 0 || command.MaxScore != 0)
             {
-                plist = plist.Where(o => Convert.ToInt32(o.AdminComment) >= command.MinScore && Convert.ToInt32(o.AdminComment) <= command.MaxScore).ToList<Product>();
+                plist = plist.Where(o => o.Price >= command.MinScore && o.Price <= command.MaxScore).ToList<Product>();
             }
 
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
@@ -3028,18 +3017,6 @@ namespace Nop.Web.Controllers
                 specs,
                 _specificationAttributeService, _webHelper, _workContext);
 
-
-            //template
-            //var templateCacheKey = string.Format(ModelCacheEventConsumer.CATEGORY_TEMPLATE_MODEL_KEY, category.CategoryTemplateId);
-            //var templateViewPath = _cacheManager.Get(templateCacheKey, () =>
-            //{
-            //    var template = _categoryTemplateService.GetCategoryTemplateById(category.CategoryTemplateId);
-            //    if (template == null)
-            //        template = _categoryTemplateService.GetAllCategoryTemplates().FirstOrDefault();
-            //    if (template == null)
-            //        throw new Exception("No default template could be loaded");
-            //    return template.ViewPath;
-            //});
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewCategory", _localizationService.GetResource("ActivityLog.PublicStore.ViewCategory"), category.Name);
