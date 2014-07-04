@@ -3584,6 +3584,7 @@
     <Content Include="Themes\DefaultTheme\Content\colorbox\colorbox.jquery.json" />
     <Content Include="Themes\DefaultTheme\Content\colorbox\README.md" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_ProductTuiJianBox.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterVipBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

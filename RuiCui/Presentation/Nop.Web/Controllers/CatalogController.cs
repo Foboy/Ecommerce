@@ -3011,6 +3011,11 @@ namespace Nop.Web.Controllers
             //只查VIP
             FilterProduct(ref plist, productss, FilterProductType.onlyVip);
 
+            if (command.MinScore != 0 || command.MaxScore != 0)
+            {
+                plist = plist.Where(o => Convert.ToInt32(o.AdminComment) >= command.MinScore && Convert.ToInt32(o.AdminComment) <= command.MaxScore).ToList<Product>();
+            }
+
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
 
