@@ -170,12 +170,71 @@ else if (check)
 @Html.Action("EuCookieLaw", "Common")
 @Html.Widget("body_end_html_tag_before")
 
+
 <div style="display:none;">
     <div id='not_vip_msg' style='padding:30px;  background:#fff;'>
         <h3 class="msg-header">温馨提示</h3>
         <div class="msg-body">VIP专区目前只对VIP用户开放。你可以在线咨询客服，了解VIP申请方式</div>
     </div>
 </div>
+
+@*固定导航*@
+<div class="fixednav">
+    <ul class="fixedBoxList">
+        <li class="Service">
+            <span class="fixeBoxSpan"><i class="iconfont font20 qqcolor">&#xf01c7;</i></span>
+            <strong class="fixed-title">在线客服</strong>
+            <div class="qq-service">
+                <div class="bjfff"></div>
+                <span>在线QQ客服</span>
+                <span style="font-size: 12px; color: #8c8c8c" class="qq-time ">AM:09:00—PM：23:00</span>
+                <div class="qq-info clearfix">
+                    <div class="float-left">客服一：</div>
+                    <div class="float-right ">
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=249238908&site=www.rc1314.com&menu=yes">
+                            <img border="0" src="http://wpa.qq.com/pa?p=2:249238908:51" alt="点击这里给我发消息" title="点击这里给我发消息" />
+                        </a>
+                    </div>
+                </div>
+                <div class="qq-info clearfix">
+                    <div class="float-left">客服二：</div>
+                    <div class="float-right ">
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=205140960&site=www.rc1314.com&menu=yes">
+                            <img border="0" src="http://wpa.qq.com/pa?p=2:205140960:51" alt="点击这里给我发消息" title="点击这里给我发消息" />
+                        </a>
+                    </div>
+                </div>
+                <div class="qq-info clearfix">
+                    <div class="float-left">客服三：</div>
+                    <div class="float-right ">
+                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=205140960&site=www.rc1314.com&menu=yes">
+                            <img border="0" src="http://wpa.qq.com/pa?p=2:205140960:51" alt="点击这里给我发消息" title="点击这里给我发消息" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <li>
+            <span class="fixeBoxSpan"><i class="iconfont font24 hcolor">&#xf02aa;</i></span>
+            <strong class="fixed-title">回到顶部</strong>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        jQuery(".Service").hover(
+            function () {
+                jQuery(this).find('span.fixeBoxSpan').addClass("hover");
+                jQuery(this).addClass("hover");
+            },
+            function () {
+                jQuery(this).find('span.fixeBoxSpan').removeClass("hover");
+                jQuery(this).removeClass("hover");
+            }
+            );
+    });
+</script>
+
 
 <script type="text/javascript">
 
