@@ -964,6 +964,13 @@
     text-align: center;
     width: 70px;
 }
+.home-new-title a {
+    color:#fff;
+}
+.home-new-title a:hover {
+    color:#fff;
+}
+
 .home-new ul {
     list-style-type:none;
     margin:8px 10px 0 10px;
