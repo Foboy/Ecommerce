@@ -370,6 +370,59 @@
     <Compile Include="Content\Validators\Localization\LanguageResourceValidator.cs" />
     <Compile Include="Content\Validators\Localization\LanguageValidator.cs" />
     <Compile Include="Content\Validators\Catalog\ProductValidator.cs" />
+    <Compile Include="Validators\Affiliates\AffiliateValidator.cs" />
+    <Compile Include="Validators\Blogs\BlogPostValidator.cs" />
+    <Compile Include="Validators\Catalog\CategoryValidator.cs" />
+    <Compile Include="Validators\Catalog\ManufacturerValidator.cs" />
+    <Compile Include="Validators\Catalog\ProductAttributeValidator.cs" />
+    <Compile Include="Validators\Catalog\ProductReviewValidator.cs" />
+    <Compile Include="Validators\Catalog\ProductTagValidator.cs" />
+    <Compile Include="Validators\Catalog\ProductValidator.cs" />
+    <Compile Include="Validators\Catalog\ProductVariantAttributeValueModelValidator.cs" />
+    <Compile Include="Validators\Catalog\SpecificationAttributeOptionValidator.cs" />
+    <Compile Include="Validators\Catalog\SpecificationAttributeValidator.cs" />
+    <Compile Include="Validators\Common\AddressValidator.cs" />
+    <Compile Include="Validators\Customers\CheckoutAttributeValidator.cs" />
+    <Compile Include="Validators\Customers\CheckoutAttributeValueValidator.cs" />
+    <Compile Include="Validators\Customers\CustomerRoleValidator.cs" />
+    <Compile Include="Validators\Customers\CustomerValidator.cs" />
+    <Compile Include="Validators\Directory\CountryValidator.cs" />
+    <Compile Include="Validators\Directory\CurrencyValidator.cs" />
+    <Compile Include="Validators\Directory\MeasureDimensionValidator.cs" />
+    <Compile Include="Validators\Directory\MeasureWeightValidator.cs" />
+    <Compile Include="Validators\Directory\StateProvinceValidator.cs" />
+    <Compile Include="Validators\Discounts\DiscountValidator.cs" />
+    <Compile Include="Validators\Forums\ForumGroupValidator.cs" />
+    <Compile Include="Validators\Forums\ForumValidator.cs" />
+    <Compile Include="Validators\Localization\LanguageResourceValidator.cs" />
+    <Compile Include="Validators\Localization\LanguageValidator.cs" />
+    <Compile Include="Validators\Messages\CampaignValidator.cs" />
+    <Compile Include="Validators\Messages\EmailAccountValidator.cs" />
+    <Compile Include="Validators\Messages\MessageTemplateValidator.cs" />
+    <Compile Include="Validators\Messages\NewsLetterSubscriptionValidator.cs" />
+    <Compile Include="Validators\Messages\QueuedEmailValidator.cs" />
+    <Compile Include="Validators\News\NewsItemValidator.cs" />
+    <Compile Include="Validators\Orders\CheckoutAttributeValidator.cs" />
+    <Compile Include="Validators\Orders\CheckoutAttributeValueValidator.cs" />
+    <Compile Include="Validators\Orders\RecurringPaymentValidator.cs" />
+    <Compile Include="Validators\Orders\ReturnRequestValidator.cs" />
+    <Compile Include="Validators\Plugins\PluginValidator.cs" />
+    <Compile Include="Validators\Polls\PollAnswerValidator.cs" />
+    <Compile Include="Validators\Polls\PollValidator.cs" />
+    <Compile Include="Validators\Settings\OrderSettingsValidator.cs" />
+    <Compile Include="Validators\Settings\RewardPointsSettingsValidator.cs" />
+    <Compile Include="Validators\Settings\SettingValidator.cs" />
+    <Compile Include="Validators\Shipping\DeliveryDateValidator.cs" />
+    <Compile Include="Validators\Shipping\ShippingMethodValidator.cs" />
+    <Compile Include="Validators\Shipping\WarehouseValidator.cs" />
+    <Compile Include="Validators\Stores\StoreValidator.cs" />
+    <Compile Include="Validators\Tasks\ScheduleTaskValidator.cs" />
+    <Compile Include="Validators\Tax\TaxCategoryValidator.cs" />
+    <Compile Include="Validators\Templates\CategoryTemplateValidator.cs" />
+    <Compile Include="Validators\Templates\ManufacturerTemplateValidator.cs" />
+    <Compile Include="Validators\Templates\ProductTemplateValidator.cs" />
+    <Compile Include="Validators\Topics\TopicValidator.cs" />
+    <Compile Include="Validators\Vendors\VendorValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE-master\.gitignore" />
@@ -2377,6 +2430,7 @@
     <Content Include="Views\ProductQuestion\_CreateOrUpdate.cshtml" />
     <Content Include="Views\ProductQuestion\Edit.cshtml" />
     <Content Include="Views\ProductQuestion\List.cshtml" />
+    <Content Include="Views\Setting\VIPConsumerValve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
