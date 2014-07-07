@@ -997,6 +997,7 @@ a:hover, a:focus {
     border-color: #8c8c8c transparent transparent;
     _border-color: #8c8c8c #fafafa #fafafa;
     vertical-align: middle;
+    cursor:pointer;
 }
 
 .site-topbar .topbar-info .user-info-menu {
@@ -1038,6 +1039,10 @@ a:hover, a:focus {
     margin-left: -15px;
     _font-size: 0;
     background: url(http://img03.mifile.cn/webfile/images/2014/cn/icon/user-menu-arrow.png) no-repeat 50% 0;
+}
+.sc-a {
+    margin-right:10px;
+    cursor:pointer;
 }
 
 .xm-box {

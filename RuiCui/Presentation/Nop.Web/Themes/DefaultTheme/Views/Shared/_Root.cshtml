@@ -25,7 +25,9 @@
 <div class="site-topbar">
     <div class="container">
         <div class="topbar-nav">
-            <a class="current" href="@Url.RouteUrl("HomePage")">瑞翠华光</a>
+            <a class="current sc-a" href="@Url.RouteUrl("HomePage")">瑞翠华光</a>
+            <a class="sc-a" href="javascript:window.external.AddFavorite('http://www.rc1314.com/','瑞翠华光')">收藏本站</a>
+            <a href=# class="sc-a" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.rc1314.com/');">设为首页</a>
         </div>
         <div class="topbar-info J_userInfo">
             @Html.Action("HeaderLinks", "Common")
