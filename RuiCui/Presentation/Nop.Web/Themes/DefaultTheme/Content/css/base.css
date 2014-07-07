@@ -140,6 +140,12 @@ body {
 .font18 {
     font-size:18px;
 }
+.font20 {
+    font-size:20px;
+}
+.font24 {
+    font-size:24px;
+}
 .basecolor {
     color:#F68B1F;
 }
@@ -154,6 +160,9 @@ body {
 }
 .bcolor {
     color:#333;
+}
+.qqcolor {
+    color:#299ec0;
 }
 .float-left {
     float:left;
@@ -2935,4 +2944,99 @@ a:hover, a:focus {
     margin-top:4px;
 }
 
+
+/*¹Ì¶¨µ¼º½*/
+.fixednav {
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
+    border: 1px solid rgb(214, 214, 214);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    right: 8px;
+    bottom: 10px;
+    width: 70px;
+    z-index: 999;
+}
+.fixedBoxList {
+     padding: 4px 0 5px;
+     margin:0;
+}
+.fixedBoxList li {
+    background: none repeat scroll 0 0 rgb(241, 241, 241);
+    height: 55px;
+    margin: 1px auto 0;
+    padding: 10px 1px 1px;
+    position: relative;
+    text-align: center;
+    width: 60px;
+    list-style:none;
+}
+.fixeBoxSpan {
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    line-height:24px;
+    text-align:center;
+    margin: 0 auto;
+    width: 26px;
+}
+.fixed-title {
+    color: rgb(102, 102, 102);
+    cursor: pointer;
+    font-weight: normal;
+    height: 22px;
+    line-height: 22px;
+    font-size:12px;
+    text-align:center;
+}
+.qq-service {
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
+    border: 1px solid rgb(214, 214, 214);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: none;
+    left: -202px;
+    position: absolute;
+    top: -145px;
+    width: 182px;
+    z-index: 999;
+    padding:10px;
+}
+.bjfff {
+	background:rgb(255,255,255);
+	top:144px;
+	width:10px;
+	height:64px;
+	right:-5px;
+	position:absolute;
+}
+
+.fixednav ul.fixedBoxList li.hover.Service {
+	background:rgb(255,255,255);
+	padding:9px 0px 0px;
+	border:1px solid rgb(214,214,214);
+	box-shadow:0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.fixednav ul.fixedBoxList li.hover.Service .qq-service {
+	display:block;
+}
+.qq-service span {
+    font-size:14px;
+    color:#6d6d6d;
+    display:block;
+    text-align:center;
+
+}
+.qq-time {
+    border-bottom: 1px solid #ddd;
+    padding-bottom:10px;
+}
+
+.qq-info {
+    color:#8c8c8c;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    padding: 8px 25px;
+    position: relative;
+    text-align: center;
+}
 
