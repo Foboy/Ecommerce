@@ -75,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="display:none">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" class="commonalink" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">
@@ -98,8 +98,11 @@
         $($("#currentoption").val()).attr("class","panel-collapse collapse in");
         $('.commonalink').bind('click', function () {
             $("#currentoption").val($(this).attr('href'));
-        })
-
+        });
+        var oreignval= $("#PriceRanges").val();
+        $("#PriceRanges").bind("focus",function(){
+            $("#PriceRanges").val()=oreignval;
+        });
     });
 </script>
 
@@ -134,7 +137,8 @@
                 @Html.ValidationMessageFor(model => model.Name)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Description):
             </td>
@@ -146,7 +150,8 @@
     </table>
 
     <table class="adminContent">
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.CategoryTemplateId):
             </td>
@@ -155,7 +160,8 @@
                 @Html.ValidationMessageFor(model => model.CategoryTemplateId)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.PictureId)
             </td>
@@ -164,7 +170,8 @@
                 @Html.ValidationMessageFor(model => model.PictureId)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.ParentCategoryId):
             </td>
@@ -182,7 +189,8 @@
                 @Html.ValidationMessageFor(model => model.PriceRanges)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.ShowOnHomePage):
             </td>
@@ -191,7 +199,8 @@
                 @Html.ValidationMessageFor(model => model.ShowOnHomePage)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.IncludeInTopMenu):
             </td>
@@ -200,7 +209,8 @@
                 @Html.ValidationMessageFor(model => model.IncludeInTopMenu)
             </td>
         </tr>
-        <tr>
+        <!--zheng-->
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.AllowCustomersToSelectPageSize):
             </td>
@@ -428,7 +438,7 @@
         foreach (var discount in Model.AvailableDiscounts)
         {
             <input type="checkbox" name="SelectedDiscountIds" value="@discount.Id"
-                   @if (Model.SelectedDiscountIds != null && Model.SelectedDiscountIds.Contains(discount.Id)) { <text> checked="checked" </text>  } />@discount.Name
+                   @if (Model.SelectedDiscountIds != null && Model.SelectedDiscountIds.Contains(discount.Id)) { <text> checked="checked" </text>   } />@discount.Name
                 <br />
         }
     }

@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Widgets.AD.Models.ConfigurationModel
+@using Nop.Web.Framework;
+@Html.Action("StoreScopeConfiguration", "Setting", new { area = "Admin" })
+@using (Html.BeginForm("ConfigureAD","AD"))
+{
+    <fieldset>
+        <legend><strong>@T("Plugins.Widgets.AD.Picture1")</strong></legend>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Picture1Id_OverrideForStore, model => model.Picture1Id, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Picture1Id)（204*204）:
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Picture1Id)
+                    @Html.ValidationMessageFor(model => model.Picture1Id)
+                    @*<input type="submit" id="btnAddNewProduct" name="btnAddNewProduct" value="选择产品" onclick="javascript:OpenWindow('@(Url.RouteUrl("Nop.Plugin.Widgets.AD.ProductAddPopup", new { categoryId = 0 }))', 800, 800, true); return false;" class="btn btn-sm btn-primary btn-flat " />*@
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Text1_OverrideForStore, model => model.Text1, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Text1):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Text1)
+                    @Html.ValidationMessageFor(model => model.Text1)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Link1_OverrideForStore, model => model.Link1, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Link1):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Link1)
+                    @Html.ValidationMessageFor(model => model.Link1)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br />
+    
+    <fieldset>
+        <legend><strong>@T("Plugins.Widgets.AD.Picture2")</strong></legend>
+        <table class="adminContent">
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Picture2Id_OverrideForStore, model => model.Picture2Id, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Picture2Id)（204*204）:
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Picture2Id)
+                    @Html.ValidationMessageFor(model => model.Picture2Id)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Text2_OverrideForStore, model => model.Text2, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Text2):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Text2)
+                    @Html.ValidationMessageFor(model => model.Text2)
+                </td>
+            </tr>
+            <tr>
+                <td class="adminTitle">
+                @Html.OverrideStoreCheckboxFor(model => model.Link2_OverrideForStore, model => model.Link2, Model.ActiveStoreScopeConfiguration)
+                    @Html.NopLabelFor(model => model.Link2):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.Link2)
+                    @Html.ValidationMessageFor(model => model.Link2)
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <br />
+    
+
+  
+    <table class="adminContent">
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
+            </td>
+        </tr>
+    </table>
+}
