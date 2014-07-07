@@ -210,6 +210,7 @@
     <Compile Include="Models\Home\DashboardModel.cs" />
     <Compile Include="Models\Payments\PaymentMethodRestrictionModel.cs" />
     <Compile Include="Models\Settings\VendorSettingsModel.cs" />
+    <Compile Include="Models\Settings\VIPConsumerValveSettingsModel.cs" />
     <Compile Include="Models\Shipping\WarehouseModel.cs" />
     <Compile Include="Models\Shipping\DeliveryDateModel.cs" />
     <Compile Include="Models\Templates\ManufacturerTemplateModel.cs" />
