@@ -2634,61 +2634,118 @@ namespace Nop.Web.Controllers
                     fplist.Add(product);
                 }
             }
-
-            switch (type)
+            #region 只查VIP
+            if ((type & FilterProductType.onlyVip)==FilterProductType.onlyVip)
             {
-                case FilterProductType.onlyVip:
-                    #region 只查VIP
-                    foreach (var product in fplist)
+             
+                foreach (var product in fplist)
+                {
+                    var existingAclRecords = _aclService.GetAclRecords(product);
+                    bool check = false;
+                    foreach (var acl in existingAclRecords)
                     {
-                        var existingAclRecords = _aclService.GetAclRecords(product);
-                        bool check = false;
-                        foreach (var acl in existingAclRecords)
-                        {
-                            if (acl.CustomerRole.Name == "VIP")
-                                check = true;
-                        }
-                        if (check)
-                        { rplist.Add(product); }
+                        if (acl.CustomerRole.Name == "VIP")
+                            check = true;
                     }
-                    fplist = rplist;
-                    #endregion
-                    break;
-                case FilterProductType.NotVip:
-                    #region 排除VIP
-                    foreach (var product in fplist)
+                    if (check)
+                    { rplist.Add(product); }
+                }
+                fplist = rplist;
+                rplist = new List<Product>();
+
+            }
+            #endregion
+
+            #region 排除VIP
+            if ((type & FilterProductType.NotVip) == FilterProductType.NotVip)
+            {
+                foreach (var product in fplist)
+                {
+                    var existingAclRecords = _aclService.GetAclRecords(product);
+                    bool check = true;
+                    foreach (var acl in existingAclRecords)
                     {
-                        var existingAclRecords = _aclService.GetAclRecords(product);
-                        bool check = true;
-                        foreach (var acl in existingAclRecords)
-                        {
-                            if (acl.CustomerRole.Name == "VIP")
-                                check = false;
-                        }
-                        if (check)
-                        { rplist.Add(product); }
+                        if (acl.CustomerRole.Name == "VIP")
+                            check = false;
                     }
-                    fplist = rplist;
-                    #endregion
-                    break;
-                case FilterProductType.StockEmpty:
-                    foreach (var product in fplist)
-                    {
-                        if (product.StockQuantity == 0)
-                        {
-                            rplist.Add(product);
-                        }
-                    }
-                    fplist = rplist;
-                    break;
-                default:
-                    foreach (var product in fplist)
+                    if (check)
+                    { rplist.Add(product); }
+                }
+                fplist = rplist;
+                rplist = new List<Product>();
+
+            }
+            #endregion
+
+            #region 库存为0
+            if ((type & FilterProductType.StockEmpty) == FilterProductType.StockEmpty)
+            {
+                foreach (var product in fplist)
+                {
+                    if (product.StockQuantity == 0)
                     {
                         rplist.Add(product);
                     }
-                    break;
+                }
+                fplist = rplist;
+                rplist = new List<Product>();
             }
-            plist = rplist;
+            #endregion 
+
+        //    switch (type)
+        //    {
+        //        case FilterProductType.onlyVip:
+        //            #region 只查VIP
+        //            foreach (var product in fplist)
+        //            {
+        //                var existingAclRecords = _aclService.GetAclRecords(product);
+        //                bool check = false;
+        //                foreach (var acl in existingAclRecords)
+        //                {
+        //                    if (acl.CustomerRole.Name == "VIP")
+        //                        check = true;
+        //                }
+        //                if (check)
+        //                { rplist.Add(product); }
+        //            }
+        //            fplist = rplist;
+        //            #endregion
+        //            break;
+        //        case FilterProductType.NotVip:
+        //            #region 排除VIP
+        //            foreach (var product in fplist)
+        //            {
+        //                var existingAclRecords = _aclService.GetAclRecords(product);
+        //                bool check = true;
+        //                foreach (var acl in existingAclRecords)
+        //                {
+        //                    if (acl.CustomerRole.Name == "VIP")
+        //                        check = false;
+        //                }
+        //                if (check)
+        //                { rplist.Add(product); }
+        //            }
+        //            fplist = rplist;
+        //            #endregion
+        //            break;
+        //        case FilterProductType.StockEmpty:
+        //            foreach (var product in fplist)
+        //            {
+        //                if (product.StockQuantity == 0)
+        //                {
+        //                    rplist.Add(product);
+        //                }
+        //            }
+        //            fplist = rplist;
+        //            break;
+        //        default:
+        //            foreach (var product in fplist)
+        //            {
+        //                rplist.Add(product);
+        //            }
+        //            break;
+        //    }
+            plist = fplist;
         }
         /// <summary>
         /// 查询最新商品
