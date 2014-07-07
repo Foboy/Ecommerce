@@ -2486,10 +2486,30 @@ namespace Nop.Web.Controllers
             return PartialView(model);
         }
 
+        /// <summary>
+        /// 热门产品 按销量倒序
+        /// </summary>
+        /// <param name="productThumbPictureSize"></param>
+        /// <returns></returns>
         [ChildActionOnly]
         public ActionResult HomepageProducts(int? productThumbPictureSize)
         {
-            var products = _productService.GetAllProductsDisplayedOnHomePage();
+            int vendorId = 0;
+            if (_workContext.CurrentVendor != null)
+                vendorId = _workContext.CurrentVendor.Id;
+
+            var items = _orderReportService.BestSellersReport(
+                vendorId: vendorId,
+                pageIndex: 0,
+                pageSize: 2,
+                showHidden: true);
+            List<Product> products = new List<Product>();
+            foreach (var item in items)
+            {
+                products.Add(_productService.GetProductById(item.ProductId));
+            }
+
+           // var products = _productService.GetAllProductsDisplayedOnHomePage();
             //ACL and store mapping
             products = products.Where(p => _aclService.Authorize(p) && _storeMappingService.Authorize(p)).ToList();
 
@@ -2577,9 +2597,10 @@ namespace Nop.Web.Controllers
             }
         }
         #region ruicui产品筛选
+        [Flags]
         enum FilterProductType
         {
-            None=0,
+            None = 0,
             onlyVip = 1,
             NotVip = 2,
             StockEmpty = 4

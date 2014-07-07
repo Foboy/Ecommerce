@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Widgets.AD.Models.IndexModel
+@using Nop.Web.Framework;
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#tab1" data-toggle="tab">产品列表右侧广告配置</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="tab1">@Html.Partial("Nop.Plugin.Widgets.AD.Views.WidgetsAD.Configure", Model._ConfigurationModel)</div>
+</div>
+
+<script>
+    function showTab(name)
+    {
+        $('#myTab a[href="#' + name + '"]').tab('show');
+    }
+  
+    </script>
+
+

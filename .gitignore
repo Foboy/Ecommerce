@@ -166,3 +166,5 @@
 /RuiCui/Presentation/Nop.Web/Plugins
 /RuiCui/Plugins/Nop.Plugin.Payments.AliPay/bin
 /RuiCui/Plugins/Nop.Plugin.Payments.AliPay/obj
+/RuiCui/Plugins/Nop.Plugin.Widgets.AD/obj
+/RuiCui/Plugins/Nop.Plugin.Widgets.AD/bin
