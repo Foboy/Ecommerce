@@ -3064,3 +3064,12 @@ a:hover, a:focus {
 
 }
 
+.root-nav-bar-play {
+    position:fixed !important;
+    top:0 !important;
+    width:1176px !important;
+}
+
+.root-nav-section-list-home {
+    z-index:-1 !important;
+}
