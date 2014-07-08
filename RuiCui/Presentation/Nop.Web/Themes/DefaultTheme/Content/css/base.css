@@ -3045,3 +3045,18 @@ a:hover, a:focus {
     text-align: center;
 }
 
+.root-nav-bar-play {
+    position:fixed !important;
+    width:1176px !important;
+    top:0 !important;
+    z-index:99999 !important;
+}
+
+.root-nav-section-home {
+    position:absolute !important;
+}
+
+.root-nav-section-list-home {
+    z-index:-1 !important;
+}
+
