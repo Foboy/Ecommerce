@@ -3059,7 +3059,8 @@ a:hover, a:focus {
     height: 66px;
     position: absolute;
     right: 16px;
-    top: 0px;
+    top: 0;
     width: 62px;
+
 }
 
