@@ -138,6 +138,8 @@
         </div>
     </div>
 </div>
+@if(Model.Products.Count>0)
+{ 
 <div class="xm-goods-list-wrap">
 
     <ul class="xm-goods-list clearfix">
@@ -149,7 +151,21 @@
         }
     </ul>
 </div>
+
 <div class="xm-pagenavi">
     @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
 </div>
 
+    }else
+{
+    if (Request.Params["Q"] != null)
+    {
+        string q = Convert.ToString(Request.Params["Q"]);
+           <div class="row">抱歉，没有找到与“@q”相关的商品。</div> 
+    }
+    else
+    {
+          <div class="row">抱歉，没有找到商品。</div> 
+    }
+   
+}

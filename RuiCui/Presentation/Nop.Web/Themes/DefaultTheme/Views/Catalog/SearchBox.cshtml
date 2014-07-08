@@ -3,13 +3,13 @@
 @using (Html.BeginRouteForm("ProductSearch", FormMethod.Get, new { onsubmit = "return check_small_search_form()", @class = "search-form clearfix" }))
 {
     <input class="search-text" type="text" id="small-searchterms" @(Model.AutoCompleteEnabled ? Html.Raw(" autocomplete=\"off\"") : null)
-           value="@T("Search.SearchBox.Tooltip")" name="q" onfocus="if(this.value=='@T("Search.SearchBox.Tooltip")')this.value=''" onblur="if(this.value=='') {this.value = '@T("Search.SearchBox.Tooltip")';}" />
+           value="" name="q" onfocus="if(this.value=='@T("Search.SearchBox.Tooltip")')this.value=''" onblur="if(this.value=='') {this.value = '@T("Search.SearchBox.Tooltip")';}" />
     <input type="submit" class="search-btn iconfont font12" value="&#xf012c;" />
     <!--[if IE 6]><div class="ie6-fix"></div><![endif]-->
     <div class="hot-words">
-        <a href="#">翡翠</a>
-        <a href="#">玉佛</a>
-        <a href="#">念珠</a>
+        <a href="search?q=翡翠" >翡翠</a>
+        <a href="search?q=玉佛">玉佛</a>
+        <a href="search?q=念珠">念珠</a>
 
     </div>
     <script type="text/javascript">

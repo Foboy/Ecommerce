@@ -9,5 +9,6 @@ namespace Nop.Web.Models.Catalog
         {
             public string Breadcrumb { get; set; }
         }
+        public int OrderBy { get; set; }
     }
 }
