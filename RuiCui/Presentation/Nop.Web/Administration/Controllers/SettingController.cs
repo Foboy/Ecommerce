@@ -2633,5 +2633,60 @@ namespace Nop.Admin.Controllers
         }
 
         #endregion
+
+        #region
+
+        public ActionResult IndexSearchTags()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageSettings))
+                return AccessDeniedView();
+            //load settings for a chosen store scope
+            var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+            var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
+            var model = IndexSearchTagsSettings;
+            model.ActiveStoreScopeConfiguration = storeScope;
+            if (storeScope > 0)
+            {
+                model.FirstTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.FirstTag_OverrideForStore, storeScope);
+                model.SecondTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.SecondTag_OverrideForStore, storeScope);
+                model.ThirdTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.ThirdTag_OverrideForStore, storeScope);
+
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult IndexSearchTags(IndexSearchTagsSettingModel model)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageSettings))
+                return AccessDeniedView();
+            if (ModelState.IsValid)
+            {
+                //load settings for a chosen store scope
+                var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+
+                var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
+
+                IndexSearchTagsSettings.FirstTag = model.FirstTag;
+                IndexSearchTagsSettings.SecondTag = model.SecondTag;
+                IndexSearchTagsSettings.ThirdTag = model.ThirdTag;
+                if (model.FirstTag_OverrideForStore || storeScope == 0)
+                    _settingService.SaveSetting(IndexSearchTagsSettings, x => x.FirstTag, storeScope, false);
+                if (model.SecondTag_OverrideForStore || storeScope == 0)
+                    _settingService.SaveSetting(IndexSearchTagsSettings, x => x.SecondTag, storeScope, false);
+                if (model.ThirdTag_OverrideForStore || storeScope == 0)
+                    _settingService.SaveSetting(IndexSearchTagsSettings, x => x.ThirdTag, storeScope, false);
+
+                //now clear settings cache
+                _settingService.ClearCache();
+
+                //activity log
+                _customerActivityService.InsertActivity("EditSettings", _localizationService.GetResource("ActivityLog.EditSettings"));
+
+                SuccessNotification(_localizationService.GetResource("Admin.Configuration.Updated"));
+            }
+            return View(model);
+        }
+
+        #endregion
     }
 }
