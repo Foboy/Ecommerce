@@ -47,6 +47,9 @@ sub, sup {
     line-height: 0;
     vertical-align: baseline;
 }
+.location {
+    position: relative;
+}
 
 sup {
     top: -0.5em;
@@ -3045,18 +3048,19 @@ a:hover, a:focus {
     text-align: center;
 }
 
-.root-nav-bar-play {
-    position:fixed !important;
-    width:1176px !important;
-    top:0 !important;
-    z-index:99999 !important;
+/*“— €–¿…Õ*/
+.sold-margin {
+    margin-top:20px;
 }
+.sold-icon {
+    background-image: url("../Images/iconTag.png");
+    background-position: -63px 2px;
+    background-repeat: no-repeat;
+    height: 66px;
+    position: absolute;
+    right: 16px;
+    top: 0;
+    width: 62px;
 
-.root-nav-section-home {
-    position:absolute !important;
-}
-
-.root-nav-section-list-home {
-    z-index:-1 !important;
 }
 
