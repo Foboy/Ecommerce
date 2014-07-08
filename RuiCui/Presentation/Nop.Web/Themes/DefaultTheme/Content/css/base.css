@@ -3068,6 +3068,7 @@ a:hover, a:focus {
     position:fixed !important;
     top:0 !important;
     width:1176px !important;
+    z-index:64358 !important;
 }
 
 .root-nav-section-list-home {
