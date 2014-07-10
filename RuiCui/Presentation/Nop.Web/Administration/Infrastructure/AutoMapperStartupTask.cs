@@ -58,7 +58,7 @@ namespace Nop.Admin.Infrastructure
         public void Execute()
         {
             //TODO remove 'CreatedOnUtc' ignore mappings because now presentation layer models have 'CreatedOn' property and core entities have 'CreatedOnUtc' property (distinct names)
-            
+
             //address
             Mapper.CreateMap<Address, AddressModel>()
                 .ForMember(dest => dest.AddressHtml, mo => mo.Ignore())
@@ -123,8 +123,8 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.LocaleStringResources, mo => mo.Ignore());
             //email account
             Mapper.CreateMap<EmailAccount, EmailAccountModel>()
-                .ForMember(dest => dest.Password, mo => mo.Ignore()) 
-                .ForMember(dest => dest.IsDefaultEmailAccount, mo => mo.Ignore()) 
+                .ForMember(dest => dest.Password, mo => mo.Ignore())
+                .ForMember(dest => dest.IsDefaultEmailAccount, mo => mo.Ignore())
                 .ForMember(dest => dest.SendTestEmailTo, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<EmailAccountModel, EmailAccount>()
@@ -146,7 +146,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.SentOn, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<QueuedEmailModel, QueuedEmail>()
-                .ForMember(dest=> dest.CreatedOnUtc, dt=> dt.Ignore())
+                .ForMember(dest => dest.CreatedOnUtc, dt => dt.Ignore())
                 .ForMember(dest => dest.SentOnUtc, mo => mo.Ignore())
                 .ForMember(dest => dest.EmailAccount, mo => mo.Ignore())
                 .ForMember(dest => dest.EmailAccountId, mo => mo.Ignore())
@@ -641,6 +641,18 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.ShowHeaderRssUrl_OverrideForStore, mo => mo.Ignore())
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<BlogSettingsModel, BlogSettings>();
+            Mapper.CreateMap<VIPConsumerValveSettings, VIPConsumerValveSettingsModel>()
+                .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
+                .ForMember(dest => dest.VIPConditionValue_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
+            Mapper.CreateMap<VIPConsumerValveSettingsModel, VIPConsumerValveSettings>();
+            Mapper.CreateMap<IndexSearchTagsSetting, IndexSearchTagsSettingModel>()
+               .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
+               .ForMember(dest => dest.FirstTag_OverrideForStore, mo => mo.Ignore())
+                .ForMember(dest => dest.SecondTag_OverrideForStore, mo => mo.Ignore())
+                 .ForMember(dest => dest.ThirdTag_OverrideForStore, mo => mo.Ignore())
+               .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
+            Mapper.CreateMap<IndexSearchTagsSettingModel, IndexSearchTagsSetting>();
             Mapper.CreateMap<VendorSettings, VendorSettingsModel>()
                 .ForMember(dest => dest.ActiveStoreScopeConfiguration, mo => mo.Ignore())
                 .ForMember(dest => dest.VendorsBlockItemsToDisplay_OverrideForStore, mo => mo.Ignore())
@@ -821,6 +833,7 @@ namespace Nop.Admin.Infrastructure
             Mapper.CreateMap<CustomerUserSettingsModel.AddressSettingsModel, AddressSettings>();
 
 
+
             //category template
             Mapper.CreateMap<CategoryTemplate, CategoryTemplateModel>()
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
@@ -834,7 +847,7 @@ namespace Nop.Admin.Infrastructure
                 .ForMember(dest => dest.CustomProperties, mo => mo.Ignore());
             Mapper.CreateMap<ProductTemplateModel, ProductTemplate>();
         }
-        
+
         public int Order
         {
             get { return 0; }

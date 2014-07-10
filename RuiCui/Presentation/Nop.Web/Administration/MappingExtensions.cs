@@ -806,6 +806,34 @@ namespace Nop.Admin
         }
 
 
+        public static VIPConsumerValveSettingsModel ToModel(this VIPConsumerValveSettings entity)
+        {
+            return Mapper.Map<VIPConsumerValveSettings, VIPConsumerValveSettingsModel>(entity);
+        }
+        public static VIPConsumerValveSettings ToEntity(this VIPConsumerValveSettingsModel model)
+        {
+            return Mapper.Map<VIPConsumerValveSettingsModel, VIPConsumerValveSettings>(model);
+        }
+        public static VIPConsumerValveSettings ToEntity(this VIPConsumerValveSettingsModel model, VIPConsumerValveSettings destination)
+        {
+            return Mapper.Map(model, destination);
+        }
+
+        public static IndexSearchTagsSettingModel ToModel(this IndexSearchTagsSetting entity)
+        {
+            return Mapper.Map<IndexSearchTagsSetting, IndexSearchTagsSettingModel>(entity);
+        }
+        public static IndexSearchTagsSetting ToEntity(this IndexSearchTagsSettingModel model)
+        {
+            return Mapper.Map<IndexSearchTagsSettingModel, IndexSearchTagsSetting>(model);
+        }
+        public static IndexSearchTagsSetting ToEntity(this IndexSearchTagsSettingModel model, IndexSearchTagsSetting destination)
+        {
+            return Mapper.Map(model, destination);
+        }
+
+
+
         public static VendorSettingsModel ToModel(this VendorSettings entity)
         {
             return Mapper.Map<VendorSettings, VendorSettingsModel>(entity);
@@ -928,6 +956,9 @@ namespace Nop.Admin
         {
             return Mapper.Map(model, destination);
         }
+
+        
+
         #endregion
 
         #region Plugins
