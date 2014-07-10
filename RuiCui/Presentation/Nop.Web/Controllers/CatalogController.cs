@@ -4442,13 +4442,14 @@ namespace Nop.Web.Controllers
         public ActionResult SearchBox()
         {
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-            //var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
-
+            var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSetting>(storeScope);
+          
             var model = new SearchBoxModel()
             {
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,
                 ShowProductImagesInSearchAutoComplete = _catalogSettings.ShowProductImagesInSearchAutoComplete,
-                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength
+                SearchTermMinimumLength = _catalogSettings.ProductSearchTermMinimumLength,
+                Tags = new List<string> { IndexSearchTagsSettings.FirstTag, IndexSearchTagsSettings.SecondTag, IndexSearchTagsSettings.ThirdTag }
             };
             return PartialView(model);
         }
