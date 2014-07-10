@@ -7,7 +7,7 @@ using Nop.Admin.Validators.Settings;
 namespace Nop.Admin.Models.Settings
 {
     [Validator(typeof(IndexSearchTagsValidator))]
-    public partial class IndexSearchTagsSettingModel : BaseNopModel, ISettings
+    public partial class IndexSearchTagsSettingModel : BaseNopModel
     {
         public int ActiveStoreScopeConfiguration { get; set; }
 

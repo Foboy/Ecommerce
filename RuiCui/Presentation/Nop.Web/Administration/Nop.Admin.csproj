@@ -208,6 +208,7 @@
     <Compile Include="Models\Customers\CustomerAttributeModel.cs" />
     <Compile Include="Models\Customers\CustomerAttributeValueModel.cs" />
     <Compile Include="Models\Home\DashboardModel.cs" />
+    <Compile Include="Models\Orders\OrderAverageReportLineSummaryByChartModel.cs" />
     <Compile Include="Models\Payments\PaymentMethodRestrictionModel.cs" />
     <Compile Include="Models\Settings\IndexSearchTagsSettingModel.cs" />
     <Compile Include="Models\Settings\VendorSettingsModel.cs" />
@@ -1372,6 +1373,8 @@
     <Content Include="Content\js\plugins\datatables\dataTables.bootstrap.js" />
     <Content Include="Content\js\plugins\datatables\jquery.dataTables.js" />
     <Content Include="Content\js\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Content\js\plugins\echarts\echarts-plain-map.js" />
+    <Content Include="Content\js\plugins\echarts\echarts-plain.js" />
     <Content Include="Content\js\plugins\flot\excanvas.js" />
     <Content Include="Content\js\plugins\flot\excanvas.min.js" />
     <Content Include="Content\js\plugins\flot\jquery.colorhelpers.js" />
@@ -2381,6 +2384,7 @@
     <Content Include="Views\ProductQuestion\List.cshtml" />
     <Content Include="Views\Setting\VIPConsumerValve.cshtml" />
     <Content Include="Views\Setting\IndexSearchTags.cshtml" />
+    <Content Include="Views\Home\EchartDashBord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />

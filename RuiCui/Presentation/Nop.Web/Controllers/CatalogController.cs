@@ -33,6 +33,7 @@ using Nop.Services.Shipping;
 using Nop.Services.Stores;
 using Nop.Services.Tax;
 using Nop.Services.Vendors;
+using Nop.Services.Configuration;
 using Nop.Web.Extensions;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
@@ -95,7 +96,9 @@ namespace Nop.Web.Controllers
         private readonly CustomerSettings _customerSettings;
         private readonly ICacheManager _cacheManager;
         private readonly CaptchaSettings _captchaSettings;
-        private readonly OrderSettings _orderSettings;
+        private readonly IStoreService _storeService;
+        private readonly ISettingService _settingService;
+       private readonly OrderSettings _orderSettings;
 
 
         private readonly ICategorySpecificationAtrributeService _categorySpecificationService;
@@ -148,8 +151,10 @@ namespace Nop.Web.Controllers
             CustomerSettings customerSettings, 
             CaptchaSettings captchaSettings,
             ICacheManager cacheManager,
-            ICategorySpecificationAtrributeService categorySpecificationService,
-            OrderSettings orderSettings)
+ OrderSettings orderSettings,
+            IStoreService storeService,
+            ISettingService settingService,
+            ICategorySpecificationAtrributeService categorySpecificationService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -200,7 +205,8 @@ namespace Nop.Web.Controllers
             this._cacheManager = cacheManager;
 
             this._categorySpecificationService = categorySpecificationService;
-
+ 			 this._storeService = storeService;
+            this._settingService = settingService;
             this._orderSettings = orderSettings;
         }
 
@@ -2619,7 +2625,8 @@ namespace Nop.Web.Controllers
             None = 0,
             onlyVip = 1,
             NotVip = 2,
-            StockEmpty = 4
+            StockEmpty = 4,
+            OrderNotEmpty=8
         }
         /// <summary>
         /// 筛选商品 "type"1：只查VIP 2：排除VIP 3：库存为0
@@ -2706,61 +2713,28 @@ namespace Nop.Web.Controllers
                 fplist = rplist;
                 rplist = new List<Product>();
             }
+            #endregion
+
+            #region 订单数大于0
+            if ((type & FilterProductType.OrderNotEmpty) == FilterProductType.OrderNotEmpty)
+            {
+                   var items = _orderReportService.BestSellersReport().Where(o => o.TotalQuantity > 0);
+                foreach (var product in fplist)
+                {
+                    foreach (var item in items)
+                    {
+                        if (product.Id == item.ProductId)
+                        {
+                            rplist.Add(product);
+                        }
+                    }
+                    
+                }
+                fplist = rplist;
+                rplist = new List<Product>();
+            }
             #endregion 
 
-        //    switch (type)
-        //    {
-        //        case FilterProductType.onlyVip:
-        //            #region 只查VIP
-        //            foreach (var product in fplist)
-        //            {
-        //                var existingAclRecords = _aclService.GetAclRecords(product);
-        //                bool check = false;
-        //                foreach (var acl in existingAclRecords)
-        //                {
-        //                    if (acl.CustomerRole.Name == "VIP")
-        //                        check = true;
-        //                }
-        //                if (check)
-        //                { rplist.Add(product); }
-        //            }
-        //            fplist = rplist;
-        //            #endregion
-        //            break;
-        //        case FilterProductType.NotVip:
-        //            #region 排除VIP
-        //            foreach (var product in fplist)
-        //            {
-        //                var existingAclRecords = _aclService.GetAclRecords(product);
-        //                bool check = true;
-        //                foreach (var acl in existingAclRecords)
-        //                {
-        //                    if (acl.CustomerRole.Name == "VIP")
-        //                        check = false;
-        //                }
-        //                if (check)
-        //                { rplist.Add(product); }
-        //            }
-        //            fplist = rplist;
-        //            #endregion
-        //            break;
-        //        case FilterProductType.StockEmpty:
-        //            foreach (var product in fplist)
-        //            {
-        //                if (product.StockQuantity == 0)
-        //                {
-        //                    rplist.Add(product);
-        //                }
-        //            }
-        //            fplist = rplist;
-        //            break;
-        //        default:
-        //            foreach (var product in fplist)
-        //            {
-        //                rplist.Add(product);
-        //            }
-        //            break;
-        //    }
             plist = fplist;
         }
         /// <summary>
@@ -3163,12 +3137,44 @@ namespace Nop.Web.Controllers
             if (command.PageNumber <= 0) command.PageNumber = 1;
             ProductSModel model = new ProductSModel();
 
-            var productss = _productService.SearchProducts();
+            //sorting
+            model.PagingFilteringContext.AllowProductSorting = _catalogSettings.AllowProductSorting;
+            if (model.PagingFilteringContext.AllowProductSorting)
+            {
+                foreach (ProductSortingEnum enumValue in Enum.GetValues(typeof(ProductSortingEnum)))
+                {
+                    var currentPageUrl = _webHelper.GetThisPageUrl(true);
+                    currentPageUrl = currentPageUrl.Substring(0, currentPageUrl.IndexOf('?') + 1);
+                    var sortUrl = _webHelper.ModifyQueryString(currentPageUrl, "orderby=" + ((int)enumValue).ToString(), null);
+
+                    var sortValue = enumValue.GetLocalizedEnum(_localizationService, _workContext);
+                    model.PagingFilteringContext.AvailableSortOptions.Add(new SelectListItem()
+                    {
+                        Text = sortValue,
+                        Value = sortUrl,
+                        Selected = enumValue == (ProductSortingEnum)command.OrderBy
+                    });
+                }
+            }
+    
+
+            var productss = _productService.SearchProducts(orderBy:(ProductSortingEnum)command.OrderBy);
             List<Product> plist = new List<Product>();
 
             //查询库存为0
-            FilterProduct(ref plist, productss, FilterProductType.NotVip | FilterProductType.StockEmpty);
+            FilterProduct(ref plist, productss, FilterProductType.NotVip | FilterProductType.StockEmpty | FilterProductType.OrderNotEmpty);
 
+            ////查询订单大于0
+            
+
+            if (Request.Params["s"] != null)
+            {
+                string s = Request.Params["s"];
+                if (s == "1")
+                {
+                    plist = plist.OrderBy(o=>o.CreatedOnUtc).ToList<Product>();
+                }
+            }
 
             var products = new PagedList<Product>(plist, command.PageNumber - 1, command.PageSize);
             model.Products = PrepareProductOverviewModels(products).ToList();
@@ -4435,6 +4441,9 @@ namespace Nop.Web.Controllers
         [ChildActionOnly]
         public ActionResult SearchBox()
         {
+            var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+            //var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
+
             var model = new SearchBoxModel()
             {
                 AutoCompleteEnabled = _catalogSettings.ProductSearchAutoCompleteEnabled,

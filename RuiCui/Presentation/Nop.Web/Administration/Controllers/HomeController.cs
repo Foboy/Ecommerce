@@ -49,6 +49,10 @@ namespace Nop.Admin.Controllers
             return View(model);
         }
 
+        public ActionResult EchartDashBord() {
+            return View();
+        }
+
         [ChildActionOnly]
         public ActionResult NopCommerceNews()
         {
