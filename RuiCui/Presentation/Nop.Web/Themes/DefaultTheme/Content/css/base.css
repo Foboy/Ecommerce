@@ -1537,12 +1537,12 @@ a:hover, a:focus {
                     *zoom: 1;
                     padding: 1px 3px;
                     margin-left: 5px;
-                    color: #333;
-                    background: #f3f3f3;
+                    color: #fff;
+                    background: #f68b1f;
                 }
 
                     .site-header .header-info .search-form .hot-words a:hover {
-                        background: #dfdfdf;
+                        background: #B66717;
                     }
 
             .site-header .header-info .search-form .keyword-list {
@@ -1711,7 +1711,7 @@ a:hover, a:focus {
                     }
 
                         .site-header .header-nav .nav-category-list .nav-category-item .links a:hover {
-                            color: #333;
+                            color: #ff4a00;
                         }
 
             .site-header .header-nav .nav-category-list .nav-category-item-first {
@@ -3064,3 +3064,13 @@ a:hover, a:focus {
 
 }
 
+.root-nav-bar-play {
+    position:fixed !important;
+    top:0 !important;
+    width:1176px !important;
+    z-index:64358 !important;
+}
+
+.root-nav-section-list-home {
+    z-index:-1 !important;
+}

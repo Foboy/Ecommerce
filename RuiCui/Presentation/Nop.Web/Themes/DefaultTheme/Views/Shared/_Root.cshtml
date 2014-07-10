@@ -36,7 +36,7 @@
 </div>
 <!-- .site-topbar END -->
 
-<div class="site-header container">
+<div class="site-header container" id="rootHeaderContainer">
     <div class="site-logo">
         <a class="logo" href="@Url.RouteUrl("HomePage")" title="瑞翠华光"><i class="iconfont">&#xe61d;</i></a>
     </div>
@@ -48,10 +48,10 @@
             @Html.Action("FlyoutShoppingCart", "ShoppingCart")
         </div>
     </div>
-    <div class="header-nav clearfix">
+    <div class="header-nav clearfix" id="rootNavBar">
         <div id="J_categoryContainer" class="nav-category">
             <a class="btn-category-list" href="@Url.RouteUrl("HomePage")">全部商品分类</a>
-            <div class="nav-category-section" style="display: none;">
+            <div class="nav-category-section" style="display: none;" id="navCategorySection">
                 <ul class="nav-category-list clearfix">
                     @Html.Action("TopSpecsMenu", "Catalog")
                 </ul>
@@ -63,23 +63,23 @@
                     <a href="@Url.RouteUrl("HomePage")"><span class="text">首页</span></a>
                 </li>
                 <li id="nav_lastproduct" class="nav-main-item">
-                    <a href="@Url.RouteUrl("LastProduct")" ><span class="text">每日新品</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("LastProduct")"><span class="text">每日新品</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="@Url.RouteUrl("TuiJianProduct")" ><span class="text">超值推荐</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("TuiJianProduct")"><span class="text">超值推荐</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
                     <a href="#"><span class="text">精品典藏</span><span class="arrow"></span></a>
                 </li>
                 <li id="nav_vip" class="nav-main-item">
                     @if (!IsLogin)
-{
-    <a href="@Url.RouteUrl("Login")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    {
+                        <a href="@Url.RouteUrl("Login")" target="_blank"><span class="text">VIP专区</span><span class="arrow"></span></a>
 
-}
-else if (check)
-{
-                    <a href="@Url.RouteUrl("VipProduct")" target="_blank" ><span class="text">VIP专区</span><span class="arrow"></span></a>
+                    }
+                    else if (check)
+                    {
+                        <a href="@Url.RouteUrl("VipProduct")" target="_blank"><span class="text">VIP专区</span><span class="arrow"></span></a>
                     }
                     else
                     {
@@ -89,15 +89,38 @@ else if (check)
 
                 </li>
                 <li class="nav-main-item">
-                    <a href="#" ><span class="text">购物无忧</span><span class="arrow"></span></a>
+                    <a href="#"><span class="text">购物无忧</span><span class="arrow"></span></a>
                 </li>
                 <li class="nav-main-item">
-                    <a href="@Url.RouteUrl("SoldProduct")" ><span class="text">已售欣赏</span><span class="arrow"></span></a>
+                    <a href="@Url.RouteUrl("SoldProduct")"><span class="text">已售欣赏</span><span class="arrow"></span></a>
                 </li>
             </ul>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(window).scroll(function () {
+        var a = $(this).scrollTop(),
+        b = $("#rootHeaderContainer").offset().top + 110;
+        var c = b - a;
+        if (a > b)
+        {
+            $("#rootNavBar").addClass("root-nav-bar-play");
+            $("#navCategorySection").addClass("root-nav-section-list-home");
+            if (isCategoryToggled) {
+                $("#navCategorySection").css({ top: c });
+            }
+        }
+        else
+        {
+            $("#rootNavBar").removeClass("root-nav-bar-play");
+            $("#navCategorySection").removeClass("root-nav-section-list-home");
+            if (isCategoryToggled) {
+                $("#navCategorySection").css({ top: 50 });
+            }
+        }
+    })
+</script>
 <!-- .site-header END -->
 <div class="container">
     @RenderBody()

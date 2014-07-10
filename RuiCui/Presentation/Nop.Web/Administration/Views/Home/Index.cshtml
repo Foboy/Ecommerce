@@ -18,6 +18,9 @@
                     <img src="@Url.Content("~/Administration/Content/images/ico-stat1.gif")" alt="" />
                     @T("Admin.Dashboard.StoreStatistics")
                 </div>
+                <div class="options">
+                    <a href="@Url.Action("EchartDashBord")" class="btn btn-sm btn-primary btn-flat ">图标统计模式</a>
+                </div>
             </div>
             @if (!Model.IsLoggedInAsVendor && canManageOrders)
             {

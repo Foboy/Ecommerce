@@ -88,8 +88,10 @@
     <Compile Include="Domain\Catalog\CategorySpecificationAtrribute.cs" />
     <Compile Include="Domain\Catalog\ProductQuestion.cs" />
     <Compile Include="Domain\Catalog\ProductType.cs" />
+    <Compile Include="Domain\Common\IndexSearchTagsSetting.cs" />
     <Compile Include="Domain\Common\SearchTermReportLine.cs" />
     <Compile Include="Domain\Common\SearchTerm.cs" />
+    <Compile Include="Domain\Common\VIPConsumerValveSettings.cs" />
     <Compile Include="Domain\Customers\CustomerAttribute.cs" />
     <Compile Include="Domain\Customers\CustomerAttributeValue.cs" />
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />

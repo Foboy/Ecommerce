@@ -1,0 +1,166 @@
+﻿@using Nop.Services.Security
+@{
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var canManageOrders = permissionService.Authorize(StandardPermissionProvider.ManageOrders);
+    var canManageCustomers = permissionService.Authorize(StandardPermissionProvider.ManageCustomers);
+    var canManageProducts = permissionService.Authorize(StandardPermissionProvider.ManageProducts);
+}
+<div>
+    <!--Step:2 Prepare a dom for ECharts which (must) has size (width & hight)-->
+    <!--Step:2 为ECharts准备一个具备大小（宽高）的Dom-->
+    <div id="OrderTotal" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+    <div id="UnfinishedOrders" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+    <div id="mainMap" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+</div>
+<!--Step:1 Import echarts-plain.js or echarts-plain-map.js-->
+<!--Step:1 引入echarts-plain.js或者 echarts-plain-map.js-->
+
+<script type="text/javascript">
+    // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
+    // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+
+    $(document).ready(function () {
+        var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
+        $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order"))", {}, function (data, status) {
+            if (status = "success") {
+                var Datas = data.Data;
+                var BindDatas = [];
+                for (var i = 0; i < Datas.length; i++) {
+                    var data = [Datas[i].SumTodayOrders, Datas[i].SumThisWeekOrders, Datas[i].SumThisMonthOrders, Datas[i].SumThisYearOrders, Datas[i].SumAllTimeOrders];
+                    BindDatas.push(data);
+                }
+                OrderTotalChart.setOption({
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['待处理', '处理中', '已完成', '已取消']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: { show: true },
+                            dataView: { show: true, readOnly: false },
+                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['今日', '本周', '本月', '今年', '全部']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '待处理',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[0]
+                        },
+                        {
+                            name: '处理中',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[1]
+                        },
+                        {
+                            name: '已完成',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[2]
+                        },
+                        {
+                            name: '已取消',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[3]
+                        }
+                    ]
+                });
+            }
+        })
+
+        var UnfinishedOrdersChart = echarts.init(document.getElementById('UnfinishedOrders'));
+
+        UnfinishedOrdersChart.setOption({
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['待付款的订单总额', '待发货的订单总额', '待处理的订单总额']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            series: [
+                {
+                    name: '待付款的订单',
+                    type: 'bar',
+                    data: [212798]
+                },
+                 {
+                     name: '待发货的订单总数',
+                     type: 'bar',
+                     data: [218530]
+                 },
+                  {
+                      name: '待处理的订单',
+                      type: 'bar',
+                      data: [212798]
+                  }
+            ]
+        });
+        // --- 地图 ---
+        var myChart2 = echarts.init(document.getElementById('mainMap'));
+        myChart2.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}'
+            },
+            series: [
+                {
+                    name: '中国',
+                    type: 'map',
+                    mapType: 'china',
+                    selectedMode: 'multiple',
+                    itemStyle: {
+                        normal: { label: { show: true } },
+                        emphasis: { label: { show: true } }
+                    },
+                    data: [
+                        { name: '广东', selected: true }
+                    ]
+                }
+            ]
+        });
+    })
+
+</script>

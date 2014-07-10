@@ -98,6 +98,7 @@ namespace Nop.Web.Controllers
         private readonly CaptchaSettings _captchaSettings;
         private readonly IStoreService _storeService;
         private readonly ISettingService _settingService;
+       private readonly OrderSettings _orderSettings;
 
 
         private readonly ICategorySpecificationAtrributeService _categorySpecificationService;
@@ -150,6 +151,7 @@ namespace Nop.Web.Controllers
             CustomerSettings customerSettings, 
             CaptchaSettings captchaSettings,
             ICacheManager cacheManager,
+ OrderSettings orderSettings,
             IStoreService storeService,
             ISettingService settingService,
             ICategorySpecificationAtrributeService categorySpecificationService)
@@ -203,8 +205,9 @@ namespace Nop.Web.Controllers
             this._cacheManager = cacheManager;
 
             this._categorySpecificationService = categorySpecificationService;
-            this._storeService = storeService;
+ 			 this._storeService = storeService;
             this._settingService = settingService;
+            this._orderSettings = orderSettings;
         }
 
         #endregion
@@ -2169,6 +2172,18 @@ namespace Nop.Web.Controllers
 
             //activity log
             _customerActivityService.InsertActivity("PublicStore.ViewProduct", _localizationService.GetResource("ActivityLog.PublicStore.ViewProduct"), product.Name);
+
+            if (_workContext.CurrentCustomer.IsGuest())
+            {
+                if (_orderSettings.AnonymousCheckoutAllowed)
+                {
+                    model.AddToCart.CheckoutUrl = Url.HttpRouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
+                }
+            }
+            else
+            {
+                model.AddToCart.CheckoutUrl = Url.HttpRouteUrl("Checkout", new { });
+            }
 
             return View(model.ProductTemplateViewPath, model);
         }

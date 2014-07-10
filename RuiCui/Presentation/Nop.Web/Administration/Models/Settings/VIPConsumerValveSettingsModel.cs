@@ -4,7 +4,7 @@ using Nop.Core.Configuration;
 
 namespace Nop.Admin.Models.Settings
 {
-    public partial class VIPConsumerValveSettingsModel : BaseNopModel, ISettings
+    public partial class VIPConsumerValveSettingsModel : BaseNopModel
     {
         public int ActiveStoreScopeConfiguration { get; set; }
 

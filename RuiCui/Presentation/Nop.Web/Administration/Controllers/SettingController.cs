@@ -2590,41 +2590,44 @@ namespace Nop.Admin.Controllers
 
         public ActionResult VIPConsumerValve()
         {
+           
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageSettings))
                 return AccessDeniedView();
 
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-            var vipConsumerValveSettings = _settingService.LoadSetting<VIPConsumerValveSettingsModel>(storeScope);
-            var model = vipConsumerValveSettings;
+            var vIPConsumerValveSettings = _settingService.LoadSetting<VIPConsumerValveSettings>(storeScope);
+            var model = vIPConsumerValveSettings.ToModel();
             model.ActiveStoreScopeConfiguration = storeScope;
             if (storeScope > 0)
             {
-                model.VIPConditionValue_OverrideForStore = _settingService.SettingExists(vipConsumerValveSettings, x => x.VIPConditionValue_OverrideForStore, storeScope);
-
+                model.VIPConditionValue_OverrideForStore = _settingService.SettingExists(vIPConsumerValveSettings, x => x.VIPConditionValue, storeScope);
+                
             }
             return View(model);
         }
         [HttpPost]
         public ActionResult VIPConsumerValve(VIPConsumerValveSettingsModel model)
         {
+
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageSettings))
                 return AccessDeniedView();
 
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+            var vipConsumerValveSettings = _settingService.LoadSetting<VIPConsumerValveSettings>(storeScope);
+            vipConsumerValveSettings = model.ToEntity(vipConsumerValveSettings);
 
-            var vipConsumerValveSettings = _settingService.LoadSetting<VIPConsumerValveSettingsModel>(storeScope);
             /* We do not clear cache after each setting update.
              * This behavior can increase performance because cached settings will not be cleared 
              * and loaded from database after each update */
-            vipConsumerValveSettings.VIPConditionValue = model.VIPConditionValue;
+
             if (model.VIPConditionValue_OverrideForStore || storeScope == 0)
                 _settingService.SaveSetting(vipConsumerValveSettings, x => x.VIPConditionValue, storeScope, false);
-
+            else if (storeScope > 0)
+                _settingService.DeleteSetting(vipConsumerValveSettings, x => x.VIPConditionValue, storeScope);
             //now clear settings cache
             _settingService.ClearCache();
-
             //activity log
             _customerActivityService.InsertActivity("EditSettings", _localizationService.GetResource("ActivityLog.EditSettings"));
 
@@ -2640,17 +2643,17 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageSettings))
                 return AccessDeniedView();
+
             //load settings for a chosen store scope
             var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
-            var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
-            var model = IndexSearchTagsSettings;
+            var indexSearchTagsSetting = _settingService.LoadSetting<IndexSearchTagsSetting>(storeScope);
+            var model = indexSearchTagsSetting.ToModel();
             model.ActiveStoreScopeConfiguration = storeScope;
             if (storeScope > 0)
             {
-                model.FirstTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.FirstTag_OverrideForStore, storeScope);
-                model.SecondTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.SecondTag_OverrideForStore, storeScope);
-                model.ThirdTag_OverrideForStore = _settingService.SettingExists(IndexSearchTagsSettings, x => x.ThirdTag_OverrideForStore, storeScope);
-
+                model.FirstTag_OverrideForStore = _settingService.SettingExists(indexSearchTagsSetting, x => x.FirstTag, storeScope);
+                model.SecondTag_OverrideForStore = _settingService.SettingExists(indexSearchTagsSetting, x => x.SecondTag, storeScope);
+                model.ThirdTag_OverrideForStore = _settingService.SettingExists(indexSearchTagsSetting, x => x.ThirdTag, storeScope);
             }
             return View(model);
         }
@@ -2663,19 +2666,21 @@ namespace Nop.Admin.Controllers
             {
                 //load settings for a chosen store scope
                 var storeScope = this.GetActiveStoreScopeConfiguration(_storeService, _workContext);
+                var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSetting>(storeScope);
+                IndexSearchTagsSettings = model.ToEntity(IndexSearchTagsSettings);
 
-                var IndexSearchTagsSettings = _settingService.LoadSetting<IndexSearchTagsSettingModel>(storeScope);
-
-                IndexSearchTagsSettings.FirstTag = model.FirstTag;
-                IndexSearchTagsSettings.SecondTag = model.SecondTag;
-                IndexSearchTagsSettings.ThirdTag = model.ThirdTag;
                 if (model.FirstTag_OverrideForStore || storeScope == 0)
                     _settingService.SaveSetting(IndexSearchTagsSettings, x => x.FirstTag, storeScope, false);
+                else if (storeScope>0)
+                    _settingService.DeleteSetting(IndexSearchTagsSettings, x => x.FirstTag, storeScope);
                 if (model.SecondTag_OverrideForStore || storeScope == 0)
                     _settingService.SaveSetting(IndexSearchTagsSettings, x => x.SecondTag, storeScope, false);
+                else if (storeScope > 0)
+                    _settingService.DeleteSetting(IndexSearchTagsSettings, x => x.SecondTag, storeScope);
                 if (model.ThirdTag_OverrideForStore || storeScope == 0)
                     _settingService.SaveSetting(IndexSearchTagsSettings, x => x.ThirdTag, storeScope, false);
-
+                else if ( storeScope> 0)
+                    _settingService.DeleteSetting(IndexSearchTagsSettings, x => x.ThirdTag, storeScope);
                 //now clear settings cache
                 _settingService.ClearCache();
 
@@ -2684,9 +2689,8 @@ namespace Nop.Admin.Controllers
 
                 SuccessNotification(_localizationService.GetResource("Admin.Configuration.Updated"));
             }
-            return View(model);
+            return RedirectToAction("IndexSearchTags");
         }
-
         #endregion
     }
 }
