@@ -17,15 +17,19 @@
             <a href="@Url.Action("Create")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.AddNew")</a>
             <a href="@Url.Action("DownloadCatalogAsPdf")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Catalog.Products.List.DownloadPDF")</a>
             @*<a href="@Url.Action("ExportXmlAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.All")</a>
-            <a  id="exportxml-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.Selected")</a>*@
+                <a  id="exportxml-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.Selected")</a>*@
             <a href="@Url.Action("ExportExcelAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToExcel.All")</a>
-            <a  id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat " >@T("Admin.Common.ExportToExcel.Selected")</a>
+            <a id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToExcel.Selected")</a>
             @if (!Model.IsLoggedInAsVendor)
-{
-    //a vendor cannot import products
-    <input type="button" id="importexcel" name="importexcel" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ImportFromExcel")" />
-}
+            {
+                //a vendor cannot import products
+                <input type="button" id="importexcel" name="importexcel" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ImportFromExcel")" />
+            }
             <input type="button" id="delete-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Delete.Selected")" />
+            <input type="button" id="setvip-selected" class="btn btn-sm btn-primary btn-flat " value="设置所选商品为VIP商品" />
+            <input type="button" id="setnormal-selected" class="btn btn-sm btn-primary btn-flat " value="取消所选VIP商品" />
+            <input type="button" id="setboutique-selected" class="btn btn-sm btn-primary btn-flat " value="设置所选商品为精品典藏" />
+            <input type="button" id="cancelboutique-selected" class="btn btn-sm btn-primary btn-flat " value="取消所选精品典藏" />
         </div>
     </div>
     <table width="100%">
@@ -82,13 +86,13 @@
             </td>
         </tr>
         @*<tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.SearchVendorId):
-            </td>
-            <td class="adminData">
-                @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
-            </td>
-        </tr>*@
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SearchVendorId):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
+                </td>
+            </tr>*@
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchWarehouseId):
@@ -107,15 +111,15 @@
             </td>
         </tr>
         @*<tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.GoDirectlyToSku):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
-                <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
-            </td>
-        </tr>*@
-       
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.GoDirectlyToSku):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
+                    <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
+                </td>
+            </tr>*@
+
     </table>
     <p>
     </p>
@@ -169,15 +173,15 @@
                                     attributes: { style: "text-align:center" },
                                     template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
                                     width: 50
-                                },  
+                                },
                                 @if (Model.DisplayProductPictures)
                                 {
                                     <text>{
-                                field: "PictureThumbnailUrl",
-                                title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
-                                template: '<img src="#=PictureThumbnailUrl#" />',
-                            width: 200
-                        },</text>
+                                    field: "PictureThumbnailUrl",
+                                    title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
+                                    template: '<img src="#=PictureThumbnailUrl#" />',
+                                    width: 200
+                                },</text>
                                 }
                                 {
                                     field: "Name",
@@ -212,7 +216,23 @@
                                     headerAttributes: { style: "text-align:center" },
                                     attributes: { style: "text-align:center" },
                                     template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
-                                }, {
+                                },{
+                                    field: "IsVipProduct",
+                                    title: "是否是VIP商品",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsVipProduct#.gif" />'
+                                }, 
+                                {
+                                    field: "IsBoutique",
+                                    title: "是否是精品典藏商品",
+                                    width: 50,
+                                    headerAttributes: { style: "text-align:center" },
+                                    attributes: { style: "text-align:center" },
+                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsBoutique#.gif" />'
+                                }, 
+                                {
                                     field: "Id",
                                     title: "操作",
                                     width: 200,
@@ -225,7 +245,7 @@
             </td>
         </tr>
     </table>
-    
+
     <script type="text/javascript">
 
         var selectedIds = [];
@@ -284,21 +304,46 @@
                 setLocation('@(Url.Action("DeleteSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
+            $('#setvip-selected').click(function (e) {
+                e.preventDefault();
+                //redirect to required URL
+                setLocation('@(Url.Action("SetProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
+                return false;
+            });
+            $('#setnormal-selected').click(function (e) {
+                e.preventDefault();
+                //redirect to required URL
+                setLocation('@(Url.Action("CancelProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
+                return false;
+            });
+           
+            $('#setboutique-selected').click(function (e) {
+                e.preventDefault();
+                //redirect to required URL
+                setLocation('@(Url.Action("SetBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
+                return false;
+            });
+            $('#cancelboutique-selected').click(function (e) {
+                e.preventDefault();
+                //redirect to required URL
+                setLocation('@(Url.Action("CancelBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
+                return false;
+            });
 
-            //wire up checkboxes. 
+            //wire up checkboxes.
             $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
                 var $check = $(this);
                 if ($check.is(":checked") == true) {
                     var checked = jQuery.inArray($check.val(), selectedIds);
                     if (checked == -1) {
-                        //add id to selectedIds.  
+                        //add id to selectedIds.
                         selectedIds.push($check.val());
                     }
                 }
                 else {
                     var checked = jQuery.inArray($check.val(), selectedIds);
                     if (checked > -1) {
-                        //remove id from selectedIds.  
+                        //remove id from selectedIds.
                         selectedIds = $.grep(selectedIds, function (item, index) {
                             return item != $check.val();
                         });
@@ -325,7 +370,7 @@
             $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
                 var currentId = $(this).val();
                 var checked = jQuery.inArray(currentId, selectedIds);
-                //set checked based on if current checkbox's value is in selectedIds.  
+                //set checked based on if current checkbox's value is in selectedIds.
                 $(this).attr('checked', checked > -1);
             });
 
@@ -337,13 +382,13 @@
             var numChkBoxesChecked = $('#products-grid input[type=checkbox][checked][id!=mastercheckbox]').length;
             $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
         }
-    </script>  
+    </script>
 }
 
 
 @*import products form*@
 <div id="importexcel-window" style="display:none;">
-    @using (Html.BeginForm("ImportExcel", "Product", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    @using (Html.BeginForm("ImportExcel", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <table style="text-align:left;">
             <tr>
