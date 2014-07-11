@@ -12,3 +12,10 @@ D:\NET\RCEcommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.csprojResolveAssemblyReference.cache
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.dll
 D:\NET\RCEcommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Description.txt
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\logo.jpg
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Presentation\Nop.Web\Plugins\ExternalAuth.SinaWeb\Nop.Plugin.ExternalAuth.SinaWeb.pdb
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.csprojResolveAssemblyReference.cache
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.dll
+C:\Users\yangchao\Desktop\电商B2C\Ecommerce\RuiCui\Plugins\Nop.Plugin.ExternalAuth.SinaWeb\obj\Debug\Nop.Plugin.ExternalAuth.SinaWeb.pdb

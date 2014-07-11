@@ -155,9 +155,10 @@ namespace Nop.Web.Models.Catalog
                 return null;
             }
 
-            public virtual void LoadPriceRangeFilters(string priceRangeStr, IWebHelper webHelper, IPriceFormatter priceFormatter)
+            public virtual void LoadPriceRangeFilters(string priceRangeStr, IWebHelper webHelper, IPriceFormatter priceFormatter,string catalogUrl = null)
             {
                 var priceRangeList = GetPriceRangeList(priceRangeStr);
+                var pageUrl = catalogUrl != null ? catalogUrl : webHelper.GetThisPageUrl(true);
                 if (priceRangeList.Count > 0)
                 {
                     this.Enabled = true;
@@ -195,7 +196,7 @@ namespace Nop.Web.Models.Catalog
                             item.Selected = true;
 
                         //filter URL
-                        string url = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + fromQuery + "-" + toQuery, null);
+                        string url = webHelper.ModifyQueryString(pageUrl, QUERYSTRINGPARAM + "=" + fromQuery + "-" + toQuery, null);
                         url = ExcludeQueryStringParams(url, webHelper);
                         item.FilterUrl = url;
 
@@ -206,7 +207,7 @@ namespace Nop.Web.Models.Catalog
                     if (selectedPriceRange != null)
                     {
                         //remove filter URL
-                        string url = webHelper.RemoveQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM);
+                        string url = webHelper.RemoveQueryString(pageUrl, QUERYSTRINGPARAM);
                         url = ExcludeQueryStringParams(url, webHelper);
                         this.RemoveFilterUrl = url;
                     }
