@@ -13,5 +13,7 @@ namespace Nop.Core.Domain.Catalog
         /// Physical
         /// </summary>
         Physical = 1,
+
+        JingPing=999,
     }
 }
