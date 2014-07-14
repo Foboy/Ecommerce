@@ -9,7 +9,7 @@
         public DataSourceRequest()
         {
             this.Page = 1;
-            this.PageSize = 10;
+            this.PageSize = 15;
         }
     }
 }

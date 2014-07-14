@@ -26,10 +26,6 @@
                 <input type="button" id="importexcel" name="importexcel" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ImportFromExcel")" />
             }
             <input type="button" id="delete-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Delete.Selected")" />
-            <input type="button" id="setvip-selected" class="btn btn-sm btn-primary btn-flat " value="设置所选商品为VIP商品" />
-            <input type="button" id="setnormal-selected" class="btn btn-sm btn-primary btn-flat " value="取消所选VIP商品" />
-            <input type="button" id="setboutique-selected" class="btn btn-sm btn-primary btn-flat " value="设置所选商品为精品典藏" />
-            <input type="button" id="cancelboutique-selected" class="btn btn-sm btn-primary btn-flat " value="取消所选精品典藏" />
         </div>
     </div>
     <table width="100%">
@@ -123,128 +119,41 @@
     </table>
     <p>
     </p>
-    <table class="adminContent">
-        <tr>
-            <td>
-                <div id="products-grid"></div>
+    <div id="product-list">
+        <ul>
+            <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
+                全部商品
+            </li>
+            <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
+                VIP商品
+            </li>
+            <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+                精品典藏商品
+            </li>
+        </ul>
+        <div>
+            @TabAllInfo()
+        </div>
+        <div>
+            @TabVIPInfo()
+        </div>
+        <div>
+            @TabBoutiqueInfo()
+        </div>
 
-                <script>
-                    $(document).ready(function() {
-                        $("#products-grid").kendoGrid({
-                            dataSource: {
-                                type: "json",
-                                transport: {
-                                    read: {
-                                        url: "@Html.Raw(Url.Action("ProductList", "Product"))",
-                                        type: "POST",
-                                        dataType: "json",
-                                        data: additionalData
-                                    }
-                                },
-                                schema: {
-                                    data: "Data",
-                                    total: "Total",
-                                    errors: "Errors"
-                                },
-                                error: function(e) {
-                                    display_kendoui_grid_error(e);
-                                    // Cancel the changes
-                                    this.cancelChanges();
-                                },
-                                pageSize: @(gridPageSize),
-                                serverPaging: true,
-                                serverFiltering: true,
-                                serverSorting: true
-                            },
-                            pageable: {
-                                refresh: true
-                            },
-                            editable: {
-                                confirmation: false,
-                                mode: "inline"
-                            },
-                            scrollable: false,
-                            dataBound: onDataBound,
-                            columns: [
-                                {
-                                    field: "Id",
-                                    headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
-                                    width: 50
-                                },
-                                @if (Model.DisplayProductPictures)
-                                {
-                                    <text>{
-                                    field: "PictureThumbnailUrl",
-                                    title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
-                                    template: '<img src="#=PictureThumbnailUrl#" />',
-                                    width: 200
-                                },</text>
-                                }
-                                {
-                                    field: "Name",
-                                    title: "@T("Admin.Catalog.Products.Fields.Name")",
-                                    width: 300
-                                }@*, {
-                                    field: "Sku",
-                                    title: "@T("Admin.Catalog.Products.Fields.Sku")",
-                                    width: 100
-                                }*@, {
-                                    field: "Price",
-                                    title: "@T("Admin.Catalog.Products.Fields.Price")",
-                                    width: 150,
-                                    //if not a grouped product, then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct)) {# #:Price# #}  #"
-                                }, {
-                                    field: "StockQuantity",
-                                    title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
-                                    width: 50,
-                                    //if not a grouped product
-                                    //AND "manage inventory" is "Track inventory"
-                                    //then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
-                                }, @*{
-                                    field: "ProductTypeName",
-                                    title: "@T("Admin.Catalog.Products.Fields.ProductType")",
-                                    width: 100
-                                },*@ {
-                                    field: "Published",
-                                    title: "@T("Admin.Catalog.Products.Fields.Published")",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
-                                },{
-                                    field: "IsVipProduct",
-                                    title: "是否是VIP商品",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsVipProduct#.gif" />'
-                                }, 
-                                {
-                                    field: "IsBoutique",
-                                    title: "是否是精品典藏商品",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsBoutique#.gif" />'
-                                }, 
-                                {
-                                    field: "Id",
-                                    title: "操作",
-                                    width: 200,
-                                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
-                                }
-                            ]
-                        } );
-                    });
-                </script>
-            </td>
-        </tr>
-    </table>
+    </div>
+     <script>
+        $(document).ready(function() {
+            $("#product-list").kendoTabStrip({
+                animation:  {
+                    open: {
+                        effects: "fadeIn"
+                    }
+                },
+                select: tabstrip_on_tab_select
+            });
+        });
+    </script>
 
     <script type="text/javascript">
 
@@ -255,7 +164,7 @@
             //search button
             $('#search-products').click(function () {
                 //search
-                var grid = $('#products-grid').data('kendoGrid');
+                var grid = $('#products-allgrid').data('kendoGrid');
                 grid.dataSource.page(1); //new search. Set page size to 1
                 grid.dataSource.read();
                 //clear selected checkboxes
@@ -292,11 +201,6 @@
                 setLocation('@(Url.Action("ExportXmlSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
-
-            $('#mastercheckbox').click(function () {
-                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
-            });
-
             //"Delete (selected)" button
             $('#delete-selected').click(function (e) {
                 e.preventDefault();
@@ -304,53 +208,8 @@
                 setLocation('@(Url.Action("DeleteSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
-            $('#setvip-selected').click(function (e) {
-                e.preventDefault();
-                //redirect to required URL
-                setLocation('@(Url.Action("SetProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
-                return false;
-            });
-            $('#setnormal-selected').click(function (e) {
-                e.preventDefault();
-                //redirect to required URL
-                setLocation('@(Url.Action("CancelProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
-                return false;
-            });
            
-            $('#setboutique-selected').click(function (e) {
-                e.preventDefault();
-                //redirect to required URL
-                setLocation('@(Url.Action("SetBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
-                return false;
-            });
-            $('#cancelboutique-selected').click(function (e) {
-                e.preventDefault();
-                //redirect to required URL
-                setLocation('@(Url.Action("CancelBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
-                return false;
-            });
-
-            //wire up checkboxes.
-            $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
-                var $check = $(this);
-                if ($check.is(":checked") == true) {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked == -1) {
-                        //add id to selectedIds.
-                        selectedIds.push($check.val());
-                    }
-                }
-                else {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked > -1) {
-                        //remove id from selectedIds.
-                        selectedIds = $.grep(selectedIds, function (item, index) {
-                            return item != $check.val();
-                        });
-                    }
-                }
-                updateMasterCheckbox();
-            });
+            
         });
 
         function additionalData() {
@@ -366,22 +225,22 @@
             };
         }
 
-        function onDataBound(e) {
-            $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
-                var currentId = $(this).val();
-                var checked = jQuery.inArray(currentId, selectedIds);
-                //set checked based on if current checkbox's value is in selectedIds.
-                $(this).attr('checked', checked > -1);
-            });
+        //function onDataBound(e) {
+        //    $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
+        //        var currentId = $(this).val();
+        //        var checked = jQuery.inArray(currentId, selectedIds);
+        //        //set checked based on if current checkbox's value is in selectedIds.
+        //        $(this).attr('checked', checked > -1);
+        //    });
 
-            updateMasterCheckbox();
-        }
+        //    updateMasterCheckbox();
+        //}
 
-        function updateMasterCheckbox() {
-            var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox]').length;
-            var numChkBoxesChecked = $('#products-grid input[type=checkbox][checked][id!=mastercheckbox]').length;
-            $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
-        }
+        //function updateMasterCheckbox() {
+        //    var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox]').length;
+        //    var numChkBoxesChecked = $('#products-grid input[type=checkbox][checked][id!=mastercheckbox]').length;
+        //    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+        //}
     </script>
 }
 
@@ -429,3 +288,16 @@
         });
     });
 </script>
+
+@helper  TabAllInfo()
+{
+    @Html.Partial("_ProductList.All", Model)
+}
+@helper TabVIPInfo()
+{
+    @Html.Partial("_ProductList.VIP", Model)
+}
+@helper TabBoutiqueInfo()
+{
+    @Html.Partial("_ProductList.Boutique", Model)
+}
