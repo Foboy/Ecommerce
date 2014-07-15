@@ -113,12 +113,6 @@ visibility: hidden !important;
     color:#ff6600;
     list-style:none;
 }
-.f-left {
-    float:left;
-}
-.f-right {
-    float:right;
-}
 
 /* 第三方存在的时候支付宝不出现 */
 .has_third .ta-alipay{display: none;}
