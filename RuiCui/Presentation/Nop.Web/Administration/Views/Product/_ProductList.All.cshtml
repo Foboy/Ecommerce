@@ -12,120 +12,123 @@
         <td>
             <div id="products-allgrid"></div>
             <script>
-                    $(document).ready(function() {
-                        $("#products-allgrid").kendoGrid({
-                            dataSource: {
-                                type: "json",
-                                transport: {
-                                    read: {
-                                        url: "@Html.Raw(Url.Action("ProductList", "Product", new { type = "All" }))",
-                                        type: "POST",
-                                        dataType: "json",
-                                        data: additionalData
-                                    }
-                                },
-                                schema: {
-                                    data: "Data",
-                                    total: "Total",
-                                    errors: "Errors"
-                                },
-                                error: function(e) {
-                                    display_kendoui_grid_error(e);
-                                    // Cancel the changes
-                                    this.cancelChanges();
-                                },
-                                pageSize: @(gridPageSize),
-                                serverPaging: true,
-                                serverFiltering: true,
-                                serverSorting: true
-                            },
-                            pageable: {
-                                refresh: true
-                            },
-                            editable: {
-                                confirmation: false,
-                                mode: "inline"
-                            },
-                            scrollable: false,
-                            //dataBound: onDataBound,
-                            columns: [
-                                {
+    $(document).ready(function() {
+        $("#products-allgrid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("ProductList", "Product", new { type = "All" }))",
+                        type: "POST",
+                        dataType: "json",
+                        data: additionalData
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                error: function(e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                pageSize: @(gridPageSize),
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true
+            },
+            editable: {
+                confirmation: false,
+                mode: "inline"
+            },
+            scrollable: false,
+            //dataBound: onDataBound,
+            columns: [
+                {
 
-                                    field: "Id",
-                                    headerTemplate: "",
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template:'<input type="checkbox" #=IsVipProduct || IsBoutique ? "disabled" : "" #  value="#=Id#" ></input>'
+                    field: "Id",
+                    headerTemplate: "",
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template:'<input type="checkbox" #=IsVipProduct || IsBoutique ? "disabled" : "" #  value="#=Id#" ></input>'
 ,
-                                    width: 50
-                                },
-                                @if (Model.DisplayProductPictures)
+                    width: 50
+                },
+                @if (Model.DisplayProductPictures)
                                 {
                                     <text>{
-                                    field: "PictureThumbnailUrl",
-                                    title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
-                                    template: '<img src="#=PictureThumbnailUrl#" />',
-                                    width: 200
-                                },</text>
+                    field: "PictureThumbnailUrl",
+                    title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
+                    template: '<img src="#=PictureThumbnailUrl#" />',
+                    width: 200
+                },</text>
                                 }
-                                {
-                                    field: "Name",
-                                    title: "@T("Admin.Catalog.Products.Fields.Name")",
-                                    width: 250
-                                }@*, {
+                {
+                    field: "Name",
+                    title: "@T("Admin.Catalog.Products.Fields.Name")",
+                    width: 250
+                }@*, {
                                     field: "Sku",
                                     title: "@T("Admin.Catalog.Products.Fields.Sku")",
                                     width: 100
                                 }*@, {
-                                    field: "Price",
-                                    title: "@T("Admin.Catalog.Products.Fields.Price")",
-                                    width: 50,
-                                    //if not a grouped product, then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct)) {# #:Price# #}  #"
-                                }, {
-                                    field: "StockQuantity",
-                                    title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
-                                    width: 50,
-                                    //if not a grouped product
-                                    //AND "manage inventory" is "Track inventory"
-                                    //then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
-                                }, @*{
+                    field: "Price",
+                    title: "@T("Admin.Catalog.Products.Fields.Price")",
+                    width: 50,
+                    //if not a grouped product, then display
+                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct)) {# #:Price# #}  #"
+                }, {
+                    field: "StockQuantity",
+                    title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
+                    width: 50,
+                    //if not a grouped product
+                    //AND "manage inventory" is "Track inventory"
+                    //then display
+                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
+                }, @*{
                                     field: "ProductTypeName",
                                     title: "@T("Admin.Catalog.Products.Fields.ProductType")",
                                     width: 100
                                 },*@ {
-                                    field: "Published",
-                                    title: "@T("Admin.Catalog.Products.Fields.Published")",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
-                                },{
-                                    field: "IsVipProduct",
-                                    title: "是否是VIP商品",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsVipProduct#.gif" />'
-                                },
-                                {
-                                    field: "IsBoutique",
-                                    title: "是否是精品典藏商品",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsBoutique#.gif" />'
-                                },
-                                {
-                                    field: "Id",
-                                    title: "操作",
-                                    width: 200,
-                                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
-                                }
-                            ]
-                        } );
-                    });
+                    field: "Published",
+                    title: "@T("Admin.Catalog.Products.Fields.Published")",
+                    width: 50,
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
+                },{
+                    field: "IsVipProduct",
+                    title: "是否是VIP商品",
+                    width: 50,
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsVipProduct#.gif" />'
+                },
+                {
+                    field: "IsBoutique",
+                    title: "是否是精品典藏商品",
+                    width: 50,
+                    headerAttributes: { style: "text-align:center" },
+                    attributes: { style: "text-align:center" },
+                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=IsBoutique#.gif" />'
+                },
+                {
+                    field: "Id",
+                    title: "操作",
+                    width: 200,
+                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +
+                        ' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" +
+                        ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'+' '+
+                        "<a  onclick='javascript:OpenWindow(\"/addproducttopackage/#=Id#\", 650, 400, true); return false;' class='btn btn-sm btn-primary btn-flat '>添加到套餐</a>"
+                }
+            ]
+        } );
+    });
             </script>
         </td>
     </tr>
