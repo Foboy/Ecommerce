@@ -1,0 +1,153 @@
+﻿@using Nop.Core.Domain.Catalog
+@model ProductListModel
+@{
+    var gridPageSize = EngineContext.Current.Resolve<Nop.Core.Domain.Common.AdminAreaSettings>().GridPageSize;
+
+}
+<table class="adminContent">
+    <input type="button" id="cancelboutique-selected" class="btn btn-sm btn-primary btn-flat pull-right" value="取消所选精品典藏" />
+    <tr>
+        <td>
+            <div id="products-boutiquegrid"></div>
+            <script>
+                $(document).ready(function() {
+                    $("#products-boutiquegrid").kendoGrid({
+                        dataSource: {
+                            type: "json",
+                            transport: {
+                                read: {
+                                    url: "@Html.Raw(Url.Action("ProductList", "Product", new { type = "Boutique" }))",
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: additionalData
+                                }
+                            },
+                            schema: {
+                                data: "Data",
+                                total: "Total",
+                                errors: "Errors"
+                            },
+                            error: function(e) {
+                                display_kendoui_grid_error(e);
+                                // Cancel the changes
+                                this.cancelChanges();
+                            },
+                            pageSize: @(gridPageSize),
+                            serverPaging: true,
+                            serverFiltering: true,
+                            serverSorting: true
+                        },
+                        pageable: {
+                            refresh: true
+                        },
+                        editable: {
+                            confirmation: false,
+                            mode: "inline"
+                        },
+                        scrollable: false,
+                        //dataBound: onDataBound,
+                        columns: [
+                            {
+
+                                field: "Id",
+                                headerTemplate: "",
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template:'<input type="checkbox" #=IsVipProduct ? "disabled" : "" #  value="#=Id#" ></input>'
+,
+                                width: 50
+                            },
+                            @if (Model.DisplayProductPictures)
+                                {
+                                    <text>{
+                                field: "PictureThumbnailUrl",
+                                title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
+                                template: '<img src="#=PictureThumbnailUrl#" />',
+                                width: 200
+                            },</text>
+                                }
+                            {
+                                field: "Name",
+                                title: "@T("Admin.Catalog.Products.Fields.Name")",
+                                width: 250
+                            }@*, {
+                                    field: "Sku",
+                                    title: "@T("Admin.Catalog.Products.Fields.Sku")",
+                                    width: 100
+                                }*@, {
+                                field: "Price",
+                                title: "@T("Admin.Catalog.Products.Fields.Price")",
+                                width: 50,
+                                //if not a grouped product, then display
+                                template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct)) {# #:Price# #}  #"
+                            }, {
+                                field: "StockQuantity",
+                                title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
+                                width: 50,
+                                //if not a grouped product
+                                //AND "manage inventory" is "Track inventory"
+                                //then display
+                                template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
+                            }, @*{
+                                    field: "ProductTypeName",
+                                    title: "@T("Admin.Catalog.Products.Fields.ProductType")",
+                                    width: 100
+                                },*@ {
+                                field: "Published",
+                                title: "@T("Admin.Catalog.Products.Fields.Published")",
+                                width: 50,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
+                            },
+                            {
+                                field: "Id",
+                                title: "操作",
+                                width: 200,
+                                template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
+                            }
+                        ]
+                    } );
+                });
+            </script>
+        </td>
+    </tr>
+    <script type="text/javascript">
+        var selectedIds = [];
+        $(document).ready(function () {
+            $('#cancelboutique-selected').click(function (e) {
+                e.preventDefault();
+                //redirect to required URL
+                setLocation('@(Url.Action("CancelBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
+                return false;
+            });
+            //wire up checkboxes.
+            $('#products-boutiquegrid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
+                var $check = $(this);
+                if ($check.is(":checked") == true) {
+                    var checked = jQuery.inArray($check.val(), selectedIds);
+                    if (checked == -1) {
+                        //add id to selectedIds.
+                        selectedIds.push($check.val());
+                    }
+                }
+                else {
+                    var checked = jQuery.inArray($check.val(), selectedIds);
+                    if (checked > -1) {
+                        //remove id from selectedIds.
+                        selectedIds = $.grep(selectedIds, function (item, index) {
+                            return item != $check.val();
+                        });
+                    }
+                }
+                updateMasterCheckbox();
+            });
+        });
+        function updateMasterCheckbox() {
+            var numChkBoxes = $('#products-boutiquegrid input[type=checkbox][id!=mastercheckbox]').length;
+            var numChkBoxesChecked = $('#products-boutiquegrid input[type=checkbox][checked][id!=mastercheckbox]').length;
+            $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+        }
+    </script>
+</table>
+

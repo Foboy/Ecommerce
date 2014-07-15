@@ -9,23 +9,73 @@
     <div class="tj-sort">
         <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
             <dd class="float-left">
-                <ul id="typeOrder" class="clearfix">                  
-                    <li class="current first">
-                        <a href="" rel="nofollow">默认</a>
-                    </li>
-                    <li class="">
-                        <a href="" rel="nofollow">价格从低到高</a>
-                    </li>
-                    <li class="">
-                        <a href="" rel="nofollow">价格从高到低</a>
-                    </li>
-                    <li class="">
-                        <a href="" rel="nofollow">
+                <ul id="typeOrder" class="clearfix">    
+@if (Model.PagingFilteringContext.AvailableSortOptions.Count > 0)
+{
+    var first = 0;
+    var firstCss = " first";
+    foreach (var item in Model.PagingFilteringContext.AvailableSortOptions)
+    {
+        if (first++ > 0)
+        {
+            firstCss = "";
+        }
+
+        if (item.Value.Contains("orderby=0"))
+        {
+            
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">默认</a>
+            </li>
+        }
+        else if (item.Value.Contains("orderby=11"))
+        {
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">价格从高到低</a>
+            </li>
+        }
+        else if (item.Value.Contains("orderby=10"))
+        {
+            <li class='@((item.Selected ? "current" : "") + firstCss)'>
+                <a href="@item.Value" rel="nofollow">价格从低到高</a>
+            </li>
+        }
+        else if (item.Value.Contains("orderby=15"))
+        {
+            <li class="@((item.Selected ? "current" : "") + firstCss)">
+
+                @if (Request.Params["s"] != null)
+                    {
+                         string s=Request.Params["s"];
+                        if(s=="0")
+                        {
+                              <a href="@(item.Value)&s=1" rel="nofollow">
+                                    上架时间
+                                    <i class="iconfont font12 hcolor">&#xf01a6;</i>@*向下*@
+                                    @*<i class="iconfont font12 hcolor">&#xf01a3;</i>向上*@
+                                </a>
+                        }else
+                        { 
+                         <a href="@(item.Value)&s=0" rel="nofollow">
                             上架时间
-                            <i class="iconfont font12 hcolor">&#xf01a6;</i>@*向下*@
-                            @*<i class="iconfont font12 hcolor">&#xf01a3;</i>向上*@
+                            <i class="iconfont font12 hcolor">&#xf01a3;</i>
                         </a>
-                    </li>
+                         }
+                    }
+                    else
+                    {
+                <a href="@(item.Value)&s=0" rel="nofollow">
+                    上架时间
+                    <i class="iconfont font12 hcolor">&#xf01a6;</i>@*向下*@
+                    @*<i class="iconfont font12 hcolor">&#xf01a3;</i>向上*@
+                </a>
+              }
+            </li>
+        }
+
+
+    }
+}             
                 </ul>
             </dd>
         </dl>

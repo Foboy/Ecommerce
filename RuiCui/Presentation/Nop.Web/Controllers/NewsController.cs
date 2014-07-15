@@ -245,6 +245,25 @@ namespace Nop.Web.Controllers
             if (!_newsSettings.Enabled)
                 return RedirectToRoute("HomePage");
 
+            var newsList = _newsService.GetAllNews(_workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id,
+   0, int.MaxValue);
+            string pname = "";
+            string nname = "";
+            for(int i=0;i<newsList.Count;i++) 
+            {
+                if (newsList[i].Id == newsItemId)
+                {
+                    if (i != 0)
+                    {
+                        pname = newsList[i-1].GetSeName(newsList[i-1].LanguageId, ensureTwoPublishedLanguages: false);
+                    }
+                    if (i + 1 != newsList.Count)
+                    {
+                        nname = newsList[i + 1].GetSeName(newsList[i + 1].LanguageId, ensureTwoPublishedLanguages: false);
+                    }
+                }
+            }
+
             var newsItem = _newsService.GetNewsById(newsItemId);
             if (newsItem == null || 
                 !newsItem.Published ||
@@ -255,6 +274,8 @@ namespace Nop.Web.Controllers
                 return RedirectToRoute("HomePage");
 
             var model = new NewsItemModel();
+            model.PreSeName = pname;
+            model.NextSeName = nname;
             PrepareNewsItemModel(model, newsItem, true);
 
             return View(model);

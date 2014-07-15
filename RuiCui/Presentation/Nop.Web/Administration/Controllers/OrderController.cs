@@ -3231,6 +3231,45 @@ namespace Nop.Admin.Controllers
             return Json(gridModel);
         }
 
+        /// <summary>
+        /// 无格式输出订单汇总统计
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult OrderAverageReportListByChart(DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
+                return Content("");
+
+            //a vendor does have access to this report
+            if (_workContext.CurrentVendor != null)
+                return Content("");
+
+
+            var report = new List<OrderAverageReportLineSummary>();
+            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Pending));
+            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Processing));
+            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Complete));
+            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Cancelled));
+            var model = report.Select(x =>
+            {
+                return new OrderAverageReportLineSummaryByChartModel()
+                {
+                    SumTodayOrders =Math.Round(x.SumTodayOrders,0).ToString(),
+                    SumThisWeekOrders = Math.Round(x.SumThisWeekOrders, 0).ToString(),
+                    SumThisMonthOrders = Math.Round(x.SumThisMonthOrders, 0).ToString(),
+                    SumThisYearOrders = Math.Round(x.SumThisYearOrders, 0).ToString(),
+                    SumAllTimeOrders = Math.Round(x.SumAllTimeOrders, 0).ToString()
+                };
+            }).ToList();
+            var gridModel = new DataSourceResult
+            {
+                Data = model,
+                Total = model.Count
+            };
+            return Json(gridModel);
+        }
         [ChildActionOnly]
         public ActionResult OrderIncompleteReport()
         {

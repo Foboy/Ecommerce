@@ -17,14 +17,14 @@
             <a href="@Url.Action("Create")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.AddNew")</a>
             <a href="@Url.Action("DownloadCatalogAsPdf")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Catalog.Products.List.DownloadPDF")</a>
             @*<a href="@Url.Action("ExportXmlAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.All")</a>
-            <a  id="exportxml-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.Selected")</a>*@
+                <a  id="exportxml-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToXml.Selected")</a>*@
             <a href="@Url.Action("ExportExcelAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToExcel.All")</a>
-            <a  id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat " >@T("Admin.Common.ExportToExcel.Selected")</a>
+            <a id="exportexcel-selected" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.ExportToExcel.Selected")</a>
             @if (!Model.IsLoggedInAsVendor)
-{
-    //a vendor cannot import products
-    <input type="button" id="importexcel" name="importexcel" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ImportFromExcel")" />
-}
+            {
+                //a vendor cannot import products
+                <input type="button" id="importexcel" name="importexcel" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.ImportFromExcel")" />
+            }
             <input type="button" id="delete-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Delete.Selected")" />
         </div>
     </div>
@@ -82,13 +82,13 @@
             </td>
         </tr>
         @*<tr @(Model.IsLoggedInAsVendor ? Html.Raw("style='display: none;'") : null)>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.SearchVendorId):
-            </td>
-            <td class="adminData">
-                @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
-            </td>
-        </tr>*@
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.SearchVendorId):
+                </td>
+                <td class="adminData">
+                    @Html.DropDownList("SearchVendorId", Model.AvailableVendors)
+                </td>
+            </tr>*@
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchWarehouseId):
@@ -107,125 +107,54 @@
             </td>
         </tr>
         @*<tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.GoDirectlyToSku):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
-                <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
-            </td>
-        </tr>*@
-       
+                <td class="adminTitle">
+                    @Html.NopLabelFor(model => model.GoDirectlyToSku):
+                </td>
+                <td class="adminData">
+                    @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
+                    <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
+                </td>
+            </tr>*@
+
     </table>
     <p>
     </p>
-    <table class="adminContent">
-        <tr>
-            <td>
-                <div id="products-grid"></div>
+    <div id="product-list">
+        <ul>
+            <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
+                全部商品
+            </li>
+            <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
+                VIP商品
+            </li>
+            <li @Html.RenderSelectedTabIndex(2, GetSelectedTabIndex())>
+                精品典藏商品
+            </li>
+        </ul>
+        <div>
+            @TabAllInfo()
+        </div>
+        <div>
+            @TabVIPInfo()
+        </div>
+        <div>
+            @TabBoutiqueInfo()
+        </div>
 
-                <script>
-                    $(document).ready(function() {
-                        $("#products-grid").kendoGrid({
-                            dataSource: {
-                                type: "json",
-                                transport: {
-                                    read: {
-                                        url: "@Html.Raw(Url.Action("ProductList", "Product"))",
-                                        type: "POST",
-                                        dataType: "json",
-                                        data: additionalData
-                                    }
-                                },
-                                schema: {
-                                    data: "Data",
-                                    total: "Total",
-                                    errors: "Errors"
-                                },
-                                error: function(e) {
-                                    display_kendoui_grid_error(e);
-                                    // Cancel the changes
-                                    this.cancelChanges();
-                                },
-                                pageSize: @(gridPageSize),
-                                serverPaging: true,
-                                serverFiltering: true,
-                                serverSorting: true
-                            },
-                            pageable: {
-                                refresh: true
-                            },
-                            editable: {
-                                confirmation: false,
-                                mode: "inline"
-                            },
-                            scrollable: false,
-                            dataBound: onDataBound,
-                            columns: [
-                                {
-                                    field: "Id",
-                                    headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
-                                    width: 50
-                                },  
-                                @if (Model.DisplayProductPictures)
-                                {
-                                    <text>{
-                                field: "PictureThumbnailUrl",
-                                title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
-                                template: '<img src="#=PictureThumbnailUrl#" />',
-                            width: 200
-                        },</text>
-                                }
-                                {
-                                    field: "Name",
-                                    title: "@T("Admin.Catalog.Products.Fields.Name")",
-                                    width: 300
-                                }@*, {
-                                    field: "Sku",
-                                    title: "@T("Admin.Catalog.Products.Fields.Sku")",
-                                    width: 100
-                                }*@, {
-                                    field: "Price",
-                                    title: "@T("Admin.Catalog.Products.Fields.Price")",
-                                    width: 150,
-                                    //if not a grouped product, then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct)) {# #:Price# #}  #"
-                                }, {
-                                    field: "StockQuantity",
-                                    title: "@T("Admin.Catalog.Products.Fields.StockQuantity")",
-                                    width: 50,
-                                    //if not a grouped product
-                                    //AND "manage inventory" is "Track inventory"
-                                    //then display
-                                    template: "# if(ProductTypeId != @((int)ProductType.GroupedProduct) && ManageInventoryMethodId == @((int)ManageInventoryMethod.ManageStock)) {# #:StockQuantity# #}  #"
-                                }, @*{
-                                    field: "ProductTypeName",
-                                    title: "@T("Admin.Catalog.Products.Fields.ProductType")",
-                                    width: 100
-                                },*@ {
-                                    field: "Published",
-                                    title: "@T("Admin.Catalog.Products.Fields.Published")",
-                                    width: 50,
-                                    headerAttributes: { style: "text-align:center" },
-                                    attributes: { style: "text-align:center" },
-                                    template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=Published#.gif" />'
-                                }, {
-                                    field: "Id",
-                                    title: "操作",
-                                    width: 200,
-                                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
-                                }
-                            ]
-                        } );
-                    });
-                </script>
-            </td>
-        </tr>
-    </table>
-    
+    </div>
+     <script>
+        $(document).ready(function() {
+            $("#product-list").kendoTabStrip({
+                animation:  {
+                    open: {
+                        effects: "fadeIn"
+                    }
+                },
+                select: tabstrip_on_tab_select
+            });
+        });
+    </script>
+
     <script type="text/javascript">
 
         var selectedIds = [];
@@ -235,7 +164,7 @@
             //search button
             $('#search-products').click(function () {
                 //search
-                var grid = $('#products-grid').data('kendoGrid');
+                var grid = $('#products-allgrid').data('kendoGrid');
                 grid.dataSource.page(1); //new search. Set page size to 1
                 grid.dataSource.read();
                 //clear selected checkboxes
@@ -272,11 +201,6 @@
                 setLocation('@(Url.Action("ExportXmlSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
-
-            $('#mastercheckbox').click(function () {
-                $('.checkboxGroups').attr('checked', $(this).is(':checked')).change();
-            });
-
             //"Delete (selected)" button
             $('#delete-selected').click(function (e) {
                 e.preventDefault();
@@ -284,28 +208,8 @@
                 setLocation('@(Url.Action("DeleteSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
-
-            //wire up checkboxes. 
-            $('#products-grid').on('change', 'input[type=checkbox][id!=mastercheckbox]', function (e) {
-                var $check = $(this);
-                if ($check.is(":checked") == true) {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked == -1) {
-                        //add id to selectedIds.  
-                        selectedIds.push($check.val());
-                    }
-                }
-                else {
-                    var checked = jQuery.inArray($check.val(), selectedIds);
-                    if (checked > -1) {
-                        //remove id from selectedIds.  
-                        selectedIds = $.grep(selectedIds, function (item, index) {
-                            return item != $check.val();
-                        });
-                    }
-                }
-                updateMasterCheckbox();
-            });
+           
+            
         });
 
         function additionalData() {
@@ -321,29 +225,29 @@
             };
         }
 
-        function onDataBound(e) {
-            $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
-                var currentId = $(this).val();
-                var checked = jQuery.inArray(currentId, selectedIds);
-                //set checked based on if current checkbox's value is in selectedIds.  
-                $(this).attr('checked', checked > -1);
-            });
+        //function onDataBound(e) {
+        //    $('#products-grid input[type=checkbox][id!=mastercheckbox]').each(function () {
+        //        var currentId = $(this).val();
+        //        var checked = jQuery.inArray(currentId, selectedIds);
+        //        //set checked based on if current checkbox's value is in selectedIds.
+        //        $(this).attr('checked', checked > -1);
+        //    });
 
-            updateMasterCheckbox();
-        }
+        //    updateMasterCheckbox();
+        //}
 
-        function updateMasterCheckbox() {
-            var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox]').length;
-            var numChkBoxesChecked = $('#products-grid input[type=checkbox][checked][id!=mastercheckbox]').length;
-            $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
-        }
-    </script>  
+        //function updateMasterCheckbox() {
+        //    var numChkBoxes = $('#products-grid input[type=checkbox][id!=mastercheckbox]').length;
+        //    var numChkBoxesChecked = $('#products-grid input[type=checkbox][checked][id!=mastercheckbox]').length;
+        //    $('#mastercheckbox').attr('checked', numChkBoxes == numChkBoxesChecked && numChkBoxes > 0);
+        //}
+    </script>
 }
 
 
 @*import products form*@
 <div id="importexcel-window" style="display:none;">
-    @using (Html.BeginForm("ImportExcel", "Product", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    @using (Html.BeginForm("ImportExcel", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <table style="text-align:left;">
             <tr>
@@ -384,3 +288,16 @@
         });
     });
 </script>
+
+@helper  TabAllInfo()
+{
+    @Html.Partial("_ProductList.All", Model)
+}
+@helper TabVIPInfo()
+{
+    @Html.Partial("_ProductList.VIP", Model)
+}
+@helper TabBoutiqueInfo()
+{
+    @Html.Partial("_ProductList.Boutique", Model)
+}

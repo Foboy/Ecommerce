@@ -289,6 +289,144 @@ namespace Nop.Admin.Controllers
                 }
             }
         }
+        /// <summary>
+        /// 设置商品权限控制，并且设为vip商品
+        /// </summary>
+        /// <param name="selectedIds"></param>
+        /// <returns></returns>
+        public ActionResult SetProductVipZone(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                products.AddRange(_productService.GetProductsByIds(ids));
+
+                for (int i = 0; i < products.Count; i++)
+                {
+                    var product = products[i];
+
+                    //a vendor should have access only to his products
+                    if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
+                        continue;
+                    product.SubjectToAcl = true;
+                    _productService.UpdateProduct(product);
+                    var existingAclRecords = _aclService.GetAclRecords(product);
+                    //定死的vip的roleid为9
+                    if (existingAclRecords.Count(acl => acl.CustomerRoleId == 9) == 0)
+                        _aclService.InsertAclRecord(product, 9);
+                }
+            }
+            return RedirectToAction("List");
+        }
+        /// <summary>
+        /// 取消商品为vip商品
+        /// </summary>
+        /// <param name="selectedIds"></param>
+        /// <returns></returns>
+        public ActionResult CancelProductVipZone(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                products.AddRange(_productService.GetProductsByIds(ids));
+
+                for (int i = 0; i < products.Count; i++)
+                {
+                    var product = products[i];
+
+                    //a vendor should have access only to his products
+                    if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
+                        continue;
+                    product.SubjectToAcl = false;
+                    _productService.UpdateProduct(product);
+                    var existingAclRecords = _aclService.GetAclRecords(product);
+                    //定死的vip的roleid为9
+                    var aclRecordToDelete = existingAclRecords.FirstOrDefault(acl => acl.CustomerRoleId == 9);
+                    if (aclRecordToDelete != null)
+                        _aclService.DeleteAclRecord(aclRecordToDelete);
+                }
+            }
+            return RedirectToAction("List");
+        }
+
+        /// <summary>
+        /// 设置商品为精品典藏
+        /// </summary>
+        /// <param name="selectedIds"></param>
+        /// <returns></returns>
+        public ActionResult SetBoutiqueZone(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                products.AddRange(_productService.GetProductsByIds(ids));
+
+                for (int i = 0; i < products.Count; i++)
+                {
+                    var product = products[i];
+
+                    //a vendor should have access only to his products
+                    if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
+                        continue;
+                    product.GiftCardTypeId = 999;//定死999为精品典藏
+                    _productService.UpdateProduct(product);
+                }
+            }
+            return RedirectToAction("List");
+        }
+        /// <summary>
+        /// 取消经典典藏
+        /// </summary>
+        /// <param name="selectedIds"></param>
+        /// <returns></returns>
+        public ActionResult CancelBoutiqueZone(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var products = new List<Product>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                products.AddRange(_productService.GetProductsByIds(ids));
+
+                for (int i = 0; i < products.Count; i++)
+                {
+                    var product = products[i];
+
+                    //a vendor should have access only to his products
+                    if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
+                        continue;
+                    product.GiftCardTypeId = 0;
+                    _productService.UpdateProduct(product);
+                }
+            }
+            return RedirectToAction("List");
+        }
 
         [NonAction]
         private void PrepareStoresMappingModel(ProductModel model, Product product, bool excludeProperties)
@@ -582,30 +720,32 @@ namespace Nop.Admin.Controllers
             var specificationAttributes = _specificationAttributeService.GetSpecificationAttributes();
             for (int i = 0; i < specificationAttributes.Count; i++)
             {
-                
+
                 var sa = specificationAttributes[i];
-                if (i == 0) {
-                    model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString(),Selected=true });
-                }else
-                { 
-                model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString() });
+                if (i == 0)
+                {
+                    model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString(), Selected = true });
+                }
+                else
+                {
+                    model.AddSpecificationAttributeModel.AvailableAttributes.Add(new SelectListItem() { Text = sa.Name, Value = sa.Id.ToString() });
                 }
                 if (i == 0)
                 {
                     //attribute options
-                    var specificationAttributeOptions=_specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sa.Id);
+                    var specificationAttributeOptions = _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sa.Id);
                     for (int j = 0; j < specificationAttributeOptions.Count; j++)
                     {
                         var sao = specificationAttributeOptions[j];
                         if (j == 0)
                         {
-                            model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem() { Text = sao.Name, Value = sao.Id.ToString(),Selected=true });
+                            model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem() { Text = sao.Name, Value = sao.Id.ToString(), Selected = true });
                         }
                         model.AddSpecificationAttributeModel.AvailableOptions.Add(new SelectListItem() { Text = sao.Name, Value = sao.Id.ToString() });
                     }
                 }
             }
-           
+
             model.AddSpecificationAttributeModel.AvailableAttributesJsonStr = JsonConvert.SerializeObject(model.AddSpecificationAttributeModel.AvailableAttributes);
             var categorySpecificationAtrributes = _categorySpecificationAtrributeService.LoadAllCategorySpecificationAtrribute();
             model.AddSpecificationAttributeModel.AvailableCategorySpecificationAttributesJsonStr = JsonConvert.SerializeObject(categorySpecificationAtrributes);
@@ -711,58 +851,133 @@ namespace Nop.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductList(DataSourceRequest command, ProductListModel model)
+        public ActionResult ProductList(DataSourceRequest command, ProductListModel model, string type)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
-
-            //a vendor should have access only to his products
-            if (_workContext.CurrentVendor != null)
-            {
-                model.SearchVendorId = _workContext.CurrentVendor.Id;
-            }
-
-            var categoryIds = new List<int>() { model.SearchCategoryId };
-            //include subcategories
-            if (model.SearchIncludeSubCategories && model.SearchCategoryId > 0)
-                categoryIds.AddRange(GetChildCategoryIds(model.SearchCategoryId));
-
-            var products = _productService.SearchProducts(
-                categoryIds: categoryIds,
-                manufacturerId: model.SearchManufacturerId,
-                storeId: model.SearchStoreId,
-                vendorId: model.SearchVendorId,
-                warehouseId: model.SearchWarehouseId,
-                productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
-                keywords: model.SearchProductName,
-                pageIndex: command.Page - 1,
-                pageSize: command.PageSize,
-                showHidden: true,
-                orderBy:ProductSortingEnum.CreatedOn 
-            );
             var gridModel = new DataSourceResult();
-            gridModel.Data = products.Select(x =>
+            switch (type)
             {
-                var productModel = x.ToModel();
-                //little hack here:
-                //ensure that product full descriptions are not returned
-                //otherwise, we can get the following error if products have too long descriptions:
-                //"Error during serialization or deserialization using the JSON JavaScriptSerializer. The length of the string exceeds the value set on the maxJsonLength property. "
-                //also it improves performance
-                productModel.FullDescription = "";
+                case "All":
+                    //a vendor should have access only to his products
+                    if (_workContext.CurrentVendor != null)
+                    {
+                        model.SearchVendorId = _workContext.CurrentVendor.Id;
+                    }
+                    var categoryIds = new List<int>() { model.SearchCategoryId };
+                    //include subcategories
+                    if (model.SearchIncludeSubCategories && model.SearchCategoryId > 0)
+                        categoryIds.AddRange(GetChildCategoryIds(model.SearchCategoryId));
 
-                if (_adminAreaSettings.DisplayProductPictures)
-                {
-                    var defaultProductPicture = _pictureService.GetPicturesByProductId(x.Id, 1).FirstOrDefault();
-                    productModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
-                }
-                productModel.ProductTypeName = x.ProductType.GetLocalizedEnum(_localizationService, _workContext);
-                return productModel;
-            });
-            gridModel.Total = products.TotalCount;
+                    var products = _productService.SearchProducts(
+                        categoryIds: categoryIds,
+                        manufacturerId: model.SearchManufacturerId,
+                        storeId: model.SearchStoreId,
+                        vendorId: model.SearchVendorId,
+                        warehouseId: model.SearchWarehouseId,
+                        productType: model.SearchProductTypeId > 0 ? (ProductType?)model.SearchProductTypeId : null,
+                        keywords: model.SearchProductName,
+                        pageIndex: command.Page - 1,
+                        pageSize: command.PageSize,
+                        showHidden: true,
+                        orderBy: ProductSortingEnum.CreatedOn
+                    );
+                    gridModel.Data = products.Select(x =>
+                    {
 
+                        var productModel = x.ToModel();
+                        //little hack here:
+                        //ensure that product full descriptions are not returned
+                        //otherwise, we can get the following error if products have too long descriptions:
+                        //"Error during serialization or deserialization using the JSON JavaScriptSerializer. The length of the string exceeds the value set on the maxJsonLength property. "
+                        //also it improves performance
+                        var existingAclRecords = _aclService.GetAclRecords(x);
+                        bool check = false;
+                        foreach (var acl in existingAclRecords)
+                        {
+                            if (acl.CustomerRole.Id == 9)
+                                check = true;
+                        }
+                        if (check)
+                        { productModel.IsVipProduct = true; }
+                        if (x.GiftCardTypeId == 999)
+                        {
+                            productModel.IsBoutique = true;
+                        }
+                        productModel.FullDescription = "";
+
+                        if (_adminAreaSettings.DisplayProductPictures)
+                        {
+                            var defaultProductPicture = _pictureService.GetPicturesByProductId(x.Id, 1).FirstOrDefault();
+                            productModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
+                        }
+                        productModel.ProductTypeName = x.ProductType.GetLocalizedEnum(_localizationService, _workContext);
+                        return productModel;
+                    });
+                    gridModel.Total = products.TotalCount;
+                    break;
+                case "VIP":
+                    List<ProductModel> vlist = new List<ProductModel>();
+                    var Allproducts = _productService.SearchProducts(
+                        showHidden: true,
+                        orderBy: ProductSortingEnum.CreatedOn);
+                     //只查VIP
+                    foreach (var item in Allproducts)
+                    {
+                        var productModel = item.ToModel();
+                        if (_adminAreaSettings.DisplayProductPictures)
+                        {
+                            var defaultProductPicture = _pictureService.GetPicturesByProductId(item.Id, 1).FirstOrDefault();
+                            productModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
+                        }
+                        productModel.ProductTypeName = item.ProductType.GetLocalizedEnum(_localizationService, _workContext);
+                        var existingAclRecords = _aclService.GetAclRecords(item);
+                        bool check = false;
+                        foreach (var acl in existingAclRecords)
+                        {
+                            if (acl.CustomerRole.Id == 9)
+                                check = true;
+                        }
+                        if (check)
+                        {
+                            vlist.Add(productModel);
+                        }
+                    }
+                    var vipproducts = new PagedList<ProductModel>(vlist, command.Page - 1, command.PageSize);
+                    gridModel.Data = vipproducts;
+                    gridModel.Total = vipproducts.TotalCount;
+                    break;
+                case "Boutique":
+                    List<ProductModel> blist = new List<ProductModel>();
+                    var allproducts = _productService.SearchProducts(
+                        showHidden: true,
+                        orderBy: ProductSortingEnum.CreatedOn);
+                    //只查精品典藏
+                    foreach (var item in allproducts)
+                    {
+                        var productModel = item.ToModel(); 
+                        if (_adminAreaSettings.DisplayProductPictures)
+                        {
+                            var defaultProductPicture = _pictureService.GetPicturesByProductId(item.Id, 1).FirstOrDefault();
+                            productModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
+                        }
+                        productModel.ProductTypeName = item.ProductType.GetLocalizedEnum(_localizationService, _workContext);
+
+                        if (item.GiftCardTypeId == 999)
+                        {
+                            blist.Add(productModel);
+                        }
+                    }
+                    var boutiqueproducts = new PagedList<ProductModel>(blist, command.Page - 1, command.PageSize);
+                    gridModel.Data = boutiqueproducts;
+                    gridModel.Total = boutiqueproducts.TotalCount;
+                    break;
+                default:
+                    break;
+            }
             return Json(gridModel);
         }
+
 
         [HttpPost, ActionName("List")]
         [FormValueRequired("go-to-product-by-sku")]
@@ -2088,13 +2303,13 @@ namespace Nop.Admin.Controllers
                     return RedirectToAction("List");
                 }
             }
-           
+
             var psa = new ProductSpecificationAttribute()
             {
                 SpecificationAttributeOptionId = specificationAttributeOptionId,
                 ProductId = productId,
                 CustomValue = customValue,
-                AllowFiltering =  _categorySpecificationAtrributeService.GetCategorySpecificationAtrributeBySid(specificationAttributeId).AllowFiltering,
+                AllowFiltering = _categorySpecificationAtrributeService.GetCategorySpecificationAtrributeBySid(specificationAttributeId).AllowFiltering,
                 ShowOnProductPage = showOnProductPage,
                 DisplayOrder = displayOrder,
             };
