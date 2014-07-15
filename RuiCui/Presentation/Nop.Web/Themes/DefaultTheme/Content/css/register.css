@@ -87,7 +87,7 @@ i.val_m{font-style:normal; font-size:14px;}
 .color_yellow{color: #ff7e00;}
 
 /*-- 注册账户部分 --*/
-.h4_suc{margin:0 0 10px 0; padding-top:20px; font-size:22px; font-weight:bold; color:#F68B1F;}
+.h4_suc{margin:0 0 10px 0; padding-top:20px; font-size:22px; font-weight:bold; color:#F68B1F; width:840px;}
 .suc_p{padding:0 0 20px 30px; border-bottom:1px dashed #e3e3e3; color:#999;}
 .radio_quyu{margin:50px 0 20px 260px; font-size:14px;}
 .p_cor_hui{color:#999; margin:4px 0 0 260px}
@@ -549,10 +549,22 @@ a.sub_bg{color:#333;}
 .repass_container{width:300px;padding:20px;background:#FFF;border:1px solid #BBB;height:auto;margin:0 auto;text-align:center;}
 .repass_header{font-size:16px;}
 
+.reg-title {
+    position:relative;
+    border-bottom: 1px dashed #e3e3e3;
+    padding-bottom: 10px;
+}
+.log-title{color:#999; text-align:center;cursor:pointer;vertical-align:middle;margin-top:25px;margin-right:10px; }
 .error-code {
     text-align:center;
     margin-bottom:15px;
     color:#ff6600;
+}
+.f-left {
+    float:left;
+}
+.f-right {
+    float:right;
 }
 
 /*global*/

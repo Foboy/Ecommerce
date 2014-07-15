@@ -50,7 +50,7 @@
                     @using (Html.BeginForm())
                     {
                         <div class="message-error">
-                            @Html.ValidationSummary(true, T("Account.Login.Unsuccessful").Text)
+                            @Html.ValidationSummary(true,"登录账户有误，请重新输入",new{ @class = "error-code " })
                         </div>
                         <div class="inputs">
                             @Html.TextBoxFor(m => m.Email, new { @class = "enter-item first-enter-item", autofocus = "autofocus", placeholder = "邮箱/手机号码" })
