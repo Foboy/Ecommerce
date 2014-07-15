@@ -2385,6 +2385,12 @@
     <Content Include="Views\Setting\VIPConsumerValve.cshtml" />
     <Content Include="Views\Setting\IndexSearchTags.cshtml" />
     <Content Include="Views\Home\EchartDashBord.cshtml" />
+    <Content Include="Views\ShoppingCart\PackageProductList.cshtml" />
+    <Content Include="Views\Discount\_CreateOrUpdatePackage.cshtml" />
+    <Content Include="Views\Discount\EditPackage.cshtml" />
+    <Content Include="Views\Discount\PackageList.cshtml" />
+    <Content Include="Views\Discount\CreatePackage.cshtml" />
+    <Content Include="Views\Discount\PackageProductAddPopup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />

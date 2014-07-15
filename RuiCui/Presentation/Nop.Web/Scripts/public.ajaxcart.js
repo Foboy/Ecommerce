@@ -29,12 +29,14 @@ var AjaxCart = {
             return;
         }
         this.setLoadWaiting(true);
-
+        var me = this;
         $.ajax({
             cache: false,
             url: urladd,
             type: 'post',
-            success: this.success_desktop,
+            success: function (response) {
+                me.success_desktop(response);
+            },
             complete: this.resetLoadWaiting,
             error: this.ajaxFailure
         });
@@ -53,6 +55,31 @@ var AjaxCart = {
             data: $(formselector).serialize(),
             type: 'post',
             success: function (response) {
+                me.success_desktop(response, checkoutUrl);
+            },
+            complete: this.resetLoadWaiting,
+            error: this.ajaxFailure
+        });
+    },
+    addproducttopackage_details: function (urladd, formselector, checkoutUrl) {
+        if (this.loadWaiting != false) {
+            return;
+        }
+        var me = this;
+        this.setLoadWaiting(true);
+        $.ajax({
+            cache: false,
+            url: urladd,
+            data: $(formselector).serialize(),
+            type: 'post',
+            success: function (response) {
+                if (response.success == true) {
+                    alert(response.message);
+                    window.close();
+                }
+                else {
+                    alert(response.message)
+                }
                 me.success_desktop(response, checkoutUrl);
             },
             complete: this.resetLoadWaiting,
@@ -140,7 +167,7 @@ var AjaxCart = {
                 }
                 else {
                     //no timeout for errors
-                    displayBarNotification(response.message, 'error', 0);
+                    displayBarNotification(response.message, 'error', 3500);
                 }
                 
             }
@@ -158,6 +185,6 @@ var AjaxCart = {
     },
 
     ajaxFailure: function () {
-        alert('Failed to add the product to the cart. Please refresh the page and try one more time.');
+        alert('添加失败');
     }
 };

@@ -107,7 +107,7 @@
         {
             $("#rootNavBar").addClass("root-nav-bar-play");
             $("#navCategorySection").addClass("root-nav-section-list-home");
-            if (isCategoryToggled) {
+            if (typeof isCategoryToggled != "undefined" && isCategoryToggled) {
                 $("#navCategorySection").css({ top: c });
             }
         }
@@ -115,7 +115,7 @@
         {
             $("#rootNavBar").removeClass("root-nav-bar-play");
             $("#navCategorySection").removeClass("root-nav-section-list-home");
-            if (isCategoryToggled) {
+            if (typeof isCategoryToggled != "undefined" && isCategoryToggled) {
                 $("#navCategorySection").css({ top: 50 });
             }
         }

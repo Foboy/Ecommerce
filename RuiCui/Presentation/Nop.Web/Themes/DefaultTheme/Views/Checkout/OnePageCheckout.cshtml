@@ -36,6 +36,14 @@
         confirmOrderStepNumber--;
     }
 }
+<style type="text/css">
+    .input-validation-error {
+        border:solid 1px  #f60745;
+    }
+    .field-validation-error {
+        color: #f60745;
+    }
+</style>
 <div class="checkout-box">
     <div class="checkout-box-bd" id="checkout-steps">
         @if (Model.ShippingRequired)
@@ -59,7 +67,7 @@
                     <div class="buttons" id="shipping-buttons-container" style="display:none;">
                         <br />
                         <input type="button" class="btn btn-lineDakeLight btn-small" onclick="Shipping.cancel(); return false;" value="取消" />
-                        <input type="button" class="btn btn-primary btn-small" onclick="Shipping.save(); return false;" value="确定" />
+                        <input type="button" class="btn btn-primary btn-small" onclick="Shipping.newAddressSave(); return false;" value="确定" />
                         <span id="shipping-please-wait" class="please-wait" style="display: none;"> 正在保存...</span>
                     </div>
                 </div>

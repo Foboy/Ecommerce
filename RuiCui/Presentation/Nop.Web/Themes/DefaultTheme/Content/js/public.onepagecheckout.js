@@ -94,12 +94,8 @@ var Checkout = {
         }
         
         //TODO move it to a new method
-        if ($("#billing-address-select").length > 0) {
-            Billing.newAddress(!$('#billing-address-select').val());
-        }
-        if ($("#shipping-address-select").length > 0) {
-            Shipping.newAddress(!$('#shipping-address-select').val());
-        }
+
+
 
         if (response.goto_section) {
             Checkout.gotoSection(response.goto_section);
@@ -254,7 +250,6 @@ var Shipping = {
 
     save: function () {
         if (Checkout.loadWaiting != false) return;
-
         Checkout.setLoadWaiting('shipping');
         
         $.ajax({
@@ -266,6 +261,26 @@ var Shipping = {
             complete: this.resetLoadWaiting,
             error: Checkout.ajaxFailure
         });
+    },
+    newAddressSave: function () {
+        if (Checkout.loadWaiting != false) return;
+        var form = $(this.form);
+        form.validate();
+        if (form.valid())
+        {
+            Checkout.setLoadWaiting('shipping');
+            this.resetSelectedAddress();
+            $.ajax({
+                cache: false,
+                url: this.saveUrl,
+                data: $(this.form).serialize(),
+                type: 'post',
+                success: this.nextStep,
+                complete: this.resetLoadWaiting,
+                error: Checkout.ajaxFailure
+            });
+        }
+      
     },
 
     resetLoadWaiting: function () {

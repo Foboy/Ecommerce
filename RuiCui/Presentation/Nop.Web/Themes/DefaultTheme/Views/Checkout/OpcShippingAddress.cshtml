@@ -39,7 +39,7 @@
     <input type="text" value="@(Model.UsallyId)" name="shipping_address_id" id="shipping-address-select" style="display:none;">
 }
 <div class="checkout-data">
-    <div class="section new-shipping-address" id="shipping-new-address-form" style="display:none;">
+    <div class="section new-shipping-address" id="shipping-new-address-form" style="@(Model.NewAddressPreselected ? "" : "display:none;")">
         <div class="enter-address">
             <div class="enter-address-body">
                 @{
@@ -54,7 +54,7 @@
     </div>
 </div>
 <br />
-<a class="btn btn-white btn-small" href="javascript:void(0)" onclick="Shipping.newAddress(true)" id="shipping-new-address-btn">
+<a class="btn btn-white btn-small" href="javascript:void(0)" onclick="Shipping.newAddress(true)" id="shipping-new-address-btn" style="@(Model.NewAddressPreselected ? "display:none;" : "")">
     <i class="iconfont font12">&#xf0175;</i>
     使用新地址
 </a>

@@ -20,6 +20,8 @@ namespace Nop.Services.Orders
         void DeleteShoppingCartItem(ShoppingCartItem shoppingCartItem, bool resetCheckoutData = true,
             bool ensureOnlyActiveCheckoutAttributes = false);
 
+        void DeletePackageShoppingCartItem(ShoppingCartItem shoppingCartItem);
+
         /// <summary>
         /// Deletes expired shopping cart items
         /// </summary>
@@ -165,5 +167,7 @@ namespace Nop.Services.Orders
         /// <param name="toCustomer">To customer</param>
         /// <param name="includeCouponCodes">A value indicating whether to coupon codes (discount and gift card) should be also re-applied</param>
         void MigrateShoppingCart(Customer fromCustomer, Customer toCustomer, bool includeCouponCodes);
+
+        IList<ShoppingCartItem> GetShoppingCartItemByIds(int[] ids);
     }
 }

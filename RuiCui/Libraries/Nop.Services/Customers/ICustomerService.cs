@@ -199,5 +199,7 @@ namespace Nop.Services.Customers
         void UpdateCustomerRole(CustomerRole customerRole);
 
         #endregion
+
+        Customer GetPackageCustomer();
     }
 }

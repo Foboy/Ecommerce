@@ -27,6 +27,7 @@ using Nop.Services.Logging;
 using Nop.Services.Media;
 using Nop.Services.Messages;
 using Nop.Services.Orders;
+using Nop.Services.Customers;
 using Nop.Services.Security;
 using Nop.Services.Seo;
 using Nop.Services.Shipping;
@@ -99,6 +100,8 @@ namespace Nop.Web.Controllers
         private readonly IStoreService _storeService;
         private readonly ISettingService _settingService;
        private readonly OrderSettings _orderSettings;
+       private readonly IShoppingCartService _shoppingCartService;
+       private readonly ICustomerService _customerService;
 
 
         private readonly ICategorySpecificationAtrributeService _categorySpecificationService;
@@ -154,7 +157,9 @@ namespace Nop.Web.Controllers
  OrderSettings orderSettings,
             IStoreService storeService,
             ISettingService settingService,
-            ICategorySpecificationAtrributeService categorySpecificationService)
+            ICategorySpecificationAtrributeService categorySpecificationService,
+            IShoppingCartService shoppingCartService,
+            ICustomerService customerService)
         {
             this._categoryService = categoryService;
             this._manufacturerService = manufacturerService;
@@ -208,6 +213,8 @@ namespace Nop.Web.Controllers
  			 this._storeService = storeService;
             this._settingService = settingService;
             this._orderSettings = orderSettings;
+            this._shoppingCartService = shoppingCartService;
+            this._customerService = customerService;
         }
 
         #endregion
@@ -1527,8 +1534,8 @@ namespace Nop.Web.Controllers
             foreach(var cat in model.Categories)
             {
                 var catSpecs = specs.Where(s => s.CategoryId == cat.Id && s.AllowFiltering).ToList();
-                cat.PriceRangeFilter.LoadPriceRangeFilters(cat.PriceRanges, _webHelper, _priceFormatter, Url.HttpRouteUrl("Category", new { SeName = cat.SeName }));
-                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.HttpRouteUrl("Category", new { SeName = cat.SeName }));
+                cat.PriceRangeFilter.LoadPriceRangeFilters(cat.PriceRanges, _webHelper, _priceFormatter, Url.RouteUrl("Category", new { SeName = cat.SeName }));
+                cat.SpecificationFilter.PrepareSpecsFilters(catSpecs, _specificationAttributeService, _webHelper, _workContext, Url.RouteUrl("Category", new { SeName = cat.SeName }));
             }
             return PartialView(model);
         }
@@ -2186,6 +2193,89 @@ namespace Nop.Web.Controllers
             }
 
             return View(model.ProductTemplateViewPath, model);
+        }
+
+        [NopHttpsRequirement(SslRequirement.No)]
+        public ActionResult AddProductToPackage(int productId, int updatecartitemid = 0)
+        {
+            var product = _productService.GetProductById(productId);
+            var customer = _customerService.GetPackageCustomer();
+            if (product == null || product.Deleted)
+                return InvokeHttp404();
+
+            //Is published?
+            //Check whether the current user has a "Manage catalog" permission
+            //It allows him to preview a product before publishing
+            if (!product.Published && !_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return InvokeHttp404();
+
+            //ACL (access control list)
+            if (!_aclService.Authorize(product))
+                return InvokeHttp404();
+
+            //Store mapping
+            if (!_storeMappingService.Authorize(product))
+                return InvokeHttp404();
+
+            //visible individually?
+            if (!product.VisibleIndividually)
+            {
+                //is this one an associated products?
+                var parentGroupedProduct = _productService.GetProductById(product.ParentGroupedProductId);
+                if (parentGroupedProduct != null)
+                {
+                    return RedirectToRoute("Product", new { SeName = parentGroupedProduct.GetSeName() });
+                }
+                else
+                {
+                    return RedirectToRoute("HomePage");
+                }
+            }
+
+            //update existing shopping cart item?
+            ShoppingCartItem updatecartitem = null;
+            if (_shoppingCartSettings.AllowCartItemEditing && updatecartitemid > 0)
+            {
+
+                var cart = customer.ShoppingCartItems
+                    .Where(x => x.ShoppingCartType == ShoppingCartType.Package)
+                    .Where(x => x.StoreId == _storeContext.CurrentStore.Id)
+                    .ToList();
+                updatecartitem = cart.FirstOrDefault(x => x.Id == updatecartitemid);
+                //not found?
+                if (updatecartitem == null)
+                {
+                    return RedirectToRoute("Product", new { SeName = product.GetSeName() });
+                }
+                //is it this product?
+                if (product.Id != updatecartitem.ProductId)
+                {
+                    return RedirectToRoute("Product", new { SeName = product.GetSeName() });
+                }
+            }
+
+            //prepare the model
+            var model = PrepareProductDetailsPageModel(product, updatecartitem, false);
+
+            //save as recently viewed
+            _recentlyViewedProductsService.AddProductToRecentlyViewedList(product.Id);
+
+            //activity log
+            _customerActivityService.InsertActivity("PublicStore.ViewProduct", _localizationService.GetResource("ActivityLog.PublicStore.ViewProduct"), product.Name);
+
+            if (_workContext.CurrentCustomer.IsGuest())
+            {
+                if (_orderSettings.AnonymousCheckoutAllowed)
+                {
+                    model.AddToCart.CheckoutUrl = Url.RouteUrl("LoginCheckoutAsGuest", new { returnUrl = Url.RouteUrl("ShoppingCart") });
+                }
+            }
+            else
+            {
+                model.AddToCart.CheckoutUrl = Url.RouteUrl("Checkout", new { });
+            }
+
+            return View(model);
         }
 
         [ChildActionOnly]
