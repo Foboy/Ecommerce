@@ -439,27 +439,8 @@ dl{margin-bottom:20px;}
 .once_get{color:#6a6a6a; cursor:default;}
 .sendRpw .resetwidth{width:180px; color:#F68B1F; cursor:pointer;}
 
-/* faq */
-.hei_513{height:auto; min-height:513px; _height:513px;}
-.faq_link{margin-bottom:20px;}
-.faq_link em{width:25px; height:25px; display:inline-block; margin-right:10px; background:url(/static/img/passport/faq_icon.png) 0 0 no-repeat; vertical-align:middle}
-.faq_link a{color:#000; font-size:14px; vertical-align:middle}
 
-.faq_link_more{color:#F68B1F; text-decoration:underline;}
 
-.radio_quyu .faq_link_more{margin-left:40px;}
-.td_lht .faq_link_more{text-decoration:none;}
-
-.check_tips .faq_link_more{text-decoration:none;}
-
-/* yahoo邮箱提醒 */
-.tl_c{text-align:center;}
-        .yh_notice{width:510px; padding:30px 0; margin:0 auto;}
-        .notice_title1{font-size:20px; margin-bottom:40px; color:#000; text-align:center;}
-        .notice_title2{color:#000; font-size:14px; margin-bottom:20px;}
-        .notice_content{line-height:1.5; font-size:14px; margin-bottom:20px; color:#808184;}
-        .yh_notice .sub_login{display:inline-block; *display:inline; zoom:1; color:#fff; line-height:40px; text-align:center; font-size:14px;}
-        .notice_link{color:#F68B1F; margin-top:10px; text-decoration:underline; display:inline-block; *display:inline; zoom:1;}
 
 /* 提醒修改密码长度 */
 .mar_tp2{color:#252525;}
@@ -541,15 +522,6 @@ a.sub_bg{color:#333;}
 .dl_has_bug .container a{font-size:12px; text-decoration:underline; float:right; padding-top:10px;}
 .dl_has_bug .container a:hover{color:#ff7e00; text-decoration:none;}
 
-/* app */
-.app_area{position:absolute; height:110px; width:212px; zoom:1; top:0; left:0; z-index:10;}
-.app_area img{display:block;}
-.app_area a{display:inline-block; *display:inline; zoom:1; height:30px; line-height:30px;}
-.app_area{height:110px; padding-left:102px; background:url(/static/img/passport/app_bg2.png) 0 0 no-repeat;}
-.app_area p{width:110px;}
-.app_area_hover{background:url(/static/img/passport/app_hover.png) no-repeat;}
-.color_fff{color:#fff;}
-.aa_download_link a:hover{color:#ff7e00;}
 
 /* 图标 */
   .has_no_bind_ico,
@@ -557,58 +529,6 @@ a.sub_bg{color:#333;}
   .has_bind_ico{background:url(/static/img/passport/icos.png) 0 -16px no-repeat;}
 
   .msgTips{z-index:50;}
-
-/* 激活令牌（新）*/
-.downapp_container{width: 570px; margin:0 auto;}
-.dc_title{padding:40px 0; line-height: 26px;}
-.dct_intro{font-size: 14px; font-weight: bold; margin-right: 40px;}
-.down_index{display:inline-block; *display: inline; zoom:1; background: url(/static/img/passport/new_select_ico.png) 0 0 no-repeat; color: #fff; height: 26px; line-height: 26px; text-indent: 36px; margin-right: 20px;}
-.di_andriod{background-position: 0 -1px; width: 104px;}
-.di_andriod:hover{background-position: 0 -1px;}
-.di_andriod_default{background-position: 0 -30px;}
-.di_ios{background-position: -105px -1px; width: 72px;}
-.di_ios:hover{background-position: -105px -1px;}
-.di_ios_default{background-position: -105px -30px;}
-
-/* 新的下载页 */
-  .down_area{background:#f9f9f9; border:1px solid #333; border-radius:6px; width:620px; height:370px; position:absolute; top:50%; margin-top:-186px; left:50%; margin-left:-310px; z-index:100;}
-  .download_area{padding-top:30px;}
-  .da_andriod,
-  .da_code{float:left; margin-left:40px; display:inline-block; *display:inline; zoom:1; padding-top:20px; width:245px; border:1px solid #ccc; border-radius:20px; height:230px;}
-  .da_andriod img,
-  .da_andriod a{display:block; margin:0 auto;}
-  .da_andriod img{margin:14px auto;}
-  .da_btn{background:#f4592d url(/static/img/passport/app_down_ico.png) 20px 6px no-repeat; padding:10px 20px 10px 50px; border-radius:6px; width:80px; font-size:16px; color:#fff;}
-  .da_code_img{width:120px; height:120px; border:1px solid #ccc; margin:14px auto; overflow:hidden;}
-  .da_code_img img{margin:-24px 0 0 -24px;}
-  .down_area .info{padding:14px 30px;}
-  .close_btn{float:right; font-size:20px; color:#666; cursor:pointer;}
-  .close_btn:hover{color:#ff7e00;}
-  .msgTips{z-index:50;}
-
-  /* 新的下载页 */
-  .downapp_container .download_area{display:none; border-radius: 6px; border:1px solid #ccc; padding: 60px 40px; position: relative; background: #fff;}
-  .downapp_container .ad_corner{position: absolute; top:-15px; left: 50%; margin-left: -12px; height:15px;  width:25px;
-    background: url(/static/img/passport/new_two_corner.png) 0 0 no-repeat;}
-  .downapp_container .dla_title{font-size: 14px; font-weight: bold;}
-  .downapp_container .da_andriod,
-  .downapp_container .da_code{float:left; display:inline-block; *display:inline; zoom:1; width:236px; height:190px; border:0 none; border-radius: 0; margin: 0;}
-  .downapp_container .da_andriod{border-right: 1px solid #ccc;}
-  .downapp_container .da_andriod img,
-  .downapp_container .da_andriod a{display:block; margin:0 auto;}
-  .downapp_container .da_andriod img{margin:14px auto;}
-  .downapp_container .da_code_img{width:120px; height:120px; margin:14px auto; overflow:hidden;}
-  .downapp_container .da_code_img img{margin:-27px 0 0 -24px;}
-  .downapp_container .down_area .info{padding:14px 30px;}
-  .downapp_container .close_btn{float:right; font-size:20px; color:#666; cursor:pointer;}
-  .downapp_container .close_btn:hover{color:#ff7e00;}
-  #ios_area .ad_corner{left: 390px;}
-
-.activate_token .font_16{margin: 10px;}
-.activate_token .sub_bg{margin-right:20px;}
-.activate_fail_tip{margin: 40px; color: #999; font-size:14px; font-weight: bold;}
-.token_area{display: inline-block; *display: inline; zoom:1; padding: 10px 30px; margin:10px 0; background: #989898; color: #fff; font-size: 16px; font-weight: bold;}
-.activate_link a{color: #ff7e00;}
 
 /*panjun847  common*/
 .avatar{border-radius:6px;overflow:hidden;background:#bbb;width:90px;height:90px;padding:0;margin:20px auto 10px;}
@@ -628,6 +548,12 @@ a.sub_bg{color:#333;}
 /*panjun847 repeat password*/
 .repass_container{width:300px;padding:20px;background:#FFF;border:1px solid #BBB;height:auto;margin:0 auto;text-align:center;}
 .repass_header{font-size:16px;}
+
+.error-code {
+    text-align:center;
+    margin-bottom:15px;
+    color:#ff6600;
+}
 
 /*global*/
 .en .hide-with-en,
