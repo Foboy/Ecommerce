@@ -2039,7 +2039,7 @@ a:hover, a:focus {
     .site-footer .col-links {
         float: left;
         _display: inline;
-        width: 165px;
+        width: 125px;
         margin: 0 0 0 30px;
         border-right: 1px solid #dfdfdf;
     }
@@ -2068,7 +2068,7 @@ a:hover, a:focus {
 
     .site-footer .col-contact {
         float: left;
-        width: 270px;
+        width: 200px;
         text-align: center;
     }
 
@@ -3073,4 +3073,10 @@ a:hover, a:focus {
 
 .root-nav-section-list-home {
     z-index:-1 !important;
+}
+.two-code {
+    margin:0 auto 0 20px;
+    text-align:center;
+    vertical-align:middle;
+    float:left;
 }
