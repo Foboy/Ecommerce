@@ -22,6 +22,9 @@ using Nop.Web.Extensions;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Security;
 using Nop.Web.Models.Order;
+using Nop.Web.Models.Customer;
+using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Forums;
 
 namespace Nop.Web.Controllers
 {
@@ -50,6 +53,10 @@ namespace Nop.Web.Controllers
         private readonly PdfSettings _pdfSettings;
         private readonly ShippingSettings _shippingSettings;
         private readonly AddressSettings _addressSettings;
+        private readonly CustomerSettings _customerSettings;
+        private readonly RewardPointsSettings _rewardPointsSettings;
+        private readonly ForumSettings _forumSettings;
+        private readonly IStoreContext _storeContext;
 
         #endregion
 
@@ -65,7 +72,11 @@ namespace Nop.Web.Controllers
             IWebHelper webHelper, 
             CatalogSettings catalogSettings, OrderSettings orderSettings,
             TaxSettings taxSettings, PdfSettings pdfSettings,
-            ShippingSettings shippingSettings, AddressSettings addressSettings)
+            ShippingSettings shippingSettings, AddressSettings addressSettings,
+            CustomerSettings customerSettings,
+            RewardPointsSettings rewardPointsSettings,
+            ForumSettings forumSettings,
+            IStoreContext storeContext)
         {
             this._orderService = orderService;
             this._shipmentService = shipmentService;
@@ -88,6 +99,10 @@ namespace Nop.Web.Controllers
             this._pdfSettings = pdfSettings;
             this._shippingSettings = shippingSettings;
             this._addressSettings = addressSettings;
+            this._customerSettings = customerSettings;
+            this._rewardPointsSettings = rewardPointsSettings;
+            this._forumSettings = forumSettings;
+            this._storeContext = storeContext;
         }
 
         #endregion
@@ -419,7 +434,24 @@ namespace Nop.Web.Controllers
 
             var model = PrepareOrderDetailsModel(order);
 
+            model.NavigationModel = GetCustomerNavigationModel(_workContext.CurrentCustomer);
+            model.NavigationModel.SelectedTab = CustomerNavigationEnum.Orders;
+
             return View(model);
+        }
+
+        [NonAction]
+        protected CustomerNavigationModel GetCustomerNavigationModel(Customer customer)
+        {
+            var model = new CustomerNavigationModel();
+            model.HideAvatar = !_customerSettings.AllowCustomersToUploadAvatars;
+            model.HideRewardPoints = !_rewardPointsSettings.Enabled;
+            model.HideForumSubscriptions = !_forumSettings.ForumsEnabled || !_forumSettings.AllowCustomersToManageSubscriptions;
+            model.HideReturnRequests = !_orderSettings.ReturnRequestsEnabled ||
+                _orderService.SearchReturnRequests(_storeContext.CurrentStore.Id, customer.Id, 0, null, 0, 1).Count == 0;
+            model.HideDownloadableProducts = _customerSettings.HideDownloadableProductsTab;
+            model.HideBackInStockSubscriptions = _customerSettings.HideBackInStockSubscriptionsTab;
+            return model;
         }
 
         [NopHttpsRequirement(SslRequirement.Yes)]

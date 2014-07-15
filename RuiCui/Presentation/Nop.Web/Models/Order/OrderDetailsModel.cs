@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Common;
+using Nop.Web.Models.Customer;
 
 namespace Nop.Web.Models.Order
 {
@@ -64,6 +65,8 @@ namespace Nop.Web.Models.Order
         public IList<OrderItemModel> Items { get; set; }
         
         public IList<OrderNote> OrderNotes { get; set; }
+
+        public CustomerNavigationModel NavigationModel { get; set; }
 
 		#region Nested Classes
 
