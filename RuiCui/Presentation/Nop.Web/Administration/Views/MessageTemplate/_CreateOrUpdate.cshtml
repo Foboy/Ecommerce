@@ -48,7 +48,7 @@
 @helper TabInfo()
 {
     <table class="adminContent">
-        <tr>
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.AllowedTokens):
             </td>
@@ -56,7 +56,7 @@
                 @Html.DisplayFor(model => model.AllowedTokens)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Name):
             </td>
@@ -65,7 +65,7 @@
                 @Html.HiddenFor(model => model.Name)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.IsActive):
             </td>
@@ -79,20 +79,20 @@
     <table class="adminContent">
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.BccEmailAddresses):
-            </td>
-            <td class="adminData">
-                @Html.EditorFor(model => model.BccEmailAddresses)
-                @Html.ValidationMessageFor(model => model.BccEmailAddresses)
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
                 @Html.NopLabelFor(model => model.Subject):
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.Subject)
                 @Html.ValidationMessageFor(model => model.Subject)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                抄送:
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.BccEmailAddresses)
+                @Html.ValidationMessageFor(model => model.BccEmailAddresses)
             </td>
         </tr>
         <tr>
@@ -141,7 +141,7 @@
 
     </script>
     <table class="adminContent">
-        <tr>
+        <tr >
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.LimitedToStores):
             </td>

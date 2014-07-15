@@ -49,5 +49,7 @@ namespace Nop.Admin.Models.Catalog
         public IList<SelectListItem> AvailableWarehouses { get; set; }
         public IList<SelectListItem> AvailableVendors { get; set; }
         public IList<SelectListItem> AvailableProductTypes { get; set; }
+
+      
     }
 }

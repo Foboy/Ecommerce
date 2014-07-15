@@ -1,10 +1,10 @@
 /*.loading-img{display: none!important;}*/
-html,body,ul,li,p,h1,div,a,img{padding: 0; margin: 0;}
+html,body,ul,li,p,h1,div,a,img{padding: 0; margin: 0; list-style:none;}
 html,body{background:#f9f9f9; line-height: 1.5; color: #333; font-size: 12px;}
 body,input{font-family: "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;}
 a,label, :focus{outline:0 none;}
 a,img{border:0 none;}
-a{text-decoration: none;}
+a{text-decoration: none; cursor:pointer; }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   a{background-color:transparent;}
 }
@@ -106,6 +106,14 @@ visibility: hidden !important;
 }
 .ta-qq,.ta-weibo,.ta-alipay,.ta-facebook,.checkbox,.checked,.error-ico{background-image: url(../../Content/Images/sprite_all2.png); 
     _background-image: url(../../Content/Images/sprite_all2.png)}
+
+.error-code {
+    text-align:center;
+    margin-bottom:15px;
+    color:#ff6600;
+    list-style:none;
+}
+
 /* 第三方存在的时候支付宝不出现 */
 .has_third .ta-alipay{display: none;}
 .en .ng-cookie-area{width: 110px;}

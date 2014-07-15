@@ -32,6 +32,11 @@ namespace Nop.Web.Infrastructure
              new { controller = "Catalog", action = "SearchVipProduct" },
              new[] { "Nop.Web.Controllers" });
 
+            routes.MapLocalizedRoute("JingPingProduct",
+ "精品典藏",
+ new { controller = "Catalog", action = "SearchJingPingProduct" },
+ new[] { "Nop.Web.Controllers" });
+
             routes.MapLocalizedRoute("SoldProduct",
                                "已售欣赏",
                                new { controller = "Catalog", action = "SearchSoldProduct" },

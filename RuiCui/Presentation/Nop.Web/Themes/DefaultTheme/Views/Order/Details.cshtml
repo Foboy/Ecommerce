@@ -3,7 +3,7 @@
 @{
     if (!Model.PrintMode)
     {
-        Layout = "~/Views/Shared/_ColumnsOne.cshtml";
+        Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
     }
     else
     {
@@ -11,6 +11,10 @@
     }
     //title
     Html.AddTitleParts(T("PageTitle.OrderDetails").Text);
+}
+@section left
+{
+    @Html.Partial("../Customer/MyAccountNavigation", Model.NavigationModel, new ViewDataDictionary())
 }
 @if (Model.PrintMode)
 {

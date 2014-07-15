@@ -29,5 +29,9 @@ namespace Nop.Web.Models.News
 
         public IList<NewsCommentModel> Comments { get; set; }
         public AddNewsCommentModel AddNewComment { get; set; }
+
+        public string PreSeName { get; set; }
+        public string NextSeName { get; set; }
+     
     }
 }

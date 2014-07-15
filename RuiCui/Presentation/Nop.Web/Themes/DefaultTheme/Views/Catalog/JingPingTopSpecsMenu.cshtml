@@ -11,23 +11,22 @@
 <ul id="J_vip_nav" class="vip-nav-ul">
     @if (Model.Categories.Count > 0)
     {
-        int a=0;
+        int a = 0;
         foreach (var category in Model.Categories)
         {
             var specModel = category.SpecificationFilter;
             var priceModel = category.PriceRangeFilter;
             var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
-
-            if (a == 0)
+             if (a == 0)
             {
             <li class="current">
                 @*顶部翡翠-水墨玉*@
-                <a href="@Url.RouteUrl("VipProduct", new { SeName = category.SeName })">
+                <a href="@Url.RouteUrl("JingPingProduct", new { SeName = category.SeName })">
                广场
                 </a>
+
             </li>
-          }
-        
+    }
             @*类*@
             if (specModel.NotFilteredItems.Count > 0)
             {
@@ -53,7 +52,9 @@
                 }
             }
             a++;
+
         }
+        
     }
 </ul>
     @*<li class="current"><a>广场</a></li>

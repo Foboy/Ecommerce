@@ -19,84 +19,246 @@
                     @T("Admin.Dashboard.StoreStatistics")
                 </div>
                 <div class="options">
-                    <a href="@Url.Action("EchartDashBord")" class="btn btn-sm btn-primary btn-flat ">图标统计模式</a>
+                    <a href="#" id="listshow" class="btn btn-sm btn-primary btn-flat ">列表统计模式</a>
+                    <a href="#" id="chartshow" class="btn btn-sm btn-primary btn-flat ">图表统计模式</a>
                 </div>
             </div>
-            @if (!Model.IsLoggedInAsVendor && canManageOrders)
-            {
-                <table class="stats">
-                    <tbody>
-                        <tr>
-                            <td class="orderaveragereport">
-                                <div class="statisticsTitle">
-                                    @T("Admin.SalesReport.Average")
-                                </div>
-                                @Html.Action("OrderAverageReport", "Order")
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            }
-            @if (!Model.IsLoggedInAsVendor)
-            {
-                if (canManageOrders || canManageCustomers || canManageProducts)
+            <div id="list" style="display:none">
+                @if (!Model.IsLoggedInAsVendor && canManageOrders)
                 {
                     <table class="stats">
                         <tbody>
                             <tr>
-                                @if (canManageOrders)
-                                {
-                                    <td class="orderstatistics">
-                                        <div class="statisticsTitle">
-                                            @T("Admin.SalesReport.Incomplete")
-                                        </div>
-                                        @Html.Action("OrderIncompleteReport", "Order")
-                                    </td>
-                                }
-                                @if (canManageCustomers)
-                                {
-                                    <td class="customerstatistics">
-                                        <div class="statisticsTitle">
-                                            @T("Admin.Customers.Reports.RegisteredCustomers")
-                                        </div>
-                                        @Html.Action("ReportRegisteredCustomers", "Customer")
-                                    </td>
-                                }
-                                @if (canManageProducts)
-                                {
-                                    <td class="search-term-statistics">
-                                        <div class="statisticsTitle">
-                                            @T("Admin.SearchTermReport")
-                                        </div>
-                                        @Html.Action("PopularSearchTermsReport", "Common")
-                                    </td>
-                                }
+                                <td class="orderaveragereport">
+                                    <div class="statisticsTitle">
+                                        @T("Admin.SalesReport.Average")
+                                    </div>
+                                    @Html.Action("OrderAverageReport", "Order")
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 }
-            }
-            @if (canManageOrders)
-            {
-                <table class="stats">
-                    <tr>
-                        <td class="bestsellers">
-                            <div class="statisticsTitle">
-                                @T("Admin.SalesReport.BestSellers.ByQuantity")
-                            </div>
-                            @Html.Action("BestsellersBriefReportByQuantity", "Order")
-                        </td>
-                        <td class="bestsellers">
-                            <div class="statisticsTitle">
-                                @T("Admin.SalesReport.BestSellers.ByAmount")
-                            </div>
-                            @Html.Action("BestsellersBriefReportByAmount", "Order")
-                        </td>
-                    </tr>
-                </table>
-            }
+                @if (!Model.IsLoggedInAsVendor)
+                {
+                    if (canManageOrders || canManageCustomers || canManageProducts)
+                    {
+                        <table class="stats">
+                            <tbody>
+                                <tr>
+                                    @if (canManageOrders)
+                                    {
+                                        <td class="orderstatistics">
+                                            <div class="statisticsTitle">
+                                                @T("Admin.SalesReport.Incomplete")
+                                            </div>
+                                            @Html.Action("OrderIncompleteReport", "Order")
+                                        </td>
+                                    }
+                                    @if (canManageCustomers)
+                                    {
+                                        <td class="customerstatistics">
+                                            <div class="statisticsTitle">
+                                                @T("Admin.Customers.Reports.RegisteredCustomers")
+                                            </div>
+                                            @Html.Action("ReportRegisteredCustomers", "Customer")
+                                        </td>
+                                    }
+                                    @if (canManageProducts)
+                                    {
+                                        <td class="search-term-statistics">
+                                            <div class="statisticsTitle">
+                                                @T("Admin.SearchTermReport")
+                                            </div>
+                                            @Html.Action("PopularSearchTermsReport", "Common")
+                                        </td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    }
+                }
+                @if (canManageOrders)
+                {
+                    <table class="stats">
+                        <tr>
+                            <td class="bestsellers">
+                                <div class="statisticsTitle">
+                                    @T("Admin.SalesReport.BestSellers.ByQuantity")
+                                </div>
+                                @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                            </td>
+                            <td class="bestsellers">
+                                <div class="statisticsTitle">
+                                    @T("Admin.SalesReport.BestSellers.ByAmount")
+                                </div>
+                                @Html.Action("BestsellersBriefReportByAmount", "Order")
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+            <div id="chart" >
+                <div id="OrderTotal" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+                <div >
+                    <div id="UnfinishedOrders" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+                    <div id="mainMap" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+                </div>
+            </div>
         </td>
-
     </tr>
     @Html.Widget("admin_dashboard_bottom")
 </table>
+<script type="text/javascript">
+    // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
+    // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+
+    $(document).ready(function () {
+        var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
+        $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order"))", {}, function (data, status) {
+            if (status = "success") {
+                var Datas = data.Data;
+                var BindDatas = [];
+                for (var i = 0; i < Datas.length; i++) {
+                    var data = [Datas[i].SumTodayOrders, Datas[i].SumThisWeekOrders, Datas[i].SumThisMonthOrders, Datas[i].SumThisYearOrders, Datas[i].SumAllTimeOrders];
+                    BindDatas.push(data);
+                }
+                OrderTotalChart.setOption({
+                    title: {
+                        text: '订单汇总',
+                        x: 'left'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['待处理', '处理中', '已完成', '已取消'],
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: { show: true },
+                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['今日', '本周', '本月', '今年', '全部']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '待处理',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[0]
+                        },
+                        {
+                            name: '处理中',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[1]
+                        },
+                        {
+                            name: '已完成',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[2]
+                        },
+                        {
+                            name: '已取消',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[3]
+                        }
+                    ]
+                });
+            }
+        })
+        var UnfinishedOrdersChart = echarts.init(document.getElementById('UnfinishedOrders'));
+       // $.post();
+        UnfinishedOrdersChart.setOption({
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        { value: 335, name: '直接访问' },
+                        { value: 310, name: '邮件营销' },
+                        { value: 234, name: '联盟广告' },
+                        { value: 135, name: '视频广告' },
+                        { value: 1548, name: '搜索引擎' }
+                    ]
+                }
+            ]
+        });
+        // --- 地图 ---
+        var myChart2 = echarts.init(document.getElementById('mainMap'));
+        myChart2.setOption({
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}'
+            },
+            series: [
+                {
+                    name: '中国',
+                    type: 'map',
+                    mapType: 'china',
+                    selectedMode: 'multiple',
+                    itemStyle: {
+                        normal: { label: { show: true } },
+                        emphasis: { label: { show: true } }
+                    },
+                    data: [
+                        { name: '广东', selected: true }
+                    ]
+                }
+            ]
+        });
+        $("#listshow").click(function () {
+            $("#list").show();
+            $("#chart").hide();
+        });
+        $("#chartshow").click(function () {
+            $("#chart").show(function () {
+            });
+            $("#list").hide();
+        })
+    })
+</script>
+

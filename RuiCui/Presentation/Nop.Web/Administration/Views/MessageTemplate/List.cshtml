@@ -6,7 +6,7 @@
 <div class="section-header">
     <div class="title">
         <img src="@Url.Content("~/Administration/Content/images/ico-content.png")" alt="" />
-        @T("Admin.ContentManagement.MessageTemplates")
+        邮件模版列表
     </div>
     <div class="options">
     </div>
@@ -71,10 +71,12 @@
                             mode: "inline"
                         },
                         scrollable: false,
-                        columns: [{
+                        columns: [
+                            @*{
                             field: "Name",
                             title: "@T("Admin.ContentManagement.MessageTemplates.Fields.Name")"
-                        }, {
+                        },*@
+                        {
                             field: "Subject",
                             title: "@T("Admin.ContentManagement.MessageTemplates.Fields.Subject")"
                         }, {

@@ -138,10 +138,23 @@
             </div>
             <div class="news-page clearfix">
                 <div class="up-page">
-                    <a>上一页</a>
+                    @if (string.IsNullOrEmpty(Model.PreSeName))
+                    {
+                        <a href="javascript:void(0)">上一页</a> 
+                    }else
+                    { 
+                    <a href="@Url.RouteUrl("NewsItem", new { SeName = Model.PreSeName })">上一页</a>
+                    }
                 </div>
                 <div class="down-page">
-                    <a>下一页</a>
+                    @if (string.IsNullOrEmpty(Model.NextSeName))
+                    {
+                        <a href="javascript:void(0)">下一页</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl("NewsItem", new { SeName = Model.NextSeName })">下一页</a>
+                    }
                 </div>
             </div>
         </div>

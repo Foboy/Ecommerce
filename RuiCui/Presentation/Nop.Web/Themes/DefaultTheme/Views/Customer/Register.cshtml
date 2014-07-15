@@ -303,8 +303,10 @@
     <div class="suc_content reg-account nojsp">
         <div class="suc_kuang">
             <div class="hei_513">
-                <h4 class="h4_suc textM">注册帐户</h4>
-                <p class="suc_p"></p>
+                <div class="reg-title clearfix">
+                    <h4 class="h4_suc textM f-left">注册帐户</h4>
+                    <a class="log-title f-right">立即登录</a>
+                </div>
                 <div class="radio_quyu">
                     @*<input type="radio" name="registerMethod" class="Mradio" id="tab2" clickfor="#regByPhone" checked="checked" />
                         <label for="tab2" hidefocus="true">用手机号码注册</label>
@@ -318,7 +320,7 @@
 
                         <div class="page-body">
                             <div class="message-error">
-                                @Html.ValidationSummary(true)
+                                @Html.ValidationSummary(true, "", new { @class = "error-code " })
                             </div>
                             @Html.Partial("_ExternalAuthentication.AssociateMessage")
                             <dl class="login-dl clearfix">

@@ -100,7 +100,15 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.ProductTags")]
         public string ProductTags { get; set; }
 
+        /// <summary>
+        /// 商品是不是vip商品标示
+        /// </summary>
+        public bool IsVipProduct { get; set; }
 
+        /// <summary>
+        /// 商品是不是精品典藏商品
+        /// </summary>
+        public bool IsBoutique { get; set; }
 
 
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.Sku")]
@@ -874,5 +882,7 @@ namespace Nop.Admin.Models.Catalog
         [NopResourceDisplayName("Admin.Catalog.Products.Fields.SeName")]
         [AllowHtml]
         public string SeName { get; set; }
+
+        
     }
 }
