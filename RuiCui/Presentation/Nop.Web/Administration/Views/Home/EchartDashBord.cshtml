@@ -9,8 +9,12 @@
     <!--Step:2 Prepare a dom for ECharts which (must) has size (width & hight)-->
     <!--Step:2 为ECharts准备一个具备大小（宽高）的Dom-->
     <div id="OrderTotal" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
-    <div id="UnfinishedOrders" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
-    <div id="mainMap" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+    <div class="row col-sm-12">
+        <div id="UnfinishedOrders" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+        <div id="mainMap" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+    </div>
+  
+    
 </div>
 <!--Step:1 Import echarts-plain.js or echarts-plain-map.js-->
 <!--Step:1 引入echarts-plain.js或者 echarts-plain-map.js-->
@@ -40,7 +44,6 @@
                         show: true,
                         feature: {
                             mark: { show: true },
-                            dataView: { show: true, readOnly: false },
                             magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
                             restore: { show: true },
                             saveAsImage: { show: true }
@@ -92,50 +95,43 @@
         var UnfinishedOrdersChart = echarts.init(document.getElementById('UnfinishedOrders'));
 
         UnfinishedOrdersChart.setOption({
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x: 'center'
+            },
             tooltip: {
-                trigger: 'axis'
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                data: ['待付款的订单总额', '待发货的订单总额', '待处理的订单总额']
+                orient: 'vertical',
+                x: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
             },
             toolbox: {
                 show: true,
                 feature: {
                     mark: { show: true },
-                    dataView: { show: true, readOnly: false },
-                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
                     restore: { show: true },
                     saveAsImage: { show: true }
                 }
             },
             calculable: true,
-            xAxis: [
-                {
-                    type: 'category',
-                    data: ['']
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value'
-                }
-            ],
             series: [
                 {
-                    name: '待付款的订单',
-                    type: 'bar',
-                    data: [212798]
-                },
-                 {
-                     name: '待发货的订单总数',
-                     type: 'bar',
-                     data: [218530]
-                 },
-                  {
-                      name: '待处理的订单',
-                      type: 'bar',
-                      data: [212798]
-                  }
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        { value: 335, name: '直接访问' },
+                        { value: 310, name: '邮件营销' },
+                        { value: 234, name: '联盟广告' },
+                        { value: 135, name: '视频广告' },
+                        { value: 1548, name: '搜索引擎' }
+                    ]
+                }
             ]
         });
         // --- 地图 ---
