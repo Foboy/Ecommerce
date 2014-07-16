@@ -119,6 +119,7 @@
         <div class="uc-order-list-box">
             @if (Model.Orders.Count > 0)
             {
+                var itemFirst = 0;
                 foreach (var order in Model.Orders)
                 {
                     @*<div class="section order-item">
@@ -145,7 +146,7 @@
                         </div>
                     </div>*@
 
-                    <ul class="uc-order-detail-list ul-order-bottom {">
+                    <ul class="uc-order-detail-list">
                         <li class="uc-order-detail-item">
                             <table class="order-detail-table">
                                 <thead>
@@ -154,8 +155,8 @@
                                             <div class="column-content">
                                                 @order.CreatedOn.ToString()
                                                 <span class="sep">|</span>
-                                                订单号：<a href="">@(order.CreatedOn.Ticks.ToString() + order.Id.ToString())</a>
-                                                <span class="order-status float-right">@order.OrderStatus</span>
+                                                订单号：<a href="@Url.RouteUrl("OrderDetails", new { orderId = order.Id })">@(order.CreatedOn.Ticks.ToString() + order.Id.ToString())</a>
+                                                <span class="order-status float-right">@T("Order.OrderStatus") ： @order.OrderStatus</span>
                                             </div>
                                         </th>
                                     </tr>
@@ -164,37 +165,38 @@
                                     <tr>
                                         <td class="column-detail column-l">
                                             <ul class="order-goods-list">
-@foreach (var item in order.Items)
-{
-    <li class="first">
-        <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">
-            <img class="goods-thumb" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title">
-        </a>
-        <a class="goods-name" href="" target="_blank">@item.ProductName</a>
-        <p>
-            @if (!String.IsNullOrEmpty(item.AttributeInfo))
-            {
-                <span>
-                    @Html.Raw(item.AttributeInfo)
-                </span>
-            }
-        </p>
-        <span class="goods-price">@item.UnitPrice x @item.Quantity</span>
-        <span class="goods-link"> </span>
-    </li>
-}
+                                                @foreach (var item in order.Items)
+                                                {
+                                                    <li class="@(itemFirst++<1?"first":"")">
+                                                        <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">
+                                                            <img class="goods-thumb" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title">
+                                                        </a>
+                                                        <a class="goods-name" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">@item.ProductName</a>
+                                                        <p>
+                                                            @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                                            {
+                                                                <span>
+                                                                    @Html.Raw(item.AttributeInfo)
+                                                                </span>
+                                                            }
+                                                        </p>
+                                                        <span class="goods-price">@item.UnitPrice x @item.Quantity</span>
+                                                        <span class="goods-link"> </span>
+                                                    </li>
+                                                }
                                             </ul>
                                         </td>
                                         <td class="column-price">
                                             <div class="order-info order-price">
                                                 @order.OrderTotal
-                                                <br>
-                                                在线支付
                                             </div>
                                         </td>
                                         <td class="column-action column-r">
-                                            <div class="order-info order-action">
-                                               
+                                            <div class="order-info order-action"> 
+                                                <a href="@Url.RouteUrl("OrderDetails", new { orderId = order.Id })">
+                                                    订单详情
+                                                    <i class="iconfont font12">&#xf02af;</i>
+                                                </a> 
                                                 <a class="btn btn-primary btn-small" target="_blank" href="">立即支付</a>
                                             </div>
                                         </td>

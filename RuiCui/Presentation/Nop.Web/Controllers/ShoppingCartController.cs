@@ -1476,6 +1476,153 @@ namespace Nop.Web.Controllers
             #endregion
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult AddProductToCartPackage_Details(int productId, int shoppingCartTypeId, FormCollection form)
+        {
+            Customer customer = _customerService.GetPackageCustomer();
+            var product = _productService.GetProductById(productId);
+            if (product == null)
+            {
+                return Json(new
+                {
+                    redirect = Url.RouteUrl("HomePage"),
+                });
+            }
+
+            //we can add only simple products
+            if (product.ProductType != ProductType.SimpleProduct)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Only simple products could be added to the cart"
+                });
+            }
+
+            #region Update existing shopping cart item?
+            int updatecartitemid = 0;
+            foreach (string formKey in form.AllKeys)
+                if (formKey.Equals(string.Format("addtocart_{0}.UpdatedShoppingCartItemId", productId), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    int.TryParse(form[formKey], out updatecartitemid);
+                    break;
+                }
+            ShoppingCartItem updatecartitem = null;
+            if (_shoppingCartSettings.AllowCartItemEditing && updatecartitemid > 0)
+            {
+                var cart = customer.ShoppingCartItems
+                    .Where(x => x.ShoppingCartType == ShoppingCartType.Package)
+                    .Where(x => x.StoreId == _storeContext.CurrentStore.Id)
+                    .ToList();
+                updatecartitem = cart.FirstOrDefault(x => x.Id == updatecartitemid);
+                //not found?
+                if (updatecartitem == null)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "No shopping cart item found to update"
+                    });
+                }
+                //is it this product?
+                if (product.Id != updatecartitem.ProductId)
+                {
+                    return Json(new
+                    {
+                        success = false,
+                        message = "This product does not match a passed shopping cart item identifier"
+                    });
+                }
+            }
+            #endregion
+
+            #region Customer entered price
+            decimal customerEnteredPriceConverted = decimal.Zero;
+            if (product.CustomerEntersPrice)
+            {
+                foreach (string formKey in form.AllKeys)
+                {
+                    if (formKey.Equals(string.Format("addtocart_{0}.CustomerEnteredPrice", productId), StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        decimal customerEnteredPrice = decimal.Zero;
+                        if (decimal.TryParse(form[formKey], out customerEnteredPrice))
+                            customerEnteredPriceConverted = _currencyService.ConvertToPrimaryStoreCurrency(customerEnteredPrice, _workContext.WorkingCurrency);
+                        break;
+                    }
+                }
+            }
+            #endregion
+
+            #region Quantity
+
+            int quantity = 1;
+            foreach (string formKey in form.AllKeys)
+                if (formKey.Equals(string.Format("addtocart_{0}.EnteredQuantity", productId), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    int.TryParse(form[formKey], out quantity);
+                    break;
+                }
+
+            #endregion
+
+            string attributes = ParseProductAttributes(product, form);
+
+            //save item
+            var addToCartWarnings = new List<string>();
+            var cartType = (ShoppingCartType)shoppingCartTypeId;
+            if (updatecartitem == null)
+            {
+                //add to the cart
+                addToCartWarnings.AddRange(_shoppingCartService.AddToCart(customer,
+                    product, cartType, _storeContext.CurrentStore.Id,
+                    attributes, customerEnteredPriceConverted, quantity, true));
+            }
+            else
+            {
+                var cart = customer.ShoppingCartItems
+                    .Where(x => x.ShoppingCartType == ShoppingCartType.Package)
+                    .Where(x => x.StoreId == _storeContext.CurrentStore.Id)
+                    .ToList();
+                var otherCartItemWithSameParameters = _shoppingCartService.FindShoppingCartItemInTheCart(
+                    cart, cartType, product, attributes, customerEnteredPriceConverted);
+                if (otherCartItemWithSameParameters != null &&
+                    otherCartItemWithSameParameters.Id == updatecartitem.Id)
+                {
+                    //ensure it's other shopping cart cart item
+                    otherCartItemWithSameParameters = null;
+                }
+                //update existing item
+                addToCartWarnings.AddRange(_shoppingCartService.UpdateShoppingCartItem(customer,
+                    updatecartitem.Id, attributes, customerEnteredPriceConverted, quantity, true));
+                if (otherCartItemWithSameParameters != null && addToCartWarnings.Count == 0)
+                {
+                    //delete the same shopping cart item
+                    _shoppingCartService.DeleteShoppingCartItem(otherCartItemWithSameParameters);
+                }
+            }
+
+            #region Return result
+
+            if (addToCartWarnings.Count > 0)
+            {
+                //cannot be added to the cart/wishlist
+                //let's display warnings
+                return Json(new
+                {
+                    success = false,
+                    message = addToCartWarnings.ToArray()
+                });
+            }
+            return Json(new
+            {
+                success = true,
+                message = "加入套餐商品列表成功"
+            });
+
+            #endregion
+        }
+
         //handle product attribute selection event. this way we return new price, overriden gtin/sku/mpn
         //currently we use this method on the product details pages
         [HttpPost]

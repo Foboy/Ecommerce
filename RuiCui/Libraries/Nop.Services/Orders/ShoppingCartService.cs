@@ -152,6 +152,19 @@ namespace Nop.Services.Orders
             _eventPublisher.EntityDeleted(shoppingCartItem);
         }
 
+        public virtual void DeletePackageShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        {
+            if (shoppingCartItem == null)
+                throw new ArgumentNullException("shoppingCartItem");
+
+            shoppingCartItem.Quantity = 0;
+            //delete item
+            _sciRepository.Update(shoppingCartItem);
+
+            //event notification
+            _eventPublisher.EntityUpdated(shoppingCartItem);
+        }
+
         /// <summary>
         /// Deletes expired shopping cart items
         /// </summary>
@@ -1127,6 +1140,26 @@ namespace Nop.Services.Orders
                 _customerService.UpdateCustomer(toCustomer);
                  
             }
+        }
+
+        public virtual IList<ShoppingCartItem> GetShoppingCartItemByIds(int[] ids)
+        {
+            if (ids == null || ids.Length == 0)
+                return new List<ShoppingCartItem>();
+
+            var query = from p in _sciRepository.Table
+                        where ids.Contains(p.Id)
+                        select p;
+            var items = query.ToList();
+            //sort by passed identifiers
+            var sortedItems = new List<ShoppingCartItem>();
+            foreach (int id in ids)
+            {
+                var item = items.Find(x => x.Id == id);
+                if (item != null)
+                    sortedItems.Add(item);
+            }
+            return sortedItems;
         }
 
         #endregion

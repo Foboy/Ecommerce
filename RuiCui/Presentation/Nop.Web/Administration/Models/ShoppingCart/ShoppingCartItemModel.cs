@@ -21,5 +21,9 @@ namespace Nop.Admin.Models.ShoppingCart
         public string Total { get; set; }
         [NopResourceDisplayName("Admin.CurrentCarts.UpdatedOn")]
         public DateTime UpdatedOn { get; set; }
+
+        public string PictureThumbnailUrl { get; set; }
+        public string AttributeInfo { get; set; }
+
     }
 }

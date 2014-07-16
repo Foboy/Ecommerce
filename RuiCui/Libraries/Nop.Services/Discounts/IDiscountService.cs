@@ -126,5 +126,14 @@ namespace Nop.Services.Discounts
         /// <param name="discountUsageHistory">Discount usage history record</param>
         void DeleteDiscountUsageHistory(DiscountUsageHistory discountUsageHistory);
 
+
+        IList<DiscountPackageProducts> GetPackageProductsByDiscountId(int discountId);
+
+        void InsertPackageProduct(DiscountPackageProducts packageProduct);
+
+        DiscountPackageProducts GetDiscountPackageProductById(int id);
+
+        void DeleteDiscountPackageProduct(DiscountPackageProducts packageProduct);
+
     }
 }

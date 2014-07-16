@@ -6,32 +6,35 @@
     //title
     Html.AddTitleParts(T("PageTitle.Checkout").Text);
 }
-<div class="page checkout-page">
+@{
+    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/shopcart.css");
+}
+<div class="order-success row-margin">
     @if (!Model.OnePageCheckoutEnabled)
     {
         @Html.Action("CheckoutProgress", "Checkout", new { step = CheckoutProgressStep.Complete })
     }
-    <div class="page-title">
-        <h1>@T("Checkout.ThankYou")</h1>
+
+    <div class="order-icon">
+        @*<h1>@T("Checkout.ThankYou")</h1>*@
+        <i class="iconfont font90 sucesscolor order-icon-mar">&#xf00b2;</i>
     </div>
-    <div class="page-body checkout-data">
-        @Html.Widget("checkout_completed_top")
-        <div class="section order-completed">
-            <div class="title">
-                <strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>
-            </div>
-            <ul class="details">
-                <li>
-                    @T("Checkout.OrderNumber"): @Model.OrderId
-                </li>
-                <li>
-                    <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">@T("Checkout.PlacedOrderDetails")</a>
-                </li>
-            </ul>
-            <div class="buttons">
-                <input type="button" value="@T("Checkout.ThankYou.Continue")" class="button-2 order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
-            </div>
-        </div>
-        @Html.Widget("checkout_completed_bottom")
+    @Html.Widget("checkout_completed_top")
+    <div class="msg">
+        @*<strong>@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</strong>*@
+        <h3>您的订单已提交成功！</h3>
+        <p class="post-date">成功付款后，7个工作日内将为您发货</p>
     </div>
+    <ul class="details">
+        <li>
+            @T("Checkout.OrderNumber"): @Model.OrderId
+        </li>
+        <li>
+            <a href="@Url.RouteUrl("OrderDetails", new { orderID = Model.OrderId })">查看订单详情</a>
+        </li>
+    </ul>
+    <div class="buttons">
+        <input type="button" value="@T("Checkout.ThankYou.Continue")" class="btn btn-primary btn-small" onclick="setLocation('@Url.RouteUrl("HomePage")')" />
+    </div>
+    @Html.Widget("checkout_completed_bottom")
 </div>

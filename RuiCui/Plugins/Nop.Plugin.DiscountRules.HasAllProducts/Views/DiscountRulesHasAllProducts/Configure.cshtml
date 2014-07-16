@@ -5,9 +5,7 @@
 @using Nop.Web.Framework;
 
     <script type="text/javascript">
-        alert(1);
         $(document).ready(function () {
-            alert(2);
             $('#saveHasAllProductsrequirement@(Model.RequirementId)').click(function () {
                 var productIds = $("#@Html.FieldIdFor(model => model.Products)").val();
                 var discountId = @Model.DiscountId;

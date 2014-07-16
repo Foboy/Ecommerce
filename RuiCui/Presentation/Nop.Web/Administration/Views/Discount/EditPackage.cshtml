@@ -1,0 +1,21 @@
+﻿@model DiscountModel
+@{
+    //page title
+    ViewBag.Title = "编辑套餐";
+}
+@using (Html.BeginForm())
+{
+    <div class="section-header">
+        <div class="title">
+        <img src="@Url.Content("~/Administration/Content/images/ico-promotions.png")" alt="" />
+            套餐编辑 - @Model.Name @Html.ActionLink("(返回套餐列表)", "PackageList")
+        </div>
+        <div class="options">
+            <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
+            <input type="submit" name="save-continue" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.SaveContinue")" />
+            <span id="discount-delete" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Common.Delete")</span>
+        </div>
+    </div>
+    @Html.Partial("_CreateOrUpdatePackage", Model)
+}
+@Html.DeleteConfirmation("discount-delete")

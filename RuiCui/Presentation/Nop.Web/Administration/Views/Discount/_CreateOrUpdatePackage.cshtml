@@ -13,10 +13,7 @@
 <div id="discount-edit">
     <ul>
         <li @Html.RenderSelectedTabIndex(0, GetSelectedTabIndex())>
-            @T("Admin.Promotions.Discounts.Info")
-        </li>
-        <li @Html.RenderSelectedTabIndex(1, GetSelectedTabIndex())>
-            @T("Admin.Promotions.Discounts.Requirements")
+            套餐信息
         </li>
         @if (Model.Id > 0)
         {
@@ -27,9 +24,6 @@
     </ul>
     <div>
         @TabInfo()
-    </div>
-    <div>
-        @TabRequirements()
     </div>
     @if (Model.Id > 0)
     {
@@ -146,12 +140,12 @@
                 @Html.ValidationMessageFor(model => model.Name)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.DiscountTypeId):
             </td>
             <td class="adminData">
-                @Html.DropDownListFor(model => model.DiscountTypeId, ((DiscountType)Model.DiscountTypeId).ToSelectList(valuesToExclude:new int[1]{((int)DiscountType.AssignedToPackage)}))
+                @Html.DropDownListFor(model => model.DiscountTypeId, ((DiscountType)Model.DiscountTypeId).ToSelectList())
                 @Html.ValidationMessageFor(model => model.DiscountTypeId)
             </td>
         </tr>
@@ -203,7 +197,7 @@
                 }
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.UsePercentage):
             </td>
@@ -214,14 +208,14 @@
         </tr>
         <tr id="pnlDiscountAmount">
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.DiscountAmount):
+                <label for="DiscountAmount" title="套餐优惠金额">套餐优惠金额</label>:
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.DiscountAmount) [@Model.PrimaryStoreCurrencyCode]
                 @Html.ValidationMessageFor(model => model.DiscountAmount)
             </td>
         </tr>
-        <tr id="pnlDiscountPercentage">
+        <tr id="pnlDiscountPercentage" style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.DiscountPercentage):
             </td>
@@ -248,7 +242,7 @@
                 @Html.ValidationMessageFor(model => model.EndDateUtc)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.RequiresCouponCode):
             </td>
@@ -257,7 +251,7 @@
                 @Html.ValidationMessageFor(model => model.RequiresCouponCode)
             </td>
         </tr>
-        <tr id="pnlCouponCode">
+        <tr id="pnlCouponCode" style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.CouponCode):
             </td>
@@ -268,7 +262,7 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.DiscountLimitationId):
+                <label for="DiscountAmount" title="套餐限制">套餐限制</label>:
             </td>
             <td class="adminData">
                 @Html.DropDownListFor(model => model.DiscountLimitationId, ((DiscountLimitationType)Model.DiscountLimitationId).ToSelectList())
@@ -285,191 +279,116 @@
             </td>
         </tr>
     </table>
-}
-@helper TabRequirements()
-    {
+
         if (Model.Id > 0)
         {
-        
-    <script type="text/javascript">
-            
-            $(document).ready(function () {
-            
-                $("#@Html.FieldIdFor(model => model.AddDiscountRequirement)").change(loadNewRequirementBox);
+            <table class="adminContent">
+                <tr>
+                    <td>
+                        <div id="products-grid"></div>
 
-                //load add requirement box
-                loadNewRequirementBox();
+                        <script>
+                            $(document).ready(function () {
+                                $("#products-grid").kendoGrid({
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: {
+                                                url: "@Html.Raw(Url.Action("DiscountPackageProductList", "ShoppingCart", new { discountId=Model.Id }))",
+                                                type: "POST",
+                                                dataType: "json"
+                                            },
+                                            destroy: {
+                                                url: "@Html.Raw(Url.Action("DiscountPackageProductDelete", "Discount"))",
+                                            type: "POST",
+                                            dataType: "json"
+                                        }
+                                        },
+                                        schema: {
+                                            data: "Data",
+                                            total: "Total",
+                                            errors: "Errors",
+                                            model: {
+                                                id: "Id"
+                                            }
+                                        },
+                                        requestEnd: function (e) {
+                                            if (e.type == "update") {
+                                                this.read();
+                                            }
+                                        },
+                                        error: function(e) {
+                                            display_kendoui_grid_error(e);
+                                            // Cancel the changes
+                                            this.cancelChanges();
+                                        },
+                                        serverPaging: true,
+                                        serverFiltering: true,
+                                        serverSorting: true
+                                    },
+                                    pageable: {
+                                        refresh: true,
+                                        numeric: false,
+                                        previousNext: false,
+                                        info: false
+                                    },
+                                    editable: {
+                                        confirmation: false,
+                                        mode: "inline"
+                                    },
+                                    scrollable: false,
+                                    columns: [
+                                        {
+                                            field: "PictureThumbnailUrl",
+                                            title: "@T("Admin.Catalog.Products.Fields.PictureThumbnailUrl")",
+                                            template: '<img src="#=PictureThumbnailUrl#" />',
+                                            width: 200
+                                        },
+                                        {
+                                            field: "ProductName",
+                                            title: "@T("Admin.CurrentCarts.Product")",
+                                            width:500,
+                                            template: '<a href="@Url.Content("~/Admin/Product/Edit/")#=ProductId#">#=ProductName#</a><br><strong>#=AttributeInfo#</strong>'
+                                        }, {
+                                            field: "UnitPrice",
+                                            title: "@T("Admin.CurrentCarts.UnitPrice")",
+                                            width:200
+                                        }, {
+                                            command: [{
+                                                name: "destroy",
+                                                text: "@T("Admin.Common.Delete")"
+                                            }]}]
+                                });
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%">
+                        <input type="submit" id="btnAddNewRelatedProduct" name="btnAddNewRelatedProduct" value="添加套餐商品" onclick="javascript:OpenWindow('@(Url.Action("PackageProductAddPopup", "Discount", new { discountId = Model.Id, btnId = "btnRefreshPackageProducts", formId = "packageproduct-form" }))    ', 800, 800, true); return false;" class="btn btn-sm btn-primary btn-flat " />
+                        <input type="submit" id="btnRefreshPackageProducts" name="btnRefreshPackageProducts" style="display: none" />
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#btnRefreshPackageProducts').click(function () {
+                                    //refresh grid
+                                    var optionsGrid = $("#products-grid").data('kendoGrid');
+                                    optionsGrid.dataSource.read();
 
-                //load existing requirements
-                loadExistingRequirements();
-                           
-               //adding requirement event
-               $("#discountRequirementContainer").bind('nopnewdiscountruleadded', function(event, newRequirementId) {
-  
-                    var discountId = @Model.Id;
-                    $.ajax({
-                        cache:false,
-                        type: "POST",
-                        url: "@(Url.Action("GetDiscountRequirementMetaInfo", "Discount"))",
-                        data: { "discountRequirementId": newRequirementId, "discountId": discountId },
-                        success: function (result) {                            
-                            discountRequirements.push({ discountRequirementId: newRequirementId, ruleName : result.ruleName, url : result.url });
-                            loadExistingRequirements();
-                        },
-                        error:function (xhr, ajaxOptions, thrownError) {
-                            alert('Failed to load new discount requirement info. Please refresh the page');
-                        }
-                    });
-
-               });
-            });
-
-                
-            //load requirement HTML
-            function loadRequirement(configureRuleUrl, placeholderName) {
-                $.ajax({
-                    cache:false,
-                    url: configureRuleUrl,
-                    dataType: "html",
-                    success: function (result) {
-                        $(placeholderName).html(result);
-                    },
-                    error:function (xhr, ajaxOptions, thrownError) {
-                        $(placeholderName).html('Failed to load requirement content.');
-                    }
-                });
-            }
-
-            //load HTML for adding requirement
-            function loadNewRequirementBox() {
-                //load URL
-                var ruleSystemName = $("#@Html.FieldIdFor(model => model.AddDiscountRequirement)").val();
-                var discountId = @Model.Id;
-                if (ruleSystemName != '') {
-                    $.ajax({
-                        cache:false,
-                        url: "@(Url.Action("GetDiscountRequirementConfigurationUrl", "Discount"))",
-                        data: { "systemName": ruleSystemName, "discountId": discountId },
-                        success: function (result) {
-                                var configureRuleUrl = result.url;
-                                //now load the content
-                                loadRequirement(configureRuleUrl, '#addrequirementplaceholder');
-                        },
-                        error:function (xhr, ajaxOptions, thrownError){
-                            $('#addrequirementplaceholder').html('Failed to load requirement URL');
-                        }  
-                    });
-                }
-                else {
-                    $('#addrequirementplaceholder').html('');
-                }
-            }
-
-           //array of exisiting discount requirements
-           var discountRequirements = [
-                    @for (int i = 0; i < Model.DiscountRequirementMetaInfos.Count; i++)
-                    {
-                        var drmi = Model.DiscountRequirementMetaInfos[i];
-                        <text>{ discountRequirementId: @(drmi.DiscountRequirementId), ruleName: "@(drmi.RuleName)", url:  "@(Html.Raw(drmi.ConfigurationUrl))" } </text> if (i != Model.DiscountRequirementMetaInfos.Count - 1)
-                                                                                                                                                                         {<text>, </text>}
-
-                    }
-               ];
-           
-           //load HTML for exisiting requirements
-           function loadExistingRequirements() {
-               $("#discountRequirementContainer").html('');
-               $("#discountRequirementTemplate").tmpl(discountRequirements).appendTo("#discountRequirementContainer");
-
-               var discountRequirementsLen = discountRequirements.length;
-               for (var i=0; i<discountRequirementsLen; i++) {
-                   var url = discountRequirements[i].url;
-                   var discountRequirementId = discountRequirements[i].discountRequirementId;
-                   var placeholderName = '#editrequirementplaceholder' + discountRequirementId;
-                   $(placeholderName).html('loading...');
-                   loadRequirement(url, placeholderName);
-               }
-           }
-
-           //delete requirement rule
-           function deleteRequirement(discountRequirementId) {           
-                var discountId = @Model.Id;                
-                $.ajax({
-                    cache:false,
-                    type: "POST",
-                    url: "@(Url.Action("DeleteDiscountRequirement", "Discount"))",
-                    data: { "discountId": discountId, "discountRequirementId": discountRequirementId },
-                    success: function (data) {
-                        removeRequirementByElement(discountRequirements, discountRequirementId)
-                        loadExistingRequirements();
-                    },
-                    error:function (xhr, ajaxOptions, thrownError){
-                        alert('Failed to delete requirement.');
-                    }  
-                });
-
-                
-            function removeRequirementByElement(arrayName,discountRequirementId) {
-                for(var i=0; i<arrayName.length; i++) {
-                    if(arrayName[i].discountRequirementId==discountRequirementId) {
-                        arrayName.splice(i,1);
-                    }
-                }
-             }
-
+                                    //return false to don't reload a page
+                                    return false;
+                                });
+                            });
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        }
+else
+        { 
+            <br />
+        <h5>保存后添加套餐商品</h5>
         }
 
-    </script>
-    <!-- Template container -->
-    <div id="discountRequirementContainer">
-    </div>
-    <!-- Discount requirement template -->
-    <script id="discountRequirementTemplate" type="text/html">
-            <div id="editrequirement{{= discountRequirementId }}">
-                <div>@T("Admin.Promotions.Discounts.Requirements.DiscountRequirementType"): <strong>{{= ruleName }}</strong></div>
-                <div id="editrequirementplaceholder{{= discountRequirementId }}" style="float:left;"></div>
-                <div style="float:right;">
-                    <input type="button" id="deleterequirement{{= discountRequirementId }}" onclick="deleteRequirement({{= discountRequirementId }})" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Promotions.Discounts.Requirements.Remove")" />
-                </div>
-                <table class="adminContent">
-                    <tr class="adminSeparator">
-                        <td colspan="2">
-                            <hr />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-    </script>
-            
-    <table class="adminContent">
-        <tr>
-            <td colspan="2">
-                <strong>@T("Admin.Promotions.Discounts.Requirements.AddNew")</strong>
-            </td>
-        </tr>
-        <tr>
-            <td class="adminTitle">
-                @Html.NopLabelFor(model => model.AddDiscountRequirement):
-            </td>
-            <td class="adminData">
-                @Html.DropDownListFor(model => model.AddDiscountRequirement, Model.AvailableDiscountRequirementRules)
-                @Html.ValidationMessageFor(model => model.AddDiscountRequirement)
-            </td>
-        </tr>
-    </table>
-    <table class="adminContent">
-        <tr>
-            <td colspan="2">
-                <div id="addrequirementplaceholder">
-                </div>
-            </td>
-        </tr>
-    </table>
-        }
-        else
-        {
-    @T("Admin.Promotions.Discounts.Requirements.SaveBeforeEdit")
-        }
 }
 @helper TabHistory()
     {

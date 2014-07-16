@@ -3585,9 +3585,7 @@
     <Content Include="Themes\DefaultTheme\Content\colorbox\README.md" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_ProductTuiJianBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterVipBox.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterJingPingBox.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Catalog\JingPingTopSpecsMenu.cshtml" />
-    <Content Include="Themes\DefaultTheme\Views\Customer\RegisterByEmailValidation.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Catalog\AddProductToPackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />

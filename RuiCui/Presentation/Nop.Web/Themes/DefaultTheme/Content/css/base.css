@@ -149,6 +149,12 @@ body {
 .font24 {
     font-size:24px;
 }
+.font90 {
+    font-size:90px;
+}
+.sucesscolor {
+    color:#83bd39;
+}
 .basecolor {
     color:#F68B1F;
 }
@@ -172,6 +178,9 @@ body {
 }
 .float-right {
     float:right;
+}
+.row-margin {
+    margin-top:25px;
 }
 .left-list-w {
     width:204px;

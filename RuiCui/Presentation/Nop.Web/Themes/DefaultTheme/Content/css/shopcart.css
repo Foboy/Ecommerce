@@ -658,3 +658,46 @@ em {
     line-height:30px;
     text-align:right;
 }
+.order-success {
+    border: 1px solid #dfdfdf;
+    margin-bottom: 15px;
+    padding: 25px 30px 25px 260px;
+    position: relative;
+}
+.order-icon {
+    background: none repeat scroll 0 0 #fafafa;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 240px;
+    text-align:center;
+}
+.order-icon-mar {
+    margin-left: -40px;
+    margin-top: 35px;
+    position: absolute;
+}
+.order-success .msg {
+    margin-bottom: 20px;
+}
+.order-success h3 {
+    color: #000;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+.order-success .post-date {
+    color: #333;
+    font-size: 18px;
+}
+.order-success .details li {
+    margin-bottom:6px;
+}
+.order-success .details a {
+    text-decoration:underline;
+}
+.order-success .buttons {
+    margin-top:20px;
+}

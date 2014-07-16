@@ -210,6 +210,16 @@ namespace Nop.Web.Infrastructure
                             new { controller = "ShoppingCart", action = "AddProductToCart_Details" },
                             new { productId = @"\d+", shoppingCartTypeId = @"\d+" },
                             new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("AddProductToPackage-Details",
+                "addproducttopackage/details/{productId}/{shoppingCartTypeId}",
+                new { controller = "ShoppingCart", action = "AddProductToCartPackage_Details" },
+                new { productId = @"\d+", shoppingCartTypeId = @"\d+" },
+                new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("AddProductToPackage",
+                "addproducttopackage/{productId}",
+                new { controller = "Catalog", action = "AddProductToPackage" },
+                new { productId = @"\d+"},
+                new[] { "Nop.Web.Controllers" });
             //product attributes with "upload file" type
             routes.MapLocalizedRoute("UploadFileProductAttribute",
                             "uploadfileproductattribute/{attributeId}",

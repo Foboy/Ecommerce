@@ -14,5 +14,7 @@ namespace Nop.Core.Domain.Orders
         /// Wishlist
         /// </summary>
         Wishlist = 2,
+        
+        Package = 3
     }
 }

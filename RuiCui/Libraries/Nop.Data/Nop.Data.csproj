@@ -82,6 +82,7 @@
     <Compile Include="Mapping\Common\GenericAttributeMap.cs" />
     <Compile Include="Mapping\Customers\CustomerAttributeMap.cs" />
     <Compile Include="Mapping\Customers\CustomerAttributeValueMap.cs" />
+    <Compile Include="Mapping\Discounts\DiscountPackageProductsMap.cs" />
     <Compile Include="Mapping\Shipping\WarehouseMap.cs" />
     <Compile Include="Mapping\Shipping\DeliveryDateMap.cs" />
     <Compile Include="Mapping\Vendors\VendorMap.cs" />
