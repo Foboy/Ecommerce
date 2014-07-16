@@ -37,6 +37,7 @@ namespace Nop.Services.Discounts
         #region Fields
 
         private readonly IRepository<Discount> _discountRepository;
+        private readonly IRepository<DiscountPackageProducts> _discountPackageProductsRepository;
         private readonly IRepository<DiscountRequirement> _discountRequirementRepository;
         private readonly IRepository<DiscountUsageHistory> _discountUsageHistoryRepository;
         private readonly ICacheManager _cacheManager;
@@ -62,6 +63,7 @@ namespace Nop.Services.Discounts
         /// <param name="eventPublisher">Event published</param>
         public DiscountService(ICacheManager cacheManager,
             IRepository<Discount> discountRepository,
+            IRepository<DiscountPackageProducts> discountPackageProductsRepository,
             IRepository<DiscountRequirement> discountRequirementRepository,
             IRepository<DiscountUsageHistory> discountUsageHistoryRepository,
             IStoreContext storeContext,
@@ -71,6 +73,7 @@ namespace Nop.Services.Discounts
         {
             this._cacheManager = cacheManager;
             this._discountRepository = discountRepository;
+            this._discountPackageProductsRepository = discountPackageProductsRepository;
             this._discountRequirementRepository = discountRequirementRepository;
             this._discountUsageHistoryRepository = discountUsageHistoryRepository;
             this._storeContext = storeContext;
@@ -464,6 +467,46 @@ namespace Nop.Services.Discounts
             _eventPublisher.EntityDeleted(discountUsageHistory);
         }
 
+        public virtual IList<DiscountPackageProducts> GetPackageProductsByDiscountId(int discountId)
+        {
+            var query = from rp in _discountPackageProductsRepository.Table
+                        join p in _discountRepository.Table on rp.DiscountId equals p.Id
+                        where rp.DiscountId == discountId
+                        orderby rp.DisplayOrder
+                        select rp;
+            var packageProducts = query.ToList();
+
+            return packageProducts;
+        }
+
+        public virtual void InsertPackageProduct(DiscountPackageProducts packageProduct)
+        {
+            if (packageProduct == null)
+                throw new ArgumentNullException("packageProduct");
+
+            _discountPackageProductsRepository.Insert(packageProduct);
+
+            //event notification
+            _eventPublisher.EntityInserted(packageProduct);
+        }
+
+        public virtual DiscountPackageProducts GetDiscountPackageProductById(int id)
+        {
+            if (id == 0)
+                return null;
+            return _discountPackageProductsRepository.GetById(id);
+        }
+
+        public virtual void DeleteDiscountPackageProduct(DiscountPackageProducts packageProduct)
+        {
+            if (packageProduct == null)
+                throw new ArgumentNullException("packageProduct");
+
+            _discountPackageProductsRepository.Delete(packageProduct);
+
+            //event notification
+            _eventPublisher.EntityDeleted(packageProduct);
+        }
         #endregion
     }
 }

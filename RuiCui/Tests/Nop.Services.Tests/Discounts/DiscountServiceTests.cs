@@ -21,6 +21,7 @@ namespace Nop.Services.Tests.Discounts
     public class DiscountServiceTests : ServiceTest
     {
         private IRepository<Discount> _discountRepo;
+        private IRepository<DiscountPackageProducts> _discountPackageProductsRepo;
         private IRepository<DiscountRequirement> _discountRequirementRepo;
         private IRepository<DiscountUsageHistory> _discountUsageHistoryRepo;
         private IEventPublisher _eventPublisher;
@@ -69,7 +70,7 @@ namespace Nop.Services.Tests.Discounts
             _discountUsageHistoryRepo = MockRepository.GenerateMock<IRepository<DiscountUsageHistory>>();
             var pluginFinder = new PluginFinder();
             _genericAttributeService = MockRepository.GenerateMock<IGenericAttributeService>();
-            _discountService = new DiscountService(cacheManager, _discountRepo, _discountRequirementRepo,
+            _discountService = new DiscountService(cacheManager, _discountRepo, _discountPackageProductsRepo, _discountRequirementRepo,
                 _discountUsageHistoryRepo, _storeContext, _genericAttributeService, pluginFinder, _eventPublisher);
         }
 

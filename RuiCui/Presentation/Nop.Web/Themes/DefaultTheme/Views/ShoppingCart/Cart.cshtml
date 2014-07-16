@@ -9,10 +9,7 @@
 
     Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/shopcart.css");
 }
-@if (!Model.OnePageCheckoutEnabled)
-{
-    @Html.Action("CheckoutProgress", "Checkout", new {step = CheckoutProgressStep.Cart})
-}
+
 @Html.Partial("OrderSummary", Model)
 <div class="xm-line-box hot-pro J_hotProCarousel">
     @Html.Action("CrossSellProducts", "Catalog")

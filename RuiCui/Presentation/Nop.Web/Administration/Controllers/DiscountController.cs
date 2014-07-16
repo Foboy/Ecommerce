@@ -16,6 +16,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Orders;
 
 namespace Nop.Admin.Controllers
 {
@@ -33,6 +34,7 @@ namespace Nop.Admin.Controllers
         private readonly IProductService _productService;
         private readonly CurrencySettings _currencySettings;
         private readonly IPermissionService _permissionService;
+        private readonly IShoppingCartService _shoppingCartService;
 
         #endregion
 
@@ -43,7 +45,8 @@ namespace Nop.Admin.Controllers
             ICategoryService categoryService, IProductService productService,
             IWebHelper webHelper, IDateTimeHelper dateTimeHelper,
             ICustomerActivityService customerActivityService, CurrencySettings currencySettings,
-            IPermissionService permissionService)
+            IPermissionService permissionService,
+            IShoppingCartService shoppingCartService)
         {
             this._discountService = discountService;
             this._localizationService = localizationService;
@@ -55,6 +58,7 @@ namespace Nop.Admin.Controllers
             this._customerActivityService = customerActivityService;
             this._currencySettings = currencySettings;
             this._permissionService = permissionService;
+            this._shoppingCartService = shoppingCartService;
         }
 
         #endregion
@@ -157,6 +161,36 @@ namespace Nop.Admin.Controllers
                 return AccessDeniedView();
 
             var discounts = _discountService.GetAllDiscounts(null, null, true);
+            discounts = discounts.Where(d => d.DiscountType != DiscountType.AssignedToPackage).ToList();
+            var gridModel = new DataSourceResult
+            {
+                Data = discounts.PagedForCommand(command).Select(x =>
+                {
+                    var discountModel = x.ToModel();
+                    discountModel.PrimaryStoreCurrencyCode = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode;
+                    return discountModel;
+                }),
+                Total = discounts.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        public ActionResult PackageList()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PackageDiscountList(DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            var discounts = _discountService.GetAllDiscounts(DiscountType.AssignedToPackage, null, true);
             var gridModel = new DataSourceResult
             {
                 Data = discounts.PagedForCommand(command).Select(x =>
@@ -431,6 +465,187 @@ namespace Nop.Admin.Controllers
             var duh = _discountService.GetDiscountUsageHistoryById(id);
             if (duh != null)
                 _discountService.DeleteDiscountUsageHistory(duh);
+
+            return new NullJsonResult();
+        }
+
+        #endregion
+
+        #region packages
+        //create
+        public ActionResult CreatePackage()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            var model = new DiscountModel();
+            PrepareDiscountModel(model, null);
+            //default values
+            model.DiscountTypeId = (int)DiscountType.AssignedToPackage;
+            model.LimitationTimes = 1;
+            return View(model);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        public ActionResult CreatePackage(DiscountModel model, bool continueEditing)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            if (ModelState.IsValid)
+            {
+                var discount = model.ToEntity();
+                _discountService.InsertDiscount(discount);
+
+                //activity log
+                _customerActivityService.InsertActivity("AddNewDiscount", _localizationService.GetResource("ActivityLog.AddNewDiscount"), discount.Name);
+
+                SuccessNotification(_localizationService.GetResource("Admin.Promotions.Discounts.Added"));
+                return continueEditing ? RedirectToAction("Edit", new { id = discount.Id }) : RedirectToAction("List");
+            }
+
+            //If we got this far, something failed, redisplay form
+            PrepareDiscountModel(model, null);
+            return View(model);
+        }
+
+        public ActionResult EditPackage(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            var discount = _discountService.GetDiscountById(id);
+            if (discount == null)
+                //No discount found with the specified id
+                return RedirectToAction("List");
+
+            var model = discount.ToModel();
+            PrepareDiscountModel(model, discount);
+            return View(model);
+        }
+
+        [HttpPost, ParameterBasedOnFormName("save-continue", "continueEditing")]
+        public ActionResult EditPackage(DiscountModel model, bool continueEditing)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+
+            var discount = _discountService.GetDiscountById(model.Id);
+            if (discount == null)
+                //No discount found with the specified id
+                return RedirectToAction("List");
+
+            if (ModelState.IsValid)
+            {
+                var prevDiscountType = discount.DiscountType;
+                discount = model.ToEntity(discount);
+                _discountService.UpdateDiscount(discount);
+
+                //clean up old references (if changed) and update "HasDiscountsApplied" properties
+                if (prevDiscountType == DiscountType.AssignedToCategories
+                    && discount.DiscountType != DiscountType.AssignedToCategories)
+                {
+                    //applied to categories
+                    var categories = discount.AppliedToCategories.ToList();
+                    discount.AppliedToCategories.Clear();
+                    _discountService.UpdateDiscount(discount);
+                    //update "HasDiscountsApplied" property
+                    foreach (var category in categories)
+                        _categoryService.UpdateHasDiscountsApplied(category);
+                }
+                if (prevDiscountType == DiscountType.AssignedToSkus
+                    && discount.DiscountType != DiscountType.AssignedToSkus)
+                {
+                    //applied to products
+                    var products = discount.AppliedToProducts.ToList();
+                    discount.AppliedToProducts.Clear();
+                    _discountService.UpdateDiscount(discount);
+                    //update "HasDiscountsApplied" property
+                    foreach (var p in products)
+                        _productService.UpdateHasDiscountsApplied(p);
+                }
+
+                //activity log
+                _customerActivityService.InsertActivity("EditDiscount", _localizationService.GetResource("ActivityLog.EditDiscount"), discount.Name);
+
+                SuccessNotification(_localizationService.GetResource("Admin.Promotions.Discounts.Updated"));
+
+                if (continueEditing)
+                {
+                    //selected tab
+                    SaveSelectedTabIndex();
+
+                    return RedirectToAction("Edit", discount.Id);
+                }
+                else
+                {
+                    return RedirectToAction("List");
+                }
+            }
+
+            //If we got this far, something failed, redisplay form
+            PrepareDiscountModel(model, discount);
+            return View(model);
+        }
+
+        #endregion
+
+        #region discount products
+        public ActionResult PackageProductAddPopup()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+            return View();
+        }
+
+        [HttpPost]
+        [FormValueRequired("save")]
+        public ActionResult PackageProductAddPopup(int discountId, string btnId, string formId)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageDiscounts))
+                return AccessDeniedView();
+            var ids = Request["SelectedProductIds"];
+
+            if (ids != null && !string.IsNullOrWhiteSpace(ids))
+            {
+                var selectedProductIds = ids.Split(',').Select(i => Convert.ToInt32(i)).ToArray();
+                var products = _shoppingCartService.GetShoppingCartItemByIds(selectedProductIds);
+                if (products != null)
+                {
+                    foreach (var p in products)
+                    {
+                        var existingProducts = _discountService.GetPackageProductsByDiscountId(discountId);
+                        if (existingProducts.FindPackageProduct(discountId, p.Id) == null)
+                        {
+                            _discountService.InsertPackageProduct(
+                                new DiscountPackageProducts()
+                                {
+                                    DiscountId = discountId,
+                                    ShoppingCartItemId = p.Id,
+                                    DisplayOrder = 1
+                                });
+                        }
+                    }
+                }
+            }
+            ViewBag.RefreshPage = true;
+            ViewBag.btnId = btnId;
+            ViewBag.formId = formId;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DiscountPackageProductDelete(int id)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var packageProduct = _discountService.GetDiscountPackageProductById(id);
+            if (packageProduct == null)
+                throw new ArgumentException("No package product found with the specified id");
+
+            _discountService.DeleteDiscountPackageProduct(packageProduct);
 
             return new NullJsonResult();
         }

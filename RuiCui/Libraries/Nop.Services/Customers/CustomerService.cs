@@ -790,6 +790,14 @@ namespace Nop.Services.Customers
 
         #endregion
 
+
+
         #endregion
+
+        public virtual Customer GetPackageCustomer()
+        {
+            Customer customer = GetCustomerById(1);
+            return customer;
+        }
     }
 }

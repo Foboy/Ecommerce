@@ -25,5 +25,7 @@ namespace Nop.Core.Domain.Discounts
         /// Assigned to order subtotal
         /// </summary>
         AssignedToOrderSubTotal = 20,
+
+        AssignedToPackage = 30,
     }
 }

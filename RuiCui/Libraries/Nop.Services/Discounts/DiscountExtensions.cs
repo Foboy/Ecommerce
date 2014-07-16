@@ -6,6 +6,14 @@ namespace Nop.Services.Discounts
 {
     public static class DiscountExtensions
     {
+        public static DiscountPackageProducts FindPackageProduct(this IList<DiscountPackageProducts> source,
+    int discountId, int shoppingCartItemId)
+        {
+            foreach (DiscountPackageProducts product in source)
+                if (product.DiscountId == discountId && product.ShoppingCartItemId == shoppingCartItemId)
+                    return product;
+            return null;
+        }
         /// <summary>
         /// Gets the discount amount for the specified value
         /// </summary>

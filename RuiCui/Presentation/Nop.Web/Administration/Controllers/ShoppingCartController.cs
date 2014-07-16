@@ -13,6 +13,11 @@ using Nop.Services.Security;
 using Nop.Services.Stores;
 using Nop.Services.Tax;
 using Nop.Web.Framework.Kendoui;
+using Nop.Core;
+using Nop.Core.Domain.Common;
+using Nop.Services.Media;
+using System.Collections.Generic;
+using Nop.Services.Discounts;
 
 namespace Nop.Admin.Controllers
 {
@@ -20,6 +25,7 @@ namespace Nop.Admin.Controllers
     {
         #region Fields
 
+        private readonly IDiscountService _discountService;
         private readonly ICustomerService _customerService;
         private readonly IDateTimeHelper _dateTimeHelper;
         private readonly IPriceFormatter _priceFormatter;
@@ -28,6 +34,10 @@ namespace Nop.Admin.Controllers
         private readonly IPriceCalculationService _priceCalculationService;
         private readonly IPermissionService _permissionService;
         private readonly ILocalizationService _localizationService;
+        private readonly AdminAreaSettings _adminAreaSettings;
+        private readonly IPictureService _pictureService;
+        private readonly IProductAttributeFormatter _productAttributeFormatter;
+        private readonly IShoppingCartService _shoppingCartService;
         #endregion
 
         #region Constructors
@@ -36,7 +46,12 @@ namespace Nop.Admin.Controllers
             IDateTimeHelper dateTimeHelper, IPriceFormatter priceFormatter,
             IStoreService storeService, ITaxService taxService, 
             IPriceCalculationService priceCalculationService,
-            IPermissionService permissionService, ILocalizationService localizationService)
+            IPermissionService permissionService, ILocalizationService localizationService,
+            AdminAreaSettings adminAreaSettings,
+            IPictureService pictureService,
+            IProductAttributeFormatter productAttributeFormatter,
+            IShoppingCartService shoppingCartService,
+            IDiscountService discountService)
         {
             this._customerService = customerService;
             this._dateTimeHelper = dateTimeHelper;
@@ -46,6 +61,11 @@ namespace Nop.Admin.Controllers
             this._priceCalculationService = priceCalculationService;
             this._permissionService = permissionService;
             this._localizationService = localizationService;
+            this._adminAreaSettings = adminAreaSettings;
+            this._pictureService = pictureService;
+            this._productAttributeFormatter = productAttributeFormatter;
+            this._shoppingCartService = shoppingCartService;
+            this._discountService = discountService;
         }
 
         #endregion
@@ -200,6 +220,112 @@ namespace Nop.Admin.Controllers
             return Json(gridModel);
         }
 
+        public ActionResult PackageProductList()
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PackageProductList(DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var customer = _customerService.GetPackageCustomer();
+            var cart = customer.ShoppingCartItems.Where(x => x.ShoppingCartType == ShoppingCartType.Package && x.Quantity > 0).ToList();
+
+            var gridModel = new DataSourceResult
+            {
+                Data = new PagedList<ShoppingCartItemModel>(cart.Select(sci =>
+                {
+                    decimal taxRate;
+                    var store = _storeService.GetStoreById(sci.StoreId);
+                    var sciModel = new ShoppingCartItemModel()
+                    {
+                        Id = sci.Id,
+                        Store = store != null ? store.Name : "Unknown",
+                        ProductId = sci.ProductId,
+                        ProductName = sci.Product.Name,
+                        UnitPrice = _priceFormatter.FormatPrice(_taxService.GetProductPrice(sci.Product, _priceCalculationService.GetUnitPrice(sci, true), out taxRate)),
+                        UpdatedOn = _dateTimeHelper.ConvertToUserTime(sci.UpdatedOnUtc, DateTimeKind.Utc)
+                    };
+                    if (_adminAreaSettings.DisplayProductPictures)
+                    {
+                        var defaultProductPicture = _pictureService.GetPicturesByProductId(sci.Product.Id, 1).FirstOrDefault();
+                        sciModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
+                    }
+                    sciModel.AttributeInfo = _productAttributeFormatter.FormatAttributes(sci.Product, sci.AttributesXml);
+                    return sciModel;
+                }).ToList(), command.Page - 1, command.PageSize),
+                Total = cart.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        [HttpPost]
+        public ActionResult DiscountPackageProductList(int discountId,DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var existingProducts = _discountService.GetPackageProductsByDiscountId(discountId);
+            var cart = _shoppingCartService.GetShoppingCartItemByIds(existingProducts.Select(p => p.ShoppingCartItemId).ToArray());
+
+            var gridModel = new DataSourceResult
+            {
+                Data = new PagedList<ShoppingCartItemModel>(cart.Select(sci =>
+                {
+                    decimal taxRate;
+                    var store = _storeService.GetStoreById(sci.StoreId);
+                    var sciModel = new ShoppingCartItemModel()
+                    {
+                        Id = existingProducts.Where(p=>p.ShoppingCartItemId == sci.Id).Select(p=>p.Id).FirstOrDefault(),
+                        Store = store != null ? store.Name : "Unknown",
+                        ProductId = sci.ProductId,
+                        ProductName = sci.Product.Name,
+                        UnitPrice = _priceFormatter.FormatPrice(_taxService.GetProductPrice(sci.Product, _priceCalculationService.GetUnitPrice(sci, true), out taxRate)),
+                        UpdatedOn = _dateTimeHelper.ConvertToUserTime(sci.UpdatedOnUtc, DateTimeKind.Utc)
+                    };
+                    if (_adminAreaSettings.DisplayProductPictures)
+                    {
+                        var defaultProductPicture = _pictureService.GetPicturesByProductId(sci.Product.Id, 1).FirstOrDefault();
+                        sciModel.PictureThumbnailUrl = _pictureService.GetPictureUrl(defaultProductPicture, 75, true);
+                    }
+                    sciModel.AttributeInfo = _productAttributeFormatter.FormatAttributes(sci.Product, sci.AttributesXml);
+                    return sciModel;
+                }).ToList(), command.Page - 1, command.PageSize),
+                Total = cart.Count
+            };
+
+            return Json(gridModel);
+        }
+
+        public ActionResult DeleteSelectedPackage(string selectedIds)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            var packages = new List<ShoppingCartItem>();
+            if (selectedIds != null)
+            {
+                var ids = selectedIds
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => Convert.ToInt32(x))
+                    .ToArray();
+                packages.AddRange(_shoppingCartService.GetShoppingCartItemByIds(ids));
+
+                for (int i = 0; i < packages.Count; i++)
+                {
+                    var item = packages[i];
+
+                    _shoppingCartService.DeletePackageShoppingCartItem(item);
+                }
+            }
+
+            return RedirectToAction("PackageProductList");
+        }
         #endregion
     }
 }
