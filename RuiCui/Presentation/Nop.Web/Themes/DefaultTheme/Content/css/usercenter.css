@@ -1028,9 +1028,12 @@ a {
     color: #333;
 }
 
-    .uc-order-list-type a.current {
-        color: #f68b1f;
-    }
+.uc-order-list-type a.current {
+    color: #f68b1f;
+}
+.uc-order-list-type a:hover {
+    color: #f68b1f;
+}
 
 .uc-order-list-box {
     margin: 20px 0;
@@ -1242,6 +1245,7 @@ a {
             .uc-order-detail-item .order-detail-table .order-action a {
                 display: block;
                 margin: 0 auto;
+                cursor:pointer;
             }
 
             .uc-order-detail-item .order-detail-table .order-action .btn {
@@ -1260,6 +1264,10 @@ a {
 
 .uc-order-detail-box {
     color: #333;
+}
+.uc-order-detail-box ul {
+    list-style:none;
+    padding:0;
 }
 
     .uc-order-detail-box .box-hd .more {
@@ -1535,59 +1543,78 @@ a {
                     font-size: 30px;
                 }
 
-    .uc-order-detail-box .order-delivery-address {
-        padding: 30px;
-        background: #fafafa;
-    }
+.uc-order-detail-box .order-delivery-address {
+    padding: 30px;
+    background: #fafafa;
+}
 
-        .uc-order-detail-box .order-delivery-address .order-text-section {
-            margin-bottom: 30px;
-        }
+.uc-order-detail-box .order-delivery-address .order-text-section {
+    margin-bottom: 30px;
+}
 
-            .uc-order-detail-box .order-delivery-address .order-text-section h4 {
-                margin: 0 0 10px;
-                font-size: 14px;
-                font-weight: 400;
-                color: #8c8c8c;
-            }
+.uc-order-detail-box .order-delivery-address .order-text-section h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #8c8c8c;
+}
 
-        .uc-order-detail-box .order-delivery-address .order-text-table {
-            color: #333;
-        }
+.uc-order-detail-box .order-delivery-address .order-text-table {
+    color: #333;
+}
 
-            .uc-order-detail-box .order-delivery-address .order-text-table th {
-                width: 75px;
-                font-weight: 400;
-                text-align: left;
-                vertical-align: top;
-            }
+.uc-order-detail-box .order-delivery-address .order-text-table th {
+    width: 75px;
+    font-weight: 400;
+    text-align: left;
+    vertical-align: top;
+}
 
-            .uc-order-detail-box .order-delivery-address .order-text-table a {
-                text-decoration: underline;
-            }
+.uc-order-detail-box .order-delivery-address .order-text-table a {
+    text-decoration: underline;
+}
 
-                .uc-order-detail-box .order-delivery-address .order-text-table a:hover {
-                    text-decoration: none;
-                }
+.uc-order-detail-box .order-delivery-address .order-text-table a:hover {
+    text-decoration: none;
+}
 
-            .uc-order-detail-box .order-delivery-address .order-text-table .delivery-tip {
-                font-size: 12px;
-                color: #d6313a;
-            }
+.uc-order-detail-box .order-delivery-address .order-text-table .delivery-tip {
+    font-size: 12px;
+    color: #d6313a;
+}
 
-        .uc-order-detail-box .order-delivery-address .order-delivery-time ul {
-            margin: 0 0 20px 20px;
-            padding: 0;
-            list-style-type: none;
-        }
+.uc-order-detail-box .order-delivery-address .order-delivery-time ul {
+    margin: 0 0 20px 20px;
+    padding: 0;
+    list-style-type: none;
+}
 
-        .uc-order-detail-box .order-delivery-address .order-delivery-time li {
-            margin: 5px 0;
-        }
+.uc-order-detail-box .order-delivery-address .order-delivery-time li {
+    margin: 5px 0;
+}
 
-            .uc-order-detail-box .order-delivery-address .order-delivery-time li input {
-                margin-right: 5px;
-            }
+.uc-order-detail-box .order-delivery-address .order-delivery-time li input {
+    margin-right: 5px;
+}
+
+.order-delivery-address dl {
+    margin:0;
+    padding:0;
+    height:30px;
+} 
+.order-delivery-address dt {
+    display:inline-block;
+    text-align:right;
+    margin-bottom:20px;
+    margin-left:10px;
+    width:100px;
+}
+.order-delivery-address dd {
+    display:inline-block;
+    text-align:left;
+    margin-bottom:20px;
+    margin-left:10px;
+}
 
     .uc-order-detail-box .uc-manage-address-hide {
         display: none;

@@ -145,7 +145,7 @@
                         </div>
                     </div>*@
 
-                    <ul class="uc-order-detail-list ul-order-bottom {">
+                    <ul class="uc-order-detail-list">
                         <li class="uc-order-detail-item">
                             <table class="order-detail-table">
                                 <thead>
@@ -164,37 +164,38 @@
                                     <tr>
                                         <td class="column-detail column-l">
                                             <ul class="order-goods-list">
-@foreach (var item in order.Items)
-{
-    <li class="first">
-        <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">
-            <img class="goods-thumb" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title">
-        </a>
-        <a class="goods-name" href="" target="_blank">@item.ProductName</a>
-        <p>
-            @if (!String.IsNullOrEmpty(item.AttributeInfo))
-            {
-                <span>
-                    @Html.Raw(item.AttributeInfo)
-                </span>
-            }
-        </p>
-        <span class="goods-price">@item.UnitPrice x @item.Quantity</span>
-        <span class="goods-link"> </span>
-    </li>
-}
+                                                @foreach (var item in order.Items)
+                                                {
+                                                    <li class="first">
+                                                        <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" target="_blank">
+                                                            <img class="goods-thumb" alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" srcset="@item.Picture.ImageUrl" title="@item.Picture.Title">
+                                                        </a>
+                                                        <a class="goods-name" href="" target="_blank">@item.ProductName</a>
+                                                        <p>
+                                                            @if (!String.IsNullOrEmpty(item.AttributeInfo))
+                                                            {
+                                                                <span>
+                                                                    @Html.Raw(item.AttributeInfo)
+                                                                </span>
+                                                            }
+                                                        </p>
+                                                        <span class="goods-price">@item.UnitPrice x @item.Quantity</span>
+                                                        <span class="goods-link"> </span>
+                                                    </li>
+                                                }
                                             </ul>
                                         </td>
                                         <td class="column-price">
                                             <div class="order-info order-price">
                                                 @order.OrderTotal
-                                                <br>
-                                                在线支付
                                             </div>
                                         </td>
                                         <td class="column-action column-r">
-                                            <div class="order-info order-action">
-                                               
+                                            <div class="order-info order-action"> 
+                                                <a>
+                                                    订单详情
+                                                    <i class="iconfont font12">&#xf02af;</i>                                               
+                                                </a> 
                                                 <a class="btn btn-primary btn-small" target="_blank" href="">立即支付</a>
                                             </div>
                                         </td>
