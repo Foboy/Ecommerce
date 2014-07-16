@@ -162,11 +162,11 @@
                                     title: "@T("Admin.Common.View")",
                                     width: 100,
                                     template: '<a href="@Url.Content("~/Admin/Product/Edit/")#=Id#">@T("Admin.Common.View")</a>'
-                                },{
+                                },@*{
                                     field: "Sku",
                                     title: "@T("Admin.Catalog.BulkEdit.Fields.Sku")",
                                     width: 150
-                                }, {
+                                },*@ {
                                     field: "Price",
                                     title: "@T("Admin.Catalog.BulkEdit.Fields.Price")",
                                     width: 150,
