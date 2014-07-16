@@ -3586,6 +3586,7 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\_ProductTuiJianBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterVipBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\AddProductToPackage.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Customer\RegisterByEmailValidation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />
