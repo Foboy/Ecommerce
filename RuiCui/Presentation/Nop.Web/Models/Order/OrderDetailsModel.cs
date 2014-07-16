@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
+using Nop.Web.Models.Media;
 
 namespace Nop.Web.Models.Order
 {
@@ -72,6 +73,12 @@ namespace Nop.Web.Models.Order
 
         public partial class OrderItemModel : BaseNopEntityModel
         {
+            public OrderItemModel()
+            {
+                Picture = new PictureModel();
+            }
+
+            public PictureModel Picture { get; set; }
             public string Sku { get; set; }
             public int ProductId { get; set; }
             public string ProductName { get; set; }

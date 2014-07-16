@@ -25,6 +25,11 @@ using Nop.Web.Models.Order;
 using Nop.Web.Models.Customer;
 using Nop.Core.Domain.Customers;
 using Nop.Core.Domain.Forums;
+using Nop.Web.Models.Media;
+using Nop.Web.Infrastructure.Cache;
+using Nop.Core.Domain.Media;
+using Nop.Core.Caching;
+using Nop.Services.Media;
 
 namespace Nop.Web.Controllers
 {
@@ -57,6 +62,9 @@ namespace Nop.Web.Controllers
         private readonly RewardPointsSettings _rewardPointsSettings;
         private readonly ForumSettings _forumSettings;
         private readonly IStoreContext _storeContext;
+        private readonly MediaSettings _mediaSettings;
+        private readonly ICacheManager _cacheManager;
+        private readonly IPictureService _pictureService;
 
         #endregion
 
@@ -76,7 +84,10 @@ namespace Nop.Web.Controllers
             CustomerSettings customerSettings,
             RewardPointsSettings rewardPointsSettings,
             ForumSettings forumSettings,
-            IStoreContext storeContext)
+            IStoreContext storeContext,
+            MediaSettings mediaSettings,
+            ICacheManager cacheManager,
+            IPictureService pictureService)
         {
             this._orderService = orderService;
             this._shipmentService = shipmentService;
@@ -103,6 +114,9 @@ namespace Nop.Web.Controllers
             this._rewardPointsSettings = rewardPointsSettings;
             this._forumSettings = forumSettings;
             this._storeContext = storeContext;
+            this._mediaSettings = mediaSettings;
+            this._cacheManager = cacheManager;
+            this._pictureService = pictureService;
         }
 
         #endregion
@@ -319,6 +333,8 @@ namespace Nop.Web.Controllers
                     Quantity = orderItem.Quantity,
                     AttributeInfo = orderItem.AttributeDescription,
                 };
+                orderItemModel.Picture = PrepareCartItemPictureModel(orderItem,
+        _mediaSettings.CartThumbPictureSize, true, orderItemModel.ProductName);
                 model.Items.Add(orderItemModel);
 
                 //unit price, subtotal
@@ -342,6 +358,53 @@ namespace Nop.Web.Controllers
                 }
             }
 
+            return model;
+        }
+
+        [NonAction]
+        protected PictureModel PrepareCartItemPictureModel(OrderItem sci,
+            int pictureSize, bool showDefaultPicture, string productName)
+        {
+            var pictureCacheKey = string.Format(ModelCacheEventConsumer.CART_PICTURE_MODEL_KEY, sci.Id, pictureSize, true, _workContext.WorkingLanguage.Id, _webHelper.IsCurrentConnectionSecured(), _storeContext.CurrentStore.Id);
+            var model = _cacheManager.Get(pictureCacheKey,
+                //as we cache per user (shopping cart item identifier)
+                //let's cache just for 3 minutes
+                3, () =>
+                {
+                    //shopping cart item picture
+                    Picture sciPicture = null;
+
+                    //first, let's see whether a shopping cart item has some attribute values with custom pictures
+                    var pvaValues = _productAttributeParser.ParseProductVariantAttributeValues(sci.AttributesXml);
+                    foreach (var pvaValue in pvaValues)
+                    {
+                        var pvavPicture = _pictureService.GetPictureById(pvaValue.PictureId);
+                        if (pvavPicture != null)
+                        {
+                            sciPicture = pvavPicture;
+                            break;
+                        }
+                    }
+
+                    //now let's load the default product picture
+                    var product = sci.Product;
+                    if (sciPicture == null)
+                    {
+                        sciPicture = _pictureService.GetPicturesByProductId(product.Id, 1).FirstOrDefault();
+                    }
+
+                    //let's check whether this product has some parent "grouped" product
+                    if (sciPicture == null && !product.VisibleIndividually && product.ParentGroupedProductId > 0)
+                    {
+                        sciPicture = _pictureService.GetPicturesByProductId(product.ParentGroupedProductId, 1).FirstOrDefault();
+                    }
+                    return new PictureModel()
+                    {
+                        ImageUrl = _pictureService.GetPictureUrl(sciPicture, pictureSize, showDefaultPicture),
+                        Title = string.Format(_localizationService.GetResource("Media.Product.ImageLinkTitleFormat"), productName),
+                        AlternateText = string.Format(_localizationService.GetResource("Media.Product.ImageAlternateTextFormat"), productName),
+                    };
+                });
             return model;
         }
 

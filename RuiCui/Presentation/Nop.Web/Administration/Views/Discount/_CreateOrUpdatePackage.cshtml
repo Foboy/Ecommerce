@@ -197,7 +197,7 @@
                 }
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.UsePercentage):
             </td>
@@ -215,7 +215,7 @@
                 @Html.ValidationMessageFor(model => model.DiscountAmount)
             </td>
         </tr>
-        <tr id="pnlDiscountPercentage">
+        <tr id="pnlDiscountPercentage" style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.DiscountPercentage):
             </td>
@@ -242,7 +242,7 @@
                 @Html.ValidationMessageFor(model => model.EndDateUtc)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.RequiresCouponCode):
             </td>
@@ -251,7 +251,7 @@
                 @Html.ValidationMessageFor(model => model.RequiresCouponCode)
             </td>
         </tr>
-        <tr id="pnlCouponCode">
+        <tr id="pnlCouponCode" style="display:none;">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.CouponCode):
             </td>
@@ -262,7 +262,7 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.DiscountLimitationId):
+                <label for="DiscountAmount" title="套餐限制">套餐限制</label>:
             </td>
             <td class="adminData">
                 @Html.DropDownListFor(model => model.DiscountLimitationId, ((DiscountLimitationType)Model.DiscountLimitationId).ToSelectList())
