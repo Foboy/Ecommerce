@@ -166,11 +166,15 @@ namespace Nop.Web.Infrastructure
                             "logout/",
                             new { controller = "Customer", action = "Logout" },
                             new[] { "Nop.Web.Controllers" });
-            routes.MapLocalizedRoute("RegisterResult",
-                            "registerresult/{resultId}",
-                            new { controller = "Customer", action = "RegisterResult" },
-                            new { resultId = @"\d+" },
+            routes.MapLocalizedRoute("RegisterByEmailValidation",
+                            "registerbyemailvalidation/{customerGuid}",
+                            new { controller = "Customer", action = "RegisterByEmailValidation", customerGuid = UrlParameter.Optional },
                             new[] { "Nop.Web.Controllers" });
+            routes.MapLocalizedRoute("RegisterResult",
+                                "registerresult/{resultId}",
+                                new { controller = "Customer", action = "RegisterResult" },
+                                new { resultId = @"\d+" },
+                                new[] { "Nop.Web.Controllers" });
             routes.MapLocalizedRoute("CheckUsernameAvailability",
                             "customer/checkusernameavailability",
                             new { controller = "Customer", action = "CheckUsernameAvailability" },

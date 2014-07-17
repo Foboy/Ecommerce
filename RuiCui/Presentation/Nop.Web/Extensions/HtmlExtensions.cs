@@ -283,6 +283,30 @@ namespace Nop.Web.Extensions
             return css;
         }
 
+        public static string ConsigneeFrontAddress<T>(this HtmlHelper<T> html, AddressModel address)
+        {
+            var addressLine = "";
+            if (address.CountryEnabled && !String.IsNullOrWhiteSpace(address.CountryName))
+            {
+                addressLine += address.CountryName + "省";
+            }
+            if (address.StateProvinceEnabled && !String.IsNullOrEmpty(address.StateProvinceName))
+            {
+                addressLine += " " + address.StateProvinceName;
+            }
+            if (address.CityEnabled && !String.IsNullOrEmpty(address.City))
+            {
+                addressLine += " " + address.City;
+            }
+            if (address.StreetAddressEnabled && !String.IsNullOrEmpty(address.Address1))
+            {
+                addressLine += " " + address.Address1;
+            }
+
+            addressLine += " (" + address.FirstName + " 收)";
+            return addressLine;
+        }
+
     }
 }
 

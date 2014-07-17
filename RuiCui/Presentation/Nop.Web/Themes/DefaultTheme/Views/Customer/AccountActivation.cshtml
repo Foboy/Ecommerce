@@ -1,18 +1,59 @@
-﻿@model AccountActivationModel
-@using Nop.Web.Models.Customer;
+﻿
 @{
-    Layout = "~/Views/Shared/_ColumnsThree.cshtml";
-
-    //title
-    Html.AddTitleParts(T("PageTitle.AccountActivation").Text);
+    Layout = null;
 }
-<div class="page account-activation-page">
-    <div class="page-title">
-        <h1>@T("Account.AccountActivation")</h1>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>瑞翠华光帐户 - 帐号激活成功</title>
+    <link href="~/Themes/DefaultTheme/Content/css/register.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var me = $("#message");
+            me.time = 3;
+            ; (function () {
+                if (me.time > 0) {
+                    me.time--;
+                    me.html("&nbsp;(" + me.time + ")秒后将自动跳转到.....");
+                    setTimeout(arguments.callee, 1000);
+                } else {
+                    window.location.href = "/";
+                }
+            })();
+        })
+    </script>
+</head>
+<body>
+    <div class="top">
+        <div class="logo">
+
+            <a href="/"><img width="70" src="~/Themes/DefaultTheme/Content/Images/logo.jpg" alt="瑞翠华光logo" /></a>
+
+        </div>
     </div>
-    <div class="page-body">
-        <strong>
-            @Model.Result
-        </strong>
+
+    <div class="suc_content">
+        <div class="suc_kuang">
+            <div class="hei_444 teln_m">
+                <div class="title">账号激活成功</div>
+                <div class="register">
+                    <div class="point_email">
+                        <p id="message"></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="suc_botm"></div>
+        </div>
     </div>
-</div>
+    <div class="footer" style="width:auto;">
+        <ul class="links">
+            <li class="copyright"><span>版权所有 © 2014 瑞翠商城 保留所有权利</span></li>
+        </ul>
+    </div>
+</body>
+</html>
