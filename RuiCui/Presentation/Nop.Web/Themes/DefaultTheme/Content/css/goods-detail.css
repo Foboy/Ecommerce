@@ -1162,69 +1162,67 @@ dl.goods-info-box {
     border: 1px solid #dfdfdf;
 }
 
-    .goods-detail-desc .common-question .question-hd {
-        height: 50px;
-        line-height: 50px;
-        font-size: 18px;
-        color: #6d6d6d;
-    }
+.goods-detail-desc .common-question .question-hd {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    color: #6d6d6d;
+}
 
-        .goods-detail-desc .common-question .question-hd .title_a {
-            width: 130px;
-            text-align: center;
-            float: left;
-        }
+.goods-detail-desc .common-question .question-hd .title_a {
+    padding:0 10px;
+}
 
-        .goods-detail-desc .common-question .question-hd .title_b {
-            width: 767px;
-            border-left: 1px solid #dfdfdf;
-            border-bottom: 1px solid #dfdfdf;
-            padding-left: 30px;
-            float: left;
-        }
+.goods-detail-desc .common-question .question-hd .title_b {
+    width: 767px;
+    border-left: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+    padding-left: 30px;
+    float: left;
+}
 
-            .goods-detail-desc .common-question .question-hd .title_b a {
-                height: 50px;
-                display: block;
-            }
+.goods-detail-desc .common-question .question-hd .title_b a {
+    height: 50px;
+    display: block;
+}
 
-    .goods-detail-desc .common-question .question-bd {
-        padding-top: 30px;
-        padding-left: 10px;
-        padding-right: 30px;
-    }
+.goods-detail-desc .common-question .question-bd {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 
-        .goods-detail-desc .common-question .question-bd .content {
-            list-style-type: none;
-        }
+.goods-detail-desc .common-question .question-bd .content {
+    list-style-type: none;
+}
 
-            .goods-detail-desc .common-question .question-bd .content li h3 {
-                font-size: 14px;
-                color: #6d6d6d;
-                font-weight: normal;
-            }
+.goods-detail-desc .common-question .question-bd .content li h3 {
+    font-size: 14px;
+    color: #6d6d6d;
+    font-weight: normal;
+}
 
-            .goods-detail-desc .common-question .question-bd .content li p {
-                margin-top: 10px;
-                margin-bottom: 20px;
-                font-size: 12px;
-                color: #8c8c8c;
-            }
+.goods-detail-desc .common-question .question-bd .content li p {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: #8c8c8c;
+}
 
 .goods-detail-desc .guess-u-like {
     margin-top: 35px;
 }
 
-    .goods-detail-desc .guess-u-like h2 {
-        font-size: 30px;
-        text-align: center;
-        color: #333;
-        border-bottom: 1px solid #dfdfdf;
-    }
+.goods-detail-desc .guess-u-like h2 {
+    font-size: 30px;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #dfdfdf;
+}
 
-    .goods-detail-desc .guess-u-like .goods-list li {
-        float: left;
-    }
+.goods-detail-desc .guess-u-like .goods-list li {
+    float: left;
+}
 
 .goods-sub-bar {
     display: block;
@@ -1246,112 +1244,112 @@ dl.goods-info-box {
     border-bottom: 1px solid #c3c3c3;
 }
 
-    .goods-sub-bar ul, .goods-sub-bar li, .goods-sub-bar p, .goods-sub-bar dl, .goods-sub-bar dd, .goods-sub-bar h1, .goods-sub-bar h2, .goods-sub-bar h3, .goods-sub-bar h4, .goods-sub-bar h5, .goods-sub-bar h6 {
-        padding: 0;
-        margin: 0;
-    }
+.goods-sub-bar ul, .goods-sub-bar li, .goods-sub-bar p, .goods-sub-bar dl, .goods-sub-bar dd, .goods-sub-bar h1, .goods-sub-bar h2, .goods-sub-bar h3, .goods-sub-bar h4, .goods-sub-bar h5, .goods-sub-bar h6 {
+    padding: 0;
+    margin: 0;
+}
 
-    .goods-sub-bar ul, .goods-sub-bar li, .goods-sub-bar ol {
-        list-style: none;
-    }
+.goods-sub-bar ul, .goods-sub-bar li, .goods-sub-bar ol {
+    list-style: none;
+}
 
-    .goods-sub-bar .goods-sub-bar-info {
-        padding: 10px 0;
-    }
+.goods-sub-bar .goods-sub-bar-info {
+    padding: 10px 0;
+}
 
-        .goods-sub-bar .goods-sub-bar-info dt {
-            float: left;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
+.goods-sub-bar .goods-sub-bar-info dt {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
 
-            .goods-sub-bar .goods-sub-bar-info dt img {
-                width: 40px;
-                height: 40px;
-            }
+.goods-sub-bar .goods-sub-bar-info dt img {
+    width: 40px;
+    height: 40px;
+}
 
-        .goods-sub-bar .goods-sub-bar-info dd {
-            float: left;
-            display: block;
-            width: 180px;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
+.goods-sub-bar .goods-sub-bar-info dd {
+    float: left;
+    display: block;
+    width: 180px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
-            .goods-sub-bar .goods-sub-bar-info dd strong {
-                font-weight: normal;
-                color: #333;
-            }
+.goods-sub-bar .goods-sub-bar-info dd strong {
+    font-weight: normal;
+    color: #333;
+}
 
-            .goods-sub-bar .goods-sub-bar-info dd em {
-                margin-right: 5px;
-                color: #ee330a;
-            }
+.goods-sub-bar .goods-sub-bar-info dd em {
+    margin-right: 5px;
+    color: #ee330a;
+}
 
-            .goods-sub-bar .goods-sub-bar-info dd del {
-                color: #c3c3c3;
-            }
+.goods-sub-bar .goods-sub-bar-info dd del {
+    color: #c3c3c3;
+}
 
-    .goods-sub-bar .fr {
-        float: right;
-    }
+.goods-sub-bar .fr {
+    float: right;
+}
 
-        .goods-sub-bar .fr .btn {
-            margin-top: 10px;
-            margin-right: 0;
-        }
+.goods-sub-bar .fr .btn {
+    margin-top: 10px;
+    margin-right: 0;
+}
 
-        .goods-sub-bar .fr .goods-add-cart-btn .iconfont {
-            vertical-align: -2px;
-        }
+.goods-sub-bar .fr .goods-add-cart-btn .iconfont {
+    vertical-align: -2px;
+}
 
-        .goods-sub-bar .fr .goods-add-cart-btn, .goods-sub-bar .fr .goods-over-btn {
-            width: 235px;
-            color: #fff;
-            font-size: 12px;
-            line-height: 40px;
-            height: 40px;
-        }
+.goods-sub-bar .fr .goods-add-cart-btn, .goods-sub-bar .fr .goods-over-btn {
+    width: 235px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 40px;
+    height: 40px;
+}
 
-            .goods-sub-bar .fr .goods-add-cart-btn .iconfont, .goods-sub-bar .fr .goods-over-btn .iconfont {
-                font-size: 14px;
-            }
+.goods-sub-bar .fr .goods-add-cart-btn .iconfont, .goods-sub-bar .fr .goods-over-btn .iconfont {
+    font-size: 14px;
+}
 
-        .goods-sub-bar .fr .item-action-state {
-            position: absolute;
-            left: 0px;
-            bottom: -70px;
-            z-index: 9;
-            width: 237px;
-            height: 42px;
-            text-align: center;
-            top: 52px;
-            line-height: 42px;
-            color: #fff;
-            background: #90ce36;
-            cursor: pointer;
-            _zoom: 1;
-        }
+.goods-sub-bar .fr .item-action-state {
+    position: absolute;
+    left: 0px;
+    bottom: -70px;
+    z-index: 9;
+    width: 237px;
+    height: 42px;
+    text-align: center;
+    top: 52px;
+    line-height: 42px;
+    color: #fff;
+    background: #90ce36;
+    cursor: pointer;
+    _zoom: 1;
+}
 
-    .goods-sub-bar .goods-desc-menu {
-        float: left;
-    }
+.goods-sub-bar .goods-desc-menu {
+    float: left;
+}
 
-        .goods-sub-bar .goods-desc-menu .items li {
-            text-align: center;
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 60px;
-            color: #6d6d6d;
-            float: left;
-            width: 110px;
-        }
+.goods-sub-bar .goods-desc-menu .items li {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 60px;
+    color: #6d6d6d;
+    float: left;
+    width: 110px;
+}
 
-        .goods-sub-bar .goods-desc-menu .items .current a {
-            color: #ee330a;
-        }
+.goods-sub-bar .goods-desc-menu .items .current a {
+    color: #ee330a;
+}
 
 .goods-sub-bar-play {
     top: 0px;
@@ -1679,4 +1677,7 @@ dl.goods-info-box {
 .goods-att-info {
     position:relative;
 }
+
+/*³¬ÖµÌ×²Í*/
+
 

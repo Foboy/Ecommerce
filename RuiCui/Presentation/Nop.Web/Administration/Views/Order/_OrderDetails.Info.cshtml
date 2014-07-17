@@ -104,7 +104,8 @@
             @Html.NopLabelFor(model => model.Id):
         </td>
         <td class="adminData">
-            @Model.Id
+          @(Model.CreatedOn.Ticks.ToString() + Model.Id.ToString()) 
+
         </td>
     </tr>
     @if (!Model.IsLoggedInAsVendor)

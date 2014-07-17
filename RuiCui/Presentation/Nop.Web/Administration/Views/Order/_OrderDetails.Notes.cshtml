@@ -66,7 +66,7 @@
                             field: "Note",
                             title: "@T("Admin.Orders.OrderNotes.Fields.Note")",
                             encoded: false
-                        },{
+                        },@*{
                             field: "DownloadId",
                             title: "@T("Admin.Orders.OrderNotes.Fields.Download")",
                             template: '# if(DownloadId > 0) {# <a href="@Url.Content("~/Admin/Download/DownloadFile")?downloadGuid=#=DownloadGuid#">@T("Admin.Orders.OrderNotes.Fields.Download.Link")</a> #} else {# @T("Admin.Orders.OrderNotes.Fields.Download.Link.No") #} #'
@@ -77,7 +77,7 @@
                             headerAttributes: { style: "text-align:center" },
                             attributes: { style: "text-align:center" },
                             template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=DisplayToCustomer#.gif" />'
-                        },  {
+                        },*@  {
                             command: { name: "destroy", text: "@T("Admin.Common.Delete")" },
                             title: "@T("Admin.Common.Delete")",
                             width: 100
@@ -103,7 +103,8 @@
             @Html.ValidationMessageFor(model => model.AddOrderNoteMessage)
         </td>
     </tr>
-    <tr>
+    <!--zheng-->
+    <tr style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.AddOrderNoteDownloadId)
         </td>
@@ -112,7 +113,8 @@
             @Html.ValidationMessageFor(model => model.AddOrderNoteDownloadId)
         </td>
     </tr>
-    <tr>
+    <!--zheng-->
+    <tr style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.AddOrderNoteDisplayToCustomer)
         </td>

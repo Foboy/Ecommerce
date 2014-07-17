@@ -2392,6 +2392,9 @@
     <Content Include="Views\Discount\PackageList.cshtml" />
     <Content Include="Views\Discount\CreatePackage.cshtml" />
     <Content Include="Views\Discount\PackageProductAddPopup.cshtml" />
+    <Content Include="Views\Product\_ProductList.All.cshtml" />
+    <Content Include="Views\Product\_ProductList.Boutique.cshtml" />
+    <Content Include="Views\Product\_ProductList.Vip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
