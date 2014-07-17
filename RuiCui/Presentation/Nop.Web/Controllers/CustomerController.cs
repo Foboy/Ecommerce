@@ -1026,7 +1026,7 @@ namespace Nop.Web.Controllers
                                 _workflowMessageService.SendCustomerEmailValidationMessage(customer, _workContext.WorkingLanguage.Id);
 
                                 //result
-                                return RedirectToRoute("RegisterResult", new { resultId = (int)UserRegistrationType.EmailValidation });
+                                return RedirectToRoute("RegisterByEmailValidation", new { customerGuid = customer.CustomerGuid });
                             }
                         case UserRegistrationType.AdminApproval:
                             {
@@ -1183,6 +1183,44 @@ namespace Nop.Web.Controllers
             }
 
         }
+        [NopHttpsRequirement(SslRequirement.Yes)]
+        public ActionResult RegisterByEmailValidation(Guid? customerGuid)
+        {
+            Customer customer = customerGuid.HasValue ?
+                _customerService.GetCustomerByGuid(customerGuid.Value)
+                : _workContext.CurrentCustomer;
+            if (customer == null)
+                return RedirectToRoute("HomePage");
+            var model = new CustomerInfoModel();
+            PrepareCustomerInfoModel(model, customer, false);
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult AgainSendEmailValidation(string email)
+        {
+            Customer customer = _customerService.GetCustomerByEmail(email);
+            if (customer != null)
+            {
+                int a = _workflowMessageService.SendCustomerEmailValidationMessage(customer, _workContext.WorkingLanguage.Id);
+                if (a > 0)
+                {
+                    var result = new { code = 1 };
+                    return Json(result);
+                }
+                else
+                {
+                    var result = new { code = 0 };
+                    return Json(result);
+                }
+            }
+            else
+            {
+                var result = new { code = 0 };
+                return Json(result);
+            }
+        }
 
         [NopHttpsRequirement(SslRequirement.Yes)]
         public ActionResult AccountActivation(string token, string email)
@@ -1204,9 +1242,19 @@ namespace Nop.Web.Controllers
             _genericAttributeService.SaveAttribute(customer, SystemCustomerAttributeNames.AccountActivationToken, "");
             //send welcome message
             _workflowMessageService.SendCustomerWelcomeMessage(customer, _workContext.WorkingLanguage.Id);
-
+            
             var model = new AccountActivationModel();
             model.Result = _localizationService.GetResource("Account.AccountActivation.Activated");
+            
+
+            //migrate shopping cart
+            _shoppingCartService.MigrateShoppingCart(_workContext.CurrentCustomer, customer, true);
+
+            //sign in new customer
+            _authenticationService.SignIn(customer, true);
+
+            //activity log
+            _customerActivityService.InsertActivity("PublicStore.Login", _localizationService.GetResource("ActivityLog.PublicStore.Login"), customer);
             return View(model);
         }
 
@@ -1432,7 +1480,7 @@ namespace Nop.Web.Controllers
                 model.EditAddress.PrepareModel(null, false, _addressSettings, _localizationService,
             _stateProvinceService, () => _countryService.GetAllCountries());
             }
-                
+
             return View(model);
         }
 
