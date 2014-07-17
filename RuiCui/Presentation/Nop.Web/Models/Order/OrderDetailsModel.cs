@@ -4,6 +4,7 @@ using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Common;
 using Nop.Web.Models.Customer;
 using Nop.Web.Models.Media;
+using System.Web.Mvc;
 
 namespace Nop.Web.Models.Order
 {
@@ -19,6 +20,7 @@ namespace Nop.Web.Models.Order
 
             BillingAddress = new AddressModel();
             ShippingAddress = new AddressModel();
+            DiscountUseages = new List<SelectListItem>();
         }
 
         public bool PrintMode { get; set; }
@@ -68,6 +70,8 @@ namespace Nop.Web.Models.Order
         public IList<OrderNote> OrderNotes { get; set; }
 
         public CustomerNavigationModel NavigationModel { get; set; }
+
+        public IList<SelectListItem> DiscountUseages { get; set; }
 
 		#region Nested Classes
 

@@ -104,7 +104,7 @@
                                 field: "Id",
                                 title: "操作",
                                 width: 200,
-                                template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
+                                template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat" target="_blank">@T("Admin.Common.Edit")</a>' +' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" + ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'
                             }
                         ]
                     } );
@@ -116,6 +116,11 @@
         var selectedIds = [];
         $(document).ready(function () {
             $('#cancelboutique-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("CancelBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));

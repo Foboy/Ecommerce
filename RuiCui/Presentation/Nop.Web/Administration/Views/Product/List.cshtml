@@ -28,7 +28,51 @@
             <input type="button" id="delete-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Delete.Selected")" />
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("a.product_search_speclink").click(function () {
+                var me = $(this);
+                me.siblings("a").removeClass("btn-primary").attr("selected", false);
+                if (me.attr("selected")) {
+                    me.removeClass("btn-primary").attr("selected", false);
+                }
+                else {
+                    me.addClass("btn-primary").attr("selected", true);
+                }
+            })
+        });
+    </script>
     <table width="100%">
+        @for (var i = 0; i < Model.Specs.Count;i++ )
+        {
+            var spec = Model.Specs[i];
+         <tr>
+            <td class="adminTitle">
+                <label title="@(spec.Name)">@(spec.Name)</label>:
+            </td>
+            <td class="adminData">
+                @for (var j = 0; j < spec.Options.Count; j++)
+                {
+                    var option = spec.Options[j];
+                    if (j > 0)
+                    {
+                        <span>|</span>
+                    }
+                    <a href="javascript:void(0)" class="product_search_speclink" data-specid="@option.Value">@option.Text</a>
+                }
+            </td>
+        </tr>
+        }
+        <tr>
+            <td class="adminTitle">
+                <label title="价格区间">价格区间</label>:
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.SearchMinPrice)
+                -
+                @Html.EditorFor(model => model.SearchMaxPrice)
+            </td>
+        </tr>
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchProductName):
@@ -38,6 +82,7 @@
                 <input type="button" id="search-products" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
             </td>
         </tr>
+
         <tr>
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.SearchCategoryId):
@@ -213,6 +258,14 @@
         });
 
         function additionalData() {
+            var product_search_select_specids = [];
+            $("a.product_search_speclink").each(function () {
+                var me = $(this);
+                if (me.attr("selected"))
+                {
+                    product_search_select_specids.push(me.attr("data-specid"));
+                }
+            });
             return {
                 SearchProductName: $('#@Html.FieldIdFor(model => model.SearchProductName)').val(),
                 SearchCategoryId: $('#SearchCategoryId').val(),
@@ -221,7 +274,10 @@
                 SearchStoreId: $('#SearchStoreId').val(),
                 SearchWarehouseId: $('#SearchWarehouseId').val(),
                 SearchVendorId: $('#SearchVendorId').val(),
-                SearchProductTypeId: $('#SearchProductTypeId').val()
+                SearchProductTypeId: $('#SearchProductTypeId').val(),
+                SearchSpecIds: product_search_select_specids.join(","),
+                SearchMinPrice: $('#@Html.FieldIdFor(model => model.SearchMinPrice)').val(),
+                SearchMaxPrice: $('#@Html.FieldIdFor(model => model.SearchMaxPrice)').val(),
             };
         }
 

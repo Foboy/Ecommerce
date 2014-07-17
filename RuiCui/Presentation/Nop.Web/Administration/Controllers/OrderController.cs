@@ -760,7 +760,8 @@ namespace Nop.Admin.Controllers
                         ShippingStatus = x.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext),
                         CustomerEmail = x.BillingAddress.Email,
                         CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
-                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc),
+                        OrderNum=_dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc).Ticks.ToString() + x.Id
                     };
                 }),
                 Total = orders.TotalCount
@@ -794,7 +795,13 @@ namespace Nop.Admin.Controllers
         [FormValueRequired("go-to-order-by-number")]
         public ActionResult GoToOrderId(OrderListModel model)
         {
-            var order = _orderService.GetOrderById(model.GoDirectlyToNumber);
+            int orderId=0;
+            if(model.OrderNum.Trim().Length>18)
+            {
+              int.TryParse( model.OrderNum.Trim().Substring(17),out orderId);
+            }
+
+            var order = _orderService.GetOrderById(orderId);
             if (order != null)
                 return RedirectToAction("Edit", "Order", new { id = order.Id });
             else

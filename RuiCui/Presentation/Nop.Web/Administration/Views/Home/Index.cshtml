@@ -99,11 +99,12 @@
                 }
             </div>
             <div id="chart" >
-                <div id="OrderTotal" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+                <div id="OrderTotal" class="col-sm-12" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
                 <div >
-                    <div id="UnfinishedOrders" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
-                    <div id="mainMap" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+                    <div id="UnfinishedOrdersChartAmount" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
+                    <div id="UnfinishedOrdersChartNumber" class="col-sm-6" style="height:500px;border:1px solid #ccc;"></div>
                 </div>
+                <div id="mainMap" class="col-sm-12" style="height: 500px; border: 1px solid #ccc; padding: 10px;"></div>
             </div>
         </td>
     </tr>
@@ -185,12 +186,12 @@
                 });
             }
         })
-        var UnfinishedOrdersChart = echarts.init(document.getElementById('UnfinishedOrders'));
+        var UnfinishedOrdersChartAmount = echarts.init(document.getElementById('UnfinishedOrdersChartAmount'));
+        var UnfinishedOrdersChartNumber = echarts.init(document.getElementById('UnfinishedOrdersChartNumber'));
        // $.post();
-        UnfinishedOrdersChart.setOption({
+        UnfinishedOrdersChartAmount.setOption({
             title: {
-                text: '某站点用户访问来源',
-                subtext: '纯属虚构',
+                text: '未完成的订单总额环比',
                 x: 'center'
             },
             tooltip: {
@@ -200,7 +201,7 @@
             legend: {
                 orient: 'vertical',
                 x: 'left',
-                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+                data: ['未支付的订单总额(待付款的订单)', '未发货的订单总额', '未完成的订单总额(待处理的订单)']
             },
             toolbox: {
                 show: true,
@@ -213,16 +214,51 @@
             calculable: true,
             series: [
                 {
-                    name: '访问来源',
+                    name: '条件来源',
                     type: 'pie',
                     radius: '55%',
                     center: ['50%', '60%'],
                     data: [
-                        { value: 335, name: '直接访问' },
-                        { value: 310, name: '邮件营销' },
-                        { value: 234, name: '联盟广告' },
-                        { value: 135, name: '视频广告' },
-                        { value: 1548, name: '搜索引擎' }
+                        { value: 335, name: '未支付的订单总额(待付款的订单)' },
+                        { value: 135, name: '未发货的订单总额' },
+                        { value: 1548, name: '未完成的订单总额(待处理的订单)' }
+                    ]
+                }
+            ]
+        });
+        UnfinishedOrdersChartNumber.setOption({
+            title: {
+                text: '未完成的订单总数环比',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'left',
+                data: ['未支付的订单总数(待付款的订单)', '未发货的订单总数', '未完成的订单总数(待处理的订单)']
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: { show: true },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            calculable: true,
+            series: [
+                {
+                    name: '条件来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        { value: 8, name: '未支付的订单总数(待付款的订单)' },
+                        { value: 11, name: '未发货的订单总数' },
+                        { value: 7, name: '未完成的订单总数(待处理的订单)' }
                     ]
                 }
             ]

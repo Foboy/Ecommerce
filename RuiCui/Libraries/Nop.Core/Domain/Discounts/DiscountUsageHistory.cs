@@ -33,5 +33,7 @@ namespace Nop.Core.Domain.Discounts
         /// Gets or sets the order
         /// </summary>
         public virtual Order Order { get; set; }
+
+        public virtual decimal DiscountAmount { get; set; }
     }
 }

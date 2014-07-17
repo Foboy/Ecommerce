@@ -1,0 +1,88 @@
+﻿@model CustomerInfoModel
+@using Nop.Web.Models.Customer
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>瑞翠华光帐户 - 激活帐号</title>
+    <link href="~/Themes/DefaultTheme/Content/css/register.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sendMsg").bind('click',function () {
+                var me = $(this);
+                if (me.attr("disabled")) { return false; }
+                $.post("@Html.Raw(Url.Action("AgainSendEmailValidation", "Customer", new { email =Model.Email }))", {}, function (data, status) {
+                    if (status = "success") {
+                        console.log(data);
+                        if (data.code == 1) {
+                            me.attr("disabled", "true");
+                            me.time = 60;
+                            ; (function () {
+                                if (me.time > 1) {
+                                    me.time--;
+                                    me.html("&nbsp;发送成功！如未收到，(" + me.time + ")秒后可以再次尝试！");
+                                    setTimeout(arguments.callee, 1000);
+                                } else {
+                                    me.html("点此重新发送激活邮件");
+                                    me.removeAttr("disabled");
+                                }
+                            })();
+                        } else {
+                            me.attr("disabled", "true");
+                            me.time = 5;
+                            ; (function () {
+                                if (me.time > 1) {
+                                    me.time--;
+                                    me.html("&nbsp;发送失败，请再次获取(" + me.time + ")");
+                                    setTimeout(arguments.callee, 1000);
+                                } else {
+                                    me.html("点此重新发送激活邮件");
+                                    me.removeAttr("disabled");
+                                }
+                            })();
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="top">
+        <div class="logo">
+
+            <a href="/"><img width="70" src="~/Themes/DefaultTheme/Content/Images/logo.jpg" alt="瑞翠华光logo" /></a>
+
+        </div>
+    </div>
+
+    <div class="suc_content">
+        <div class="suc_kuang">
+            <div class="hei_444 teln_m">
+                <div class="title">还差一步，请激活您的帐号</div>
+                <div class="register">
+                    <div class="point_email">
+                        <p>系统已经发送了一封激活邮件到您的邮箱</p><p>请访问您的邮箱：<b>@Model.Email</b>，点击邮件中的链接便可激活您的帐号</p>
+                    </div>
+                    <div class="other">
+                        <p>&nbsp;&nbsp;如果没有收到激活邮件：</p><p>• 也许邮件被您的邮箱误认为是垃圾邮件而放到垃圾箱中，请检查一下</p><p>• 或者，您可以<a id="sendMsg" class="action" href="javascript:void(0)">点此重新发送激活邮件</a></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="suc_botm"></div>
+        </div>
+    </div>
+    <div class="footer" style="width:auto;">
+        <ul class="links">
+            <li class="copyright"><span>版权所有 © 2014 瑞翠商城 保留所有权利</span></li>
+        </ul>
+    </div>
+</body>
+</html>
