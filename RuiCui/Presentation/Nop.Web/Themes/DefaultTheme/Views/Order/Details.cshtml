@@ -193,10 +193,18 @@
                                                 </span>
                                             </dt>
                                             <dd class="cart-total-right">
+
+                                                @foreach (var duh in Model.DiscountUseages)
+                                                {
+                                                    
+                                                    <span>@(duh.Text + "：" + @duh.Value)</span>
+                                                    <br />
+                                                }
                                                 <span class="nobr">
-                                                    @Model.OrderTotalDiscount
+                                                    @("折扣总计：" + Model.OrderTotalDiscount)
                                                 </span>
                                             </dd>
+
 
                                     }
                                     @if (Model.GiftCards.Count > 0)

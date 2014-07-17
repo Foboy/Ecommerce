@@ -116,7 +116,13 @@
                             : </span>
                     </td>
                     <td class="cart-total-right">
-                        <span class="nobr"><span class="product-price">@Model.OrderTotalDiscount</span> </span>
+                        
+                        @foreach (var duh in Model.DiscountUseages)
+                        { 
+                            <span>@(duh.Text + "："+ @duh.Value)</span>
+                            <br />
+                        }
+                        <span class="nobr"><span class="product-price">@("折扣总计：" + Model.OrderTotalDiscount)</span> </span>
                     </td>
                 </tr>
             }
