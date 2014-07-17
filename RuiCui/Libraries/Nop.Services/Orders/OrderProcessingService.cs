@@ -715,6 +715,7 @@ namespace Nop.Services.Orders
 
                 //applied discount (used to store discount usage history)
                 var appliedDiscounts = new List<Discount>();
+                var appliedDiscountsWithDiscountAmount = new List<DiscountUsageHistory>();
 
                 //sub total
                 decimal orderSubTotalInclTax, orderSubTotalExclTax;
@@ -734,7 +735,14 @@ namespace Nop.Services.Orders
 
                     //discount history
                     if (orderSubTotalAppliedDiscount1 != null && !appliedDiscounts.ContainsDiscount(orderSubTotalAppliedDiscount1))
+                    {
                         appliedDiscounts.Add(orderSubTotalAppliedDiscount1);
+                        appliedDiscountsWithDiscountAmount.Add(new DiscountUsageHistory() {
+                            Discount = orderSubTotalAppliedDiscount1,
+                            DiscountAmount = orderSubTotalDiscountAmount1
+                        });
+                    }
+                        
 
                     //sub total (excl tax)
                     decimal orderSubTotalDiscountAmount2 = decimal.Zero;
@@ -816,7 +824,15 @@ namespace Nop.Services.Orders
                         throw new NopException("Shipping total couldn't be calculated");
 
                     if (shippingTotalDiscount != null && !appliedDiscounts.ContainsDiscount(shippingTotalDiscount))
+                    {
                         appliedDiscounts.Add(shippingTotalDiscount);
+                        appliedDiscountsWithDiscountAmount.Add(new DiscountUsageHistory()
+                        {
+                            Discount = shippingTotalDiscount,
+                            DiscountAmount = taxRate
+                        });
+                    }
+                        
                 }
                 else
                 {
@@ -887,7 +903,15 @@ namespace Nop.Services.Orders
 
                     //discount history
                     if (orderAppliedDiscount != null && !appliedDiscounts.ContainsDiscount(orderAppliedDiscount))
+                    {
                         appliedDiscounts.Add(orderAppliedDiscount);
+                        appliedDiscountsWithDiscountAmount.Add(new DiscountUsageHistory()
+                        {
+                            Discount = orderAppliedDiscount,
+                            DiscountAmount = orderDiscountAmount
+                        });
+                    }
+                        
                 }
                 else
                 {
@@ -1112,7 +1136,15 @@ namespace Nop.Services.Orders
                                 decimal discountAmountInclTax = _taxService.GetProductPrice(sc.Product, discountAmount, true, customer, out taxRate);
                                 decimal discountAmountExclTax = _taxService.GetProductPrice(sc.Product, discountAmount, false, customer, out taxRate);
                                 if (scDiscount != null && !appliedDiscounts.ContainsDiscount(scDiscount))
+                                {
                                     appliedDiscounts.Add(scDiscount);
+                                    appliedDiscountsWithDiscountAmount.Add(new DiscountUsageHistory()
+                                    {
+                                        Discount = scDiscount,
+                                        DiscountAmount = discountAmount
+                                    });
+                                }
+                                   
 
                                 //attributes
                                 string attributeDescription = _productAttributeFormatter.FormatAttributes(sc.Product, sc.AttributesXml, customer);
@@ -1247,6 +1279,8 @@ namespace Nop.Services.Orders
 
                         //discount usage history
                         if (!processPaymentRequest.IsRecurringPayment)
+                        {
+                            /*
                             foreach (var discount in appliedDiscounts)
                             {
                                 var duh = new DiscountUsageHistory()
@@ -1256,7 +1290,20 @@ namespace Nop.Services.Orders
                                     CreatedOnUtc = DateTime.UtcNow
                                 };
                                 _discountService.InsertDiscountUsageHistory(duh);
+                            }*/
+                            foreach (var discount in appliedDiscountsWithDiscountAmount)
+                            {
+                                var duh = new DiscountUsageHistory()
+                                {
+                                    Discount = discount.Discount,
+                                    Order = order,
+                                    DiscountAmount = discount.DiscountAmount,
+                                    CreatedOnUtc = DateTime.UtcNow
+                                };
+                                _discountService.InsertDiscountUsageHistory(duh);
                             }
+                        }
+
 
                         //gift card usage history
                         if (!processPaymentRequest.IsRecurringPayment)
