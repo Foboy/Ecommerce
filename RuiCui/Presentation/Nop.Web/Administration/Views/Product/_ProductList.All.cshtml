@@ -136,12 +136,22 @@
         var selectedIds = [];
         $(document).ready(function () {
             $('#setvip-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("SetProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
             $('#setboutique-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("SetBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));

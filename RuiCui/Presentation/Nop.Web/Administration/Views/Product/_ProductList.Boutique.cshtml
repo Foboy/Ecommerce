@@ -116,6 +116,11 @@
         var selectedIds = [];
         $(document).ready(function () {
             $('#cancelboutique-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("CancelBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));
