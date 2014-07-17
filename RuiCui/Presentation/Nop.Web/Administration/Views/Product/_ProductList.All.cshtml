@@ -121,7 +121,7 @@
                     field: "Id",
                     title: "操作",
                     width: 200,
-                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat">@T("Admin.Common.Edit")</a>' +
+                    template: '<a href="Edit/#=Id#" class="btn btn-sm btn-primary btn-flat" target="_blank">@T("Admin.Common.Edit")</a>' +
                         ' '+"<a  onclick='javascript:OpenWindow(\"/#=SeName#\", 1250, 600, true); return false;' class='btn btn-sm btn-primary btn-flat '>@T("Admin.Common.Preview")</a>" +
                         ' '+'<a href="Edit/#=Id#?currentoption=%23collapseorder" class="btn btn-sm btn-primary btn-flat">已购买订单</a>'+' '+
                         "<a  onclick='javascript:OpenWindow(\"/addproducttopackage/#=Id#\", 650, 400, true); return false;' class='btn btn-sm btn-primary btn-flat '>添加到套餐</a>"
@@ -136,12 +136,22 @@
         var selectedIds = [];
         $(document).ready(function () {
             $('#setvip-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("SetProductVipZone", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
             $('#setboutique-selected').click(function (e) {
+                if(selectedIds.length==0)
+                {
+                    confirm("请勾选商品");
+                    return;
+                }
                 e.preventDefault();
                 //redirect to required URL
                 setLocation('@(Url.Action("SetBoutiqueZone", "Product"))?selectedIds=' + selectedIds.join(","));

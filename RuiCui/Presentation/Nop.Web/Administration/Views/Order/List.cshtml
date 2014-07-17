@@ -104,7 +104,7 @@
                 @Html.NopLabelFor(model => model.GoDirectlyToNumber):
             </td>
             <td class="adminData">
-                @Html.EditorFor(model => model.GoDirectlyToNumber)
+                @Html.EditorFor(model => model.OrderNum)
                 <input type="submit" name="go-to-order-by-number" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
             </td>
         </tr>
@@ -177,7 +177,7 @@
                                     width: 50
                                 },
                                 {
-                                    field: "Id",
+                                    field: "OrderNum",
                                     title: "@T("Admin.Orders.Fields.ID")",
                                 width: 50
                                 },

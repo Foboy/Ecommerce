@@ -15,6 +15,8 @@ namespace Nop.Admin.Models.Catalog
             AvailableWarehouses = new List<SelectListItem>();
             AvailableVendors = new List<SelectListItem>();
             AvailableProductTypes = new List<SelectListItem>();
+            SearchIncludeSubCategories = true;
+            Specs = new List<CategorySpecificationAtrributeModel>();
         }
 
         [NopResourceDisplayName("Admin.Catalog.Products.List.SearchProductName")]
@@ -39,6 +41,12 @@ namespace Nop.Admin.Models.Catalog
         [AllowHtml]
         public string GoDirectlyToSku { get; set; }
 
+        public decimal SearchMinPrice { get; set; }
+
+        public decimal SearchMaxPrice { get; set; }
+
+        public string SearchSpecIds { get; set; }
+
         public bool DisplayProductPictures { get; set; }
 
         public bool IsLoggedInAsVendor { get; set; }
@@ -49,6 +57,8 @@ namespace Nop.Admin.Models.Catalog
         public IList<SelectListItem> AvailableWarehouses { get; set; }
         public IList<SelectListItem> AvailableVendors { get; set; }
         public IList<SelectListItem> AvailableProductTypes { get; set; }
+
+        public IList<CategorySpecificationAtrributeModel> Specs { get; set; }
 
       
     }
