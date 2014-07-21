@@ -16,6 +16,8 @@ namespace Nop.Admin.Models.Orders
         [NopResourceDisplayName("Admin.Orders.Shipments.OrderID")]
         public int OrderId { get; set; }
         [NopResourceDisplayName("Admin.Orders.Shipments.TotalWeight")]
+
+        public string OrderNum { get; set; }
         public string TotalWeight { get; set; }
         [NopResourceDisplayName("Admin.Orders.Shipments.TrackingNumber")]
         public string TrackingNumber { get; set; }
@@ -28,6 +30,8 @@ namespace Nop.Admin.Models.Orders
         [NopResourceDisplayName("Admin.Orders.Shipments.DeliveryDate")]
         public string DeliveryDate { get; set; }
         public bool CanDeliver { get; set; }
+
+        public bool IsMayReturn { get; set; }
         public DateTime? DeliveryDateUtc { get; set; }
 
         public List<ShipmentItemModel> Items { get; set; }
