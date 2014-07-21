@@ -8,7 +8,7 @@
     <div class="section-header">
         <div class="title">
             <img src="@Url.Content("~/Administration/Content/images/ico-sales.png")" alt="" />
-            @string.Format(T("Admin.Orders.Shipments.AddNew.Title").Text, Model.OrderId) @Html.ActionLink("(" + T("Admin.Orders.Shipments.BackToOrder") + ")", "Edit", new { id = Model.OrderId })
+          @string.Format("添加配送信息到订单编号{0}",Model.OrderId)的订单中 @Html.ActionLink("(" + T("Admin.Orders.Shipments.BackToOrder") + ")", "Edit", new { id = Model.OrderId })
         </div>
         <div class="options">
             <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Save")" />
@@ -47,21 +47,21 @@
                             <th align="center">
                                 @T("Admin.Orders.Shipments.Products.ProductName")
                             </th>
-                            <th align="center">
+                            @*<th align="center">
                                 @T("Admin.Orders.Shipments.Products.SKU")
-                            </th>
+                            </th>*@
                             <th align="center">
                                 @T("Admin.Orders.Shipments.Products.ItemWeight")
                             </th>
                             <th align="center">
-                                @T("Admin.Orders.Shipments.Products.ItemDimensions")
+                                外形尺寸
                             </th>
                             <th align="center">
                                 @T("Admin.Orders.Shipments.Products.QtyOrdered")
                             </th>
-                            <th align="center">
+                            @*<th align="center">
                                 @T("Admin.Orders.Shipments.Products.QtyShipped")
-                            </th>
+                            </th>*@
                             <th align="center">
                                 @T("Admin.Orders.Shipments.Products.QtyToShip")
                             </th>
@@ -81,11 +81,11 @@
                                         }
                                     </div>
                                 </td>
-                                <td style="width: 10%;">
+                                @*<td style="width: 10%;">
                                     <div style="padding-left: 10px; padding-right: 10px; text-align: left;">
                                         @item.Sku
                                     </div>
-                                </td>
+                                </td>*@
                                 <td align="center" style="width: 10%;">
                                     @item.ItemWeight
                                 </td>
@@ -95,9 +95,9 @@
                                 <td align="center" style="width: 10%;">
                                     @item.QuantityOrdered
                                 </td>
-                                <td align="center" style="width: 10%;">
+                                @*<td align="center" style="width: 10%;">
                                     @item.QuantityInAllShipments
-                                </td>
+                                </td>*@
                                 <td align="center" style="width: 20%;">
                                      <input name="qtyToAdd@(item.OrderItemId)" type="text" value="@item.QuantityToAdd" id="qtyToAdd@(item.OrderItemId)" class="adminInput" style="width:100px;" />
                                 </td>

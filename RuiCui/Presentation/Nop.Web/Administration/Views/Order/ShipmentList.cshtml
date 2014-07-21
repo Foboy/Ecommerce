@@ -12,13 +12,13 @@
     <div class="section-header">
         <div class="title">
             <img src="@Url.Content("~/Administration/Content/images/ico-sales.png")" alt="" />
-            @T("Admin.Orders.Shipments.List")
+            发货与退货
         </div>
         <div class="options">
-            <a href="@Url.Action("PdfPackagingSlipAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Orders.Shipments.PrintPackagingSlip.All")</a>
-            <input type="button" id="exportpackagingslips-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Orders.Shipments.PrintPackagingSlip.Selected")" />
-            <input type="button" id="ship-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Orders.Shipments.ShipSelected")" />
-            <input type="button" id="deliver-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Orders.Shipments.DeliverySelected")" />
+            @*<a href="@Url.Action("PdfPackagingSlipAll")" class="btn btn-sm btn-primary btn-flat ">@T("Admin.Orders.Shipments.PrintPackagingSlip.All")</a>
+            <input type="button" id="exportpackagingslips-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Orders.Shipments.PrintPackagingSlip.Selected")" />*@
+            <input type="button" id="ship-selected" class="btn btn-sm btn-primary btn-flat " value="快速发货" />
+            @*<input type="button" id="deliver-selected" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Orders.Shipments.DeliverySelected")" />*@
         </div>
     </div>
     <table width="100%">
@@ -120,10 +120,10 @@
                             dataBound: onDataBound,
                             columns: [{
                                 field: "Id",
-                                headerTemplate: "<input id='mastercheckbox' type='checkbox'/>",
+                                headerTemplate: "",
                                 headerAttributes: { style: "text-align:center" },
                                 attributes: { style: "text-align:center" },
-                                template: "<input type='checkbox' value='#=Id#' class='checkboxGroups'/>",
+                                template: '<input type="checkbox" value="#=Id#"  #=!CanShip ? "disabled" : "" #/>',
                                 width: 50
                             }, {
                                 field: "Id",
@@ -142,22 +142,30 @@
                                 title: "@T("Admin.Orders.Shipments.TotalWeight")",
                                 width: 100
                             }, {
-                                field: "ShippedDate",
+                                
+                                field: "ShippedDateUtc",
                                 title: "@T("Admin.Orders.Shipments.ShippedDate")",
                                 width: 200,
                                 type: "date",
                                 format: "{0:G}"
-                            }, {
+                            },{
+                                field: "CanShip",
+                                title: "已发货",
+                                width: 50,
+                                headerAttributes: { style: "text-align:center" },
+                                attributes: { style: "text-align:center" },
+                                template: '<img src="@Url.Content("~/Administration/Content/images/")active-#=!CanShip#.gif" />'
+                            },
+                            
+                            @*{
                                 field: "DeliveryDate",
                                 title: "@T("Admin.Orders.Shipments.DeliveryDate")",
-                                width: 200,
-                                type: "date",
-                                format: "{0:G}"
-                            }, {
+                                width: 200
+                            },*@ {
                                 field: "Id",
                                 title: "@T("Admin.Common.View")",
                                 width: 50,
-                                template: '<a href="@Url.Content("~/Admin/Order/ShipmentDetails/")#=Id#">@T("Admin.Common.View")</a>'
+                                template: '<a href="@Url.Content("~/Admin/Order/ShipmentDetails/")#=Id#">编辑</a> #=!IsMayReturn ? "":"|"# <a #=!IsMayReturn ? "style=display:none":"" #>可退货</a>'
                             }]
                         });
                     });
