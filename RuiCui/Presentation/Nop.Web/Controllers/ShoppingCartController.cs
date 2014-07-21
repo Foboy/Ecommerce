@@ -2258,6 +2258,7 @@ namespace Nop.Web.Controllers
                                                           orderSubTotalAppliedDiscount.RequiresCouponCode &&
                                                           !String.IsNullOrEmpty(orderSubTotalAppliedDiscount.CouponCode) &&
                                                           model.IsEditable;
+                    model.DiscountUseages.Add(new SelectListItem() { Text = orderSubTotalAppliedDiscount.Name, Value = model.SubTotalDiscount });
                 }
 
 
@@ -2351,6 +2352,7 @@ namespace Nop.Web.Controllers
                         orderTotalAppliedDiscount.RequiresCouponCode &&
                         !String.IsNullOrEmpty(orderTotalAppliedDiscount.CouponCode) &&
                         model.IsEditable;
+                    model.DiscountUseages.Add(new SelectListItem() { Text = orderTotalAppliedDiscount.Name, Value = model.OrderTotalDiscount });
                 }
 
                 //gift cards

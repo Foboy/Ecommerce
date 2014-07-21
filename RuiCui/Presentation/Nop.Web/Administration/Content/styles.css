@@ -29,7 +29,7 @@ td.fieldname{font-size:12px;}
 .table-container .row{}
 .table-container .row .item-name{padding:3px 10px 0 0;display:block;white-space:nowrap;padding-right:10px;vertical-align:middle;}
 .table-container .row .item-value{padding:3px 0 0;vertical-align:middle;}
-table.adminContent{border-collapse:collapse;color:#333;font-size:12px;margin:0;width:100%;vertical-align:middle;text-align:left;}
+table.adminContent{border-collapse:collapse;color:#333;font-size:12px;margin:10px 0 0 0 ;width:100%;vertical-align:middle;text-align:left;}
 table.adminContent td.adminTitle{padding:4px;}
 table.adminContent td.adminData{padding:4px;}
 td.adminTitle{text-align:left;vertical-align:middle;white-space:nowrap;width:195px;}

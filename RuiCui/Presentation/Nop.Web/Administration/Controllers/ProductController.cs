@@ -847,6 +847,24 @@ namespace Nop.Admin.Controllers
             model.AvailableProductTypes = ProductType.SimpleProduct.ToSelectList(false).ToList();
             model.AvailableProductTypes.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
 
+            var filterSpecs = _categorySpecificationAtrributeService.LoadAllCategorySpecificationAtrribute().Where(s => !s.Deleted && s.AllowFiltering).ToList();
+            var specs = _specificationAttributeService.GetSpecificationAttributes();
+            foreach (var spec in filterSpecs)
+            {
+                var sp = specs.Where(s => s.Id == spec.SpecificationAttributeId).FirstOrDefault();
+                if (sp != null)
+                {
+                    CategorySpecificationAtrributeModel catespec = new CategorySpecificationAtrributeModel();
+
+                    var specOptions = _specificationAttributeService.GetSpecificationAttributeOptionsBySpecificationAttribute(sp.Id);
+                    catespec.Name = sp.Name;
+                    foreach (var so in specOptions)
+                    {
+                        catespec.Options.Add(new SelectListItem() { Text = so.Name, Value = so.Id.ToString() });
+                    }
+                    model.Specs.Add(catespec);
+                }
+            }
             return View(model);
         }
 
@@ -869,6 +887,19 @@ namespace Nop.Admin.Controllers
                     if (model.SearchIncludeSubCategories && model.SearchCategoryId > 0)
                         categoryIds.AddRange(GetChildCategoryIds(model.SearchCategoryId));
 
+                    IList<int> specids = null;
+                    if (!string.IsNullOrWhiteSpace(model.SearchSpecIds))
+                    {
+                        specids = model.SearchSpecIds.Split(new string[]{","}, StringSplitOptions.RemoveEmptyEntries).Select(s => Convert.ToInt32(s)).ToList();
+                    }
+
+                    decimal? priceMin = null;
+                    decimal? priceMax = null;
+                    if (model.SearchMinPrice > 0)
+                        priceMin = model.SearchMinPrice;
+                    if (model.SearchMaxPrice > 0 && model.SearchMaxPrice > model.SearchMinPrice)
+                        priceMax = model.SearchMaxPrice;
+
                     var products = _productService.SearchProducts(
                         categoryIds: categoryIds,
                         manufacturerId: model.SearchManufacturerId,
@@ -879,6 +910,9 @@ namespace Nop.Admin.Controllers
                         keywords: model.SearchProductName,
                         pageIndex: command.Page - 1,
                         pageSize: command.PageSize,
+                        priceMin: priceMin,
+                        priceMax: priceMax,
+                        filteredSpecs: specids,
                         showHidden: true,
                         orderBy: ProductSortingEnum.CreatedOn
                     );

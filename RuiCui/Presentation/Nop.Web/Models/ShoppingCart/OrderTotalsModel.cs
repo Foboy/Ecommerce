@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
+using System.Web.Mvc;
 
 namespace Nop.Web.Models.ShoppingCart
 {
@@ -9,6 +10,7 @@ namespace Nop.Web.Models.ShoppingCart
         {
             TaxRates = new List<TaxRate>();
             GiftCards = new List<GiftCard>();
+            DiscountUseages = new List<SelectListItem>();
         }
         public bool IsEditable { get; set; }
 
@@ -36,6 +38,8 @@ namespace Nop.Web.Models.ShoppingCart
         public int RedeemedRewardPoints { get; set; }
         public string RedeemedRewardPointsAmount { get; set; }
         public string OrderTotal { get; set; }
+
+        public IList<SelectListItem> DiscountUseages { get; set; }
 
         #region Nested classes
 

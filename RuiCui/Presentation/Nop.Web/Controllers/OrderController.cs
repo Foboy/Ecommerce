@@ -30,6 +30,7 @@ using Nop.Web.Infrastructure.Cache;
 using Nop.Core.Domain.Media;
 using Nop.Core.Caching;
 using Nop.Services.Media;
+using Nop.Services.Discounts;
 
 namespace Nop.Web.Controllers
 {
@@ -65,6 +66,7 @@ namespace Nop.Web.Controllers
         private readonly MediaSettings _mediaSettings;
         private readonly ICacheManager _cacheManager;
         private readonly IPictureService _pictureService;
+        private readonly IDiscountService _discountService;
 
         #endregion
 
@@ -87,7 +89,8 @@ namespace Nop.Web.Controllers
             IStoreContext storeContext,
             MediaSettings mediaSettings,
             ICacheManager cacheManager,
-            IPictureService pictureService)
+            IPictureService pictureService,
+            IDiscountService discountService)
         {
             this._orderService = orderService;
             this._shipmentService = shipmentService;
@@ -117,6 +120,7 @@ namespace Nop.Web.Controllers
             this._mediaSettings = mediaSettings;
             this._cacheManager = cacheManager;
             this._pictureService = pictureService;
+            this._discountService = discountService;
         }
 
         #endregion
@@ -496,6 +500,14 @@ namespace Nop.Web.Controllers
                 return new HttpUnauthorizedResult();
 
             var model = PrepareOrderDetailsModel(order);
+
+            var usags = _discountService.GetAllDiscountUsageHistory(null, null, orderId, 0, int.MaxValue);
+
+            foreach (var duh in usags)
+            {
+                var discountAmount = _priceFormatter.FormatPrice(-duh.DiscountAmount, true, order.CustomerCurrencyCode, _workContext.WorkingLanguage, true);
+                model.DiscountUseages.Add(new SelectListItem() { Text = duh.Discount.Name, Value = discountAmount });
+            }
 
             model.NavigationModel = GetCustomerNavigationModel(_workContext.CurrentCustomer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Orders;
