@@ -14,18 +14,10 @@
 {
     <div class="xm-line-box uc-box">
         <div class="box-hd">
-            <h3 class="title">@T("Account.MyAccount") - @T("Account.Avatar")</h3>
+            <h3 class="title">@T("Account.Avatar")</h3>
         </div>
         <div class="box-bd">
             <div class="compensate-content">
-             
-
-                <div class="userhader-img">
-                    <div class="tx-div">
-                        <img src="~/Themes/DefaultTheme/Content/Images/tx.png" />
-                    </div>
-                </div>
-
                 <div class="upload-div">
                     @if (!String.IsNullOrEmpty(Model.AvatarUrl))
                     {
@@ -33,10 +25,19 @@
                             <img src="@(Model.AvatarUrl)" alt="avatar" />
                         </div>
                     }
-                    <input name="uploadedFile" type="file" />
+                    else
+                    { 
+                        <div class="tx-div">
+                            <img src="~/Themes/DefaultTheme/Content/Images/tx.png" />
+                        </div> 
+                    }
+                    <div class="select-btn">
+                        <input class="upload-div-btn" name="uploadedFile" type="file" />
+                    </div>
+                    
                 </div>
                 <div class="upload-btn">
-                    <input type="submit" name="upload-avatar" class="btn btn-primary btn-small" value="@T("Common.Upload")" />
+                    <input type="submit" name="upload-avatar" class="btn btn-primary btn-small upload-btn-margin" value="@T("Common.Upload")" />
                     @if (!String.IsNullOrEmpty(Model.AvatarUrl))
                     {
                         <input type="submit" name="remove-avatar" class="btn btn-primary btn-small" value="@T("Account.Avatar.RemoveAvatar")" />

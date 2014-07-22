@@ -2342,15 +2342,36 @@ a {
     margin:1px;
 }
 .upload-div {
-    height: 30px;
     margin: 30px auto 0;
+    padding: 0;
+}
+.upload-btn {
+    height: 100px;
+    margin: 30px auto auto auto;
     padding: 0;
     width: 130px;
 }
-.upload-btn {
-    height: 40px;
-    margin: 0 auto ;
-    padding: 0;
-    width: 130px;
+.select-btn {
+    margin:10px auto auto auto;
+    padding:0;
+    width:150px;
+}
+.upload-div .image {
+    margin:0 auto;
+    padding:0;
+    height:152px;
+    width:152px;
+    border:1px solid #dfdfdf;
+}
+.upload-div .image img {
+    height:150px;
+    width:150px;
+    margin:1px;
+}
+.upload-div-btn {
+    margin:0 auto;
+}
+.upload-btn-margin {
+    margin-bottom:15px;
 }
 
