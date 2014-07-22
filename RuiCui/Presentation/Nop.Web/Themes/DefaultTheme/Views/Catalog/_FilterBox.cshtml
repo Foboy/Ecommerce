@@ -2,6 +2,7 @@
 @{
     CatalogPagingFilteringModel.SpecificationFilterModel specModel = ViewData["SpecFilter"] as CatalogPagingFilteringModel.SpecificationFilterModel;
     CatalogPagingFilteringModel.PriceRangeFilterModel priceModel =ViewData["PriceFilter"] as CatalogPagingFilteringModel.PriceRangeFilterModel;
+    IList<CategoryModel.SubCategoryModel> subCategories = ViewData["SubCategories"] as IList<CategoryModel.SubCategoryModel>;
     var notFilteredItemsGroups = specModel.NotFilteredItems.GroupBy(x => x.SpecificationAttributeName);
     var selectedItem = priceModel.Items.FirstOrDefault(x => x.Selected);
 
@@ -53,9 +54,51 @@
 {
     if (specModel.NotFilteredItems.Count > 0)
     {
+        var hasguige = false;
         foreach (var group in notFilteredItemsGroups)
         {
             var groupList = group.ToList();
+            if (groupList.Count <= 0)
+            {
+                continue;
+            }
+            if ("款式".Equals(groupList[0].SpecificationAttributeName))
+            {
+                hasguige = true;
+                break;
+            }
+        }
+        if (!hasguige)
+        {
+            <dl class="xm-filter-list  category-filter-list clearfix">
+                <dt>款式 ：</dt>
+                <dd>
+                    <ul id="typeAdapt" class="clearfix">
+                        @{
+                            var firstSpec = 0;
+                        }
+                        @if (subCategories != null && subCategories.Count > 0)
+                        {
+                            foreach (var item in subCategories)
+                            {
+                                <li class="@if (firstSpec++==0){<text>first</text>}
+                                                                     else
+                                                                     {<text></text>}">
+                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#ff4a00;">@item.Name</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </dd>
+            </dl>
+        }
+        foreach (var group in notFilteredItemsGroups)
+        {
+            var groupList = group.ToList();
+            if (groupList.Count <= 0)
+            {
+                continue;
+            }
             <dl class="xm-filter-list  category-filter-list clearfix">
                 <dt>@groupList[0].SpecificationAttributeName ：</dt>
                 <dd>
@@ -63,6 +106,17 @@
                         @{
                             var firstSpec = 0;
                         }
+@if ("款式".Equals(groupList[0].SpecificationAttributeName) && subCategories != null && subCategories.Count > 0)
+{
+    foreach (var item in subCategories)
+    {
+        <li class="@if (firstSpec++==0){<text>first</text>}
+                                                                     else
+                                                                     {<text></text>}">
+            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#ff4a00;">@item.Name</a>
+        </li>
+    }
+}
                         @foreach (var spec in groupList)
                         {
                             <li class="@if (firstSpec++==0){<text>first</text>}

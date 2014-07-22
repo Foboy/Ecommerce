@@ -54,25 +54,12 @@
 </div>
 <div class="box-bd">
     <div class="filter-lists">
-@if (Model.SubCategories.Count > 0)
-{
-    <dl class="xm-filter-list xm-filter-list-first category-filter-list clearfix">
-        <dt>款式：</dt>
-        <dd>
-            <ul id="typeCat" class="clearfix">
-@foreach (var item in Model.SubCategories)
-{
-    <li class="first "><a href="@Url.RouteUrl("Category", new { SeName = item.SeName })">@item.Name</a></li>
-}
-            </ul>
-        </dd>
-    </dl>
-}
         @*filtering*@
         @{
             ViewDataDictionary filters = new ViewDataDictionary();
             filters.Add("SpecFilter", Model.PagingFilteringContext.SpecificationFilter);
             filters.Add("PriceFilter", Model.PagingFilteringContext.PriceRangeFilter);
+            filters.Add("SubCategories", Model.SubCategories);
             @Html.Partial("_FilterBox", null, filters)
         }
     </div>
