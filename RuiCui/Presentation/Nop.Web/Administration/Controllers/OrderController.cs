@@ -637,7 +637,7 @@ namespace Nop.Admin.Controllers
                 DeliveryDate = shipment.DeliveryDateUtc.HasValue ? _dateTimeHelper.ConvertToUserTime(shipment.DeliveryDateUtc.Value, DateTimeKind.Utc).ToString() : "",
                 DeliveryDateUtc = shipment.DeliveryDateUtc,
                 CanDeliver = shipment.ShippedDateUtc.HasValue && !shipment.DeliveryDateUtc.HasValue,
-                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) > shipment.ShippedDateUtc ? true : false
+                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) < shipment.ShippedDateUtc ? true : false
             };
 
 

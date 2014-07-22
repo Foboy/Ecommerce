@@ -2894,11 +2894,12 @@ namespace Nop.Admin.Controllers
                     Price = x.Price,
                     ManageInventoryMethod = x.ManageInventoryMethod.GetLocalizedEnum(_localizationService, _workContext.WorkingLanguage.Id),
                     StockQuantity = x.StockQuantity,
-                    Published = x.Published
+                    Published = x.Published,
+                    CreateTime=_dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
                 };
 
                 return productModel;
-            });
+            }).ToList();
             gridModel.Total = products.TotalCount;
 
             return Json(gridModel);
