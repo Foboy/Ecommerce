@@ -15,6 +15,7 @@ using Nop.Services.Orders;
 using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
+using Nop.Services.Shipping;
 
 namespace Nop.Admin.Controllers
 {
@@ -31,6 +32,7 @@ namespace Nop.Admin.Controllers
         private readonly LocalizationSettings _localizationSettings;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IPermissionService _permissionService;
+        private readonly IShipmentService _shipmentService;
 
         #endregion Fields
 
@@ -40,7 +42,7 @@ namespace Nop.Admin.Controllers
             ICustomerService customerService, IDateTimeHelper dateTimeHelper,
             ILocalizationService localizationService, IWorkContext workContext,
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
-            ICustomerActivityService customerActivityService, IPermissionService permissionService)
+            ICustomerActivityService customerActivityService, IPermissionService permissionService, IShipmentService shipmentService)
         {
             this._orderService = orderService;
             this._customerService = customerService;
@@ -51,6 +53,7 @@ namespace Nop.Admin.Controllers
             this._localizationSettings = localizationSettings;
             this._customerActivityService = customerActivityService;
             this._permissionService = permissionService;
+            this._shipmentService = shipmentService;
         }
 
         #endregion
@@ -133,6 +136,36 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
+        public ActionResult Create(int orderId)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            if (order == null || order.Deleted)
+                return new HttpUnauthorizedResult();
+            var model = new ReturnRequestModel();
+            //model.ProductId = orderItem.ProductId;
+            //model.ProductName = orderItem.Product.Name;
+            //model.OrderId = orderItem.OrderId;
+            //model.CustomerId = returnRequest.CustomerId;
+            //var customer = returnRequest.Customer;
+            //model.CustomerInfo = customer.IsRegistered() ? customer.Email : _localizationService.GetResource("Admin.Customers.Guest");
+            //model.Quantity = returnRequest.Quantity;
+            //model.ReturnRequestStatusStr = returnRequest.ReturnRequestStatus.GetLocalizedEnum(_localizationService, _workContext);
+            //model.CreatedOn = _dateTimeHelper.ConvertToUserTime(returnRequest.CreatedOnUtc, DateTimeKind.Utc);
+            //if (!excludeProperties)
+            //{
+            //    model.ReasonForReturn = returnRequest.ReasonForReturn;
+            //    model.RequestedAction = returnRequest.RequestedAction;
+            //    model.CustomerComments = returnRequest.CustomerComments;
+            //    model.StaffNotes = returnRequest.StaffNotes;
+            //    model.ReturnRequestStatusId = returnRequest.ReturnRequestStatusId;
+            //}
+            ////model is successfully prepared
+            //return true;
+            //model.CustomerInfo = order.Customer.Email;
+            //model.ProductName=order.
+            //model.OrderId = orderId;
+            return View(model);
+        }
 
         //edit
         public ActionResult Edit(int id)
@@ -144,7 +177,7 @@ namespace Nop.Admin.Controllers
             if (returnRequest == null)
                 //No return request found with the specified id
                 return RedirectToAction("List");
-            
+
             var model = new ReturnRequestModel();
             PrepareReturnRequestModel(model, returnRequest, false);
             return View(model);

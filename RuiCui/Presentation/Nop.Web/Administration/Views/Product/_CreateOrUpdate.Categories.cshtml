@@ -95,7 +95,7 @@
                             editor: categoryDropDownEditor, 
                             template: "#:Category#"
                         },
-                        @if (!Model.IsLoggedInAsVendor)
+                        @*@if (!Model.IsLoggedInAsVendor)
                         {
                             //vendor cannot edit this field
                             <text>{
@@ -114,7 +114,7 @@
                         width: 200,
                         //integer format
                         format: "{0:0}"
-                    }, {
+                    },*@ {
                         command: [{
                             name: "edit",
                             text: "更新"

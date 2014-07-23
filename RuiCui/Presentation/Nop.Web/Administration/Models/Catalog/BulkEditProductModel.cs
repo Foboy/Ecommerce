@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Mvc;
+using System;
 
 namespace Nop.Admin.Models.Catalog
 {
@@ -28,5 +29,7 @@ namespace Nop.Admin.Models.Catalog
 
         [NopResourceDisplayName("Admin.Catalog.BulkEdit.Fields.Published")]
         public bool Published { get; set; }
+
+        public DateTime? CreateTime { get; set; }
     }
 }

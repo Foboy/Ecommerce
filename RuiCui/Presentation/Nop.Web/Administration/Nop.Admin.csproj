@@ -2395,6 +2395,7 @@
     <Content Include="Views\Product\_ProductList.All.cshtml" />
     <Content Include="Views\Product\_ProductList.Boutique.cshtml" />
     <Content Include="Views\Product\_ProductList.Vip.cshtml" />
+    <Content Include="Views\ReturnRequest\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />

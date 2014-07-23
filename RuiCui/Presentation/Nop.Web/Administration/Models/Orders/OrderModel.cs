@@ -19,7 +19,6 @@ namespace Nop.Admin.Models.Orders
             Items = new List<OrderItemModel>();
             UsedDiscounts = new List<UsedDiscountModel>();
         }
-        public string OrderNum { get; set; }
         public bool IsLoggedInAsVendor { get; set; }
 
         //identifiers
