@@ -268,7 +268,7 @@
         myChart2.setOption({
             tooltip: {
                 trigger: 'item',
-                formatter: '{b}'
+                formatter: '{c}'
             },
             series: [
                 {
@@ -281,7 +281,8 @@
                         emphasis: { label: { show: true } }
                     },
                     data: [
-                        { name: '广东', selected: true }
+                        { name: '广东', value: 12323, selected: true },
+                        { name: '四川', value: 34343}
                     ]
                 }
             ]

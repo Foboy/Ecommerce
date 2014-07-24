@@ -228,12 +228,14 @@ dl.goods-info-box {
 }
 
 .product-info {
-    font-size:12px;
-    color:#333;
-    height:40px;
-    line-height:40px;
-    margin-bottom:1px;
-    margin-top:1px;
+    clear: both;
+    color: #333;
+    display: table;
+    font-size: 12px;
+    height: 0;
+    margin-bottom: 10px;
+    margin-top: 1px;
+    position: relative;
 }
 .product-info dt {
     width:90px;
@@ -244,6 +246,7 @@ dl.goods-info-box {
 .product-info dd {
     float:left;
     margin-left:10px;
+    width:420px;
 }
 .product-info dd a {
     color:#000;
@@ -1677,7 +1680,39 @@ dl.goods-info-box {
 .goods-att-info {
     position:relative;
 }
+.goods-attr-ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.goods-attr-ul li {
+    float:left;
+    background: none repeat scroll 0 0 #fff;
+    display: inline;
+    float: left;
+    line-height: 20px;
+    margin: 0px 5px 8px 0;
+    position: relative;
+    vertical-align: middle;
+    cursor:pointer;
+}
+.goods-attr-ul li a {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 6px;
+    text-align: center;
+    text-decoration: none;
+    transition-duration: 0.2s;
+    transition-property: border-color, background;
+    white-space: nowrap;
+}
+.goods-attr-ul .goods-attr-selected a{
+    border: 1px solid #f40;
+    color:#f40;
+}
 
-/*³¬ÖµÌ×²Í*/
+
 
 
