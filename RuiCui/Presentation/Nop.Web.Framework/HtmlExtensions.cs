@@ -393,10 +393,15 @@ namespace Nop.Web.Framework
             months.AppendFormat("<option value='{0}'>{1}</option>", "0", monthLocale);
             for (int i = 1; i <= 12; i++)
             {
+                /*
                 months.AppendFormat("<option value='{0}'{1}>{2}</option>",
                                     i,
                                     (selectedMonth.HasValue && selectedMonth.Value == i) ? " selected=\"selected\"" : null,
-                                    CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(i));
+                                    CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(i));*/
+                months.AppendFormat("<option value='{0}'{1}>{2}</option>",
+                                    i,
+                                    (selectedMonth.HasValue && selectedMonth.Value == i) ? " selected=\"selected\"" : null,
+                                    i.ToString() + monthLocale);
             }
 
 
@@ -415,7 +420,7 @@ namespace Nop.Web.Framework
             monthsList.InnerHtml = months.ToString();
             yearsList.InnerHtml = years.ToString();
 
-            return MvcHtmlString.Create(string.Concat(daysList, monthsList, yearsList));
+            return MvcHtmlString.Create(string.Concat(yearsList, monthsList, daysList));
         }
 
         public static MvcHtmlString Widget(this HtmlHelper helper, string widgetZone)
