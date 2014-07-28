@@ -806,6 +806,7 @@ namespace Nop.Web.Controllers
 
                         //currency code
                         model.ProductPrice.CurrencyCode = _workContext.WorkingCurrency.CurrencyCode;
+                        model.ProductPrice.OldPriceValue = oldPrice;
                     }
                 }
             }

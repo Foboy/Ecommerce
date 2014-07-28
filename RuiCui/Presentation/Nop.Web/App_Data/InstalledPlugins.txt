@@ -1,4 +1,4 @@
-DiscountRequirement.HadSpentAmount
+﻿DiscountRequirement.HadSpentAmount
 DiscountRequirement.HasAllProducts
 DiscountRequirement.HasOneProduct
 DiscountRequirement.MustBeAssignedToCustomerRole
@@ -7,13 +7,7 @@ ExternalAuth.OpenId
 Misc.FacebookShop
 Misc.WebServices
 PromotionFeed.Froogle
-Shipping.AustraliaPost
-Shipping.CanadaPost
-Shipping.FedEx
-Shipping.FixedRate
-Shipping.ByWeight
-Shipping.UPS
-Shipping.USPS
+快递基本运费配置
 Mobile.SMS.Verizon
 Tax.FixedRate
 Tax.CountryStateZip

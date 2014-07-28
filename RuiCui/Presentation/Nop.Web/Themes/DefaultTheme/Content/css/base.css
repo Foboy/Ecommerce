@@ -2002,51 +2002,51 @@ a:hover, a:focus {
         border-bottom: 1px solid #dfdfdf;
     }
 
-    .site-footer .footer-links {
-        padding: 40px 0;
-        border-bottom: 1px solid #dfdfdf;
-        color: #6d6d6d;
-    }
+.site-footer .footer-links {
+    padding: 40px 0;
+    border-bottom: 1px solid #dfdfdf;
+    color: #6d6d6d;
+}
 
-    .site-footer .footer-info {
-        padding: 35px 0 65px;
-        font-size: 12px;
-    }
+.site-footer .footer-info {
+    padding: 35px 0 65px;
+    font-size: 12px;
+}
 
-    .site-footer .list-service {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
+.site-footer .list-service {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
 
-        .site-footer .list-service li {
-            float: left;
-            width: 20%;
-            text-align: center;
-        }
+.site-footer .list-service li {
+    float: left;
+    width: 25%;
+    text-align: center;
+}
 
-            .site-footer .list-service li a {
-                display: block;
-                font-size: 12px;
-                color: #333;
-            }
+.site-footer .list-service li a {
+    display: block;
+    font-size: 12px;
+    color: #333;
+}
 
-                .site-footer .list-service li a:hover .iconfont {
-                    color: #ff4a00;
-                }
+.site-footer .list-service li a:hover .iconfont {
+    color: #ff4a00;
+}
 
-                .site-footer .list-service li a .iconfont {
-                    font-size: 30px;
-                    color: #6d6d6d;
-                }
+.site-footer .list-service li a .iconfont {
+    font-size: 30px;
+    color: #6d6d6d;
+}
 
-                .site-footer .list-service li a strong {
-                    display: block;
-                    margin-top: 5px;
-                    font-size: 18px;
-                    font-weight: 400;
-                    color: #000;
-                }
+.site-footer .list-service li a strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #000;
+}
 
     .site-footer .col-links {
         float: left;
@@ -2613,7 +2613,7 @@ a:hover, a:focus {
 }
 
 .xm-pagenavi {
-    padding: 30px 0;
+    margin-top:80px;
     text-align: center;
 }
 

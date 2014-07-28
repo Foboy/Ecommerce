@@ -12,20 +12,20 @@
         <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("用户协议") })">用户协议</a></dd>
     </dl>
     <dl class="col-links">
-        <dt>售后服务</dt>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("正品承诺") })">正品承诺</a></dd>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("售后咨询") })">售后咨询</a></dd>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("退货政策") })">退货政策</a></dd>
+        <dt>服务保障</dt>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("正品承诺") })">验货签收</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("售后咨询") })">运费责任</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("退货政策") })">退货事宜</a></dd>
     </dl>
     <dl class="col-links">
-        <dt>配送方式</dt>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("配送说明") })">配送说明</a></dd>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("运费说明") })">运费说明</a></dd>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("验货签收") })">验货签收</a></dd>
+        <dt>特别说明</dt>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("配送说明") })">测量参数</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("运费说明") })">照片色差</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("验货签收") })">商品瑕疵</a></dd>
     </dl>
     <dl class="col-links">
         <dt>关于瑞翠</dt>
-        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("了解瑞翠") })">了解瑞翠</a></dd>
+        <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("了解瑞翠") })">了解我们</a></dd>
         <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("联系我们") })">联系我们</a></dd>
         <dd><a target="_blank" rel="nofollow" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("关注我们") })">关注我们</a></dd>
     </dl>
@@ -130,21 +130,18 @@
         <img class="float-right" src="/Themes/DefaultTheme/Content/Images/wechart.png" />
     </div>
 </div>
+<!--
 <div class="footer-info clearfix">
     <div class="info-links">
+
         <a href="" target="_blank"><img src="~/Themes/DefaultTheme/Content/Images/cnnicVerifyseal.png" alt="可信网站" /></a> <a href="" target="_blank"><img alt="诚信网站" src="~/Themes/DefaultTheme/Content/Images/szfwVerifyseal.gif" /></a> <a href="" target="_blank"><img alt="诚信网站" src="~/Themes/DefaultTheme/Content/Images/save.jpg" /></a>
     </div>
-</div>
-<div class="footer">
-    @if (Model.DisplayTaxShippingInfoFooter)
-    {
-        var inclTax = EngineContext.Current.Resolve<IWorkContext>().TaxDisplayType == TaxDisplayType.IncludingTax;
-        <div class="footer-tax-shipping">
-            @T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
-        </div>
-    }
+</div>-->
+<div class="footer" style="margin-bottom:30px;text-align:center;color:#8c8c8c;">
     <div class="footer-disclaimer">
-        @T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)
+        Copyright © 2014 rc1314.com，All Rights Reserved 滇ICP备14002449号
+        <br />
+        版权所有 瑞丽市瑞翠科技有限公司
     </div>
     @Html.Widget("footer")
 </div>

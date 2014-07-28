@@ -9,10 +9,11 @@
     string pattern = "(?<val>(\\d+[\\s\\,\\.]?)+)";
     string replacement = String.Format("<span class=\"price-val-for-dyn-upd-{0}\">${{val}}</span> ", Model.ProductId);  
 }
-@if (Model.DynamicPriceUpdate)
+@if (Model.DynamicPriceUpdate || true)
 {
     <script type="text/javascript">
         var priceValForDynUpd_@(Model.ProductId) = @(((float)(Model.PriceValue != Model.PriceWithDiscountValue ? Model.PriceWithDiscountValue : Model.PriceValue)).ToString(new CultureInfo("en-US")));
+        var oldPriceValForDynUpd_@(Model.ProductId) = @(((float)(Model.OldPriceValue)).ToString(new CultureInfo("en-US")));
     </script>
 }
 <div class="prices clearfix" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
