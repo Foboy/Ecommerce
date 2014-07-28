@@ -68,7 +68,6 @@
                 choseItemIds = choseItemIds + $(this).find("input").val() + ",";
             })
             $("#@Html.FieldIdFor(model => model.ChoseOrderItemIds)").val(choseItemIds);
-            alert($("#@Html.FieldIdFor(model => model.ChoseOrderItemIds)").val());
         })
     });
 </script>

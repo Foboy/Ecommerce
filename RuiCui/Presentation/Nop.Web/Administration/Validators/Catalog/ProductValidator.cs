@@ -10,7 +10,7 @@ namespace Nop.Admin.Validators.Catalog
         public ProductValidator(ILocalizationService localizationService)
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage(localizationService.GetResource("Admin.Catalog.Products.Fields.Name.Required"));
-            RuleFor(x => x.Sku).Matches(@"^[a-z|A-Z|0-9]{0,12}$").WithMessage("商品编码必须是1-12数字和字母的组合");
+            RuleFor(x => x.Sku).Matches(@"^[a-z|A-Z|0-9]{0,12}$").WithMessage("商品编号必须是1-12数字和字母的组合");
         }
     }
 }
