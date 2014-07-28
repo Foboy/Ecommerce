@@ -1,0 +1,74 @@
+﻿@model RefundOrderModel
+@using Nop.Core.Domain.Refund;
+@using Nop.Web.Framework;
+@using (Html.BeginForm()) { 
+<table class="adminContent">
+    @Html.HiddenFor(model => model.RefundOrderId)
+    @Html.HiddenFor(model => model.ChoseOrderItemIds)
+    <tr>
+        <td class="adminTitle">
+            @Html.HiddenFor(model => model.OrderId)订单号:
+        </td>
+        <td class="adminData">
+         @Model.OrderId.ToString()
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+            退货商品:
+        </td>
+        <td class="adminData">
+            @Html.CheckBoxListFor(model=>model.Id,Model.SelectList,null)
+            @Html.ValidationMessageFor(model => model.ChoseOrderItemIds)
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+           退款原因:
+        </td>
+        <td class="adminData">
+            @Html.TextAreaFor(model => model.ReasonForRefund, new { style = "Width: 500px; Height: 150px;" })
+        </td>
+    </tr>
+    <tr>
+        <td class="adminTitle">
+           退款金额:
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.RefundAmount)元
+            @Html.ValidationMessageFor(model => model.RefundAmount)
+        </td>
+    </tr>
+    @if (Model.RefundOrderId > 0)
+    { 
+    <tr>
+        <td class="adminTitle">
+            @Html.HiddenFor(model => model.OperatorEmail)操作人:
+        </td>
+        <td class="adminData">
+           @Model.OperatorEmail
+        </td>
+    </tr>
+    }
+    <tr>
+        <td class="adminTitle">
+        </td>
+        <td class="adminData">
+            <input type="submit" name="save" class="btn btn-sm btn-primary btn-flat" id="AddReturnRequest" value="添加" />
+        </td>
+    </tr>
+</table>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#AddReturnRequest").bind("click", function () {
+            var choseItemIds = "";
+            $("#@Html.FieldIdFor(model => model.ChoseOrderItemIds)").val("");
+            $("div[class='icheckbox_minimal checked']").each(function () {
+                choseItemIds = choseItemIds + $(this).find("input").val() + ",";
+            })
+            $("#@Html.FieldIdFor(model => model.ChoseOrderItemIds)").val(choseItemIds);
+            alert($("#@Html.FieldIdFor(model => model.ChoseOrderItemIds)").val());
+        })
+    });
+</script>

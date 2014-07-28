@@ -83,6 +83,8 @@
     <Compile Include="Mapping\Customers\CustomerAttributeMap.cs" />
     <Compile Include="Mapping\Customers\CustomerAttributeValueMap.cs" />
     <Compile Include="Mapping\Discounts\DiscountPackageProductsMap.cs" />
+    <Compile Include="Mapping\Refund\RefundOrderItemMap.cs" />
+    <Compile Include="Mapping\Refund\RefundOrderMap.cs" />
     <Compile Include="Mapping\Shipping\WarehouseMap.cs" />
     <Compile Include="Mapping\Shipping\DeliveryDateMap.cs" />
     <Compile Include="Mapping\Vendors\VendorMap.cs" />

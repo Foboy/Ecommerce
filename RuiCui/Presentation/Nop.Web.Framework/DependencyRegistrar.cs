@@ -53,6 +53,7 @@ using Nop.Web.Framework.EmbeddedViews;
 using Nop.Web.Framework.Mvc.Routes;
 using Nop.Web.Framework.Themes;
 using Nop.Web.Framework.UI;
+using Nop.Services.Refund;
 
 namespace Nop.Web.Framework
 {
@@ -147,7 +148,8 @@ namespace Nop.Web.Framework
             builder.RegisterType<ProductTagService>().As<IProductTagService>()
                 .WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
                 .InstancePerHttpRequest();
-
+            builder.RegisterType<RefundOrderService>().As<IRefundOrderService>().InstancePerHttpRequest();
+            builder.RegisterType<RefundOrderItemService>().As<IRefundOrderItemService>().InstancePerHttpRequest();
             builder.RegisterType<AffiliateService>().As<IAffiliateService>().InstancePerHttpRequest();
             builder.RegisterType<VendorService>().As<IVendorService>().InstancePerHttpRequest();
             builder.RegisterType<AddressService>().As<IAddressService>().InstancePerHttpRequest();
