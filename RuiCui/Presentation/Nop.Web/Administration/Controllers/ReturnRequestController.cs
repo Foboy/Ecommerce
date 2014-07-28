@@ -16,6 +16,8 @@ using Nop.Services.Security;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Services.Shipping;
+using Nop.Services.Refund;
+using Nop.Core.Domain.Refund;
 
 namespace Nop.Admin.Controllers
 {
@@ -33,6 +35,8 @@ namespace Nop.Admin.Controllers
         private readonly ICustomerActivityService _customerActivityService;
         private readonly IPermissionService _permissionService;
         private readonly IShipmentService _shipmentService;
+        private readonly IRefundOrderService _refundOrderService;
+        private readonly IRefundOrderItemService _refundOrderItemService;
 
         #endregion Fields
 
@@ -42,7 +46,7 @@ namespace Nop.Admin.Controllers
             ICustomerService customerService, IDateTimeHelper dateTimeHelper,
             ILocalizationService localizationService, IWorkContext workContext,
             IWorkflowMessageService workflowMessageService, LocalizationSettings localizationSettings,
-            ICustomerActivityService customerActivityService, IPermissionService permissionService, IShipmentService shipmentService)
+            ICustomerActivityService customerActivityService, IPermissionService permissionService, IShipmentService shipmentService, IRefundOrderService refundOrderService, IRefundOrderItemService refundOrderItemService)
         {
             this._orderService = orderService;
             this._customerService = customerService;
@@ -54,6 +58,8 @@ namespace Nop.Admin.Controllers
             this._customerActivityService = customerActivityService;
             this._permissionService = permissionService;
             this._shipmentService = shipmentService;
+            this._refundOrderService = refundOrderService;
+            this._refundOrderItemService = refundOrderItemService;
         }
 
         #endregion
@@ -115,55 +121,173 @@ namespace Nop.Admin.Controllers
         }
 
         [HttpPost]
+        //public ActionResult List(DataSourceRequest command)
+        //{
+        //    if (!_permissionService.Authorize(StandardPermissionProvider.ManageReturnRequests))
+        //        return AccessDeniedView();
+
+        //    var returnRequests = _orderService.SearchReturnRequests(0, 0, 0, null, command.Page - 1, command.PageSize);
+        //    var returnRequestModels = new List<ReturnRequestModel>();
+        //    foreach (var rr in returnRequests)
+        //    {
+        //        var m = new ReturnRequestModel();
+        //        if (PrepareReturnRequestModel(m, rr, false))
+        //            returnRequestModels.Add(m);
+        //    }
+        //    var gridModel = new DataSourceResult
+        //    {
+        //        Data = returnRequestModels,
+        //        Total = returnRequests.TotalCount,
+        //    };
+
+        //    return Json(gridModel);
+        //}
+        //后台发起退货list
         public ActionResult List(DataSourceRequest command)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageReturnRequests))
                 return AccessDeniedView();
-
-            var returnRequests = _orderService.SearchReturnRequests(0, 0, 0, null, command.Page - 1, command.PageSize);
-            var returnRequestModels = new List<ReturnRequestModel>();
-            foreach (var rr in returnRequests)
-            {
-                var m = new ReturnRequestModel();
-                if (PrepareReturnRequestModel(m, rr, false))
-                    returnRequestModels.Add(m);
-            }
-            var gridModel = new DataSourceResult
-            {
-                Data = returnRequestModels,
-                Total = returnRequests.TotalCount,
-            };
-
+            var gridModel = new DataSourceResult();
+            var Datas = _refundOrderService.GetAllRefundOrders();
+            var allRefundOrder = new PagedList<RefundOrder>(Datas, command.Page - 1, command.PageSize);
+            gridModel.Data = allRefundOrder;
+            gridModel.Total = allRefundOrder.TotalCount;
             return Json(gridModel);
         }
-        public ActionResult Create(int orderId)
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">orderId</param>
+        /// <returns></returns>
+        public ActionResult CreateOrUpdateReturnRequest(int id)
         {
-            var order = _orderService.GetOrderById(orderId);
-            if (order == null || order.Deleted)
+            var refundOrder = _refundOrderService.GetRefundOrderByOrderId(id);
+            var refundOrderItems = _refundOrderItemService.GetAllRefundOrderItems(id);
+            var orderItems = _orderService.GetAllOrderItems(id, null, null, null, null, null, null);
+            if (orderItems == null)
                 return new HttpUnauthorizedResult();
-            var model = new ReturnRequestModel();
-            //model.ProductId = orderItem.ProductId;
-            //model.ProductName = orderItem.Product.Name;
-            //model.OrderId = orderItem.OrderId;
-            //model.CustomerId = returnRequest.CustomerId;
-            //var customer = returnRequest.Customer;
-            //model.CustomerInfo = customer.IsRegistered() ? customer.Email : _localizationService.GetResource("Admin.Customers.Guest");
-            //model.Quantity = returnRequest.Quantity;
-            //model.ReturnRequestStatusStr = returnRequest.ReturnRequestStatus.GetLocalizedEnum(_localizationService, _workContext);
-            //model.CreatedOn = _dateTimeHelper.ConvertToUserTime(returnRequest.CreatedOnUtc, DateTimeKind.Utc);
-            //if (!excludeProperties)
-            //{
-            //    model.ReasonForReturn = returnRequest.ReasonForReturn;
-            //    model.RequestedAction = returnRequest.RequestedAction;
-            //    model.CustomerComments = returnRequest.CustomerComments;
-            //    model.StaffNotes = returnRequest.StaffNotes;
-            //    model.ReturnRequestStatusId = returnRequest.ReturnRequestStatusId;
-            //}
-            ////model is successfully prepared
-            //return true;
-            //model.CustomerInfo = order.Customer.Email;
-            //model.ProductName=order.
-            //model.OrderId = orderId;
+            var model = new RefundOrderModel();
+            if (refundOrder != null)
+            {
+                foreach (var item in orderItems)
+                {
+                    SelectListItem selectItem = new SelectListItem();
+                    selectItem.Selected = false;
+                    selectItem.Value = item.Id.ToString();
+                    selectItem.Text = item.Product.Name;
+                    model.ChoseOrderItemIds = item.Id.ToString() + ',';
+                    model.SelectList.Add(selectItem);
+                }
+                foreach (var item in model.SelectList)
+                {
+                    for (int i = 0; i < refundOrderItems.Count; i++)
+                    {
+                        if (item.Value == refundOrderItems[i].OrderItemId.ToString())
+                        {
+                            item.Selected = true;
+                        }
+                        model.ChoseOrderItemIds = model.ChoseOrderItemIds + refundOrderItems[i].OrderItemId + ",";
+                    }
+                }
+                model.RefundOrderId = refundOrder.Id;
+                model.OperatorEmail = refundOrder.OperatorEmail;
+                model.OperatorId = refundOrder.OperatorId;
+                model.ReasonForRefund = refundOrder.ReasonForRefund;
+                model.RefundAmount = refundOrder.RefundAmount;
+                model.OrderId = refundOrder.OrderId;
+            }
+            else
+            {
+                foreach (var item in orderItems)
+                {
+                    SelectListItem selectItem = new SelectListItem();
+                    selectItem.Selected = true;
+                    selectItem.Value = item.Id.ToString();
+                    selectItem.Text = item.Product.Name;
+                    model.ChoseOrderItemIds = item.Id.ToString() + ',';
+                    model.SelectList.Add(selectItem);
+                }
+                model.OrderId = id;
+            }
+            return View(model);
+        }
+
+        [HttpPost, ActionName("CreateOrUpdateReturnRequest")]
+        [FormValueRequired("save")]
+        public ActionResult CreateOrUpdateReturnRequest(RefundOrderModel model)
+        {
+
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageReturnRequests))
+                return AccessDeniedView();
+            if (ModelState.IsValid)
+            {
+                if (model.RefundOrderId > 0)
+                {
+                    var refundOrder = _refundOrderService.GetRefundOrderById(model.RefundOrderId);
+                    refundOrder.ReasonForRefund = model.ReasonForRefund;
+                    refundOrder.RefundAmount = model.RefundAmount;
+                    refundOrder.OperatorId = _workContext.CurrentCustomer.Id;
+                    refundOrder.OperatorEmail = _workContext.CurrentCustomer.Email;
+                    refundOrder.OperateTime = DateTime.Now;
+                    _refundOrderService.UpdateRefundOrder(refundOrder);
+                    string[] orderItemIds = model.ChoseOrderItemIds.TrimEnd(',').Split(',');
+                    var refundOrderItems = _refundOrderItemService.GetAllRefundOrderItems(model.OrderId);
+                    for (int i = 0; i < refundOrderItems.Count; i++)
+                    {
+                        _refundOrderItemService.DeleteRefundOrderItem(refundOrderItems[i]);
+                    }
+                    foreach (var item in orderItemIds)
+                    {
+                        RefundOrderItem refundorderItem = new RefundOrderItem();
+                        refundorderItem.OrderId = model.OrderId;
+                        refundorderItem.OrderItemId = Convert.ToInt32(item);
+                        _refundOrderItemService.InsertRefundOrderItem(refundorderItem);
+                        SuccessNotification("修改退货请求成功");
+                    }
+
+                }
+                else
+                {
+                    RefundOrder refundOrder = new RefundOrder();
+                    refundOrder.OrderId = model.OrderId;
+                    refundOrder.ReasonForRefund = model.ReasonForRefund;
+                    refundOrder.RefundAmount = model.RefundAmount;
+                    refundOrder.OperatorId = _workContext.CurrentCustomer.Id;
+                    refundOrder.OperatorEmail = _workContext.CurrentCustomer.Email;
+                    refundOrder.OperateTime = DateTime.Now;
+                    _refundOrderService.InsertRefundOrder(refundOrder);
+                    string[] orderItemIds = model.ChoseOrderItemIds.TrimEnd(',').Split(',');
+                    foreach (var item in orderItemIds)
+                    {
+                        RefundOrderItem refundorderItem = new RefundOrderItem();
+                        refundorderItem.OrderId = model.OrderId;
+                        refundorderItem.OrderItemId = Convert.ToInt32(item);
+                        _refundOrderItemService.InsertRefundOrderItem(refundorderItem);
+                    }
+                    var order = _orderService.GetOrderById(model.OrderId);
+                    order.OrderStatus = OrderStatus.Complete;
+                    _orderService.UpdateOrder(order);
+                    SuccessNotification("添加退货请求成功");
+                }
+                return RedirectToAction("List");
+            }
+            else
+            {
+                var orderItems = _orderService.GetAllOrderItems(model.OrderId, null, null, null, null, null, null);
+                if (orderItems == null)
+                    return new HttpUnauthorizedResult();
+                foreach (var item in orderItems)
+                {
+                    SelectListItem selectItem = new SelectListItem();
+                    selectItem.Selected = true;
+                    selectItem.Value = item.Id.ToString();
+                    selectItem.Text = item.Product.Name;
+                    model.SelectList.Add(selectItem);
+                }
+                model.RefundAmount = 0;
+            }
             return View(model);
         }
 

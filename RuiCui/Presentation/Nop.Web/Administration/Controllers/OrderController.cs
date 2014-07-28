@@ -33,6 +33,7 @@ using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
 using Nop.Web.Framework.Kendoui;
 using Nop.Web.Framework.Mvc;
+using Nop.Services.Refund;
 
 namespace Nop.Admin.Controllers
 {
@@ -40,6 +41,7 @@ namespace Nop.Admin.Controllers
     {
         #region Fields
 
+        private readonly IRefundOrderService _refundOrderService;
         private readonly IOrderService _orderService;
         private readonly IOrderReportService _orderReportService;
         private readonly IOrderProcessingService _orderProcessingService;
@@ -84,7 +86,8 @@ namespace Nop.Admin.Controllers
 
         #region Ctor
 
-        public OrderController(IOrderService orderService,
+        public OrderController(IRefundOrderService refundOrderService,
+            IOrderService orderService,
             IOrderReportService orderReportService,
             IOrderProcessingService orderProcessingService,
             IPriceCalculationService priceCalculationService,
@@ -123,6 +126,7 @@ namespace Nop.Admin.Controllers
             PdfSettings pdfSettings,
             AddressSettings addressSettings)
         {
+            this._refundOrderService = refundOrderService;
             this._orderService = orderService;
             this._orderReportService = orderReportService;
             this._orderProcessingService = orderProcessingService;
@@ -637,7 +641,7 @@ namespace Nop.Admin.Controllers
                 DeliveryDate = shipment.DeliveryDateUtc.HasValue ? _dateTimeHelper.ConvertToUserTime(shipment.DeliveryDateUtc.Value, DateTimeKind.Utc).ToString() : "",
                 DeliveryDateUtc = shipment.DeliveryDateUtc,
                 CanDeliver = shipment.ShippedDateUtc.HasValue && !shipment.DeliveryDateUtc.HasValue,
-                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) < shipment.ShippedDateUtc ? true : false
+                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) < shipment.ShippedDateUtc && _refundOrderService.GetRefundOrderByOrderId(shipment.OrderId)==null ? true : false
             };
 
 

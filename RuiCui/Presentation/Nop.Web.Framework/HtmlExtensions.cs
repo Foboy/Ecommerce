@@ -15,6 +15,7 @@ using Nop.Web.Framework.Localization;
 using Nop.Web.Framework.Mvc;
 using System.Collections.ObjectModel;
 using System.Web.UI.WebControls;
+using System.Web.Routing;
 
 namespace Nop.Web.Framework
 {
@@ -38,8 +39,8 @@ namespace Nop.Web.Framework
                     var id = string.Format("{0}_{1}", metaData.PropertyName, item.Value);
                     // Create and populate a radio button using the existing html helpers 
                     var label = htmlHelper.Label(id, HttpUtility.HtmlEncode(item.Text));
-                    var radio = item.Selected ? htmlHelper.RadioButtonFor(expression, item.Value, new { id = id, @checked ="" }).ToHtmlString() : htmlHelper.RadioButtonFor(expression, item.Value, new { id = id }).ToHtmlString();
-                
+                    var radio = item.Selected ? htmlHelper.RadioButtonFor(expression, item.Value, new { id = id, @checked = "" }).ToHtmlString() : htmlHelper.RadioButtonFor(expression, item.Value, new { id = id }).ToHtmlString();
+
 
                     // Create the html string that will be returned to the client 
                     // e.g. <input data-val="true" data-val-required=
@@ -462,6 +463,60 @@ namespace Nop.Web.Framework
         }
 
         #endregion
+
+        /// <summary>
+        /// 复选框扩展。
+        /// </summary>
+        /// <typeparam name="TModel">模型类型。</typeparam>
+        /// <typeparam name="TProperty">属性类型。</typeparam>
+        /// <param name="helper">HTML辅助方法。</param>
+        /// <param name="expression">lambda表达式。</param>
+        /// <param name="selectList">选择项。</param>
+        /// <param name="htmlAttributes">HTML属性。</param>
+        /// <returns>返回复选框MVC的字符串。</returns>
+        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, IDictionary<string, object> htmlAttributes = null)
+        {
+            if (selectList == null || expression == null)
+                return MvcHtmlString.Empty;
+            string name = ExpressionHelper.GetExpressionText(expression);
+            StringBuilder sb = new StringBuilder();
+            int index = 0;
+            foreach (var item in selectList)
+            {
+                TagBuilder tag = new TagBuilder("input");
+                tag.MergeAttributes<string, object>(htmlAttributes);
+                tag.MergeAttribute("type", "checkbox", true);
+                tag.MergeAttribute("name", name, true);
+                tag.MergeAttribute("id", name + index, true);
+                tag.MergeAttribute("value", item.Value, true);
+                if (item.Selected)
+                    tag.MergeAttribute("checked", "checked", true);
+                sb.AppendLine(tag.ToString(TagRenderMode.SelfClosing) + " ");
+                TagBuilder label = new TagBuilder("label");
+                label.MergeAttribute("for", name + index);
+                label.InnerHtml = item.Text;
+                sb.AppendLine(label.ToString());
+                sb.AppendLine("<br />");
+                index++;
+            }
+            return new MvcHtmlString(sb.ToString());
+        }
+
+        /// <summary>
+        /// 复选框扩展。
+        /// </summary>
+        /// <typeparam name="TModel">模型类型。</typeparam>
+        /// <typeparam name="TProperty">属性类型。</typeparam>
+        /// <param name="helper">HTML辅助方法。</param>
+        /// <param name="expression">lambda表达式。</param>
+        /// <param name="selectList">选择项。</param>
+        /// <param name="htmlAttributes">HTML属性。</param>
+        /// <returns>返回复选框MVC的字符串。</returns>
+        public static MvcHtmlString CheckBoxListFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> selectList, object htmlAttributes)
+        {
+            return helper.CheckBoxListFor<TModel, TProperty>(expression, selectList, new RouteValueDictionary(htmlAttributes));
+        }
+
     }
 }
 

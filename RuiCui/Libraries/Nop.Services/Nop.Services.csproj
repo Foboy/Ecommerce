@@ -187,6 +187,10 @@
     <Compile Include="Customers\CustomerAttributeExtensions.cs" />
     <Compile Include="Logging\ClearLogTask.cs" />
     <Compile Include="Media\ResizeType.cs" />
+    <Compile Include="Refund\IRefundOrderItemService.cs" />
+    <Compile Include="Refund\IRefundOrderService.cs" />
+    <Compile Include="Refund\RefundOrderItemService.cs" />
+    <Compile Include="Refund\RefundOrderService.cs" />
     <Compile Include="Shipping\EventPublisherExtensions.cs" />
     <Compile Include="Vendors\VendorService.cs" />
     <Compile Include="Vendors\IVendorService.cs" />
@@ -437,6 +441,7 @@
       <CachedSettingsPropName>Nop_Services_EuropaCheckVatService_checkVatService</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
