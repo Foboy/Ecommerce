@@ -892,6 +892,7 @@
 /*新品上架*/
 .brick-item{
     float: left;
+    position:relative;
 }
 .brick-item .item{
     border-bottom: 1px solid #DFDFDF;
@@ -1008,5 +1009,30 @@
     right: -10px;
     top: -10px;
     width: 62px;
+}
+.item-hover {
+    bottom:0;
+    color:#fff;
+    height:28px;
+    left:0;
+    overflow:hidden;
+    padding:7px 0 0;
+    position:absolute;
+    width:100%;
+}
+.item-hover-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background: #111;
+    filter: alpha(opacity=70);
+    opacity: 0.70;
+}
+.item-hover a {
+    position: relative;
+    z-index: 3;
+    color: #FFF;
 }
 
