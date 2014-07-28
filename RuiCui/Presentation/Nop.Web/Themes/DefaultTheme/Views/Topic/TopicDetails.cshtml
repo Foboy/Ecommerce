@@ -3,20 +3,36 @@
 @using Nop.Core.Infrastructure
 @using Nop.Web.Models.Topics;
 @{
-    var groupDictionary = new Dictionary<string, string[]>();
-    groupDictionary.Add("帮助中心", new[] { "购物指南", "常见问题", "用户协议" });
-    groupDictionary.Add("售后服务", new[] { "正品承诺", "售后咨询", "退货政策" });
-    groupDictionary.Add("配送方式", new[] { "配送说明", "运费说明", "验货签收" });
-    groupDictionary.Add("关于瑞翠", new[] { "了解瑞翠", "联系我们", "关注我们" });
+    Dictionary<string, string[]> groupDictionary = null;
+    var footGroupDictionary = new Dictionary<string, string[]>();
+    footGroupDictionary.Add("帮助中心", new[] { "购物指南", "常见问题", "用户协议" });
+    footGroupDictionary.Add("服务保障", new[] { "验货签收", "运费责任", "退换事宜" });
+    footGroupDictionary.Add("特别说明", new[] { "测量参数", "照片色差", "商品瑕疵" });
+    footGroupDictionary.Add("关于瑞翠", new[] { "了解我们", "联系我们", "关注我们" });
+
+    var iconGroupDictionary = new Dictionary<string, string[]>();
+    iconGroupDictionary.Add("品牌保证", new[] { "超值", "正品", "包邮","保障" });
+    
     var isPopup = ViewBag.IsPopup;
     KeyValuePair<string, string[]> group = new KeyValuePair<string,string[]>();
     var isGroup = false;
-    foreach (var item in groupDictionary)
+    foreach (var item in footGroupDictionary)
     {
         if (item.Value.Contains(Model.SystemName))
         {
             isGroup = true;
             group = item;
+            groupDictionary = footGroupDictionary;
+            break;
+        }
+    }
+    foreach (var item in iconGroupDictionary)
+    {
+        if (item.Value.Contains(Model.SystemName))
+        {
+            isGroup = true;
+            group = item;
+            groupDictionary = iconGroupDictionary;
             break;
         }
     }
