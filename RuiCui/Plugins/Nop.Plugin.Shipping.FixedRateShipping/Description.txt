@@ -1,6 +1,6 @@
 ﻿Group: Shipping rate computation
-FriendlyName: Fixed Rate Shipping
-SystemName: Shipping.FixedRate
+FriendlyName: 快递基本运费配置
+SystemName: 快递基本运费配置
 Version: 1.14
 SupportedVersions: 3.30
 Author: nopCommerce team
