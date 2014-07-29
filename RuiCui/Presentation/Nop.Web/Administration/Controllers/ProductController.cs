@@ -914,7 +914,8 @@ namespace Nop.Admin.Controllers
                         priceMax: priceMax,
                         filteredSpecs: specids,
                         showHidden: true,
-                        orderBy: ProductSortingEnum.CreatedOn
+                        orderBy: ProductSortingEnum.CreatedOn,
+                        searchSku:true
                     );
                     gridModel.Data = products.Select(x =>
                     {
