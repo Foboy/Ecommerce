@@ -29,7 +29,7 @@
     @if (!Model.PrintMode)
     {
         <div class="box-hd">
-            <h3 class="title">@T("Order.Order#")@(Model.CreatedOn.Ticks.ToString() + Model.Id.ToString())</h3>
+            <h3 class="title">@T("Order.Order#")@(Model.Id.ToString())</h3>
             <div class="more">
                 <div class="uc-order-list-type">
                     <a href="@Url.RouteUrl("PrintOrderDetails", new { orderId = Model.Id })" target="_blank" class="button-2 print-order-button">@T("Order.Print")</a>
@@ -91,6 +91,7 @@
                                                     <div class="order-info order-action">
                                                         @if (!Model.PrintMode && Model.CanRePostProcessPayment)
                                                         {
+                                                            <a target="_blank" href="@Url.Action("RePostPayment", "Order", new { orderId = Model.Id })" class="btn btn-primary btn-small">立即支付</a>
                                                         @*Completing payment support (for redirection payment methods)*@
                                                             using (Html.BeginRouteForm("OrderDetails", FormMethod.Post))
                                                             {

@@ -569,8 +569,8 @@ namespace Nop.Web.Controllers
             return RedirectToRoute("ShoppingCart");
         }
 
-        [HttpPost, ActionName("Details")]
-        [FormValueRequired("repost-payment")]
+        //[HttpPost, ActionName("Details")]
+        //[FormValueRequired("repost-payment")]
         public ActionResult RePostPayment(int orderId)
         {
             var order = _orderService.GetOrderById(orderId);
