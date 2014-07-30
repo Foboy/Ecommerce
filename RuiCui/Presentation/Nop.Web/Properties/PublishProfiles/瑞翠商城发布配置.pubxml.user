@@ -205,34 +205,34 @@
       <publishTime>05/21/2014 10:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Core.dll">
-      <publishTime>07/16/2014 11:31:10</publishTime>
+      <publishTime>07/23/2014 09:40:46</publishTime>
     </File>
     <File Include="bin/Nop.Core.pdb">
-      <publishTime>07/16/2014 11:31:10</publishTime>
+      <publishTime>07/23/2014 09:40:46</publishTime>
     </File>
     <File Include="bin/Nop.Data.dll">
-      <publishTime>07/16/2014 11:31:11</publishTime>
+      <publishTime>07/23/2014 09:40:46</publishTime>
     </File>
     <File Include="bin/Nop.Data.pdb">
-      <publishTime>07/16/2014 11:31:11</publishTime>
+      <publishTime>07/23/2014 09:40:46</publishTime>
     </File>
     <File Include="bin/Nop.Services.dll">
-      <publishTime>07/16/2014 11:31:14</publishTime>
+      <publishTime>07/23/2014 09:40:48</publishTime>
     </File>
     <File Include="bin/Nop.Services.pdb">
-      <publishTime>07/16/2014 11:31:14</publishTime>
+      <publishTime>07/23/2014 09:40:48</publishTime>
     </File>
     <File Include="bin/Nop.Web.dll">
-      <publishTime>07/16/2014 13:39:01</publishTime>
+      <publishTime>07/23/2014 09:40:58</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.dll">
-      <publishTime>07/16/2014 11:31:15</publishTime>
+      <publishTime>07/23/2014 09:40:50</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.pdb">
-      <publishTime>07/16/2014 11:31:15</publishTime>
+      <publishTime>07/23/2014 09:40:50</publishTime>
     </File>
     <File Include="bin/Nop.Web.pdb">
-      <publishTime>07/16/2014 13:39:01</publishTime>
+      <publishTime>07/23/2014 09:40:58</publishTime>
     </File>
     <File Include="bin/pl/FluentValidation.resources.dll">
       <publishTime>05/21/2014 10:54:55</publishTime>
@@ -5194,7 +5194,7 @@
       <publishTime>07/03/2014 21:52:44</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/base.css">
-      <publishTime>07/16/2014 10:58:56</publishTime>
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/checkout.css">
       <publishTime>06/26/2014 11:23:09</publishTime>
@@ -5203,7 +5203,7 @@
       <publishTime>06/26/2014 15:27:57</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/goods-detail.css">
-      <publishTime>07/07/2014 16:03:14</publishTime>
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/goods-list.css">
       <publishTime>07/07/2014 16:03:14</publishTime>
@@ -5248,7 +5248,7 @@
       <publishTime>07/16/2014 10:58:56</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/usercenter.css">
-      <publishTime>07/16/2014 13:34:24</publishTime>
+      <publishTime>07/23/2014 09:39:43</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/vip.css">
       <publishTime>07/03/2014 10:42:03</publishTime>
@@ -8413,7 +8413,7 @@
       <publishTime>05/25/2014 17:11:28</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/CategoryTemplate.ProductsInGridOrLines.cshtml">
-      <publishTime>07/08/2014 14:54:04</publishTime>
+      <publishTime>07/23/2014 09:39:43</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/CategoryTemplate.ProductsInGridOrLines.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:28</publishTime>
@@ -8635,7 +8635,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_FilterBox.cshtml">
-      <publishTime>07/08/2014 14:18:49</publishTime>
+      <publishTime>07/23/2014 09:39:43</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_FilterJingPingBox.cshtml">
       <publishTime>07/11/2014 15:32:03</publishTime>
@@ -8848,7 +8848,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/AccountActivation.cshtml">
-      <publishTime>05/25/2014 17:11:29</publishTime>
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/AccountActivation.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8875,7 +8875,7 @@
       <publishTime>06/26/2014 17:22:15</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Avatar.cshtml">
-      <publishTime>06/26/2014 09:59:17</publishTime>
+      <publishTime>07/23/2014 09:39:43</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Avatar.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8951,6 +8951,9 @@
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Register.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
+    </File>
+    <File Include="Themes/DefaultTheme/Views/Customer/RegisterByEmailValidation.cshtml">
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/RegisterResult.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -9034,7 +9037,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Order/Details.cshtml">
-      <publishTime>07/16/2014 13:34:24</publishTime>
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Order/Details.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -9190,7 +9193,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/ShoppingCart/OrderTotals.cshtml">
-      <publishTime>06/11/2014 20:44:43</publishTime>
+      <publishTime>07/17/2014 16:57:58</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/ShoppingCart/OrderTotals.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -10231,7 +10234,7 @@
       <publishTime>05/21/2014 10:54:54</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/16/2014 13:39:12</publishTime>
+      <publishTime>07/23/2014 09:41:55</publishTime>
     </File>
   </ItemGroup>
 </Project>
