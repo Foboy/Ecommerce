@@ -87,6 +87,7 @@ namespace Nop.Admin.Controllers
             OrderStatus? orderStatus = model.OrderStatusId > 0 ? (OrderStatus?)(model.OrderStatusId) : null;
             PaymentStatus? paymentStatus = model.PaymentStatusId > 0 ? (PaymentStatus?)(model.PaymentStatusId) : null;
             ////var itemss = _orderReportService.GetOrderAverageReportLine();
+
             var items = _orderReportService.BestSellersReport(
                 createdFromUtc: startDateValue,
                 createdToUtc: endDateValue,
