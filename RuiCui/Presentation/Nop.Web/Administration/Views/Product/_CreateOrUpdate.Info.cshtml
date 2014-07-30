@@ -272,6 +272,15 @@
     });
 </script>
 <table class="adminContent">
+    <tr>
+        <td class="adminTitle">
+            <label title="价格区间">商品编号</label>:
+        </td>
+        <td class="adminData">
+            @Html.EditorFor(model => model.Sku)
+            @Html.ValidationMessageFor(model => model.Sku)
+        </td>
+    </tr>
     @if (Model.Id > 0)
     {
         <tr>
@@ -410,16 +419,6 @@
         <td class="adminData">
             @Html.EditorFor(model => model.ProductTags)
             @Html.ValidationMessageFor(model => model.ProductTags)
-        </td>
-    </tr>
-    <!--zheng-->
-    <tr style="display:none">
-        <td class="adminTitle">
-            @Html.NopLabelFor(model => model.Sku):
-        </td>
-        <td class="adminData">
-            @Html.EditorFor(model => model.Sku)
-            @Html.ValidationMessageFor(model => model.Sku)
         </td>
     </tr>
     <!--zheng-->

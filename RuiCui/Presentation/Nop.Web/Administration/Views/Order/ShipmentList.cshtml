@@ -165,7 +165,7 @@
                                 field: "Id",
                                 title: "@T("Admin.Common.View")",
                                 width: 50,
-                                template: '<a href="@Url.Content("~/Admin/Order/ShipmentDetails/")#=Id#">编辑</a> #=!IsMayReturn ? "":"|"# <a #=!IsMayReturn ? "style=display:none":"" #>可退货</a>'
+                                template: '<a href="@Url.Content("~/Admin/Order/ShipmentDetails/")#=Id#">编辑</a> #=!IsMayReturn ? "":"|"# <a  #=!IsMayReturn ? "style=display:none":""#  href="@Url.Content("~/Admin/ReturnRequest/CreateOrUpdateReturnRequest/")#=OrderId#" >可退货</a>'
                             }]
                         });
                     });

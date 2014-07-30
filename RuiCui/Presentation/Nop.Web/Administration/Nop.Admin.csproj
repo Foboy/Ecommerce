@@ -137,7 +137,6 @@
     <Compile Include="Controllers\AffiliateController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
-    <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\JbimagesController.cs" />
     <Compile Include="Controllers\ProductQuestionController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
@@ -211,6 +210,8 @@
     <Compile Include="Models\Customers\CustomerAttributeValueModel.cs" />
     <Compile Include="Models\Home\DashboardModel.cs" />
     <Compile Include="Models\Orders\OrderAverageReportLineSummaryByChartModel.cs" />
+    <Compile Include="Models\Orders\RefundOrderItemModel.cs" />
+    <Compile Include="Models\Orders\RefundOrderModel.cs" />
     <Compile Include="Models\Payments\PaymentMethodRestrictionModel.cs" />
     <Compile Include="Models\Settings\IndexSearchTagsSettingModel.cs" />
     <Compile Include="Models\Settings\VendorSettingsModel.cs" />
@@ -356,6 +357,7 @@
     <Compile Include="Validators\Orders\CheckoutAttributeValidator.cs" />
     <Compile Include="Validators\Orders\CheckoutAttributeValueValidator.cs" />
     <Compile Include="Validators\Orders\RecurringPaymentValidator.cs" />
+    <Compile Include="Validators\Orders\RefundOrderValidator.cs" />
     <Compile Include="Validators\Orders\ReturnRequestValidator.cs" />
     <Compile Include="Validators\Plugins\PluginValidator.cs" />
     <Compile Include="Validators\Polls\PollAnswerValidator.cs" />
@@ -2380,7 +2382,6 @@
     <Content Include="Views\Shared\EditorTemplates\UEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\admin.pubxml" />
     <None Include="Properties\PublishProfiles\nopadmin.pubxml" />
     <Content Include="Views\ProductQuestion\_CreateOrUpdate.cshtml" />
     <Content Include="Views\ProductQuestion\Edit.cshtml" />
@@ -2397,6 +2398,7 @@
     <Content Include="Views\Product\_ProductList.All.cshtml" />
     <Content Include="Views\Product\_ProductList.Boutique.cshtml" />
     <Content Include="Views\Product\_ProductList.Vip.cshtml" />
+    <Content Include="Views\ReturnRequest\CreateOrUpdateReturnRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />

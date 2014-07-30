@@ -18,74 +18,75 @@
             <div id="returnrequests-grid"></div>
 
             <script>
-                $(document).ready(function() {
-                    $("#returnrequests-grid").kendoGrid({
-                        dataSource: {
-                            type: "json",
-                            transport: {
-                                read: {
-                                    url: "@Html.Raw(Url.Action("List", "ReturnRequest"))",
-                                    type: "POST",
-                                    dataType: "json"
-                                }
-                            },
-                            schema: {
-                                data: "Data",
-                                total: "Total",
-                                errors: "Errors"
-                            },
-                            error: function(e) {
-                                display_kendoui_grid_error(e);
-                                // Cancel the changes
-                                this.cancelChanges();
-                            },
-                            pageSize: @(gridPageSize),
-                            serverPaging: true,
-                            serverFiltering: true,
-                            serverSorting: true
-                        },
-                        pageable: {
-                            refresh: true
-                        },
-                        editable: {
-                            confirmation: false,
-                            mode: "inline"
-                        },
-                        scrollable: false,
-                        columns: [
-                            {
-                                field: "Id",
-                                title: "@T("Admin.ReturnRequests.Fields.ID")",
-                                width: 50
-                            }, {
-                                field: "ProductName",
-                                title: "@T("Admin.ReturnRequests.Fields.Product")",
-                                width: 200,
-                                template: '<a href="@Url.Content("~/Admin/Product/Edit/")#=ProductId#">#:ProductName#</a>'
-                            }, {
-                                field: "CustomerId",
-                                title: "@T("Admin.ReturnRequests.Fields.Customer")",
-                                width: 200,
-                                template: '<a href="@Url.Content("~/Admin/Customer/Edit/")#=CustomerId#">#:CustomerInfo#</a>'
-                            }, {
-                                field: "OrderId",
-                                title: "@T("Admin.ReturnRequests.Fields.Order")",
-                                width: 200,
-                                template: '<a href="@Url.Content("~/Admin/Order/Edit/")#=OrderId#">#=OrderId# - @T("Admin.Common.View")</a>'
-                            }, {
-                                field: "ReturnRequestStatusStr",
-                                title: "@T("Admin.ReturnRequests.Fields.Status")",
-                                width: 100
-                            }, {
-                                field: "Id",
-                                title: "@T("Admin.Common.Edit")",
-                                width: 100,
-                                template: '<a href="Edit/#=Id#">@T("Admin.Common.Edit")</a>'
-                            }
-                        ]
-                    });
-                });
-            </script>
+    $(document).ready(function() {
+        $("#returnrequests-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("List", "ReturnRequest"))",
+                        type: "POST",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                error: function(e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                pageSize: @(gridPageSize),
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true
+            },
+            editable: {
+                confirmation: false,
+                mode: "inline"
+            },
+            scrollable: false,
+            columns: [
+               {
+                    field: "OperatorEmail",
+                    title: "操作人",
+                    width: 200
+                }, {
+                    field: "OrderId",
+                    title: "订单编号",
+                    width: 200,
+                    template: '<a href="@Url.Content("~/Admin/Order/Edit/")#=OrderId#">#=OrderId# - @T("Admin.Common.View")</a>'
+                }, {
+                    field: "RefundAmount",
+                    title: "退货金额[元]",
+                    width: 100
+                },  {
+                    field: "OperateTime",
+                    title: "操作时间",
+                    type: "date",
+                    format: "{0:G}",
+                    width: 100
+                }, {
+                    field: "ReasonForRefund",
+                    title: "退款原因",
+                    width: 100
+                },
+                 {
+                     field: "",
+                     title: "操作",
+                     width: 100,
+                     template: '<a href="CreateOrUpdateReturnRequest/#=OrderId#">@T("Admin.Common.Edit")</a>'
+                 }
+            ]
+        });
+    });
+</script>
         </td>
     </tr>
 </table>

@@ -136,6 +136,8 @@ namespace Nop.Web.Models.Catalog
             public string Price { get; set; }
             public string PriceWithDiscount { get; set; }
 
+            public decimal OldPriceValue { get; set; }
+
             public decimal PriceValue { get; set; }
             public decimal PriceWithDiscountValue { get; set; }
 

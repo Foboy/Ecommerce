@@ -43,25 +43,25 @@
         });
     </script>
     <table width="100%">
-        @for (var i = 0; i < Model.Specs.Count;i++ )
+        @for (var i = 0; i < Model.Specs.Count; i++)
         {
             var spec = Model.Specs[i];
-         <tr>
-            <td class="adminTitle">
-                <label title="@(spec.Name)">@(spec.Name)</label>:
-            </td>
-            <td class="adminData">
-                @for (var j = 0; j < spec.Options.Count; j++)
-                {
-                    var option = spec.Options[j];
-                    if (j > 0)
+            <tr>
+                <td class="adminTitle">
+                    <label title="@(spec.Name)">@(spec.Name)</label>:
+                </td>
+                <td class="adminData">
+                    @for (var j = 0; j < spec.Options.Count; j++)
                     {
-                        <span>|</span>
+                        var option = spec.Options[j];
+                        if (j > 0)
+                        {
+                            <span>|</span>
+                        }
+                        <a href="javascript:void(0)" class="product_search_speclink" data-specid="@option.Value">@option.Text</a>
                     }
-                    <a href="javascript:void(0)" class="product_search_speclink" data-specid="@option.Value">@option.Text</a>
-                }
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
         <tr>
             <td class="adminTitle">
@@ -75,10 +75,10 @@
         </tr>
         <tr>
             <td class="adminTitle">
-                @Html.NopLabelFor(model => model.SearchProductName):
+                <label title="商品名称或商品编号">商品名称或编号</label>:
             </td>
             <td class="adminData">
-                @Html.EditorFor(model => model.SearchProductName, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品名称" }, })
+                @Html.EditorFor(model => model.SearchProductName, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品名称或编号" }, })
                 <input type="button" id="search-products" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
             </td>
         </tr>
@@ -152,14 +152,14 @@
             </td>
         </tr>
         @*<tr>
-                <td class="adminTitle">
-                    @Html.NopLabelFor(model => model.GoDirectlyToSku):
-                </td>
-                <td class="adminData">
-                    @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品Sku" }, })
-                    <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
-                </td>
-            </tr>*@
+            <td class="adminTitle">
+                <label title="价格区间">商品编码</label>:
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.GoDirectlyToSku, new { htmlAttributes = new { @class = "form-control input-sm col-md-4", @placeholder = "商品编码" }, })
+                <input type="submit" id="go-to-product-by-sku" name="go-to-product-by-sku" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Go")" />
+            </td>
+        </tr>*@
 
     </table>
     <p>
@@ -187,10 +187,10 @@
         </div>
 
     </div>
-     <script>
-        $(document).ready(function() {
+    <script>
+        $(document).ready(function () {
             $("#product-list").kendoTabStrip({
-                animation:  {
+                animation: {
                     open: {
                         effects: "fadeIn"
                     }
@@ -253,16 +253,15 @@
                 setLocation('@(Url.Action("DeleteSelected", "Product"))?selectedIds=' + selectedIds.join(","));
                 return false;
             });
-           
-            
+
+
         });
 
         function additionalData() {
             var product_search_select_specids = [];
             $("a.product_search_speclink").each(function () {
                 var me = $(this);
-                if (me.attr("selected"))
-                {
+                if (me.attr("selected")) {
                     product_search_select_specids.push(me.attr("data-specid"));
                 }
             });
