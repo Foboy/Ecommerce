@@ -1,0 +1,79 @@
+﻿<!doctype html>
+<html lang="zh-CN" xml:lang="zh-CN">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta charset="UTF-8" />
+    <title>购物无忧——瑞翠华光官网</title>
+    <meta name="description" content="购物无忧——瑞翠华光官网" />
+    <meta name="keywords"  content="瑞翠华光，翡翠，电商，购物无忧" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="css/shopintroduction.css" />
+    <link rel="stylesheet" href="css/iconfont/iconfont.css">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/jquery.fullPage.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#fullpage').fullpage({
+                sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke'],
+                anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage'],
+                menu: '#menu'
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <div class="menu-div">
+        <ul id="menu">
+            <li data-menuanchor="firstPage" class="active">               
+                <a href="#firstPage">
+                    <i class="iconfont">&#xf02b5;</i>
+                    <span>超值</span>
+                </a>
+            </li>
+            <li data-menuanchor="secondPage">
+                <a href="#secondPage">
+                    <i class="iconfont">&#xf02b9;</i>
+                    <span>正品</span>
+                </a>
+            </li>
+            <li data-menuanchor="3rdPage">
+                <a href="#3rdPage">
+                    <i class="iconfont">&#xf0297;</i>
+                    <span>包邮</span>
+                </a>
+            </li>
+            <li data-menuanchor="4thpage">
+                <a href="#4thpage">
+                    <i class="iconfont">&#xf02b8;</i>
+                    <span>保障</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="fullpage">
+        <div class="section " id="section0">
+            <div class="intro">
+                内容一
+            </div>
+        </div>
+        <div class="section" id="section1">
+            <div class="intro">
+                内容二
+            </div>
+        </div>
+        <div class="section" id="section2">
+            <div class="intro">
+                内容三
+            </div>
+        </div>
+        <div class="section" id="section3">
+            <div class="intro">
+               内容四 
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
