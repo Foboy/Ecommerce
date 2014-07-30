@@ -439,6 +439,78 @@ namespace Nop.Services.Orders
             return profit;
         }
 
+        public virtual OrderAverageReportLine GetOrderReportByAddress(int storeId, int vendorId, OrderStatus? os,
+          PaymentStatus? ps, ShippingStatus? ss, DateTime? startTimeUtc, DateTime? endTimeUtc,
+          string billingEmail, bool ignoreCancelledOrders = false)
+        {
+            int? orderStatusId = null;
+            if (os.HasValue)
+                orderStatusId = (int)os.Value;
+
+            int? paymentStatusId = null;
+            if (ps.HasValue)
+                paymentStatusId = (int)ps.Value;
+
+            int? shippingStatusId = null;
+            if (ss.HasValue)
+                shippingStatusId = (int)ss.Value;
+
+            var query = _orderRepository.Table;
+            query = query.Where(o => !o.Deleted);
+            if (storeId > 0)
+                query = query.Where(o => o.StoreId == storeId);
+            if (vendorId > 0)
+            {
+                query = query
+                    .Where(o => o.OrderItems
+                    .Any(orderItem => orderItem.Product.VendorId == vendorId));
+            }
+            if (ignoreCancelledOrders)
+            {
+                int cancelledOrderStatusId = (int)OrderStatus.Cancelled;
+                query = query.Where(o => o.OrderStatusId != cancelledOrderStatusId);
+            }
+            if (orderStatusId.HasValue)
+                query = query.Where(o => o.OrderStatusId == orderStatusId.Value);
+            if (paymentStatusId.HasValue)
+                query = query.Where(o => o.PaymentStatusId == paymentStatusId.Value);
+            if (shippingStatusId.HasValue)
+                query = query.Where(o => o.ShippingStatusId == shippingStatusId.Value);
+            if (startTimeUtc.HasValue)
+                query = query.Where(o => startTimeUtc.Value <= o.CreatedOnUtc);
+            if (endTimeUtc.HasValue)
+                query = query.Where(o => endTimeUtc.Value >= o.CreatedOnUtc);
+            if (!String.IsNullOrEmpty(billingEmail))
+                query = query.Where(o => o.BillingAddress != null && !String.IsNullOrEmpty(o.BillingAddress.Email) && o.BillingAddress.Email.Contains(billingEmail));
+
+            var item = (from oq in query
+                        group oq by 1 into result
+                        select new
+                        {
+                            OrderCount = result.Count(),
+                            OrderShippingExclTaxSum = result.Sum(o => o.OrderShippingExclTax),
+                            OrderTaxSum = result.Sum(o => o.OrderTax),
+                            OrderTotalSum = result.Sum(o => o.OrderTotal)
+                        }
+                       ).Select(r => new OrderAverageReportLine()
+                       {
+                           CountOrders = r.OrderCount,
+                           SumShippingExclTax = r.OrderShippingExclTaxSum,
+                           SumTax = r.OrderTaxSum,
+                           SumOrders = r.OrderTotalSum
+                       })
+                       .FirstOrDefault();
+
+            item = item ?? new OrderAverageReportLine()
+            {
+                CountOrders = 0,
+                SumShippingExclTax = decimal.Zero,
+                SumTax = decimal.Zero,
+                SumOrders = decimal.Zero,
+            };
+            return item;
+        }
+
         #endregion
     }
 }

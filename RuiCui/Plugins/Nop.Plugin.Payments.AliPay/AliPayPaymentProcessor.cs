@@ -188,6 +188,7 @@ namespace Nop.Plugin.Payments.AliPay
         public void PostProcessPayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
             //string gateway = "https://www.alipay.com/cooperate/gateway.do?";
+            //string gateway = "https://mapi.alipay.com/gateway.do?";
             string service = "create_direct_pay_by_user";
 
             string seller_email = _aliPayPaymentSettings.SellerEmail;
@@ -201,10 +202,11 @@ namespace Nop.Plugin.Payments.AliPay
             string out_trade_no = postProcessPaymentRequest.Order.Id.ToString();
             string subject = _storeContext.CurrentStore.Name;
             string body = "Order from " + _storeContext.CurrentStore.Name;
-            string total_fee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
+           // string total_fee = postProcessPaymentRequest.Order.OrderTotal.ToString("0.00", CultureInfo.InvariantCulture);
+            string total_fee = "0.01";
 
             string notify_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Notify";
-            string return_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Return";
+            string return_url = _webHelper.GetStoreLocation(false) + "Plugins/PaymentAliPay/Return/" + out_trade_no;
             string[] para ={
                                "service="+service,
                                "partner=" + partner,
@@ -227,7 +229,8 @@ namespace Nop.Plugin.Payments.AliPay
                 );
             var post = new RemotePost();
             post.FormName = "alipaysubmit";
-            post.Url = "https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8";
+           // post.Url = "https://www.alipay.com/cooperate/gateway.do?_input_charset=utf-8";
+            post.Url = "https://mapi.alipay.com/gateway.do?_input_charset=utf-8";
             post.Method = "POST";
 
             post.Add("service", service);

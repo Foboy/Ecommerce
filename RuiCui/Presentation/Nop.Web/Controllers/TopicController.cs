@@ -9,6 +9,7 @@ using Nop.Services.Stores;
 using Nop.Services.Topics;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Web.Models.Topics;
+using System.Collections.Generic;
 
 namespace Nop.Web.Controllers
 {
@@ -89,8 +90,37 @@ namespace Nop.Web.Controllers
 
             if (cacheModel == null)
                 return RedirectToRoute("HomePage");
+
+            if ((new List<string>() { "超值", "正品", "包邮", "保障" }).Contains(cacheModel.SystemName))
+            {
+                return View("TopicListBlock", cacheModel);
+            }
+
             return View("TopicDetails", cacheModel);
         }
+
+        public ActionResult TopicBody(string systemName)
+        {
+            var cacheKey = string.Format(ModelCacheEventConsumer.TOPIC_MODEL_BY_SYSTEMNAME_KEY, systemName, _workContext.WorkingLanguage.Id, _storeContext.CurrentStore.Id);
+            var cacheModel = _cacheManager.Get(cacheKey, () =>
+            {
+                //load by store
+                var topic = _topicService.GetTopicBySystemName(systemName);
+                if (topic == null)
+                    return null;
+                //Store mapping
+                if (!_storeMappingService.Authorize(topic))
+                    return null;
+                return PrepareTopicModel(topic);
+            });
+
+            if (cacheModel == null)
+                cacheModel = new TopicModel();
+
+            return View(cacheModel);
+        }
+
+        
 
         public ActionResult TopicDetailsPopup(string systemName)
         {

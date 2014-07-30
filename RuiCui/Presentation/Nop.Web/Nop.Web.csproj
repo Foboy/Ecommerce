@@ -2024,11 +2024,13 @@
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\demo.html" />
     <Content Include="Themes\DefaultTheme\Content\css\iconfont\iconfont.css" />
     <Content Include="Themes\DefaultTheme\Content\css\index.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\jquery.fullPage.css" />
     <Content Include="Themes\DefaultTheme\Content\css\login.css" />
     <Content Include="Themes\DefaultTheme\Content\css\main.css" />
     <Content Include="Themes\DefaultTheme\Content\css\news.css" />
     <Content Include="Themes\DefaultTheme\Content\css\register.css" />
     <Content Include="Themes\DefaultTheme\Content\css\shopcart.css" />
+    <Content Include="Themes\DefaultTheme\Content\css\shopintroduction.css" />
     <Content Include="Themes\DefaultTheme\Content\css\usercenter.css" />
     <Content Include="Themes\DefaultTheme\Content\css\vip.css" />
     <Content Include="Themes\DefaultTheme\Content\fancybox\blank.gif" />
@@ -2679,6 +2681,8 @@
     <Content Include="Themes\DefaultTheme\Content\js\base.js" />
     <Content Include="Themes\DefaultTheme\Content\js\categoryTree.js" />
     <Content Include="Themes\DefaultTheme\Content\js\index.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.fullPage.js" />
     <Content Include="Themes\DefaultTheme\Content\js\jquery.js" />
     <Content Include="Themes\DefaultTheme\Content\js\public.onepagecheckout.js" />
     <Content Include="Themes\DefaultTheme\Content\js\public.usercenter.js" />
@@ -3587,6 +3591,8 @@
     <Content Include="Themes\DefaultTheme\Views\Catalog\_FilterVipBox.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Catalog\AddProductToPackage.cshtml" />
     <Content Include="Themes\DefaultTheme\Views\Customer\RegisterByEmailValidation.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Topic\TopicListBlock.cshtml" />
+    <Content Include="Themes\DefaultTheme\Views\Topic\TopicBody.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\ueditor\net\upload\image\20140602\" />
