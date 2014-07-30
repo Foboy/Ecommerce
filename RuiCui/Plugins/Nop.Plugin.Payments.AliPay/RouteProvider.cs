@@ -17,7 +17,7 @@ namespace Nop.Plugin.Payments.AliPay
 
             //Notify
             routes.MapRoute("Plugin.Payments.AliPay.Return",
-                 "Plugins/PaymentAliPay/Return",
+                 "Plugins/PaymentAliPay/Return/{orderId}",
                  new { controller = "PaymentAliPay", action = "Return" },
                  new[] { "Nop.Plugin.Payments.AliPay.Controllers" }
             );
