@@ -137,6 +137,7 @@
     <Compile Include="Controllers\AffiliateController.cs" />
     <Compile Include="Controllers\CampaignController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\FinancialController.cs" />
     <Compile Include="Controllers\JbimagesController.cs" />
     <Compile Include="Controllers\ProductQuestionController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
@@ -2379,6 +2380,7 @@
     <Content Include="Views\Shared\EditorTemplates\UEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\admin.pubxml" />
     <None Include="Properties\PublishProfiles\nopadmin.pubxml" />
     <Content Include="Views\ProductQuestion\_CreateOrUpdate.cshtml" />
     <Content Include="Views\ProductQuestion\Edit.cshtml" />
@@ -2395,7 +2397,6 @@
     <Content Include="Views\Product\_ProductList.All.cshtml" />
     <Content Include="Views\Product\_ProductList.Boutique.cshtml" />
     <Content Include="Views\Product\_ProductList.Vip.cshtml" />
-    <Content Include="Views\ReturnRequest\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
