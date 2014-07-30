@@ -103,7 +103,8 @@ namespace Nop.Plugin.Payments.AliPay.Controllers
                 throw new NopException("AliPay module cannot be loaded");
 
 
-            string alipayNotifyUrl = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify";
+            //string alipayNotifyUrl = "https://www.alipay.com/cooperate/gateway.do?service=notify_verify";
+            string alipayNotifyUrl = "https://mapi.alipay.com/gateway.do?service=notify_verify";
             string partner = _aliPayPaymentSettings.Partner;
             if (string.IsNullOrEmpty(partner))
                 throw new Exception("Partner is not set");
@@ -183,14 +184,14 @@ namespace Nop.Plugin.Payments.AliPay.Controllers
         }
 
         [ValidateInput(false)]
-        public ActionResult Return()
+        public ActionResult Return(int? orderId)
         {
             var processor = _paymentService.LoadPaymentMethodBySystemName("Payments.AliPay") as AliPayPaymentProcessor;
             if (processor == null ||
                 !processor.IsPaymentMethodActive(_paymentSettings) || !processor.PluginDescriptor.Installed)
                 throw new NopException("AliPay module cannot be loaded");
 
-            return RedirectToAction("Index", "Home", new { area = "" });
+            return RedirectToAction("Completed", "Checkout", new { area = "", orderId = orderId });
         }
     }
 }

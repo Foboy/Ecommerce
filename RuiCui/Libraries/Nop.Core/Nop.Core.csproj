@@ -96,6 +96,7 @@
     <Compile Include="Domain\Customers\CustomerAttributeValue.cs" />
     <Compile Include="Domain\Customers\CustomerLoginResults.cs" />
     <Compile Include="Domain\Discounts\DiscountPackageProducts.cs" />
+    <Compile Include="Domain\Orders\OrderAddressReportSum.cs" />
     <Compile Include="Domain\Refund\RefundOrder.cs" />
     <Compile Include="Domain\Refund\RefundOrderItem.cs" />
     <Compile Include="Domain\Seo\WwwRequirement.cs" />

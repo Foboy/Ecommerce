@@ -7,5 +7,6 @@ namespace Nop.Core.Domain.Orders
     {
 
         public decimal SumOrderPrice { get; set; }
+
     }
 }
