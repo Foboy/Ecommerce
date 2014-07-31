@@ -75,58 +75,12 @@ namespace Nop.Admin.Controllers
 
         #region Methods
         [HttpPost]
+
         public ActionResult GetOrderReportList(DataSourceRequest command, BestsellersReportModel model)
         {
-            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
-                return Content("");
-
-            //a vendor should have access only to his products
-            int vendorId = 0;
-            if (_workContext.CurrentVendor != null)
-                vendorId = _workContext.CurrentVendor.Id;
-
-            DateTime? startDateValue = (model.StartDate == null) ? null
-                            : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.StartDate.Value, _dateTimeHelper.CurrentTimeZone);
-
-            DateTime? endDateValue = (model.EndDate == null) ? null
-                            : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.EndDate.Value, _dateTimeHelper.CurrentTimeZone).AddDays(1);
-
-            OrderStatus? orderStatus = model.OrderStatusId > 0 ? (OrderStatus?)(model.OrderStatusId) : null;
-            PaymentStatus? paymentStatus = model.PaymentStatusId > 0 ? (PaymentStatus?)(model.PaymentStatusId) : null;
-            ////var itemss = _orderReportService.GetOrderAverageReportLine();
-
-            var items = _orderReportService.BestSellersReport(
-                createdFromUtc: startDateValue,
-                createdToUtc: endDateValue,
-                os: orderStatus,
-                ps: paymentStatus,
-                billingCountryId: model.BillingCountryId,
-                orderBy: 2,
-                vendorId: vendorId,
-                categoryId: model.CategoryId,
-                manufacturerId: model.ManufacturerId,
-                pageIndex: command.Page - 1,
-                pageSize: command.PageSize,
-                showHidden: true);
-            var gridModel = new DataSourceResult
-            {
-                Data = items.Select(x =>
-                {
-                    var m = new BestsellersReportLineModel()
-                    {
-                        ProductId = x.ProductId,
-                        TotalAmount = _priceFormatter.FormatPrice(x.TotalAmount, true, false),
-                        TotalQuantity = x.TotalQuantity,
-                    };
-                    var product = _productService.GetProductById(x.ProductId);
-                    if (product != null)
-                        m.ProductName = product.Name;
-                    return m;
-                }),
-                Total = items.TotalCount
-            };
-
-            return Json(gridModel);
+            var obj = new { };
+            return Json(obj);
+            
         }
         #endregion
     }
