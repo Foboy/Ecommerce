@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Nop.Web.Framework.Mvc;
 using Nop.Web.Models.Media;
+using Nop.Core.Domain.Orders;
 
 namespace Nop.Web.Models.Customer
 {
@@ -19,6 +20,8 @@ namespace Nop.Web.Models.Customer
         public IList<string> CancelRecurringPaymentErrors { get; set; }
 
         public CustomerNavigationModel NavigationModel { get; set; }
+
+        public OrderStatus? OrderStatus { get; set; }
 
 
         #region Nested classes
@@ -60,6 +63,10 @@ namespace Nop.Web.Models.Customer
             public bool IsReturnRequestAllowed { get; set; }
             public string OrderStatus { get; set; }
             public DateTime CreatedOn { get; set; }
+
+            public string ShippingStatus { get; set; }
+
+            public bool CanRePostProcessPayment { get; set; }
 
             public IList<OrderItemModel> Items { get; set; }
         }

@@ -40,6 +40,7 @@ using QConnectSDK;
 using Nop.Web.Models.Media;
 using Nop.Web.Infrastructure.Cache;
 using Nop.Core.Caching;
+using Nop.Services.Payments;
 
 namespace Nop.Web.Controllers
 {
@@ -92,6 +93,7 @@ namespace Nop.Web.Controllers
         private readonly IProductAttributeFormatter _productAttributeFormatter;
         private readonly ICacheManager _cacheManager;
         private readonly IProductAttributeParser _productAttributeParser;
+        private readonly IPaymentService _paymentService;
 
         #endregion
 
@@ -127,7 +129,8 @@ namespace Nop.Web.Controllers
             CaptchaSettings captchaSettings, ExternalAuthenticationSettings externalAuthenticationSettings,
             IProductAttributeFormatter productAttributeFormatter,
             ICacheManager cacheManager,
-            IProductAttributeParser productAttributeParser)
+            IProductAttributeParser productAttributeParser,
+            IPaymentService paymentService)
         {
             this._authorizer = authorizer;
             this._authenticationService = authenticationService;
@@ -175,6 +178,7 @@ namespace Nop.Web.Controllers
             this._productAttributeFormatter = productAttributeFormatter;
             this._cacheManager = cacheManager;
             this._productAttributeParser = productAttributeParser;
+            this._paymentService = paymentService;
         }
 
         #endregion
@@ -602,7 +606,7 @@ namespace Nop.Web.Controllers
         }
 
         [NonAction]
-        protected CustomerOrderListModel PrepareCustomerOrderListModel(Customer customer)
+        protected CustomerOrderListModel PrepareCustomerOrderListModel(Customer customer, OrderStatus? orderStatus = null)
         {
             if (customer == null)
                 throw new ArgumentNullException("customer");
@@ -611,7 +615,7 @@ namespace Nop.Web.Controllers
             model.NavigationModel = GetCustomerNavigationModel(customer);
             model.NavigationModel.SelectedTab = CustomerNavigationEnum.Orders;
             var orders = _orderService.SearchOrders(storeId: _storeContext.CurrentStore.Id,
-                customerId: customer.Id);
+                customerId: customer.Id,os:orderStatus);
             foreach (var order in orders)
             {
                 var orderModel = new CustomerOrderListModel.OrderDetailsModel()
@@ -619,9 +623,10 @@ namespace Nop.Web.Controllers
                     Id = order.Id,
                     CreatedOn = _dateTimeHelper.ConvertToUserTime(order.CreatedOnUtc, DateTimeKind.Utc),
                     OrderStatus = order.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
-                    IsReturnRequestAllowed = _orderProcessingService.IsReturnRequestAllowed(order)
+                    ShippingStatus = order.ShippingStatus.GetLocalizedEnum(_localizationService, _workContext),
+                    IsReturnRequestAllowed = _orderProcessingService.IsReturnRequestAllowed(order),
+                    CanRePostProcessPayment = _paymentService.CanRePostProcessPayment(order)
                 };
-
                 var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
                 orderModel.OrderTotal = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, _workContext.WorkingLanguage);
 
@@ -1624,13 +1629,14 @@ namespace Nop.Web.Controllers
         #region Orders
 
         [NopHttpsRequirement(SslRequirement.Yes)]
-        public ActionResult Orders()
+        public ActionResult Orders(OrderStatus? orderStatus = null)
         {
             if (!IsCurrentUserRegistered())
                 return new HttpUnauthorizedResult();
 
             var customer = _workContext.CurrentCustomer;
-            var model = PrepareCustomerOrderListModel(customer);
+            var model = PrepareCustomerOrderListModel(customer, orderStatus);
+            model.OrderStatus = orderStatus;
             return View(model);
         }
 
