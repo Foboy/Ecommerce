@@ -1,4 +1,5 @@
-﻿@model CustomerOrderListModel
+﻿@using Nop.Core.Domain.Orders;
+@model CustomerOrderListModel
 @{
     Layout = "~/Views/Shared/_ColumnsTwo.cshtml";
 
@@ -15,11 +16,11 @@
         <h3 class="title"> @T("Account.CustomerOrders")</h3>
         <div class="more">
             <div class="uc-order-list-type">
-                <a class="current" href="">全部订单</a>
+                <a class="@(Model.OrderStatus == null ?"current":"")" href="@Url.Action("Orders", "Customer")">全部订单</a>
                 <span class="sep">|</span>
-                <a href="">未支付订单</a>
+                <a class="@(Model.OrderStatus == OrderStatus.Pending ?"current":"")" href="@Url.Action("Orders", "Customer", new { orderStatus = OrderStatus.Pending })">未支付订单</a>
                 <span class="sep">|</span>
-                <a href="">已关闭订单</a>
+                <a class="@(Model.OrderStatus == OrderStatus.Complete ? "current" : "")" href="@Url.Action("Orders", "Customer", new { orderStatus = OrderStatus.Complete })">已关闭订单</a>
             </div>
         </div>
     </div>
@@ -155,8 +156,8 @@
                                             <div class="column-content">
                                                 @order.CreatedOn.ToString()
                                                 <span class="sep">|</span>
-                                                订单号：<a href="@Url.RouteUrl("OrderDetails", new { orderId = order.Id })">@(order.CreatedOn.Ticks.ToString() + order.Id.ToString())</a>
-                                                <span class="order-status float-right">@T("Order.OrderStatus") ： @order.OrderStatus</span>
+                                                订单号：<a href="@Url.RouteUrl("OrderDetails", new { orderId = order.Id })">@(order.Id.ToString())</a>
+                                                <span class="order-status float-right">@T("Order.OrderStatus") ： @order.OrderStatus , @order.ShippingStatus</span>
                                             </div>
                                         </th>
                                     </tr>
@@ -197,7 +198,10 @@
                                                     订单详情
                                                     <i class="iconfont font12">&#xf02af;</i>
                                                 </a> 
-                                                <a class="btn btn-primary btn-small" target="_blank" href="">立即支付</a>
+                                                @if (order.CanRePostProcessPayment)
+                                                {
+                                                    <a target="_blank" href="@Url.Action("RePostPayment", "Order", new { orderId = order.Id })" class="btn btn-primary btn-small">立即支付</a>
+                                                }
                                             </div>
                                         </td>
                                     </tr>
