@@ -25,7 +25,7 @@ namespace Nop.Admin.Controllers
 {
     public class FinancialController : BaseAdminController
     {
-            #region Fields
+        #region Fields
         private readonly IStoreContext _storeContext;
         private readonly CommonSettings _commonSettings;
         private readonly ISettingService _settingService;
@@ -47,7 +47,7 @@ namespace Nop.Admin.Controllers
                 IOrderReportService orderReportService,
               IProductService productService,
               IPriceFormatter priceFormatter,
-            CommonSettings commonSettings, 
+            CommonSettings commonSettings,
             ISettingService settingService,
             IWorkContext workContext,
             ICacheManager cacheManager)
@@ -56,7 +56,7 @@ namespace Nop.Admin.Controllers
             this._commonSettings = commonSettings;
             this._settingService = settingService;
             this._workContext = workContext;
-            this._cacheManager= cacheManager;
+            this._cacheManager = cacheManager;
             this._permissionService = permissionService;
             this._dateTimeHelper = dateTimeHelper;
             this._orderReportService = orderReportService;
@@ -66,9 +66,16 @@ namespace Nop.Admin.Controllers
 
         #endregion
 
+    
+        public ActionResult OrderReport()
+        {
+
+            return View();
+        }
+
         #region Methods
         [HttpPost]
-        public ActionResult GetOrderReport(DataSourceRequest command, BestsellersReportModel model)
+        public ActionResult GetOrderReportList(DataSourceRequest command, BestsellersReportModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
                 return Content("");
@@ -121,6 +128,6 @@ namespace Nop.Admin.Controllers
 
             return Json(gridModel);
         }
-#endregion
+        #endregion
     }
 }

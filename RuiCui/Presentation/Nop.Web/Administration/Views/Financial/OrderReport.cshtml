@@ -1,0 +1,201 @@
+﻿@using Nop.Services.Security
+@model BestsellersReportModel
+@{
+    //page title
+    ViewBag.Title = T("Admin.Dashboard").Text;
+
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var canManageOrders = permissionService.Authorize(StandardPermissionProvider.ManageOrders);
+    var canManageCustomers = permissionService.Authorize(StandardPermissionProvider.ManageCustomers);
+    var canManageProducts = permissionService.Authorize(StandardPermissionProvider.ManageProducts);
+}
+<table class="dashboard">
+    @Html.Widget("admin_dashboard_top")
+    <tr>
+        <td class="maincol">
+            <div class="section-header">
+                <div class="title">
+                    <img src="@Url.Content("~/Administration/Content/images/ico-stat1.gif")" alt="" />
+                    @T("Admin.Dashboard.StoreStatistics")
+                </div>
+                <div class="options">
+                    <a href="#" id="listshow" class="btn btn-sm btn-primary btn-flat ">列表统计模式</a>
+                    <a href="#" id="chartshow" class="btn btn-sm btn-primary btn-flat ">图表统计模式</a>
+                </div>
+            </div>
+            <div id="list" style="display:none">
+               
+                    <table class="stats">
+                        <tbody>
+                            <tr>
+                                <td class="orderaveragereport">
+                                    <div class="statisticsTitle">
+                                        订单结算
+                                    </div>
+                                    <table class="adminContent">
+                                        <tr>
+                                            <td>
+                                                <div id="average-order-report-grid"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div id="chart">
+                <div id="OrderTotal" class="col-sm-12" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+            </div>
+        </td>
+    </tr>
+    @Html.Widget("admin_dashboard_bottom")
+</table>
+<script>
+    $(document).ready(function () {
+        $("#average-order-report-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("GetOrderReportList", "Financial"))",
+                        type: "POST",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                error: function (e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true,
+                numeric: false,
+                previousNext: false,
+                info: false
+            },
+            editable: {
+                confirmation: false,
+                mode: "inline"
+            },
+            scrollable: false,
+            columns: [{
+                field: "OrderStatus",
+                title: "@T("Admin.SalesReport.Average.OrderStatus")"
+            }, {
+                field: "SumTodayOrders",
+                title: "@T("Admin.SalesReport.Average.SumTodayOrders")"
+            }, {
+                field: "SumThisWeekOrders",
+                title: "@T("Admin.SalesReport.Average.SumThisWeekOrders")"
+            }, {
+                field: "SumThisMonthOrders",
+                title: "@T("Admin.SalesReport.Average.SumThisMonthOrders")"
+            }, {
+                field: "SumThisYearOrders",
+                title: "@T("Admin.SalesReport.Average.SumThisYearOrders")"
+            }, {
+                field: "SumAllTimeOrders",
+                title: "@T("Admin.SalesReport.Average.SumAllTimeOrders")"
+            }]
+        });
+    });
+</script>
+
+@*<script type="text/javascript">
+    // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
+    // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+
+    $(document).ready(function () {
+        var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
+        $.post("@Html.Raw(Url.Action("GetOrderReport", "Financial"))", {}, function (data, status) {
+            if (status = "success") {
+                var Datas = data.Data;
+                var BindDatas = [];
+                for (var i = 0; i < Datas.length; i++) {
+                    var data = [Datas[i].SumTodayOrders, Datas[i].SumThisWeekOrders, Datas[i].SumThisMonthOrders, Datas[i].SumThisYearOrders, Datas[i].SumAllTimeOrders];
+                    BindDatas.push(data);
+                }
+                OrderTotalChart.setOption({
+                    title: {
+                        text: '订单汇总',
+                        x: 'left'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['待处理', '处理中', '已完成', '已取消'],
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            mark: { show: true },
+                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: ['今日', '本周', '本月', '今年', '全部']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '待处理',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[0]
+                        },
+                        {
+                            name: '处理中',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[1]
+                        },
+                        {
+                            name: '已完成',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[2]
+                        },
+                        {
+                            name: '已取消',
+                            type: 'line',
+                            stack: '总量',
+                            data: BindDatas[3]
+                        }
+                    ]
+                });
+            }
+        })
+        $("#listshow").click(function () {
+            $("#list").show();
+            $("#chart").hide();
+        });
+        $("#chartshow").click(function () {
+            $("#chart").show(function () {
+            });
+            $("#list").hide();
+        })
+    })
+</script>*@

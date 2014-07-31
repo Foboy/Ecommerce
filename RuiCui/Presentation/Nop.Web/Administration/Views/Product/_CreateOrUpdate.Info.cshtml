@@ -812,7 +812,8 @@
             @Html.ValidationMessageFor(model => model.AdditionalShippingCharge)
         </td>
     </tr>
-    <tr id="pnlWeight">
+    @*<!--zheng-->
+    <tr id="pnlWeight" style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.Weight):
         </td>
@@ -821,7 +822,8 @@
             @Html.ValidationMessageFor(model => model.Weight)
         </td>
     </tr>
-    <tr id="pnlLength">
+    <!--zheng-->
+    <tr id="pnlLength" style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.Length):
         </td>
@@ -830,7 +832,8 @@
             @Html.ValidationMessageFor(model => model.Length)
         </td>
     </tr>
-    <tr id="pnlWidth">
+    <!--zheng-->
+    <tr id="pnlWidth" style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.Width):
         </td>
@@ -839,7 +842,8 @@
             @Html.ValidationMessageFor(model => model.Width)
         </td>
     </tr>
-    <tr id="pnlHeight">
+    <!--zheng-->
+    <tr id="pnlHeight" style="display:none">
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.Height):
         </td>
@@ -847,8 +851,9 @@
             @Html.EditorFor(model => model.Height) [@Model.BaseDimensionIn]
             @Html.ValidationMessageFor(model => model.Height)
         </td>
-    </tr>
-    <tr id="pnlDeliveryDate">
+    </tr>*@
+    <!--zheng-->
+    <tr id="pnlDeliveryDate" >
         <td class="adminTitle">
             @Html.NopLabelFor(model => model.DeliveryDateId):
         </td>

@@ -701,11 +701,23 @@ namespace Nop.Admin.Controllers
             model.AvailableOrderStatuses.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
 
             //payment statuses
-            model.AvailablePaymentStatuses = PaymentStatus.Pending.ToSelectList(false).ToList();
+            var AvailablePaymentStatuses = PaymentStatus.Pending.ToSelectList(false).ToList();
+            foreach (var item in AvailablePaymentStatuses)
+            {
+                if (item.Value == ((int)PaymentStatus.Pending).ToString() || item.Value == ((int)PaymentStatus.Paid).ToString()) { 
+                    model.AvailablePaymentStatuses.Insert(0,new SelectListItem(){Text=item.Text,Value=item.Value });
+                }
+            }
             model.AvailablePaymentStatuses.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
 
             //shipping statuses
-            model.AvailableShippingStatuses = ShippingStatus.NotYetShipped.ToSelectList(false).ToList();
+            var AvailableShippingStatuses = ShippingStatus.NotYetShipped.ToSelectList(false).ToList();
+            foreach (var item in AvailableShippingStatuses)
+            {
+                  if (item.Value == ((int)ShippingStatus.Delivered).ToString() || item.Value == ((int)ShippingStatus.Shipped).ToString()) { 
+                    model.AvailableShippingStatuses.Insert(0,new SelectListItem(){Text=item.Text,Value=item.Value });
+                }
+            }
             model.AvailableShippingStatuses.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
 
             //stores

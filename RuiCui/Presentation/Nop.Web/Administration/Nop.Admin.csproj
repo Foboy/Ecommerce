@@ -2400,6 +2400,7 @@
     <Content Include="Views\Product\_ProductList.Boutique.cshtml" />
     <Content Include="Views\Product\_ProductList.Vip.cshtml" />
     <Content Include="Views\ReturnRequest\CreateOrUpdateReturnRequest.cshtml" />
+    <Content Include="Views\Financial\OrderReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
