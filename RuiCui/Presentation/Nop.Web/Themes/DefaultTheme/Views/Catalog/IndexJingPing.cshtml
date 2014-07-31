@@ -1,40 +1,54 @@
-﻿@using Nop.Web.Models.Catalog
-@using Nop.Web.Framework.UI
-@model CategoryModel
+﻿@model CategoryModel
 @{
-    Layout = "~/Views/Shared/_Root.Head.cshtml";
+    Layout = "~/Views/Shared/_ColumnsOne.cshtml";
     Html.AddTitleParts("精品典藏——瑞翠华光官网");
-    Html.AppendCssFileParts("~/Themes/DefaultTheme/Content/css/vip.css");
+
+    Html.AddMetaDescriptionParts(Model.MetaDescription);
+    Html.AddMetaKeywordParts(Model.MetaKeywords);
+
+    var canonicalUrlsEnabled = EngineContext.Current.Resolve<SeoSettings>().CanonicalUrlsEnabled;
+    if (canonicalUrlsEnabled)
+    {
+        var categoryUrl = Url.RouteUrl("Category", new { SeName = Model.SeName }, this.Request.Url.Scheme);
+        Html.AddCanonicalUrlParts(categoryUrl);
+    }
+
+    var breadcrumbDelimiter = EngineContext.Current.Resolve<CommonSettings>().BreadcrumbDelimiter;
 }
+@using Nop.Core.Domain.Common;
+@using Nop.Core.Domain.Seo;
+@using Nop.Core.Infrastructure;
+@using Nop.Web.Models.Catalog;
+@using Nop.Web.Extensions;
 
-<div class="site-topbar">
-    <div class="container">
-        <div class="topbar-nav">
-            <a class="current" href="@Url.RouteUrl("HomePage")">瑞翠华光</a>
-        </div>
-        <div class="topbar-info J_userInfo">
-            @Html.Action("HeaderLinks", "Common")
-        </div>
+@*category breadcrumb*@
+@if (false && Model.DisplayCategoryBreadcrumb)
+{
+    <div class="breadcrumb">
+        <ul>
+            <li>
+                <a href="@Url.RouteUrl("HomePage")" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a>
+                <span class="delimiter">@breadcrumbDelimiter</span>
+            </li>
+            @foreach (var cat in Model.CategoryBreadcrumb)
+            {
+                var isLastCategory = cat.Id == Model.Id;
+                <li>
+                    @if (isLastCategory)
+                    {
+                        <strong class="current-item">@cat.Name</strong>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl("TuiJianProduct", new { SeName = cat.SeName })" title="@cat.Name">@cat.Name</a>
+                        <span class="delimiter">@breadcrumbDelimiter</span>
+                    }
+                </li>
+            }
+        </ul>
     </div>
-</div>
-<!-- .site-topbar END -->
-
-<div class="site-header vip-nav-border container">
-    <div class="site-logo">
-        <a class="logo" href="@Url.RouteUrl("HomePage")" title="瑞翠华光"></a>
-    </div>
-    <div class="vip-title">
-        <h4>精品典藏</h4>&nbsp;
-    </div>
-    <div class="header-info">
-
-        @Html.Action("JingPingTopSpecsMenu", "Catalog")
-
-
-    </div>
-</div>
-<!-- .site-header END -->
-
+    @Html.Widget("categorydetails_after_breadcrumb")
+}
 
 <div class="container">
     <div class="row vip-margin">
@@ -86,50 +100,18 @@
             </dl>
         </div>
         <!--商品列表-->
-        <div class="col col21">
-            <ul class="vip-item-list clearfix">
+        <div class="xm-goods-list-wrap">
+
+            <ul class="xm-goods-list clearfix">
                 @foreach (var product in Model.Products)
                 {
-                    <li>
-                        <div class="vip-item-wrap">
-                            <a class="img-wrap" href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">
-                                <img srcset="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" src="@product.DefaultPictureModel.ImageUrl" alt="@product.DefaultPictureModel.AlternateText " />
-                            </a>
-                            <p class="item-title"><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" target="_blank">@product.Name</a></p>
-                            <div class="vip-item-price">
-                                @product.ProductPrice.Price
-                                <del>@product.ProductPrice.OldPrice</del>
-                            </div>
-                            @{
-                    //prepare "Add to cart" AJAX link
-                    string addtocartlink = "", addtowishlink = "";
-                    var shoppingCartTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.ShoppingCart;
-                    var shoppingWishTypeId = (int)Nop.Core.Domain.Orders.ShoppingCartType.Wishlist;
-                    var quantity = 1;
-                    if (product.ProductPrice.ForceRedirectionAfterAddingToCart)
-                    {
-                        addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
-                        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
-                    }
-                    else
-                    {
-                        addtowishlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingWishTypeId, quantity = quantity, });
-                        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, });
-                    }
-                            }
-                            @if (!product.ProductPrice.DisableBuyButton)
-                            {
-                                <a class="buy-btn" href="javascript: void(0);" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">立即购买</a>
-
-                            }
-                        </div>
+                    <li class="item-box" style="width:254px;">
+                        @Html.Partial("_ProductTuiJianBox", product)
                     </li>
                 }
             </ul>
-            <div class="xm-pagenavi">
-                @Html.Pager(Model.PagingFilteringContext).QueryParam("pagenumber")
-            </div>
         </div>
+
         <!--商品列表 END-->
 
     </div>
@@ -145,38 +127,31 @@
         <div class="footer-service">
             <ul class="list-service clearfix">
                 <li>
-                    <a href="" target="_blank">
+                    <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("超值") })" target="_blank">
                         <i class="iconfont">&#xf02b5;</i>
-                        <strong>品质保证</strong>
-                        <span>品质护航，购物无忧</span>
+                        <strong>拒绝暴利</strong>
+                        <span>全新模式，最优价格</span>
                     </a>
                 </li>
                 <li>
-                    <a href="" target="_blank">
-                        <i class="iconfont">&#xf029f;</i>
-                        <strong>7天无理由退货</strong>
-                        <span>收到商品7天内无理由退货服务</span>
+                    <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("正品") })" target="_blank">
+                        <i class="iconfont">&#xf02b9;</i>
+                        <strong>放心选购</strong>
+                        <span>权威鉴定，品质保证</span>
                     </a>
                 </li>
                 <li>
-                    <a href="" target="_blank">
+                    <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("包邮") })" target="_blank">
                         <i class="iconfont">&#xf0297;</i>
-                        <strong>15天免费换货</strong>
-                        <span>质量问题免费换新货承诺</span>
+                        <strong>安心期待</strong>
+                        <span>顺丰保价，安全快捷</span>
                     </a>
                 </li>
                 <li>
-                    <a href="" target="_blank">
+                    <a href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("保障") })" target="_blank">
                         <i class="iconfont">&#xf02b8;</i>
-                        <strong>100%</strong>
-                        <span>正品保证</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="" target="_blank">
-                        <i class="iconfont">&#xf02a4;</i>
-                        <strong>超千万用户</strong>
-                        <span>口碑信赖</span>
+                        <strong>舒心拥有</strong>
+                        <span>七天鉴赏，自由退换</span>
                     </a>
                 </li>
             </ul>
