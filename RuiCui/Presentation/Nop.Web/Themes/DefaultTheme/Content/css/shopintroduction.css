@@ -65,7 +65,7 @@ p{
 	font-size: 2em;
 }
 .intro p{
-	width: 50%;
+	width: 100%;
 	margin: 0 auto;
 	font-size: 1.5em;
 }
@@ -121,6 +121,7 @@ p{
 .intro{
 	width: 960px;
 	margin: 0 auto;
+    padding-top:80px;
 }
 
 
