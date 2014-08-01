@@ -3328,7 +3328,53 @@ namespace Nop.Admin.Controllers
 
             var gridModel = new DataSourceResult
             {
-                Data = model,
+                Data = model.ToList(),
+                Total = model.Count
+            };
+
+            return Json(gridModel);
+        }
+
+
+        [HttpPost]
+        public ActionResult OrderIncompleteReportListByChart(DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
+                return Content("");
+
+            //a vendor does have access to this report
+            if (_workContext.CurrentVendor != null)
+                return Content("");
+
+            var model = new List<OrderIncompleteReportLineModel>();
+            //not paid
+            var psPending = _orderReportService.GetOrderAverageReportLine(0, 0, null, PaymentStatus.Pending, null, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalUnpaidOrders"),
+                Count = psPending.CountOrders,
+                Total = _priceFormatter.FormatPrice(psPending.SumOrders, false, false)
+            });
+            //not shipped
+            var ssPending = _orderReportService.GetOrderAverageReportLine(0, 0, null, null, ShippingStatus.NotYetShipped, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalNotShippedOrders"),
+                Count = ssPending.CountOrders,
+                Total = _priceFormatter.FormatPrice(ssPending.SumOrders, false, false)
+            });
+            //pending
+            var osPending = _orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalIncompleteOrders"),
+                Count = osPending.CountOrders,
+                Total = _priceFormatter.FormatPrice(osPending.SumOrders, false, false)
+            });
+
+            var gridModel = new DataSourceResult
+            {
+                Data = model.ToList(),
                 Total = model.Count
             };
 

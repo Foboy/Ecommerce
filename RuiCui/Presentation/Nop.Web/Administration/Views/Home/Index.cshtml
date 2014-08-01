@@ -186,105 +186,108 @@
         })
         var UnfinishedOrdersChartAmount = echarts.init(document.getElementById('UnfinishedOrdersChartAmount'));
         var UnfinishedOrdersChartNumber = echarts.init(document.getElementById('UnfinishedOrdersChartNumber'));
-       // $.post();
-        UnfinishedOrdersChartAmount.setOption({
-            title: {
-                text: '未完成的订单总额环比',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data: ['未支付的订单总额(待付款的订单)', '未发货的订单总额', '未完成的订单总额(待处理的订单)']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: { show: true },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            calculable: true,
-            series: [
-                {
-                    name: '条件来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        { value: 335, name: '未支付的订单总额(待付款的订单)' },
-                        { value: 135, name: '未发货的订单总额' },
-                        { value: 1548, name: '未完成的订单总额(待处理的订单)' }
-                    ]
-                }
-            ]
-        });
-        UnfinishedOrdersChartNumber.setOption({
-            title: {
-                text: '未完成的订单总数环比',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data: ['未支付的订单总数(待付款的订单)', '未发货的订单总数', '未完成的订单总数(待处理的订单)']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: { show: true },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            calculable: true,
-            series: [
-                {
-                    name: '条件来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        { value: 8, name: '未支付的订单总数(待付款的订单)' },
-                        { value: 11, name: '未发货的订单总数' },
-                        { value: 7, name: '未完成的订单总数(待处理的订单)' }
-                    ]
-                }
-            ]
-        });
-        // --- 地图 ---
-        var myChart2 = echarts.init(document.getElementById('mainMap'));
-        myChart2.setOption({
-            tooltip: {
-                trigger: 'item',
-                formatter: '{c}'
-            },
-            series: [
-                {
-                    name: '中国',
-                    type: 'map',
-                    mapType: 'china',
-                    selectedMode: 'multiple',
-                    itemStyle: {
-                        normal: { label: { show: true } },
-                        emphasis: { label: { show: true } }
+        $.post("@Html.Raw(Url.Action("OrderIncompleteReportListByChart", "Order"))", {}, function (data, status){
+            if (status = "success") {
+                var Datas = data.Data;
+                UnfinishedOrdersChartAmount.setOption({
+                    title: {
+                        text: '未完成的订单总额环比',
+                        x: 'center'
                     },
-                    data: [
-                        { name: '广东', value: 12323, selected: true },
-                        { name: '四川', value: 34343}
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['未支付的订单总额(待付款的订单)', '未发货的订单总额', '未完成的订单总额(待处理的订单)']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '条件来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: Datas[0].Total, name: '未支付的订单总额(待付款的订单)' },
+                                { value: Datas[1].Total, name: '未发货的订单总额' },
+                                { value: Datas[2].Total, name: '未完成的订单总额(待处理的订单)' }
+                            ]
+                        }
                     ]
-                }
-            ]
+                });
+                UnfinishedOrdersChartNumber.setOption({
+                    title: {
+                        text: '未完成的订单总数环比',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['未支付的订单总数(待付款的订单)', '未发货的订单总数', '未完成的订单总数(待处理的订单)']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    series: [
+                        {
+                            name: '条件来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: Datas[0].Count, name: '未支付的订单总数(待付款的订单)' },
+                                { value: Datas[1].Count, name: '未发货的订单总数' },
+                                { value: Datas[2].Count, name: '未完成的订单总数(待处理的订单)' }
+                            ]
+                        }
+                    ]
+                });
+            }
         });
+       
+        // --- 地图 ---
+        //var myChart2 = echarts.init(document.getElementById('mainMap'));
+        //myChart2.setOption({
+        //    tooltip: {
+        //        trigger: 'item',
+        //        formatter: '{c}'
+        //    },
+        //    series: [
+        //        {
+        //            name: '中国',
+        //            type: 'map',
+        //            mapType: 'china',
+        //            selectedMode: 'multiple',
+        //            itemStyle: {
+        //                normal: { label: { show: true } },
+        //                emphasis: { label: { show: true } }
+        //            },
+        //            data: [
+        //                { name: '广东', value: 12323, selected: true },
+        //                { name: '四川', value: 34343}
+        //            ]
+        //        }
+        //    ]
+        //});
         $("#listshow").click(function () {
             $("#list").show();
             $("#chart").hide();
