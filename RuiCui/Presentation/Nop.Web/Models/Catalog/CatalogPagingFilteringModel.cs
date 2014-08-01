@@ -359,8 +359,9 @@ namespace Nop.Web.Models.Catalog
                 foreach (var saof in allFilters)
                 {
                     //do not add already filtered specification options
-                    if (alreadyFilteredOptions.FirstOrDefault(x => x.SpecificationAttributeId == saof.SpecificationAttributeId) != null)
-                        continue;
+                    //所有可筛选条件都显示出来
+                    //if (alreadyFilteredOptions.FirstOrDefault(x => x.SpecificationAttributeId == saof.SpecificationAttributeId) != null)
+                    //    continue;
 
                     //else add it
                     notFilteredOptions.Add(saof);
@@ -370,12 +371,17 @@ namespace Nop.Web.Models.Catalog
                 if (alreadyFilteredOptions.Count > 0 || notFilteredOptions.Count > 0)
                 {
                     this.Enabled = true;
-                    
+                    Dictionary<int, int> alreadyFilterAttribute = new Dictionary<int, int>();
                     this.AlreadyFilteredItems = alreadyFilteredOptions.ToList().Select(x =>
                     {
                         var item = new SpecificationFilterItem();
                         item.SpecificationAttributeName = x.SpecificationAttributeName;
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
+
+                        if (!alreadyFilterAttribute.ContainsKey(x.SpecificationAttributeId))
+                        {
+                            alreadyFilterAttribute.Add(x.SpecificationAttributeId, x.SpecificationAttributeOptionId);
+                        }
 
                         var alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
                         if (alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
@@ -395,9 +401,34 @@ namespace Nop.Web.Models.Catalog
                         item.SpecificationAttributeOptionName = x.SpecificationAttributeOptionName;
 
                         //filter URL
-                        var alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
+                        List<int> alreadyFilteredOptionIds = new List<int>();
+                        var _alreadyFilteredOptionIds = GetAlreadyFilteredSpecOptionIds(webHelper);
+                        foreach (int oid in _alreadyFilteredOptionIds)
+                        {
+                            int aid = 0;
+                            if (alreadyFilterAttribute.TryGetValue(x.SpecificationAttributeId, out aid) && aid == oid)
+                            {
+                                alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
+                            }
+                            else
+                            {
+                                alreadyFilteredOptionIds.Add(oid);
+                            }
+                        }
                         if (!alreadyFilteredOptionIds.Contains(x.SpecificationAttributeOptionId))
+                        {
                             alreadyFilteredOptionIds.Add(x.SpecificationAttributeOptionId);
+                        }
+
+                        if (alreadyFilterAttribute.ContainsValue(x.SpecificationAttributeOptionId))
+                        {
+                            item.Filtered = false;
+                        }
+                        else
+                        {
+                            item.Filtered = true;
+                        }
+
                         string newQueryParam = GenerateFilteredSpecQueryParam(alreadyFilteredOptionIds);
                         string filterUrl = webHelper.ModifyQueryString(webHelper.GetThisPageUrl(true), QUERYSTRINGPARAM + "=" + newQueryParam, null);
                         filterUrl = ExcludeQueryStringParams(filterUrl, webHelper);
@@ -500,6 +531,7 @@ namespace Nop.Web.Models.Catalog
             public string SpecificationAttributeName { get; set; }
             public string SpecificationAttributeOptionName { get; set; }
             public string FilterUrl { get; set; }
+            public bool Filtered { get; set; }
         }
 
         #endregion

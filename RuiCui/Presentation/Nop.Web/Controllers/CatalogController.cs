@@ -1272,10 +1272,16 @@ namespace Nop.Web.Controllers
 
             if (command.PageSize <= 0) command.PageSize = category.PageSize;
 
-
+            string priceRanges = category.PriceRanges;
+            if (string.IsNullOrWhiteSpace(priceRanges) && category.ParentCategoryId >0)
+            {
+                var parent = _categoryService.GetCategoryById(category.ParentCategoryId);
+                if (parent != null)
+                    priceRanges = parent.PriceRanges;
+            }
             //price ranges
-            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(category.PriceRanges, _webHelper, _priceFormatter);
-            var selectedPriceRange = model.PagingFilteringContext.PriceRangeFilter.GetSelectedPriceRange(_webHelper, category.PriceRanges);
+            model.PagingFilteringContext.PriceRangeFilter.LoadPriceRangeFilters(priceRanges, _webHelper, _priceFormatter);
+            var selectedPriceRange = model.PagingFilteringContext.PriceRangeFilter.GetSelectedPriceRange(_webHelper, priceRanges);
             decimal? minPriceConverted = null;
             decimal? maxPriceConverted = null;
             if (selectedPriceRange != null)
@@ -1428,7 +1434,7 @@ namespace Nop.Web.Controllers
             model.PagingFilteringContext.ViewMode = viewMode;
 
             //specs
-            var specs = this._categorySpecificationService.LoadCategorySpecificationAtrributeById(category.ParentCategoryId > 0 ? category.ParentCategoryId : category.Id);
+            var specs = this._categorySpecificationService.LoadCategorySpecificationAtrributeById(category.ParentCategoryId > 0 ? category.ParentCategoryId : category.Id).Where(s=>s.AllowFiltering).ToList();
             model.PagingFilteringContext.SpecificationFilter.PrepareSpecsFilters(alreadyFilteredSpecOptionIds,
                 specs, 
                 _specificationAttributeService, _webHelper, _workContext);
