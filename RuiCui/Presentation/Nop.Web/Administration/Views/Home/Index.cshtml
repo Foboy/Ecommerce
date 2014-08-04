@@ -99,10 +99,24 @@
                 }
             </div>
             <div id="chart" >
-                <div id="OrderTotal" class="col-sm-12 OrderTotal"></div>
+                <div class="order-div">
+                    <div id="OrderTotal" class="col-sm-12 OrderTotal"></div>
+                    <div class="custom-date ">
+                        <div class="form-horizontal">
+                            <label class="control-label col-sm-3 lable-sm padding_rightnull">时间：</label>
+                            <div class="input-group col-sm-9 padding_leftnull">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input id="reservation" class="form-control input-sm pull-right ng-pristine ng-valid" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="UnfinishedOrdersChartAmount" class="col-sm-12 OrderTotal"></div>
                 <div id="UnfinishedOrdersChartNumber" class="col-sm-12 OrderTotal"></div>
-                <div id="mainMap" class="col-sm-12 OrderTotal"></div>
+                
             </div>
         </td>
     </tr>
@@ -113,14 +127,36 @@
     // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
 
     $(document).ready(function () {
+        $("#reservation").val('');
+        $('#reservation').daterangepicker({
+            showDropdowns: true,
+            format: 'YYYY/MM/DD',
+            ranges: {
+                '今天/昨天': [moment().subtract('days', 1), moment()],
+                '最近7天': [moment().subtract('days', 6), moment()],
+                '最近30天': [moment().subtract('days', 29), moment()]
+            },
+            startDate: moment().subtract('days', 1),
+            endDate: moment()
+        },
+           function (start, end) {
+               create_time1 = start / 1000;
+               create_time2 = end / 1000;
+               //$scope.SaleTotalTrendGraphByTime($scope.timestamptostr(create_time1), $scope.timestamptostr(create_time2));
+
+           });
         var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
-        $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order"))", {}, function (data, status) {
+        $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order", new { type = "week" }))", {}, function (data, status) {
             if (status = "success") {
-                var Datas = data.Data;
-                var BindDatas = [];
-                for (var i = 0; i < Datas.length; i++) {
-                    var data = [Datas[i].SumTodayOrders, Datas[i].SumThisWeekOrders, Datas[i].SumThisMonthOrders, Datas[i].SumThisYearOrders, Datas[i].SumAllTimeOrders];
-                    BindDatas.push(data);
+                var PendingOrderBindData = [];
+                var ProcessingOrderBindData = [];
+                var CompleteOrderBindData = [];
+                var CancelledOrderBindData = [];
+                for (var i = 0; i < data.TotalX.length; i++) {
+                    PendingOrderBindData.push(data.PendingOrderList[i].SumOrders);
+                    ProcessingOrderBindData.push(data.ProcessingOrderList[i].SumOrders);
+                    CompleteOrderBindData.push(data.CompleteOrderList[i].SumOrders);
+                    CancelledOrderBindData.push(data.CancelledOrderList[i].SumOrders);
                 }
                 OrderTotalChart.setOption({
                     title: {
@@ -136,8 +172,7 @@
                     toolbox: {
                         show: true,
                         feature: {
-                            mark: { show: true },
-                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                            //magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
                             restore: { show: true },
                             saveAsImage: { show: true }
                         }
@@ -147,7 +182,7 @@
                         {
                             type: 'category',
                             boundaryGap: false,
-                            data: ['今日', '本周', '本月', '今年', '全部']
+                            data: data.TotalX
                         }
                     ],
                     yAxis: [
@@ -160,25 +195,25 @@
                             name: '待处理',
                             type: 'line',
                             stack: '总量',
-                            data: BindDatas[0]
+                            data: PendingOrderBindData
                         },
                         {
                             name: '处理中',
                             type: 'line',
                             stack: '总量',
-                            data: BindDatas[1]
+                            data: ProcessingOrderBindData
                         },
                         {
                             name: '已完成',
                             type: 'line',
                             stack: '总量',
-                            data: BindDatas[2]
+                            data: CompleteOrderBindData
                         },
                         {
                             name: '已取消',
                             type: 'line',
                             stack: '总量',
-                            data: BindDatas[3]
+                            data: CancelledOrderBindData
                         }
                     ]
                 });
