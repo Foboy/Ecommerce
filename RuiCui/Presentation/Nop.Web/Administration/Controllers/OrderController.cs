@@ -3251,11 +3251,13 @@ namespace Nop.Admin.Controllers
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult OrderAverageReportListByChart(DataSourceRequest command, string type, DateTime? StartTime, DateTime? EndTime)
+        public ActionResult OrderAverageReportListByChart(DataSourceRequest command)
         {
+            string type=Request.Form["type"];
+            string startTime=Request.Form["startTime"];
+            string endTime = Request.Form["endTime"];
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
                 return Content("");
-
             //a vendor does have access to this report
             if (_workContext.CurrentVendor != null)
                 return Content("");
@@ -3275,7 +3277,7 @@ namespace Nop.Admin.Controllers
                         ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
-                        TotalX.Add(DateTime.UtcNow.AddDays(-i).ToString("MM-dd"));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
                     }
                     result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
                     break;
@@ -3287,7 +3289,7 @@ namespace Nop.Admin.Controllers
                         ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
-                        TotalX.Add(DateTime.UtcNow.AddDays(-i).ToString("MM-dd"));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
                     }
                     result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
                     break;
@@ -3299,34 +3301,42 @@ namespace Nop.Admin.Controllers
                         ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
                         CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
                         CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
-                        TotalX.Add(DateTime.UtcNow.AddMonths(-i).ToString("YYYY-mm"));
+                        TotalX.Add(DateTime.UtcNow.AddMonths(-i+1).ToString("YYYY-mm"));
                     }
                     result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "month" };
                     break;
-                 //自定义时间
+                //自定义时间
                 case "defineTime":
                     int days = 0;
+                    DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+                    long sTime = long.Parse(startTime + "0000000");
+                    long eTime = long.Parse(endTime + "0000000");
+                    TimeSpan toStart = new TimeSpan(sTime);
+                    TimeSpan toEnd = new TimeSpan(eTime);
+                    DateTime StartTime = dtStart.Add(toStart);
+                    DateTime EndTime = dtStart.Add(toEnd);
                     if (EndTime != null && StartTime != null)
                     {
+                        days = EndTime.DayOfYear - StartTime.DayOfYear + 1;
                         for (int i = days; i > 0; i--)
                         {
-                            PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, StartTime.Value.AddDays(-i), StartTime.Value.AddDays(-i + 1), null));
-                            ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, StartTime.Value.AddDays(-i), StartTime.Value.AddDays(-i + 1), null));
-                            CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, StartTime.Value.AddDays(-i), StartTime.Value.AddDays(-i + 1), null));
-                            CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, StartTime.Value.AddDays(-i), StartTime.Value.AddDays(-i + 1), null));
-                            TotalX.Add(StartTime.Value.AddDays(-i).ToString("MM-dd"));
+                            PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            TotalX.Add(EndTime.AddDays(-i+1).ToString("MM-dd"));
                         }
                         result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "defineTime" };
                     }
                     break;
                 default:
-                     for (int i = 7; i > 0; i--)
+                    for (int i = 7; i > 0; i--)
                     {
                         PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
                         CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
-                        TotalX.Add(DateTime.UtcNow.AddDays(-i).ToString("MM-dd"));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
                     }
                     result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
                     break;
