@@ -84,7 +84,7 @@
                                 <li class="@if (firstSpec++==0){<text>first</text>}
                                                                      else
                                                                      {<text></text>}">
-                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#ff4a00;">@item.Name</a>
+                                    <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#18aedf;">@item.Name</a>
                                 </li>
                             }
                         }
@@ -113,7 +113,7 @@
         <li class="@if (firstSpec++==0){<text>first</text>}
                                                                      else
                                                                      {<text></text>}">
-            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#ff4a00;">@item.Name</a>
+            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" style="color:#18aedf;">@item.Name</a>
         </li>
     }
 }
@@ -122,7 +122,14 @@
                             <li class="@if (firstSpec++==0){<text>first</text>}
                                                                      else
                                                                      {<text></text>}">
-                                <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
+                                @if (spec.Filtered)
+                                {
+                                    <a href="@spec.FilterUrl">@spec.SpecificationAttributeOptionName</a>
+                                }
+                                else
+                                {
+                                    <a style="color:#ff4a00;">@spec.SpecificationAttributeOptionName</a>
+                                }
                             </li>
                         }
                     </ul>
@@ -133,8 +140,7 @@
 }
 @if (priceModel.Enabled)
 {
-    if (selectedItem == null)
-    {
+
         <dl class="xm-filter-list  category-filter-list clearfix">
             <dt>价格区间 ：</dt>
             <dd>
@@ -146,13 +152,22 @@
                     {
                         <li class="@if (firstSpec++==0){<text>first</text>}
                                                                      else
-                                                                     {<text></text>}"><a href="@item.FilterUrl">@FormatPriceRangeText(item)</a></li>
+                                                                     {<text></text>}">
+                            @if (item.Selected)
+                            {
+                                <a style="color:#ff4a00;">@FormatPriceRangeText(item)</a>
+                            }
+                            else
+                            {
+                                <a href="@item.FilterUrl">@FormatPriceRangeText(item)</a>
+                            }
+                        
+                        </li>
                     }
 
                 </ul>
             </dd>
         </dl>
-    }
 }
 @if (specModel.Enabled || priceModel.Enabled)
 {
