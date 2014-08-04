@@ -205,34 +205,34 @@
       <publishTime>05/21/2014 10:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Core.dll">
-      <publishTime>07/23/2014 09:40:46</publishTime>
+      <publishTime>08/01/2014 10:04:12</publishTime>
     </File>
     <File Include="bin/Nop.Core.pdb">
-      <publishTime>07/23/2014 09:40:46</publishTime>
+      <publishTime>08/01/2014 10:04:12</publishTime>
     </File>
     <File Include="bin/Nop.Data.dll">
-      <publishTime>07/23/2014 09:40:46</publishTime>
+      <publishTime>08/01/2014 10:04:14</publishTime>
     </File>
     <File Include="bin/Nop.Data.pdb">
-      <publishTime>07/23/2014 09:40:46</publishTime>
+      <publishTime>08/01/2014 10:04:14</publishTime>
     </File>
     <File Include="bin/Nop.Services.dll">
-      <publishTime>07/23/2014 09:40:48</publishTime>
+      <publishTime>08/01/2014 10:04:17</publishTime>
     </File>
     <File Include="bin/Nop.Services.pdb">
-      <publishTime>07/23/2014 09:40:48</publishTime>
+      <publishTime>08/01/2014 10:04:17</publishTime>
     </File>
     <File Include="bin/Nop.Web.dll">
-      <publishTime>07/23/2014 09:40:58</publishTime>
+      <publishTime>08/01/2014 10:04:29</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.dll">
-      <publishTime>07/23/2014 09:40:50</publishTime>
+      <publishTime>08/01/2014 10:04:20</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.pdb">
-      <publishTime>07/23/2014 09:40:50</publishTime>
+      <publishTime>08/01/2014 10:04:20</publishTime>
     </File>
     <File Include="bin/Nop.Web.pdb">
-      <publishTime>07/23/2014 09:40:58</publishTime>
+      <publishTime>08/01/2014 10:04:29</publishTime>
     </File>
     <File Include="bin/pl/FluentValidation.resources.dll">
       <publishTime>05/21/2014 10:54:55</publishTime>
@@ -3270,11 +3270,17 @@
     <File Include="Scripts/jquery-ui-1.10.3.custom.min.js">
       <publishTime>05/21/2014 10:54:53</publishTime>
     </File>
+    <File Include="Scripts/jquery-ui.js">
+      <publishTime>07/30/2014 12:52:46</publishTime>
+    </File>
     <File Include="Scripts/jquery.cookie.js">
       <publishTime>07/04/2014 13:55:24</publishTime>
     </File>
     <File Include="Scripts/jquery.fancybox-1.3.4.pack.js">
       <publishTime>05/21/2014 10:54:53</publishTime>
+    </File>
+    <File Include="Scripts/jquery.fullPage.js">
+      <publishTime>07/30/2014 12:52:46</publishTime>
     </File>
     <File Include="Scripts/jquery.magnific-popup.js">
       <publishTime>05/21/2014 10:54:53</publishTime>
@@ -5194,7 +5200,7 @@
       <publishTime>07/03/2014 21:52:44</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/base.css">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/checkout.css">
       <publishTime>06/26/2014 11:23:09</publishTime>
@@ -5203,7 +5209,7 @@
       <publishTime>06/26/2014 15:27:57</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/goods-detail.css">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/goods-list.css">
       <publishTime>07/07/2014 16:03:14</publishTime>
@@ -5230,7 +5236,10 @@
       <publishTime>06/25/2014 14:57:31</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/index.css">
-      <publishTime>07/07/2014 16:03:14</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
+    </File>
+    <File Include="Themes/DefaultTheme/Content/css/jquery.fullPage.css">
+      <publishTime>07/30/2014 12:52:46</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/login.css">
       <publishTime>07/16/2014 10:58:56</publishTime>
@@ -5246,6 +5255,9 @@
     </File>
     <File Include="Themes/DefaultTheme/Content/css/shopcart.css">
       <publishTime>07/16/2014 10:58:56</publishTime>
+    </File>
+    <File Include="Themes/DefaultTheme/Content/css/shopintroduction.css">
+      <publishTime>07/30/2014 12:52:46</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Content/css/usercenter.css">
       <publishTime>07/23/2014 09:39:43</publishTime>
@@ -8446,7 +8458,7 @@
       <publishTime>05/25/2014 17:11:28</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/IndexJingPing.cshtml">
-      <publishTime>07/11/2014 15:35:51</publishTime>
+      <publishTime>07/31/2014 14:54:51</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/IndexLastProducts.cshtml">
       <publishTime>07/07/2014 09:37:21</publishTime>
@@ -8461,7 +8473,7 @@
       <publishTime>07/08/2014 14:38:45</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/IndexVip.cshtml">
-      <publishTime>07/04/2014 16:41:55</publishTime>
+      <publishTime>07/31/2014 14:39:26</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/JingPingTopSpecsMenu.cshtml">
       <publishTime>07/11/2014 15:42:52</publishTime>
@@ -8620,7 +8632,7 @@
       <publishTime>07/11/2014 15:43:04</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_AddToCart.cshtml">
-      <publishTime>07/10/2014 17:47:37</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_AddToCart.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8659,7 +8671,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_ProductAttributes.cshtml">
-      <publishTime>07/02/2014 16:04:25</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_ProductAttributes.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8677,7 +8689,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_ProductPrice.cshtml">
-      <publishTime>06/15/2014 10:12:47</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Catalog/_ProductPrice.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8800,7 +8812,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Common/Footer.cshtml">
-      <publishTime>07/16/2014 10:58:56</publishTime>
+      <publishTime>07/30/2014 11:35:33</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Common/Footer.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8911,7 +8923,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Login.cshtml">
-      <publishTime>07/16/2014 10:58:56</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Login.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8929,7 +8941,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Orders.cshtml">
-      <publishTime>07/16/2014 13:34:24</publishTime>
+      <publishTime>07/31/2014 16:21:41</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Orders.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -8947,7 +8959,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Register.cshtml">
-      <publishTime>07/16/2014 10:58:56</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Customer/Register.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -9037,7 +9049,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Order/Details.cshtml">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>07/31/2014 16:21:41</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Order/Details.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -9151,7 +9163,7 @@
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Shared/_Root.cshtml">
-      <publishTime>07/16/2014 10:58:56</publishTime>
+      <publishTime>07/31/2014 16:21:41</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Shared/_Root.Head.cshtml">
       <publishTime>07/08/2014 14:39:38</publishTime>
@@ -9234,11 +9246,17 @@
     <File Include="Themes/DefaultTheme/Views/Topic/TopicBlock.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
     </File>
+    <File Include="Themes/DefaultTheme/Views/Topic/TopicBody.cshtml">
+      <publishTime>07/30/2014 12:52:46</publishTime>
+    </File>
     <File Include="Themes/DefaultTheme/Views/Topic/TopicDetails.cshtml">
-      <publishTime>07/03/2014 21:52:45</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Topic/TopicDetails.Mobile.cshtml">
       <publishTime>05/25/2014 17:11:29</publishTime>
+    </File>
+    <File Include="Themes/DefaultTheme/Views/Topic/TopicListBlock.cshtml">
+      <publishTime>07/30/2014 12:52:46</publishTime>
     </File>
     <File Include="Themes/DefaultTheme/Views/Web.config">
       <publishTime>05/25/2014 17:11:29</publishTime>
@@ -10234,7 +10252,7 @@
       <publishTime>05/21/2014 10:54:54</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/23/2014 09:41:55</publishTime>
+      <publishTime>08/01/2014 10:07:26</publishTime>
     </File>
   </ItemGroup>
 </Project>

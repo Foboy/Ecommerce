@@ -446,5 +446,14 @@ namespace Nop.Admin.Models.Orders
         public string aggregatorshipping { get; set; }
         public string aggregatortax { get; set; }
         public string aggregatortotal { get; set; }
+
+        /// <summary>
+        /// 平均订单金额
+        /// </summary>
+        public string avgOrderTotal { get; set; }
+        /// <summary>
+        /// 平均配送费
+        /// </summary>
+        public string avgShipping { get; set; }
     }
 }

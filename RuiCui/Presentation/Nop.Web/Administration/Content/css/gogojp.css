@@ -200,10 +200,23 @@ a {
 }
 
 /*DashBorder 样式*/
+.order-div {
+    position:relative;
+    margin:0;
+    padding:0;
+}
 .OrderTotal {
     height:500px;
     border-top:1px solid #ccc;
     border-left:1px solid #ccc;
     border-right:1px solid #ccc;
     padding:10px;
+}
+
+.custom-date {
+    position:absolute;
+    top:10px;
+    right:70px;
+    font-size:12px;
+    width:260px;
 }
