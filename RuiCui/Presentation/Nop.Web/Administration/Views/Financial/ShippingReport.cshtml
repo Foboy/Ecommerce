@@ -1,0 +1,160 @@
+﻿@using Nop.Services.Security
+@model OrderReportModel
+@{
+    //page title
+    ViewBag.Title = "配送结算";
+
+    var permissionService = EngineContext.Current.Resolve<IPermissionService>();
+    var canManageOrders = permissionService.Authorize(StandardPermissionProvider.ManageOrders);
+}
+@using (Html.BeginForm("GetOrderShipReportList", "Financial"))
+{
+    <div class="section-header">
+        <div class="title">
+            <img src="@Url.Content("~/Administration/Content/images/ico-sales.png")" alt="" />
+            配送结算
+        </div>
+
+    </div>
+    <table width="100%">
+        <tr>
+            <td class="adminTitle">
+                开始时间
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.StartDate)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                结束时间
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.EndDate)
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input type="button" id="btnSearch" class="btn btn-sm btn-primary btn-flat " value="@T("Admin.Common.Search")" />
+            </td>
+        </tr>
+    </table>
+    <p>
+    </p>
+
+    <table class="adminContent">
+        <tr>
+            <td>
+                <div id="average-order-report-grid"></div>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+    $(document).ready(function () {
+        $("#average-order-report-grid").kendoGrid({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: {
+                        url: "@Html.Raw(Url.Action("GetOrderShipReportList", "Financial"))",
+                        type: "POST",
+                        dataType: "json",
+                        data: additionalData
+                    }
+                },
+                schema: {
+                    data: "Data",
+                    total: "Total",
+                    errors: "Errors"
+                },
+                requestEnd: function (e) {
+                    if (e.type == "read") {
+                        var response = e.response;
+                        if (response) {
+                            //store extra data
+                            reportAggregates = e.response["ExtraData"];
+                        }
+                    }
+                },
+                error: function (e) {
+                    display_kendoui_grid_error(e);
+                    // Cancel the changes
+                    this.cancelChanges();
+                },
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            },
+            pageable: {
+                refresh: true,
+                numeric: false,
+                previousNext: false,
+                info: false
+            },
+            editable: {
+                confirmation: false,
+                mode: "inline"
+            },
+            scrollable: false,
+            dataBound: onDataBound,
+            columns: [{
+                field: "Id",
+                title: "订单编号"
+            }, {
+                field: "CustomerFullName",
+                title: "客户名称"
+            }, {
+                field: "CreatedOn",
+                title: "@T("Admin.Orders.Fields.CreatedOn")",
+                    width: 200,
+                    type: "date",
+                    format: "{0:G}"
+                }, {
+                    field: "OrderShippingExclTax",
+                    title: "配送结算金额",
+                    width: 200,
+                    footerTemplate: '<div>@T("Admin.Orders.Report.Shipping"): <span id=\"aggregator-shipping-block\"></span></div>' +
+                    '<div>平均配送金额: <span id=\"aggregator-avgshipping-block\"></span></div>'
+                }
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript">
+
+        var reportAggregates = "";
+
+        $(document).ready(function () {
+
+            //search button
+            $('#btnSearch').click(function () {
+                //search
+                var grid = $("#average-order-report-grid").data('kendoGrid');
+                grid.dataSource.page(1); //new search. Set page size to 1
+                grid.dataSource.read();
+                return false;
+            });
+
+        });
+
+        function additionalData() {
+            return {
+                StartDate: $('#@Html.FieldIdFor(model => model.StartDate)').val(),
+                EndDate: $('#@Html.FieldIdFor(model => model.EndDate)').val()
+
+            };
+        }
+
+        function onDataBound(e) {
+            if (reportAggregates != "") {
+                for (var key in reportAggregates) {
+                    $('#aggregator-shipping-block').text(reportAggregates['aggregatorshipping']);
+                    $('#aggregator-avgshipping-block').text(reportAggregates['avgShipping']);
+                }
+            }
+        }
+    </script>
+
+}

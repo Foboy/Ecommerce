@@ -209,6 +209,7 @@
     <Compile Include="Models\Common\SystemInfoModel.cs" />
     <Compile Include="Models\Customers\CustomerAttributeModel.cs" />
     <Compile Include="Models\Customers\CustomerAttributeValueModel.cs" />
+    <Compile Include="Models\Financial\OrderReportModel.cs" />
     <Compile Include="Models\Home\DashboardModel.cs" />
     <Compile Include="Models\Orders\OrderAverageReportLineSummaryByChartModel.cs" />
     <Compile Include="Models\Orders\RefundOrderItemModel.cs" />
@@ -2401,6 +2402,7 @@
     <Content Include="Views\Product\_ProductList.Vip.cshtml" />
     <Content Include="Views\ReturnRequest\CreateOrUpdateReturnRequest.cshtml" />
     <Content Include="Views\Financial\OrderReport.cshtml" />
+    <Content Include="Views\Financial\ShippingReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />
