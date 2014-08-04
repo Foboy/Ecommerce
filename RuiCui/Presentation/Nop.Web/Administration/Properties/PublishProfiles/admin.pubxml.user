@@ -1849,22 +1849,22 @@
       <publishTime>05/21/2014 10:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Admin.dll">
-      <publishTime>07/23/2014 09:46:29</publishTime>
+      <publishTime>08/01/2014 10:08:42</publishTime>
     </File>
     <File Include="bin/Nop.Core.dll">
-      <publishTime>07/23/2014 09:44:18</publishTime>
+      <publishTime>08/01/2014 10:08:37</publishTime>
     </File>
     <File Include="bin/Nop.Data.dll">
-      <publishTime>07/23/2014 09:44:20</publishTime>
+      <publishTime>08/01/2014 10:08:37</publishTime>
     </File>
     <File Include="bin/Nop.Services.dll">
-      <publishTime>07/23/2014 09:44:21</publishTime>
+      <publishTime>08/01/2014 10:08:39</publishTime>
     </File>
     <File Include="bin/Nop.Services.XmlSerializers.dll">
-      <publishTime>07/23/2014 09:44:22</publishTime>
+      <publishTime>08/01/2014 10:08:40</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.dll">
-      <publishTime>07/23/2014 09:44:23</publishTime>
+      <publishTime>08/01/2014 10:08:40</publishTime>
     </File>
     <File Include="bin/pl/FluentValidation.resources.dll">
       <publishTime>05/21/2014 10:54:55</publishTime>
@@ -1981,7 +1981,7 @@
       <publishTime>05/21/2014 10:54:50</publishTime>
     </File>
     <File Include="Content/css/gogojp.css">
-      <publishTime>07/02/2014 11:37:37</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Content/css/iCheck/.DS_Store">
       <publishTime>05/21/2014 10:54:50</publishTime>
@@ -3727,7 +3727,7 @@
       <publishTime>06/12/2014 11:36:39</publishTime>
     </File>
     <File Include="sitemap.config">
-      <publishTime>07/23/2014 09:39:43</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/ActivityLog/ListLogs.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>
@@ -3981,6 +3981,9 @@
     <File Include="Views/ExternalAuthentication/Methods.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
+    <File Include="Views/Financial/OrderReport.cshtml">
+      <publishTime>08/01/2014 10:00:00</publishTime>
+    </File>
     <File Include="Views/Forum/CreateForum.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>
     </File>
@@ -4018,7 +4021,7 @@
       <publishTime>07/17/2014 18:40:12</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/17/2014 18:47:30</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/Home/NopCommerceNews.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4141,7 +4144,7 @@
       <publishTime>07/23/2014 09:39:43</publishTime>
     </File>
     <File Include="Views/Order/ShipmentList.cshtml">
-      <publishTime>07/23/2014 09:39:43</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Order/UploadLicenseFilePopup.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4153,7 +4156,7 @@
       <publishTime>06/03/2014 16:27:10</publishTime>
     </File>
     <File Include="Views/Order/_OrderDetails.Info.cshtml">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/Order/_OrderDetails.Notes.cshtml">
       <publishTime>07/17/2014 16:57:58</publishTime>
@@ -4225,13 +4228,13 @@
       <publishTime>06/17/2014 12:42:44</publishTime>
     </File>
     <File Include="Views/Product/EditAttributeValues.cshtml">
-      <publishTime>07/02/2014 16:04:25</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Product/EditProductTag.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>
     </File>
     <File Include="Views/Product/List.cshtml">
-      <publishTime>07/23/2014 09:39:43</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/Product/LowStockReport.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4270,7 +4273,7 @@
       <publishTime>06/30/2014 19:12:18</publishTime>
     </File>
     <File Include="Views/Product/_CreateOrUpdate.Info.cshtml">
-      <publishTime>07/02/2014 11:37:38</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/Product/_CreateOrUpdate.Manufacturers.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4300,7 +4303,7 @@
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/Product/_CreateOrUpdateProductAttributeValue.cshtml">
-      <publishTime>07/02/2014 16:04:25</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Product/_CreateOrUpdateProductTag.cshtml">
       <publishTime>06/02/2014 13:53:11</publishTime>
@@ -4309,13 +4312,13 @@
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/Product/_ProductList.All.cshtml">
-      <publishTime>07/23/2014 09:39:43</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Product/_ProductList.Boutique.cshtml">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Product/_ProductList.Vip.cshtml">
-      <publishTime>07/17/2014 16:57:58</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/ProductAttribute/Create.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>
@@ -4365,17 +4368,20 @@
     <File Include="Views/RecurringPayment/_CreateOrUpdate.cshtml">
       <publishTime>06/03/2014 11:23:35</publishTime>
     </File>
+    <File Include="Views/ReturnRequest/CreateOrUpdateReturnRequest.cshtml">
+      <publishTime>07/30/2014 10:50:50</publishTime>
+    </File>
     <File Include="Views/ReturnRequest/Edit.cshtml">
       <publishTime>06/03/2014 11:23:35</publishTime>
     </File>
     <File Include="Views/ReturnRequest/List.cshtml">
-      <publishTime>05/21/2014 10:54:51</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/ReturnRequest/_CreateOrUpdate.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/ScheduleTask/List.cshtml">
-      <publishTime>05/21/2014 10:54:51</publishTime>
+      <publishTime>08/01/2014 10:00:00</publishTime>
     </File>
     <File Include="Views/Security/AccessDenied.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4519,7 +4525,7 @@
       <publishTime>06/03/2014 11:23:35</publishTime>
     </File>
     <File Include="Views/Shipping/Providers.cshtml">
-      <publishTime>05/21/2014 10:54:51</publishTime>
+      <publishTime>07/30/2014 10:50:50</publishTime>
     </File>
     <File Include="Views/Shipping/Restrictions.cshtml">
       <publishTime>06/03/2014 11:23:35</publishTime>

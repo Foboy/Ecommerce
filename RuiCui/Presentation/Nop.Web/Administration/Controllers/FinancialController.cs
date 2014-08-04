@@ -20,6 +20,8 @@ using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Payments;
 using Nop.Services.Orders;
 using Nop.Services.Catalog;
+using Nop.Core.Domain.Shipping;
+using Nop.Services.Localization;
 
 namespace Nop.Admin.Controllers
 {
@@ -36,15 +38,19 @@ namespace Nop.Admin.Controllers
         private readonly IOrderReportService _orderReportService;
         private readonly IProductService _productService;
         private readonly IPriceFormatter _priceFormatter;
+        private readonly IOrderService _orderService;
+        private readonly ILocalizationService _localizationService;
 
         #endregion
 
         #region Ctor
 
         public FinancialController(IStoreContext storeContext,
+              IOrderService orderService,
              IPermissionService permissionService,
                IDateTimeHelper dateTimeHelper,
                 IOrderReportService orderReportService,
+                 ILocalizationService localizationService,
               IProductService productService,
               IPriceFormatter priceFormatter,
             CommonSettings commonSettings,
@@ -52,6 +58,8 @@ namespace Nop.Admin.Controllers
             IWorkContext workContext,
             ICacheManager cacheManager)
         {
+            this._localizationService = localizationService;
+            this._orderService = orderService;
             this._storeContext = storeContext;
             this._commonSettings = commonSettings;
             this._settingService = settingService;
@@ -74,13 +82,155 @@ namespace Nop.Admin.Controllers
         }
 
         #region Methods
-        [HttpPost]
+        
 
-        public ActionResult GetOrderReportList(DataSourceRequest command, BestsellersReportModel model)
+         class orderReport
         {
+            public string Name { get; set; }
+            public DateTime CreatedOnUtc { get; set; }
+            public decimal OrderTotal { get; set; }
+        }
+        [HttpPost]
+        public ActionResult GetOrderReportListByAddress(DataSourceRequest command, BestsellersReportModel model,DateTime? createdFromUtc = null, DateTime? createdToUtc = null)
+        {
+            var orderList = _orderService.SearchOrders();
+            //  if (createdFromUtc.HasValue)
+            //    query = query.Where(o => createdFromUtc.Value <= o.CreatedOnUtc);
+            //if (createdToUtc.HasValue)
+            //    query = query.Where(o => createdToUtc.Value >= o.CreatedOnUtc);
+            //List<Order> orders = new List<Order>();
+            //foreach (var o in orderList)
+            //{
+            //    orders.Add(o);
+            //    //o.ShippingAddress.Country.Name
+            //}
+            var query = from o in orderList
+                        select new orderReport
+                        {
+                            Name = o.ShippingAddress.Country.Name,
+                            CreatedOnUtc = o.CreatedOnUtc,
+                            OrderTotal = o.OrderTotal
+                        };
+
+
+            if (createdFromUtc.HasValue)
+                query = query.Where(o => createdFromUtc.Value <= o.CreatedOnUtc);
+            if (createdToUtc.HasValue)
+                query = query.Where(o => createdToUtc.Value >= o.CreatedOnUtc);
+
+            var qq = from oq in query
+                    group oq by oq.Name
+                    into result
+                    
+                    select new {
+                        SumOrderTotal = result.Sum(o => o.OrderTotal)
+                        
+                    };
             var obj = new { };
             return Json(obj);
             
+        }
+
+        [HttpPost]
+        public ActionResult GetOrderReportList(DataSourceRequest command, OrderReportModel model)
+        {
+            DateTime? startDateValue = (model.StartDate == null) ? null
+                           : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.StartDate.Value, _dateTimeHelper.CurrentTimeZone);
+
+            DateTime? endDateValue = (model.EndDate == null) ? null
+                            : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.EndDate.Value, _dateTimeHelper.CurrentTimeZone).AddDays(1);
+
+            
+            OrderStatus? orderStatus = model.OrderStatusId > 0 ? (OrderStatus?)(model.OrderStatusId) : null;
+            orderStatus = OrderStatus.Complete;
+            //load orders
+            var orders = _orderService.SearchOrders(0, 0, 0, 0, 0,
+                startDateValue, endDateValue, orderStatus,
+                null, null,null, null,
+                command.Page - 1, command.PageSize);
+            var gridModel = new DataSourceResult
+            {
+                Data = orders.Select(x =>
+                {
+                    return new OrderModel()
+                    {
+                        Id = x.Id,
+                        OrderTotal = _priceFormatter.FormatPrice(x.OrderTotal, true, false),
+                        OrderStatus = x.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
+                        CustomerEmail = x.BillingAddress.Email,
+                        CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
+                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                    };
+                }),
+                Total = orders.TotalCount,
+            };
+
+            //summary report
+            var reportSummary = _orderReportService.GetOrderAverageReportLine(0,
+                0, orderStatus, null, null,
+                startDateValue, endDateValue,null);
+
+
+            gridModel.ExtraData = new OrderAggreratorModel()
+            {
+                aggregatortotal = _priceFormatter.FormatPrice(reportSummary.SumOrders, true, false),
+                avgOrderTotal = _priceFormatter.FormatPrice(reportSummary.SumOrders / gridModel.Total, true, false)
+            };
+
+            return Json(gridModel);
+        }
+
+        public ActionResult ShippingReport()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetOrderShipReportList(DataSourceRequest command, OrderReportModel model)
+        {
+            DateTime? startDateValue = (model.StartDate == null) ? null
+                           : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.StartDate.Value, _dateTimeHelper.CurrentTimeZone);
+
+            DateTime? endDateValue = (model.EndDate == null) ? null
+                            : (DateTime?)_dateTimeHelper.ConvertToUtcTime(model.EndDate.Value, _dateTimeHelper.CurrentTimeZone).AddDays(1);
+
+
+            OrderStatus? orderStatus = model.OrderStatusId > 0 ? (OrderStatus?)(model.OrderStatusId) : null;
+            orderStatus = OrderStatus.Complete;
+            //load orders
+            var orders = _orderService.SearchOrders(0, 0, 0, 0, 0,
+                startDateValue, endDateValue, orderStatus,
+                null, null, null, null,
+                command.Page - 1, command.PageSize);
+            var gridModel = new DataSourceResult
+            {
+                Data = orders.Select(x =>
+                {
+                    return new OrderModel()
+                    {
+                        Id = x.Id,
+                        OrderShippingExclTax = _priceFormatter.FormatPrice(x.OrderShippingExclTax, true, false),
+                        OrderStatus = x.OrderStatus.GetLocalizedEnum(_localizationService, _workContext),
+                        CustomerEmail = x.BillingAddress.Email,
+                        CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
+                        CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
+                    };
+                }),
+                Total = orders.TotalCount,
+            };
+            //summary report
+            var reportSummary = _orderReportService.GetOrderAverageReportLine(0,
+                0, orderStatus, null, null,
+                startDateValue, endDateValue, null);
+
+
+            gridModel.ExtraData = new OrderAggreratorModel()
+            {
+                aggregatorshipping = _priceFormatter.FormatShippingPrice(reportSummary.SumShippingExclTax, true),
+                avgShipping = _priceFormatter.FormatPrice(reportSummary.SumShippingExclTax / gridModel.Total, true, false)
+            };
+
+            return Json(gridModel);
         }
         #endregion
     }
