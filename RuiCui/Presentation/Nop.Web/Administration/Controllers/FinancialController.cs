@@ -84,28 +84,23 @@ namespace Nop.Admin.Controllers
         #region Methods
         
 
-         class orderReport
+         class orderAddressReport
         {
             public string Name { get; set; }
             public DateTime CreatedOnUtc { get; set; }
             public decimal OrderTotal { get; set; }
         }
-        [HttpPost]
-        public ActionResult GetOrderReportListByAddress(DataSourceRequest command, BestsellersReportModel model,DateTime? createdFromUtc = null, DateTime? createdToUtc = null)
+         class orderAddressRes
+         {
+             public string name { get; set; }
+             public string value { get; set; }
+         }
+         [HttpPost]
+         public ActionResult GetOrderReportListByAddress(DateTime? createdFromUtc = null, DateTime? createdToUtc = null)
         {
             var orderList = _orderService.SearchOrders();
-            //  if (createdFromUtc.HasValue)
-            //    query = query.Where(o => createdFromUtc.Value <= o.CreatedOnUtc);
-            //if (createdToUtc.HasValue)
-            //    query = query.Where(o => createdToUtc.Value >= o.CreatedOnUtc);
-            //List<Order> orders = new List<Order>();
-            //foreach (var o in orderList)
-            //{
-            //    orders.Add(o);
-            //    //o.ShippingAddress.Country.Name
-            //}
             var query = from o in orderList
-                        select new orderReport
+                        select new orderAddressReport
                         {
                             Name = o.ShippingAddress.Country.Name,
                             CreatedOnUtc = o.CreatedOnUtc,
@@ -118,16 +113,30 @@ namespace Nop.Admin.Controllers
             if (createdToUtc.HasValue)
                 query = query.Where(o => createdToUtc.Value >= o.CreatedOnUtc);
 
-            var qq = from oq in query
-                    group oq by oq.Name
-                    into result
-                    
-                    select new {
-                        SumOrderTotal = result.Sum(o => o.OrderTotal)
-                        
-                    };
-            var obj = new { };
-            return Json(obj);
+            var q1 = from oq in query
+                     group oq by oq.Name
+                         into result
+                         select new object[]
+                          {
+                              new{name = "云南"},
+                                 new{ name = result.Key,
+                                  value = result.Sum(o => o.OrderTotal)
+                                 }
+                             
+                          };
+            var q2 = from oq in query
+                     group oq by oq.Name
+                         into result
+                         select new
+                         {
+                             name = result.Key,
+                             value = result.Sum(o => o.OrderTotal)
+
+                         };
+            var max = q2.OrderByDescending(o => o.value).First();
+            var res = new { q1 = q1, q2 = q2,max=max };
+
+            return Json(res);
             
         }
 
