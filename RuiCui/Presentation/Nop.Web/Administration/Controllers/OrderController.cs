@@ -641,7 +641,7 @@ namespace Nop.Admin.Controllers
                 DeliveryDate = shipment.DeliveryDateUtc.HasValue ? _dateTimeHelper.ConvertToUserTime(shipment.DeliveryDateUtc.Value, DateTimeKind.Utc).ToString() : "",
                 DeliveryDateUtc = shipment.DeliveryDateUtc,
                 CanDeliver = shipment.ShippedDateUtc.HasValue && !shipment.DeliveryDateUtc.HasValue,
-                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) < shipment.ShippedDateUtc && _refundOrderService.GetRefundOrderByOrderId(shipment.OrderId)==null ? true : false
+                IsMayReturn = shipment.ShippedDateUtc.HasValue && System.DateTime.UtcNow.AddDays(-15) < shipment.ShippedDateUtc && _refundOrderService.GetRefundOrderByOrderId(shipment.OrderId) == null ? true : false
             };
 
 
@@ -704,8 +704,9 @@ namespace Nop.Admin.Controllers
             var AvailablePaymentStatuses = PaymentStatus.Pending.ToSelectList(false).ToList();
             foreach (var item in AvailablePaymentStatuses)
             {
-                if (item.Value == ((int)PaymentStatus.Pending).ToString() || item.Value == ((int)PaymentStatus.Paid).ToString()) { 
-                    model.AvailablePaymentStatuses.Insert(0,new SelectListItem(){Text=item.Text,Value=item.Value });
+                if (item.Value == ((int)PaymentStatus.Pending).ToString() || item.Value == ((int)PaymentStatus.Paid).ToString())
+                {
+                    model.AvailablePaymentStatuses.Insert(0, new SelectListItem() { Text = item.Text, Value = item.Value });
                 }
             }
             model.AvailablePaymentStatuses.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
@@ -714,8 +715,9 @@ namespace Nop.Admin.Controllers
             var AvailableShippingStatuses = ShippingStatus.NotYetShipped.ToSelectList(false).ToList();
             foreach (var item in AvailableShippingStatuses)
             {
-                  if (item.Value == ((int)ShippingStatus.Delivered).ToString() || item.Value == ((int)ShippingStatus.Shipped).ToString()) { 
-                    model.AvailableShippingStatuses.Insert(0,new SelectListItem(){Text=item.Text,Value=item.Value });
+                if (item.Value == ((int)ShippingStatus.Delivered).ToString() || item.Value == ((int)ShippingStatus.Shipped).ToString())
+                {
+                    model.AvailableShippingStatuses.Insert(0, new SelectListItem() { Text = item.Text, Value = item.Value });
                 }
             }
             model.AvailableShippingStatuses.Insert(0, new SelectListItem() { Text = _localizationService.GetResource("Admin.Common.All"), Value = "0" });
@@ -3251,36 +3253,95 @@ namespace Nop.Admin.Controllers
         [HttpPost]
         public ActionResult OrderAverageReportListByChart(DataSourceRequest command)
         {
+            string type=Request.Form["type"];
+            string startTime=Request.Form["startTime"];
+            string endTime = Request.Form["endTime"];
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
                 return Content("");
-
             //a vendor does have access to this report
             if (_workContext.CurrentVendor != null)
                 return Content("");
-
-
-            var report = new List<OrderAverageReportLineSummary>();
-            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Pending));
-            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Processing));
-            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Complete));
-            report.Add(_orderReportService.OrderAverageReport(0, OrderStatus.Cancelled));
-            var model = report.Select(x =>
+            var result = new object();
+            var PendingOrderList = new List<OrderAverageReportLine>();
+            var ProcessingOrderList = new List<OrderAverageReportLine>();
+            var CompleteOrderList = new List<OrderAverageReportLine>();
+            var CancelledOrderList = new List<OrderAverageReportLine>();
+            List<string> TotalX = new List<string>();
+            switch (type)
             {
-                return new OrderAverageReportLineSummaryByChartModel()
-                {
-                    SumTodayOrders = Math.Round(x.SumTodayOrders, 0).ToString(),
-                    SumThisWeekOrders = Math.Round(x.SumThisWeekOrders, 0).ToString(),
-                    SumThisMonthOrders = Math.Round(x.SumThisMonthOrders, 0).ToString(),
-                    SumThisYearOrders = Math.Round(x.SumThisYearOrders, 0).ToString(),
-                    SumAllTimeOrders = Math.Round(x.SumAllTimeOrders, 0).ToString()
-                };
-            }).ToList();
-            var gridModel = new DataSourceResult
-            {
-                Data = model,
-                Total = model.Count
-            };
-            return Json(gridModel);
+                //最近一周
+                case "week":
+                    for (int i = 7; i > 0; i--)
+                    {
+                        PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
+                    }
+                    result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
+                    break;
+                //最近三十天
+                case "month":
+                    for (int i = 30; i > 0; i--)
+                    {
+                        PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
+                    }
+                    result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
+                    break;
+                //最近12月
+                case "year":
+                    for (int i = 12; i > 0; i--)
+                    {
+                        PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
+                        ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
+                        CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
+                        CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddMonths(-i), DateTime.UtcNow.AddMonths(-i + 1), null));
+                        TotalX.Add(DateTime.UtcNow.AddMonths(-i+1).ToString("YYYY-mm"));
+                    }
+                    result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "month" };
+                    break;
+                //自定义时间
+                case "defineTime":
+                    int days = 0;
+                    DateTime dtStart = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+                    long sTime = long.Parse(startTime + "0000000");
+                    long eTime = long.Parse(endTime + "0000000");
+                    TimeSpan toStart = new TimeSpan(sTime);
+                    TimeSpan toEnd = new TimeSpan(eTime);
+                    DateTime StartTime = dtStart.Add(toStart);
+                    DateTime EndTime = dtStart.Add(toEnd);
+                    if (EndTime != null && StartTime != null)
+                    {
+                        days = EndTime.DayOfYear - StartTime.DayOfYear + 1;
+                        for (int i = days; i > 0; i--)
+                        {
+                            PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, StartTime.AddDays(-i), StartTime.AddDays(-i + 1), null));
+                            TotalX.Add(EndTime.AddDays(-i+1).ToString("MM-dd"));
+                        }
+                        result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "defineTime" };
+                    }
+                    break;
+                default:
+                    for (int i = 7; i > 0; i--)
+                    {
+                        PendingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        ProcessingOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Processing, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CompleteOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Complete, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        CancelledOrderList.Add(_orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Cancelled, null, null, DateTime.UtcNow.AddDays(-i), DateTime.UtcNow.AddDays(-i + 1), null));
+                        TotalX.Add(DateTime.UtcNow.AddDays(-i+1).ToString("MM-dd"));
+                    }
+                    result = new { PendingOrderList = PendingOrderList, ProcessingOrderList = ProcessingOrderList, CompleteOrderList = CompleteOrderList, CancelledOrderList = CancelledOrderList, TotalX = TotalX, Type = "day" };
+                    break;
+            }
+            return Json(result);
         }
         [ChildActionOnly]
         public ActionResult OrderIncompleteReport()
@@ -3328,10 +3389,54 @@ namespace Nop.Admin.Controllers
 
             var gridModel = new DataSourceResult
             {
-                Data = model,
+                Data = model.ToList(),
                 Total = model.Count
             };
 
+            return Json(gridModel);
+        }
+
+
+        [HttpPost]
+        public ActionResult OrderIncompleteReportListByChart(DataSourceRequest command)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
+                return Content("");
+
+            //a vendor does have access to this report
+            if (_workContext.CurrentVendor != null)
+                return Content("");
+
+            var model = new List<OrderIncompleteReportLineModel>();
+            //not paid
+            var psPending = _orderReportService.GetOrderAverageReportLine(0, 0, null, PaymentStatus.Pending, null, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalUnpaidOrders"),
+                Count = psPending.CountOrders,
+                Total = Convert.ToInt32(psPending.SumOrders).ToString()
+            });
+            //not shipped
+            var ssPending = _orderReportService.GetOrderAverageReportLine(0, 0, null, null, ShippingStatus.NotYetShipped, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalNotShippedOrders"),
+                Count = ssPending.CountOrders,
+                Total = Convert.ToInt32(ssPending.SumOrders).ToString()
+            });
+            //pending
+            var osPending = _orderReportService.GetOrderAverageReportLine(0, 0, OrderStatus.Pending, null, null, null, null, null, true);
+            model.Add(new OrderIncompleteReportLineModel()
+            {
+                Item = _localizationService.GetResource("Admin.SalesReport.Incomplete.TotalIncompleteOrders"),
+                Count = osPending.CountOrders,
+                Total = Convert.ToInt32(osPending.SumOrders).ToString()
+            });
+            var gridModel = new DataSourceResult
+            {
+                Data = model.ToList(),
+                Total = model.Count
+            };
             return Json(gridModel);
         }
 

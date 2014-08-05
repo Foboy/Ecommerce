@@ -98,11 +98,25 @@
                     </table>
                 }
             </div>
-            <div id="chart" >
-                <div id="OrderTotal" class="col-sm-12 OrderTotal"></div>
+            <div id="chart">
+                <div class="order-div">
+                    <div id="OrderTotal" class="col-sm-12 OrderTotal"></div>
+                    <div class="custom-date ">
+                        <div class="form-horizontal">
+                            <label class="control-label col-sm-3 lable-sm padding_rightnull">时间：</label>
+                            <div class="input-group col-sm-9 padding_leftnull">
+                                <div class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </div>
+                                <input id="reservation" class="form-control input-sm pull-right ng-pristine ng-valid" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="UnfinishedOrdersChartAmount" class="col-sm-12 OrderTotal"></div>
                 <div id="UnfinishedOrdersChartNumber" class="col-sm-12 OrderTotal"></div>
-                <div id="mainMap" class="col-sm-12 OrderTotal"></div>
+
             </div>
         </td>
     </tr>
@@ -113,155 +127,183 @@
     // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
 
     $(document).ready(function () {
+        function GetOrderAverageReportListByChart(type, startTime, EndTime) {
+            $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order"))", { type: type, startTime: startTime, endTime: EndTime }, function (data, status) {
+                if (status = "success") {
+                    var PendingOrderBindData = [];
+                    var ProcessingOrderBindData = [];
+                    var CompleteOrderBindData = [];
+                    var CancelledOrderBindData = [];
+                    for (var i = 0; i < data.TotalX.length; i++) {
+                        PendingOrderBindData.push(data.PendingOrderList[i].SumOrders);
+                        ProcessingOrderBindData.push(data.ProcessingOrderList[i].SumOrders);
+                        CompleteOrderBindData.push(data.CompleteOrderList[i].SumOrders);
+                        CancelledOrderBindData.push(data.CancelledOrderList[i].SumOrders);
+                    }
+                    OrderTotalChart.setOption({
+                        title: {
+                            text: '订单汇总',
+                            x: 'left'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        legend: {
+                            data: ['待处理', '处理中', '已完成', '已取消'],
+                        },
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                //magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                                restore: { show: true },
+                                saveAsImage: { show: true }
+                            }
+                        },
+                        calculable: true,
+                        xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: false,
+                                data: data.TotalX
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value'
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '待处理',
+                                type: 'line',
+                                stack: '总量',
+                                data: PendingOrderBindData
+                            },
+                            {
+                                name: '处理中',
+                                type: 'line',
+                                stack: '总量',
+                                data: ProcessingOrderBindData
+                            },
+                            {
+                                name: '已完成',
+                                type: 'line',
+                                stack: '总量',
+                                data: CompleteOrderBindData
+                            },
+                            {
+                                name: '已取消',
+                                type: 'line',
+                                stack: '总量',
+                                data: CancelledOrderBindData
+                            }
+                        ]
+                    });
+                }
+            })
+        };
+        $("#reservation").val('');
+        $('#reservation').daterangepicker({
+            showDropdowns: true,
+            format: 'YYYY/MM/DD',
+            ranges: {
+                '今天/昨天': [moment().subtract('days', 1), moment()],
+                '最近7天': [moment().subtract('days', 6), moment()],
+                '最近30天': [moment().subtract('days', 29), moment()]
+            },
+            startDate: moment().subtract('days', 1),
+            endDate: moment()
+        },
+           function (start, end) {
+               startTime1 = start / 1000;
+               endTime1 = end / 1000;
+               OrderTotalChart.clear();
+               GetOrderAverageReportListByChart("defineTime", startTime1, endTime1);
+           });
         var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
-        $.post("@Html.Raw(Url.Action("OrderAverageReportListByChart", "Order"))", {}, function (data, status) {
+        GetOrderAverageReportListByChart("week");
+        var UnfinishedOrdersChartAmount = echarts.init(document.getElementById('UnfinishedOrdersChartAmount'));
+        var UnfinishedOrdersChartNumber = echarts.init(document.getElementById('UnfinishedOrdersChartNumber'));
+        $.post("@Html.Raw(Url.Action("OrderIncompleteReportListByChart", "Order"))", {}, function (data, status) {
             if (status = "success") {
                 var Datas = data.Data;
-                var BindDatas = [];
-                for (var i = 0; i < Datas.length; i++) {
-                    var data = [Datas[i].SumTodayOrders, Datas[i].SumThisWeekOrders, Datas[i].SumThisMonthOrders, Datas[i].SumThisYearOrders, Datas[i].SumAllTimeOrders];
-                    BindDatas.push(data);
-                }
-                OrderTotalChart.setOption({
+                UnfinishedOrdersChartAmount.setOption({
                     title: {
-                        text: '订单汇总',
-                        x: 'left'
+                        text: '未完成的订单总额环比',
+                        x: 'center'
                     },
                     tooltip: {
-                        trigger: 'axis'
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
-                        data: ['待处理', '处理中', '已完成', '已取消'],
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['未支付的订单总额(待付款的订单)', '未发货的订单总额', '未完成的订单总额(待处理的订单)']
                     },
                     toolbox: {
                         show: true,
                         feature: {
-                            mark: { show: true },
-                            magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
                             restore: { show: true },
                             saveAsImage: { show: true }
                         }
                     },
                     calculable: true,
-                    xAxis: [
-                        {
-                            type: 'category',
-                            boundaryGap: false,
-                            data: ['今日', '本周', '本月', '今年', '全部']
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value'
-                        }
-                    ],
                     series: [
                         {
-                            name: '待处理',
-                            type: 'line',
-                            stack: '总量',
-                            data: BindDatas[0]
-                        },
+                            name: '条件来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: Datas[0].Total, name: '未支付的订单总额(待付款的订单)' },
+                                { value: Datas[1].Total, name: '未发货的订单总额' },
+                                { value: Datas[2].Total, name: '未完成的订单总额(待处理的订单)' }
+                            ]
+                        }
+                    ]
+                });
+                UnfinishedOrdersChartNumber.setOption({
+                    title: {
+                        text: '未完成的订单总数环比',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data: ['未支付的订单总数(待付款的订单)', '未发货的订单总数', '未完成的订单总数(待处理的订单)']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            restore: { show: true },
+                            saveAsImage: { show: true }
+                        }
+                    },
+                    calculable: true,
+                    series: [
                         {
-                            name: '处理中',
-                            type: 'line',
-                            stack: '总量',
-                            data: BindDatas[1]
-                        },
-                        {
-                            name: '已完成',
-                            type: 'line',
-                            stack: '总量',
-                            data: BindDatas[2]
-                        },
-                        {
-                            name: '已取消',
-                            type: 'line',
-                            stack: '总量',
-                            data: BindDatas[3]
+                            name: '条件来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: Datas[0].Count, name: '未支付的订单总数(待付款的订单)' },
+                                { value: Datas[1].Count, name: '未发货的订单总数' },
+                                { value: Datas[2].Count, name: '未完成的订单总数(待处理的订单)' }
+                            ]
                         }
                     ]
                 });
             }
-        })
-        var UnfinishedOrdersChartAmount = echarts.init(document.getElementById('UnfinishedOrdersChartAmount'));
-        var UnfinishedOrdersChartNumber = echarts.init(document.getElementById('UnfinishedOrdersChartNumber'));
-       // $.post();
-        UnfinishedOrdersChartAmount.setOption({
-            title: {
-                text: '未完成的订单总额环比',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data: ['未支付的订单总额(待付款的订单)', '未发货的订单总额', '未完成的订单总额(待处理的订单)']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: { show: true },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            calculable: true,
-            series: [
-                {
-                    name: '条件来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        { value: 335, name: '未支付的订单总额(待付款的订单)' },
-                        { value: 135, name: '未发货的订单总额' },
-                        { value: 1548, name: '未完成的订单总额(待处理的订单)' }
-                    ]
-                }
-            ]
         });
-        UnfinishedOrdersChartNumber.setOption({
-            title: {
-                text: '未完成的订单总数环比',
-                x: 'center'
-            },
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'left',
-                data: ['未支付的订单总数(待付款的订单)', '未发货的订单总数', '未完成的订单总数(待处理的订单)']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    mark: { show: true },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            calculable: true,
-            series: [
-                {
-                    name: '条件来源',
-                    type: 'pie',
-                    radius: '55%',
-                    center: ['50%', '60%'],
-                    data: [
-                        { value: 8, name: '未支付的订单总数(待付款的订单)' },
-                        { value: 11, name: '未发货的订单总数' },
-                        { value: 7, name: '未完成的订单总数(待处理的订单)' }
-                    ]
-                }
-            ]
-        });
+
         // --- 地图 ---
+      
         $.post("@Html.Raw(Url.Action("GetOrderReportListByAddress", "Financial"))", {}, function (data, status) {
             if (status = "success") {
 
@@ -431,4 +473,3 @@
         })
     })
 </script>
-
