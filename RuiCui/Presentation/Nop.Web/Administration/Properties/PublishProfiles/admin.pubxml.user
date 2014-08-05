@@ -1849,22 +1849,22 @@
       <publishTime>05/21/2014 10:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Admin.dll">
-      <publishTime>08/01/2014 10:08:42</publishTime>
+      <publishTime>08/04/2014 11:54:58</publishTime>
     </File>
     <File Include="bin/Nop.Core.dll">
-      <publishTime>08/01/2014 10:08:37</publishTime>
+      <publishTime>08/04/2014 11:54:51</publishTime>
     </File>
     <File Include="bin/Nop.Data.dll">
-      <publishTime>08/01/2014 10:08:37</publishTime>
+      <publishTime>08/04/2014 11:54:52</publishTime>
     </File>
     <File Include="bin/Nop.Services.dll">
-      <publishTime>08/01/2014 10:08:39</publishTime>
+      <publishTime>08/04/2014 11:54:54</publishTime>
     </File>
     <File Include="bin/Nop.Services.XmlSerializers.dll">
-      <publishTime>08/01/2014 10:08:40</publishTime>
+      <publishTime>08/04/2014 11:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Web.Framework.dll">
-      <publishTime>08/01/2014 10:08:40</publishTime>
+      <publishTime>08/04/2014 11:54:56</publishTime>
     </File>
     <File Include="bin/pl/FluentValidation.resources.dll">
       <publishTime>05/21/2014 10:54:55</publishTime>
@@ -1981,7 +1981,7 @@
       <publishTime>05/21/2014 10:54:50</publishTime>
     </File>
     <File Include="Content/css/gogojp.css">
-      <publishTime>08/01/2014 10:00:00</publishTime>
+      <publishTime>08/04/2014 11:42:31</publishTime>
     </File>
     <File Include="Content/css/iCheck/.DS_Store">
       <publishTime>05/21/2014 10:54:50</publishTime>
@@ -3727,7 +3727,7 @@
       <publishTime>06/12/2014 11:36:39</publishTime>
     </File>
     <File Include="sitemap.config">
-      <publishTime>08/01/2014 10:00:00</publishTime>
+      <publishTime>08/04/2014 11:39:06</publishTime>
     </File>
     <File Include="Views/ActivityLog/ListLogs.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>
@@ -3982,7 +3982,10 @@
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/Financial/OrderReport.cshtml">
-      <publishTime>08/01/2014 10:00:00</publishTime>
+      <publishTime>08/04/2014 11:35:56</publishTime>
+    </File>
+    <File Include="Views/Financial/ShippingReport.cshtml">
+      <publishTime>08/04/2014 11:37:21</publishTime>
     </File>
     <File Include="Views/Forum/CreateForum.cshtml">
       <publishTime>06/03/2014 11:23:34</publishTime>

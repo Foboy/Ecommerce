@@ -7,6 +7,7 @@
     var permissionService = EngineContext.Current.Resolve<IPermissionService>();
     var canManageOrders = permissionService.Authorize(StandardPermissionProvider.ManageOrders);
 }
+<a href="@Url.Action("GetOrderReportListByAddress", "Financial")" class="btn btn-sm btn-primary btn-flat " >jfkldsjafl</a>
 @using (Html.BeginForm("GetOrderReportList", "Financial"))
 {
         <div class="section-header">
