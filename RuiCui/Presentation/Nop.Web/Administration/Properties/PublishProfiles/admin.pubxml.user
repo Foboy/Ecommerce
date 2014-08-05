@@ -1849,7 +1849,7 @@
       <publishTime>05/21/2014 10:54:55</publishTime>
     </File>
     <File Include="bin/Nop.Admin.dll">
-      <publishTime>08/04/2014 11:54:58</publishTime>
+      <publishTime>08/05/2014 12:40:36</publishTime>
     </File>
     <File Include="bin/Nop.Core.dll">
       <publishTime>08/04/2014 11:54:51</publishTime>
@@ -1981,7 +1981,7 @@
       <publishTime>05/21/2014 10:54:50</publishTime>
     </File>
     <File Include="Content/css/gogojp.css">
-      <publishTime>08/04/2014 11:42:31</publishTime>
+      <publishTime>08/05/2014 10:54:56</publishTime>
     </File>
     <File Include="Content/css/iCheck/.DS_Store">
       <publishTime>05/21/2014 10:54:50</publishTime>
@@ -3982,7 +3982,7 @@
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/Financial/OrderReport.cshtml">
-      <publishTime>08/04/2014 11:35:56</publishTime>
+      <publishTime>08/04/2014 12:38:16</publishTime>
     </File>
     <File Include="Views/Financial/ShippingReport.cshtml">
       <publishTime>08/04/2014 11:37:21</publishTime>
@@ -4021,10 +4021,10 @@
       <publishTime>06/03/2014 11:23:34</publishTime>
     </File>
     <File Include="Views/Home/EchartDashBord.cshtml">
-      <publishTime>07/17/2014 18:40:12</publishTime>
+      <publishTime>08/04/2014 14:16:08</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>08/01/2014 10:00:00</publishTime>
+      <publishTime>08/05/2014 10:57:05</publishTime>
     </File>
     <File Include="Views/Home/NopCommerceNews.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
@@ -4495,7 +4495,7 @@
       <publishTime>05/21/2014 10:54:51</publishTime>
     </File>
     <File Include="Views/Shared/_AdminLayout.cshtml">
-      <publishTime>07/23/2014 09:39:43</publishTime>
+      <publishTime>08/05/2014 10:54:56</publishTime>
     </File>
     <File Include="Views/Shared/_AdminPopupLayout.cshtml">
       <publishTime>05/21/2014 10:54:51</publishTime>
