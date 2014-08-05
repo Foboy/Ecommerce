@@ -217,8 +217,15 @@
            function (start, end) {
                startTime1 = start / 1000;
                endTime1 = end / 1000;
-               OrderTotalChart.clear();
-               GetOrderAverageReportListByChart("defineTime", startTime1, endTime1);
+               console.log(startTime1);
+               console.log(endTime1);
+               var Difference = endTime1 - startTime1;
+               if (Difference / 86400 > 30) {
+                   alert("查询时间间隔不能大于30天以上");
+               } else {
+                   OrderTotalChart.clear();
+                   GetOrderAverageReportListByChart("defineTime", startTime1, endTime1);
+               }
            });
         var OrderTotalChart = echarts.init(document.getElementById('OrderTotal'));
         GetOrderAverageReportListByChart("week");
