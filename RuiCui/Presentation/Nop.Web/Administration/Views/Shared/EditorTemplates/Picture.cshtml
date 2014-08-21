@@ -16,7 +16,7 @@
     @Html.HiddenFor(x => x)
 </div>
 <div id="@(clientId + "image")">
-    <img src="@(pictureService.GetPictureUrl(Model, 100, true))" />
+    @*<img src="@(pictureService.GetPictureUrl(Model, 100, true))" />*@
 </div>
 @if (picture != null)
 {
@@ -42,7 +42,7 @@ else
             <span>@T("Common.FileUploader.DropFiles")</span>
         </div>
         <div class="qq-upload-button-selector qq-upload-button">
-            <div>@T("Common.FileUploader.Upload")</div>
+            <div>上传文件</div>
         </div>
         <span class="qq-drop-processing-selector qq-drop-processing">
             <span>@T("Common.FileUploader.Processing")</span>
@@ -68,23 +68,45 @@ else
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $("#@(clientId)").fineUploader({
             request: {
                 endpoint: '@(Url.Content("~/Admin/Picture/AsyncUpload"))'
             },
             template: "@(clientId)-qq-template",
-            multiple: false
-        }).on("complete", function(event, id, name, responseJSON, xhr) {
+            multiple: true
+        }).on("complete", function (event, id, name, responseJSON, xhr) {
             if (responseJSON.success) {
-                $("#@(clientId + "image")").html("<img src='" + responseJSON.imageUrl + "'/>");
-                $("#@(clientId + "value") input").val(responseJSON.pictureId);
-                $("#@(clientId + "remove")").show();
+                $("#@(clientId + "image")").append("<img src='" + responseJSON.imageUrl + "' id='pictureid_" + responseJSON.pictureId + "'/><a  style='margin-right:15px;' id='pictureid_" + responseJSON.pictureId + "_remove' data-pictureid='" + responseJSON.pictureId + "'>删除</a>");
+                var result = $("#@(clientId + "value") input").val();
+                if (result != 0) {
+                    $("#@(clientId + "value") input").val(result + ',' + responseJSON.pictureId);
+                } else {
+                    $("#@(clientId + "value") input").val(responseJSON.pictureId);
+                }
+                $("#pictureid_" + responseJSON.pictureId + "_remove").click(function () {
+                    var pictureid = $(this).attr("data-pictureid");
+                    var resultArray = $("#@(clientId + "value") input").val().split(",");
+                    var result = "";
+                    for (var i = 0; i < resultArray.length; i++) {
+                        if (resultArray[i] != pictureid)
+                        {
+                            if (result != "") {
+                                result = result + ',' + resultArray[i];
+                            }
+                            else {
+                                result = resultArray[i];
+                            }
+                        }
+                    }
+                    $("#pictureid_" + pictureid).remove();
+                    $(this).remove();
+                    $("#@(clientId + "value") input").val(result);
+                });
             }
         });
-
-        $("#@(clientId + "remove")").click(function(e) {
+        $("#@(clientId + "remove")").click(function (e) {
             $("#@(clientId + "image")").html("<img src='@pictureService.GetDefaultPictureUrl()'/>");
             $("#@(clientId + "value") input").val(0);
             $(this).hide();

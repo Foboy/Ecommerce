@@ -782,7 +782,7 @@ namespace Nop.Admin.Controllers
                         CustomerFullName = string.Format("{0} {1}", x.BillingAddress.FirstName, x.BillingAddress.LastName),
                         CreatedOn = _dateTimeHelper.ConvertToUserTime(x.CreatedOnUtc, DateTimeKind.Utc)
                     };
-                }),
+                }).ToList(),
                 Total = orders.TotalCount
             };
 

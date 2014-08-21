@@ -2222,6 +2222,36 @@ namespace Nop.Admin.Controllers
             return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BatchProductPictureAdd(string pictureId, int displayOrder, int productId)
+        {
+
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedView();
+
+            if (pictureId == "0" || string.IsNullOrWhiteSpace(pictureId))
+                throw new ArgumentException();
+
+            var product = _productService.GetProductById(productId);
+            if (product == null)
+                throw new ArgumentException("没有与指定id发现产品图片");
+
+            //a vendor should have access only to his products
+            if (_workContext.CurrentVendor != null && product.VendorId != _workContext.CurrentVendor.Id)
+                return RedirectToAction("List");
+            string[] arrayPictureIdS = pictureId.Split(',');
+            for (int i = 0; i < arrayPictureIdS.Length; i++)
+            {
+                _productService.InsertProductPicture(new ProductPicture()
+                {
+                    PictureId =Convert.ToInt32( arrayPictureIdS[i]),
+                    ProductId = productId,
+                    DisplayOrder = displayOrder,
+                });
+                _pictureService.SetSeoFilename(Convert.ToInt32(arrayPictureIdS[i]), _pictureService.GetPictureSeName(product.Name));
+            }
+            return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult ProductPictureList(DataSourceRequest command, int productId)
         {
