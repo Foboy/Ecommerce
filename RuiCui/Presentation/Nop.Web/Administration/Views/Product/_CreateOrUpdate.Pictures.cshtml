@@ -96,7 +96,7 @@
      
         $(document).ready(function () {
             $('#addProductPicture').click(function () {
-                var pictureId = $("#@Html.FieldIdFor(model => model.AddPictureModel.PictureId)").val();
+                var pictureId = $("#@Html.FieldIdFor(model => model.AddPictureModel.PictureId)").attr("data-products");
                 var displayOrder = $("#@Html.FieldIdFor(model => model.AddPictureModel.DisplayOrder)").val();
                 
                 if (pictureId == 0) {
