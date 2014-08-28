@@ -2403,6 +2403,7 @@
     <Content Include="Views\ReturnRequest\CreateOrUpdateReturnRequest.cshtml" />
     <Content Include="Views\Financial\OrderReport.cshtml" />
     <Content Include="Views\Financial\ShippingReport.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\SinglePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CategorySpecificationAtrribute\" />

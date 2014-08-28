@@ -11,7 +11,7 @@ namespace Nop.Plugin.Widgets.AD.Models
 
 
         [NopResourceDisplayName("Plugins.Widgets.AD.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture1Id { get; set; }
         public bool Picture1Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.AD.Text")]
@@ -24,7 +24,7 @@ namespace Nop.Plugin.Widgets.AD.Models
         public bool Link1_OverrideForStore { get; set; }
 
         [NopResourceDisplayName("Plugins.Widgets.AD.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture2Id { get; set; }
         public bool Picture2Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.AD.Text")]

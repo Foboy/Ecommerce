@@ -11,7 +11,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
 
 
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture1Id { get; set; }
         public bool Picture1Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -24,7 +24,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link1_OverrideForStore { get; set; }
 
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture2Id { get; set; }
         public bool Picture2Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -37,7 +37,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link2_OverrideForStore { get; set; }
 
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture3Id { get; set; }
         public bool Picture3Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -50,7 +50,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link3_OverrideForStore { get; set; }
 
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture4Id { get; set; }
         public bool Picture4Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -63,7 +63,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link4_OverrideForStore { get; set; }
 
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture5Id { get; set; }
         public bool Picture5Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -77,7 +77,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
 
         //6
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture6Id { get; set; }
         public bool Picture6Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -90,7 +90,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link6_OverrideForStore { get; set; }
         //7
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture7Id { get; set; }
         public bool Picture7Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
@@ -103,7 +103,7 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public bool Link7_OverrideForStore { get; set; }
         //8
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Picture")]
-        [UIHint("Picture")]
+        [UIHint("SinglePicture")]
         public int Picture8Id { get; set; }
         public bool Picture8Id_OverrideForStore { get; set; }
         [NopResourceDisplayName("Plugins.Widgets.NivoSlider.Text")]
