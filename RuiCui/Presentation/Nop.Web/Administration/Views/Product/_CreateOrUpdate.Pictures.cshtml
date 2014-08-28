@@ -96,15 +96,15 @@
      
         $(document).ready(function () {
             $('#addProductPicture').click(function () {
-                var pictureId = $("#@Html.FieldIdFor(model => model.AddPictureModel.PictureId)").val();
+                var pictureId = $("#@Html.FieldIdFor(model => model.AddPictureModel.PictureId)").attr("data-products");
                 var displayOrder = $("#@Html.FieldIdFor(model => model.AddPictureModel.DisplayOrder)").val();
                 
                 if (pictureId == 0) {
                     alert('请先添加图片');
                     return;
                 }
-
-                $('#addProductPicture').attr('disabled', true);
+               
+                @*$('#addProductPicture').attr('disabled', true);
                 $.ajax({
                     cache:false,
                     type: "POST",
@@ -119,7 +119,25 @@
                         alert('添加图片失败');
                         $('#addProductPicture').attr('disabled', false);
                     }  
-                });
+                });*@
+
+                //批量上传
+                $('#addProductPicture').attr('disabled', true);
+                $.ajax({
+                    cache:false,
+                    type: "POST",
+                    url: "@(Url.Action("BatchProductPictureAdd", "Product"))",
+                    data: { "pictureId": pictureId, "displayOrder": displayOrder, "productId": @Model.Id },
+                    success: function (data) {
+                    var productpicturesGrid = $("#productpictures-grid");
+                    productpicturesGrid.data('kendoGrid').dataSource.read();
+                    $('#addProductPicture').attr('disabled', false);
+                },
+                error:function (xhr, ajaxOptions, thrownError){
+                    alert('添加图片失败');
+                    $('#addProductPicture').attr('disabled', false);
+                }  
+            });
             });
         });
     </script>        
@@ -133,13 +151,13 @@
                 @Html.ValidationMessageFor(model => model.AddPictureModel.PictureId)
             </td>
         </tr>
-        <tr>
+        <tr style="display:none">
             <td class="adminTitle">
                 @Html.NopLabelFor(model => model.AddPictureModel.DisplayOrder):
             </td>
             <td class="adminData">
                 @Html.EditorFor(model => model.AddPictureModel.DisplayOrder)
-                @Html.ValidationMessageFor(model => model.AddPictureModel.DisplayOrder)
+                @*@Html.ValidationMessageFor(model => model.AddPictureModel.DisplayOrder)*@
             </td>
         </tr>
         <tr>
@@ -147,11 +165,11 @@
                 <input type="button" id="addProductPicture" class="btn btn-sm btn-primary btn-flat " value="添加图片" />
             </td>
         </tr>
-        <tr>
+        @*<tr>
             <td colspan="2" align="left">
                 <input type="submit" name="save-continue" class="btn btn-sm btn-primary btn-flat " value="保存并进行一步" />
             </td>
-        </tr>
+        </tr>*@
     </table>
 }
 else

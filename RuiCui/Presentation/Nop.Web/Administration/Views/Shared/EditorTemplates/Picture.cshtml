@@ -16,7 +16,7 @@
     @Html.HiddenFor(x => x)
 </div>
 <div id="@(clientId + "image")">
-    <img src="@(pictureService.GetPictureUrl(Model, 100, true))" />
+    @*<img src="@(pictureService.GetPictureUrl(Model, 100, true))" />*@
 </div>
 @if (picture != null)
 {
@@ -42,7 +42,7 @@ else
             <span>@T("Common.FileUploader.DropFiles")</span>
         </div>
         <div class="qq-upload-button-selector qq-upload-button">
-            <div>@T("Common.FileUploader.Upload")</div>
+            <div>上传文件</div>
         </div>
         <span class="qq-drop-processing-selector qq-drop-processing">
             <span>@T("Common.FileUploader.Processing")</span>
@@ -68,24 +68,56 @@ else
 </script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-
+    $(document).ready(function () {
         $("#@(clientId)").fineUploader({
             request: {
                 endpoint: '@(Url.Content("~/Admin/Picture/AsyncUpload"))'
             },
             template: "@(clientId)-qq-template",
-            multiple: false
-        }).on("complete", function(event, id, name, responseJSON, xhr) {
+            multiple: true
+        }).on("complete", function (event, id, name, responseJSON, xhr) {
+            var itemClass = "qq-file-id-" + id;
+            setTimeout(function () { $(".qq-upload-list ." + itemClass).remove(); }, 2000);
             if (responseJSON.success) {
-                $("#@(clientId + "image")").html("<img src='" + responseJSON.imageUrl + "'/>");
-                $("#@(clientId + "value") input").val(responseJSON.pictureId);
-                $("#@(clientId + "remove")").show();
+                $("#@(clientId + "image")").append("<img src='" + responseJSON.imageUrl + "' id='pictureid_" + responseJSON.pictureId + "'/><a  style='margin-right:15px;' id='pictureid_" + responseJSON.pictureId + "_remove' data-pictureid='" + responseJSON.pictureId + "'>删除</a>");
+                var picInput = $("#@(clientId + "value") input");
+                var result = picInput.attr("data-products");
+                result = (typeof result != "undefined" && result != null && result != "") ? result : "0";
+                if (result != "0") {
+                    picInput.attr("data-products", result + ',' + responseJSON.pictureId);
+                } else {
+                    picInput.attr("data-products", responseJSON.pictureId);
+                }
+                picInput.val(responseJSON.pictureId);
+                $("#pictureid_" + responseJSON.pictureId + "_remove").click(function () {
+                    var pictureid = $(this).attr("data-pictureid");
+                    var resultArray = picInput.attr("data-products").split(",");
+                    var result = "";
+                    for (var i = 0; i < resultArray.length; i++) {
+                        if (resultArray[i] != pictureid)
+                        {
+                            if (result != "") {
+                                result = result + ',' + resultArray[i];
+                            }
+                            else {
+                                result = resultArray[i];
+                            }
+                        }
+                    }
+                    $("#pictureid_" + pictureid).remove();
+                    $(this).remove();
+                    picInput.attr("data-products", result);
+                    if (pictureid == picInput.val())
+                    {
+                        picInput.val(0);
+                    }
+
+                });
             }
         });
-
-        $("#@(clientId + "remove")").click(function(e) {
+        $("#@(clientId + "remove")").click(function (e) {
             $("#@(clientId + "image")").html("<img src='@pictureService.GetDefaultPictureUrl()'/>");
+            $("#@(clientId + "value") input").attr("data-products", 0);
             $("#@(clientId + "value") input").val(0);
             $(this).hide();
         });

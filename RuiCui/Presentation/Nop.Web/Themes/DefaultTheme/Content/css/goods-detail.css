@@ -64,7 +64,7 @@ em {
 
 .goods-big-pic {
     height: 430px;
-    padding: 20px 0 10px;
+    padding: 10px 0 10px;
     position: relative;
     text-align: center;
 }
@@ -677,7 +677,7 @@ dl.goods-info-box {
 
     .goods-detail-desc .goods-detail-box .box-hd {
         background-color: #fff;
-        padding: 0px;
+        padding: 0 0 0 8px;
         border-bottom: 1px solid #dfdfdf;
     }
 
@@ -705,6 +705,7 @@ dl.goods-info-box {
         padding: 25px;
         text-align: center;
         overflow: hidden;
+        background-color:#fff;
     }
 
 .goods-detail-desc .goods-detail-standard {
@@ -1163,6 +1164,7 @@ dl.goods-info-box {
 .goods-detail-desc .common-question {
     margin-top: 30px;
     border: 1px solid #dfdfdf;
+    background-color:#fff;
 }
 
 .goods-detail-desc .common-question .question-hd {

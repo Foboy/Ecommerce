@@ -917,7 +917,7 @@ em {
 
 .checkout-confirm {
     padding: 20px 30px;
-    background: #fafafa;
+    background: #fff;
     text-align: right;
     color: #333;
 }
@@ -1240,7 +1240,7 @@ em {
     .shop-cart-goods dt .col-1 {
         border-left: none;
         margin-left: 0;
-        width: 780px;
+        width: 750px;
         padding-left: 30px;
     }
 

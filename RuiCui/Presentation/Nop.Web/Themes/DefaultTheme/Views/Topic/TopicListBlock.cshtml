@@ -2,6 +2,7 @@
     Layout = null;
 }
 @{
+    Html.AppendScriptParts("~/Scripts/jquery.slimscroll.min.js");
     Html.AppendScriptParts("~/Scripts/jquery.fullPage.js");
     Html.AppendScriptParts("~/Scripts/jquery-ui.js");
     Html.AppendScriptParts("~/Scripts/jquery-1.10.2.min.js");
@@ -30,11 +31,12 @@
     @*Favicon - upload favicon.ico file to the root directory*@
     @Html.Action("Favicon", "Common")
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#fullpage').fullpage({
                 sectionsColor: ['#1bbc9b', '#4BBFC3', '#7BAABE', 'whitesmoke'],
                 anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage'],
-                menu: '#menu'
+                scrollOverflow: true,
+		menu: '#menu'
             });
 
         });
