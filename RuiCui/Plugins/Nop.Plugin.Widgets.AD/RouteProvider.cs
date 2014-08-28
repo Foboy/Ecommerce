@@ -9,7 +9,7 @@ namespace Nop.Plugin.Widgets.AD
         public void RegisterRoutes(RouteCollection routes)
         {
             routes.MapRoute("Plugin.Widgets.AD.Configure",
-                 "Plugins/Index/ConfigureSlider",
+                 "Plugins/Index/ConfigureAD",
                  new { controller = "Index", action = "Configure", },
                  new[] { "Nop.Plugin.Widgets.AD.Controllers" }
             );
