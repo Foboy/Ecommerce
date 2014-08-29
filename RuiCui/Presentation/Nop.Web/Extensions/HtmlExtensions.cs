@@ -267,20 +267,8 @@ namespace Nop.Web.Extensions
         public static string ScoreToStar<T>(this HtmlHelper<T> html, int score) 
         {
             string css = "icon-stat-";
-            int star = score / 20;
-            if (star > 0)
-            {
-                css += (star * 20 + 10 < score ? star + 1 : star).ToString();
-            }
-            if (score > star * 20 && score <= star * 20 + 10)
-            {
-                css += "half";
-            }
-            else if (score == 0)
-            {
-                css += "0";
-            }
-            return css;
+            int star = (int)Math.Round(score / 10.0f);
+            return css + star.ToString();
         }
 
         public static string ConsigneeFrontAddress<T>(this HtmlHelper<T> html, AddressModel address)

@@ -42,7 +42,7 @@ namespace Nop.Web.Controllers
             //score
             if (string.IsNullOrWhiteSpace(product.AdminComment))
             {
-                return 100;
+                return 80;
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Nop.Web.Controllers
                 }
                 else
                 {
-                    return 100;
+                    return 80;
                 }
             }
         }
