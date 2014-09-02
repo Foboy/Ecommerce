@@ -4752,6 +4752,7 @@ namespace Nop.Web.Controllers
                                 searchDescriptions: searchInDescriptions,
                                 searchSku: searchInDescriptions,
                                 searchProductTags: searchInProductTags,
+                                filteredSpecs:alreadyFilteredSpecOptionIds,
                                 languageId: _workContext.WorkingLanguage.Id,
                                 orderBy: (ProductSortingEnum)command.OrderBy,
                                 pageIndex: command.PageNumber - 1,
@@ -4771,6 +4772,7 @@ namespace Nop.Web.Controllers
                                 searchSku: searchInDescriptions,
                                 searchProductTags: searchInProductTags,
                                 languageId: _workContext.WorkingLanguage.Id,
+                                filteredSpecs: alreadyFilteredSpecOptionIds,
                                 orderBy: (ProductSortingEnum)command.OrderBy,
                                 pageIndex: command.PageNumber - 1,
                                 pageSize: command.PageSize);

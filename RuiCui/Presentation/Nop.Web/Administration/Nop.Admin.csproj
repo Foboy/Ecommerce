@@ -36,6 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -2384,7 +2385,6 @@
     <Content Include="Views\Shared\EditorTemplates\UEditor.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\nopadmin.pubxml" />
     <Content Include="Views\ProductQuestion\_CreateOrUpdate.cshtml" />
     <Content Include="Views\ProductQuestion\Edit.cshtml" />
     <Content Include="Views\ProductQuestion\List.cshtml" />
@@ -2406,6 +2406,7 @@
     <Content Include="Views\Shared\EditorTemplates\SinglePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\CategorySpecificationAtrribute\" />
   </ItemGroup>
   <PropertyGroup>
